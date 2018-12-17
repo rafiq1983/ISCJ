@@ -5,22 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace ISCJ.Pages
+namespace ISCJ.Pages.ContactManagement
 {
-    public class IndexModel : PageModel
+    public class ContactListModel : PageModel
     {
         public void OnGet()
         {
 
         }
-
-        public void OnPost()
-      {
-          Message = "Your information has been submitted";
-      }
-
-    public string Message { get; set; }
     }
-
-  
 }
