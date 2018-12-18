@@ -1,0 +1,32 @@
+﻿@page
+@model ISCJ.Pages.StudentManagement.RegisterStudentModel
+@{
+  ViewData["Title"] = "RegisterStudent";
+}
+
+<h2>Register Student</h2>
+
+<form id="registrationForm" method="post">
+  <div class="form-group">
+    <label for="txtFirstName">First Name:</label>
+    <input type="text" name="txtFirstName" id="txtFirstName" class="form-control" />
+    <label for="txtMiddleName">Middle Name:</label>
+    <input type="text" name="txtMiddleName" id="txtMiddleName" class="form-control" />
+    <label for="txtLastName">Last Name:</label>
+    <input type="text" name="txtLastName" id="txtLastName" class="form-control" />
+    <label for="txtDob">Date of Birth:</label>
+    <input type="text" name="txtDob" id="txtDob" class="form-control" />
+    <label for="txtPSG">Public School Grade</label>
+    <input type="text" name="txtPSG" id="txtPSG" class="form-control" />
+    <label for="txtISG">Islamic School Grade:</label>
+    <input type="text" name="txtISG" id="txtISG" class="form-control" />
+    <label for="txtGender">Gender:</label>
+    <input type="text" name="txtGender" id="txtGender" class="form-control" />
+
+  </div>
+  <div>
+    <input type="submit" id="btnSubmit" name="btnSubmit" value="Save" class="btn-success" />
+  </div>
+</form>
+<span class="text-info" name="Message">@Model.Message</span>
+
