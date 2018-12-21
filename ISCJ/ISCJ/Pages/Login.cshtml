@@ -1,0 +1,22 @@
+﻿@page
+@model ISCJ.Pages.Admin.LoginModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h2>Login</h2>
+
+
+<form method="post">
+    <div class="form-group">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        Username: <input asp-for="loginData.Username" class="form-control" /><br />
+        Password: <input asp-for="loginData.Password" class="form-control" /><br />
+        Remember me: <input asp-for="loginData.RememberMe" type="checkbox" /><br />
+        <input type="submit" value="Login" class="btn btn-primary" />
+        @Html.AntiForgeryToken()
+    </div>
+</form>
+
+
