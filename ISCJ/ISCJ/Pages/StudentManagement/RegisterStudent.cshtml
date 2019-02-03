@@ -4,29 +4,243 @@
   ViewData["Title"] = "RegisterStudent";
 }
 
-<h2>Register Student</h2>
 
-<form id="registrationForm" method="post">
-  <div class="form-group">
-    <label for="txtFirstName">First Name:</label>
-    <input type="text" name="txtFirstName" id="txtFirstName" class="form-control" />
-    <label for="txtMiddleName">Middle Name:</label>
-    <input type="text" name="txtMiddleName" id="txtMiddleName" class="form-control" />
-    <label for="txtLastName">Last Name:</label>
-    <input type="text" name="txtLastName" id="txtLastName" class="form-control" />
-    <label for="txtDob">Date of Birth:</label>
-    <input type="text" name="txtDob" id="txtDob" class="form-control" />
-    <label for="txtPSG">Public School Grade</label>
-    <input type="text" name="txtPSG" id="txtPSG" class="form-control" />
-    <label for="txtISG">Islamic School Grade:</label>
-    <input type="text" name="txtISG" id="txtISG" class="form-control" />
-    <label for="txtGender">Gender:</label>
-    <input type="text" name="txtGender" id="txtGender" class="form-control" />
+<form  id="registrationForm" method="post">
 
-  </div>
-  <div>
-    <input type="submit" id="btnSubmit" name="btnSubmit" value="Save" class="btn-success" />
-  </div>
+    <div class="container">
+        <h2>Islamic Center Membership & School Registration Form </h2>
+        <div class="panel-group">
+            <div class="panel panel-primary">
+                <div class="panel-heading"><h4>Application Data</h4></div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group  col-xs-4">
+                            <label for="txtDate">Date</label>
+                            <div class='input-group date' id='datetimepicker3'>
+                                <input type='text' class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                </span>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group col-xs-2">
+                            <label class="radio-inline"><input type="radio" name="optradio" checked>New</label>
+                        </div>
+
+                        <div class="form-group col-xs-2">
+                            <label class="radio-inline"><input type="radio" name="optradio">Renewal</label>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading"><h4>Guardian Information</h4></div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group  col-xs-4">
+                            <label for="txtFFirstName">Father First Name</label>
+                            <input id="txtFFirstName" name="txtFFirstName" class="form-control" />
+                        </div>
+
+                        <div class="form-group  col-xs-4">
+                            <label for="txtFMName">Father Middle Name</label>
+                            <input id="txtFMName" name="txtFMName" class="form-control" />
+                        </div>
+
+                        <div class="form-group  col-xs-4">
+                            <label for="txtFLastName">Father Last Name</label>
+                            <input id="txtFLastName" name="txtFLastName" class="form-control" />
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group  col-xs-4">
+                            <label for="txtFFirstName">Mother First Name</label>
+                            <input id="txtFFirstName" name="txtFFirstName" class="form-control" />
+                        </div>
+
+                        <div class="form-group  col-xs-4">
+                            <label for="txtFMName">Mother Middle Name</label>
+                            <input id="txtFMName" name="txtFMName" class="form-control" />
+                        </div>
+
+                        <div class="form-group  col-xs-4">
+                            <label for="txtFLastName">Mother Last Name</label>
+                            <input id="txtFLastName" name="txtFLastName" class="form-control" />
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+                        <div class="form-group  col-sm-8">
+                            <label for="txtStreet">Street</label>
+                            <input id="txtStreet" name="txtStreet" class="form-control" />
+                        </div>
+
+                        <div class="form-group  col-sm-4">
+                            <label for="txtApt">Apt</label>
+                            <input id="txtApt" name="txtApt" class="form-control" />
+                        </div>
+
+                        
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group  col-xs-4">
+                            <label for="txtFFirstName">City</label>
+                            <input id="txtFFirstName" name="txtFFirstName" class="form-control" />
+                        </div>
+
+                        <div class="form-group  col-xs-4">
+                            <label for="txtFMName">State</label>
+                            <input id="txtFMName" name="txtFMName" class="form-control" />
+                        </div>
+
+                        <div class="form-group  col-xs-4">
+                            <label for="txtFLastName">Zip</label>
+                            <input id="txtFLastName" name="txtFLastName" class="form-control" />
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group  col-xs-4">
+                            <label for="txtFFirstName">Phone (Home)</label>
+                            <input id="txtFFirstName" name="txtFFirstName" class="form-control" />
+                        </div>
+
+                        <div class="form-group  col-xs-4">
+                            <label for="txtFMName">Cell (Father)</label>
+                            <input id="txtFMName" name="txtFMName" class="form-control" />
+                        </div>
+
+                        <div class="form-group  col-xs-4">
+                            <label for="txtFLastName">Cell (Mother)</label>
+                            <input id="txtFLastName" name="txtFLastName" class="form-control" />
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group  col-sm-6">
+                            <label for="txtFFirstName">Primary Email Address</label>
+                            <input id="txtFFirstName" name="txtFFirstName" class="form-control" />
+                        </div>
+
+                        <div class="form-group  col-sm-6">
+                            <label for="txtFMName">Alternate Email Address</label>
+                            <input id="txtFMName" name="txtFMName" class="form-control" />
+                        </div>
+                        
+
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading"><h4>Student(s) Information</h4></div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group  col-xs-4">
+                            <label for="txtFFirstName">Student First Name</label>
+                            <input id="txtFFirstName" name="txtFFirstName" class="form-control" />
+                        </div>
+
+                        <div class="form-group  col-xs-4">
+                            <label for="txtFMName">Student Middle Name</label>
+                            <input id="txtFMName" name="txtFMName" class="form-control" />
+                        </div>
+
+                        <div class="form-group  col-xs-4">
+                            <label for="txtFLastName">Student Last Name</label>
+                            <input id="txtFLastName" name="txtFLastName" class="form-control" />
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group  col-xs-4">
+                            <label for="txtFFirstName">Date of Birth</label>
+                            <input id="txtFFirstName" name="txtFFirstName" class="form-control" />
+                        </div>
+
+                        <div class="form-group  col-xs-4">
+                            <label for="txtFMName">Public School Grade</label>
+                            <input id="txtFMName" name="txtFMName" class="form-control" />
+                        </div>
+
+                        <div class="form-group  col-xs-4">
+                            <label for="txtFLastName">Islamic School Grade</label>
+                            <input id="txtFLastName" name="txtFLastName" class="form-control" />
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+
+
+
+
+        </div>
+        <div>
+            <input type="submit" id="btnSubmit" name="btnSubmit" value="Save" class="btn-success" />
+        </div>
+        
+    </div>
+      
+            @*<label for="txtMiddleName">Middle Name:</label>
+            <input type="text" placeholder="Middle Name" name="txtMiddleName" id="txtMiddleName" class="js-new-item form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <label for="txtLastName">Last Name:</label>
+            <input type="text" placeholder="Last Name" name="txtLastName" id="txtLastName" class="js-new-item form-control" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="txtDob">Date of Birth:</label>
+        <input type="text" name="txtDob" placeholder="Date of Birth" id="txtDob" class="js-new-item form-control" />
+    </div>
+    <div class="form-group">
+        <label for="txtPSG">Public School Grade:</label>
+        <input type="text" placeholder="Public School Grade" name="txtPSG" id="txtPSG" class="js-new-item form-control" />
+    </div>
+    <div class="form-group">
+        <label for="txtISG">Islamic School Grade:</label>
+        <input type="text" placeholder="Islamic School Grade" name="txtISG" id="txtISG" class="js-new-item form-control" />
+    </div>
+    <div class="form-group">
+
+        <label for="optRadio">Gender:</label>
+        <div class="radio">
+            <label><input type="radio" value="1" name="optradio" checked>Male </label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" value="2" name="optradio">Female</label>
+        </div>
+
+    </div>*@
+    
+
+
 </form>
+
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker();
+    });
+</script>
+
+
 <span class="text-info" name="Message">@Model.Message</span>
 
