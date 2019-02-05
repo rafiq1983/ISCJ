@@ -16,7 +16,7 @@
     <a class="nav-link disabled" href="#">Other</a>
   </li>
 </ul>-->
-
+<form name="frmCreateContact" method="post" action="ContactAdd">
 <div class="form-group">
   <label for="txtFirstName">First Name</label>
   <input type="text" class="form-control" id="txtFirstName" placeholder="First Name">
@@ -27,7 +27,7 @@
 </div>
 <div class="form-group">
   <label for="exampleInputEmail1">Email address</label>
-  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+  <input type="email" class="form-control" id="txtEmail" aria-describedby="emailHelp" placeholder="Enter email">
   <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
 </div>
 <div class="form-group">
@@ -72,3 +72,4 @@
 <button type="submit" class="btn btn-primary" id="btnCancel">Cancel</button>
 <button type="submit" class="btn btn-primary" id="btnReset">Reset</button>
 <button type="submit" class="btn btn-primary" id="btnSubmit">Submit</button>
+  </form>
