@@ -20,6 +20,9 @@
           Email
         </th>
         <th>
+          Contact Type
+        </th>
+        <th>
           Home Phone
         </th>
         <th>
@@ -48,20 +51,21 @@
     <tbody>
       @for (var i = 0; i < Model.Contacts.Count; i++)
       {
-        <tr>
-          <td>@Model.Contacts[i].FirstName</td>
-          <td>@Model.Contacts[i].LastName</td>
-          <td>@Model.Contacts[i].Email</td>
-          <td>@Model.Contacts[i].HomePhone</td>
-          <td>@Model.Contacts[i].CellPhone</td>
-          <td>@Model.Contacts[i].Street</td>
-          <td>@Model.Contacts[i].City</td>
-          <td>@Model.Contacts[i].State</td>
-          <td>@Model.Contacts[i].Zip</td>
-          <td>
-            <input type="submit" class="btn-sm btn-success" value="Details" name="btnDetails" onClick="return SetContactId(@Model.Contacts[i].Id);" />
-          </td>
-        </tr>
+      <tr>
+        <td>@Model.Contacts[i].FirstName</td>
+        <td>@Model.Contacts[i].LastName</td>
+        <td>@Model.Contacts[i].Email</td>
+        <td>@Model.Contacts[i].ContactTypeId</td>
+        <td>@Model.Contacts[i].HomePhone</td>
+        <td>@Model.Contacts[i].CellPhone</td>
+        <td>@Model.Contacts[i].Street</td>
+        <td>@Model.Contacts[i].City</td>
+        <td>@Model.Contacts[i].State</td>
+        <td>@Model.Contacts[i].Zip</td>
+        <td>
+          <input type="submit" class="btn-sm btn-success" value="Details" id="btnDetails" name="btnAction" onClick="return SetContactId('@Model.Contacts[i].Id');" />
+        </td>
+      </tr>
       }
 
 
@@ -69,7 +73,7 @@
 
   </table>
   <div>
-    <input type="button" class="btn-sm btn-success" value="Add New" />
+    <input type="submit" id="btnAddNew" name="btnAction" class="btn-sm btn-success" value="Add New" />
   </div>
   <input type="hidden" id="contactId" name="contactId" value="a" />
 

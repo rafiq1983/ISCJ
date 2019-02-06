@@ -20,10 +20,19 @@ namespace ISCJ.Pages.ContactManagement
 
     }
 
-    public void OnPost()
+    public void OnPost(string btnAction)
     {
-      string contactId = Request.Form["contactId"];
-      Response.Redirect("ContactViewEdit?contactId=" + contactId);
+      if (btnAction == "Details")
+      {
+        string contactId = Request.Form["contactId"];
+        Response.Redirect("ContactViewEdit?contactId=" + contactId);
+         }
+      else if(btnAction=="Add New")
+      {
+        Response.Redirect("ContactViewEdit?mode=new");
+       
+      }
+
       _contacts = new List<Contact>();
     }
 

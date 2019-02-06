@@ -1,0 +1,68 @@
+﻿@page
+@model ProgramListModel
+@{
+}
+<form method="post">
+  <h2>ContactList</h2>
+
+  <table class="table-bordered" border="0">
+    <thead>
+      <tr>
+        <th>
+          Program Name
+        </th>
+        <th>
+          Start Date
+        </th>
+
+        <th>
+          End Date
+        </th>
+        <th>
+          Description
+        </th>
+        
+        <th>
+
+        </th>
+
+      </tr>
+    </thead>
+    <tbody>
+      @for (var i = 0; i < Model.ProgramDetails.Count; i++)
+      {
+        <tr>
+          <td>@Model.ProgramDetails[i].ProgramName</td>
+          <td>@Model.ProgramDetails[i].StartDate</td>
+          <td>@Model.ProgramDetails[i].EndDate</td>
+          
+          <td>
+            <input type="submit" class="btn-sm btn-success" value="Details" id="btnDetails" name="btnAction" onClick="return SetProgramId('@Model.ProgramDetails[i].ProgramId');" />
+            <input type="submit" class="btn-sm btn-success" value="Add Teachers" id="btnDetails" name="btnAction" onClick="return SetProgramId('@Model.ProgramDetails[i].ProgramId');" />
+            <input type="submit" class="btn-sm btn-success" value="Add Students" id="btnDetails" name="btnAction" onClick="return SetProgramId('@Model.ProgramDetails[i].ProgramId');" />
+
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4"><pre>@Model.ProgramDetails[i].ProgramDescription</pre></td>
+
+        </tr>
+      }
+
+    </tbody>
+
+  </table>
+  <div>
+    <input type="submit" id="btnAddNew" name="btnAction" class="btn-sm btn-success" value="Add New" />
+   </div>
+  <input type="hidden" id="programId" name="programId" />
+
+</form>
+<script language="javascript">
+  function SetProgramId(programId) {
+
+    $("#programId").val(programId);
+
+    return true;
+  }
+</script>

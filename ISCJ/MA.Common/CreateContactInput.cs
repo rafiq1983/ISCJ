@@ -48,6 +48,9 @@ namespace MA.Common
     public string CellPhone { get; set; }
     [BindProperty]
     public string HomePhone { get; set; }
+
+    [BindProperty]
+    public string ContactTypeId { get; set; }
   }
 
   public class UpdateContactInput

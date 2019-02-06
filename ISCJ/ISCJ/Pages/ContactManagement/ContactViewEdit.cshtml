@@ -17,60 +17,69 @@
   </li>
 </ul>-->
 <form name="frmCreateContact" method="post">
-<div class="form-group">
-  <label for="txtFirstName">First Name</label>
-  <input type="text" asp-for="@Model.Contact.FirstName" class="form-control" placeholder="First Name">
-</div>
-<div class="form-group">
-  <label for="txtLastName">Last Name</label>
-  <input type="text"  asp-for="@Model.Contact.LastName" class="form-control" id="txtLastName" placeholder="Last" value="@Model.Contact.LastName">
-</div>
-<div class="form-group">
-  <label for="exampleInputEmail1">Email address</label>
-  <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email" asp-for="@Model.Contact.Email">
-  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-</div>
-<div class="form-group">
-  <label for="txtDOB">DOB:</label>
-  <input type="text" class="form-control" placeholder="DOB" asp-for="@Model.Contact.DOB">
-  <small id="emailHelp" class="form-text text-muted">optional</small>
-</div>
-<div class="form-group">
-  <label for="lstGender">Gender:</label>
-  <select id="lstGender" class="form-control" asp-for="@Model.Contact.Gender">
-    <option value="1">Male</option>
-    <option value="2">Female</option>
-  </select>
-  
-</div>
-<div class="form-group">
-  <label for="txtHomePhone">Home Phone</label>
-  <input type="text" class="form-control" placeholder="Home Phone" asp-for="@Model.Contact.HomePhone">
-</div>
-<div class="form-group">
-  <label for="txtCellPhone">Cell Phone</label>
-  <input type="text" class="form-control" placeholder="Cell Phone" asp-for="@Model.Contact.CellPhone">
-</div>
+  <div class="form-group">
+    <label for="txtFirstName">First Name</label>
+    <input type="text" asp-for="@Model.Contact.FirstName" class="form-control" placeholder="First Name">
+  </div>
+  <div class="form-group">
+    <label for="txtLastName">Last Name</label>
+    <input type="text" asp-for="@Model.Contact.LastName" class="form-control" id="txtLastName" placeholder="Last" value="@Model.Contact.LastName">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email" asp-for="@Model.Contact.Email">
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div>
+  <div class="form-group">
+    <label for="txtDOB">DOB:</label>
+    <input type="text" class="form-control" placeholder="DOB" asp-for="@Model.Contact.DOB">
+    <small id="emailHelp" class="form-text text-muted">optional</small>
+  </div>
+  <div class="form-group">
+    <label for="lstContactType">Gender:</label>
+    <select class="form-control" asp-for="@Model.Contact.ContactTypeId">
+      <option value="1">Student</option>
+      <option value="2">Parent</option>
+      <option value="3">Donor</option>
+      <option value="3">Other</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="lstGender">Gender:</label>
+    <select id="lstGender" class="form-control" asp-for="@Model.Contact.Gender">
+      <option value="1">Male</option>
+      <option value="2">Female</option>
+    </select>
 
-<div class="form-group">
-  <label for="txtStreet">Street</label>
-  <input type="text" class="form-control"  placeholder="Street" asp-for="@Model.Contact.Street">
-</div>
-<div class="form-group">
-  <label for="txtZip">Apt</label>
-  <input type="text" class="form-control" placeholder="APT Number" asp-for="@Model.Contact.Apt">
-</div>
-<div class="form-group">
-  <label for="txtCity">City</label>
-  <input type="text" class="form-control" placeholder="City" asp-for="@Model.Contact.City" />
-</div>
-<div class="form-group">
-  <label for="txtZip">Zip</label>
-  <input type="text" class="form-control" placeholder="Zip" asp-for="@Model.Contact.Zip">
-</div>
+  </div>
+  <div class="form-group">
+    <label for="txtHomePhone">Home Phone</label>
+    <input type="text" class="form-control" placeholder="Home Phone" asp-for="@Model.Contact.HomePhone">
+  </div>
+  <div class="form-group">
+    <label for="txtCellPhone">Cell Phone</label>
+    <input type="text" class="form-control" placeholder="Cell Phone" asp-for="@Model.Contact.CellPhone">
+  </div>
+
+  <div class="form-group">
+    <label for="txtStreet">Street</label>
+    <input type="text" class="form-control" placeholder="Street" asp-for="@Model.Contact.Street">
+  </div>
+  <div class="form-group">
+    <label for="txtZip">Apt</label>
+    <input type="text" class="form-control" placeholder="APT Number" asp-for="@Model.Contact.Apt">
+  </div>
+  <div class="form-group">
+    <label for="txtCity">City</label>
+    <input type="text" class="form-control" placeholder="City" asp-for="@Model.Contact.City" />
+  </div>
+  <div class="form-group">
+    <label for="txtZip">Zip</label>
+    <input type="text" class="form-control" placeholder="Zip" asp-for="@Model.Contact.Zip">
+  </div>
 
   <input type="hidden" asp-for="@Model.Contact.Id" />
-<button type="submit" class="btn btn-primary" id="btnCancel">Cancel</button>
-<button type="submit" class="btn btn-primary" id="btnReset">Reset</button>
-<button type="submit" class="btn btn-primary" id="btnSubmit">Submit</button>
-  </form>
+  <button type="submit" class="btn btn-primary" id="btnCancel">Cancel</button>
+  <button type="submit" class="btn btn-primary" id="btnReset">Reset</button>
+  <button type="submit" class="btn btn-primary" id="btnSubmit">Submit</button>
+</form>

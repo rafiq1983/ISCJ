@@ -28,16 +28,18 @@ namespace ISCJ.Pages.ContactManagement
 
 
     //TODO: Wire Post Method with Form Submit button.
-    public void OnPost(Contact input)
+    public void OnPost()
     {
       //TODO: How to do model binding.
       List<string> errors = new List<string>();
-       if(Validate(input, out errors))
+       if(Validate(Contact, out errors))
       {
 
         BusinessLogic.ContactManager mgr = new BusinessLogic.ContactManager();
 
-        mgr.AddUpdateContact(0, input);
+        mgr.AddUpdateContact(0, Contact);
+
+        Response.Redirect("ContactList");
       }
 
     }
