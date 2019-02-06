@@ -13,5 +13,21 @@ namespace BusinessLogic
       return string.Empty;
 
     }
+
+    public bool DeleteContact(int userId, string contactId)
+    {
+      return false;
+    }
+
+    public bool AddStudentAssociation(int userId, string studentId, string associationId, string relationType)
+    {
+      return false;
+    }
+
+    public bool UpdateContact(int userId, UpdateContactInput input)
+    {
+      return false;
+    }
+
   }
 }

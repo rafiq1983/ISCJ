@@ -1,0 +1,35 @@
+﻿@page
+@model SchoolYearListModel
+@{
+}
+<form method="post">
+  Add School Year: <input type="text" name="txtSchoolYear" />
+  <br />
+  Description:<textarea name="txtDescription"></textarea>
+  <br />
+  Fees:<input type="text" name="txtFees" />
+  <br />
+  Begin DateTime: <input type="text" name="txtBeginDateTime" />
+
+  <br />
+  Begin DateTime: <input type="text" name="txtEndDateTime" />
+
+  <br />
+  Holiday Dates: <input type="text" name="txtHolidyDates" />
+
+
+  <input type="submit" value="Save" />
+  <table>
+    <tr>
+      <td>
+        ISCJ 2019 School Year
+      </td>
+    </tr>
+    <tr>
+      <td>
+        ISCJ 2018 School Year
+      </td>
+    </tr>
+
+  </table>
+</form>

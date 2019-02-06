@@ -28,4 +28,11 @@ namespace MA.Common
 
     public string HomePhone { get; set; }
   }
+
+  public class UpdateContactInput
+  {
+    public string ContactID { get; set; }
+
+    public string CellPhoneNumber { get; set; }
+  }
 }
