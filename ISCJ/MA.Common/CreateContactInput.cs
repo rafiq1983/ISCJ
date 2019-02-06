@@ -3,6 +3,7 @@ using System;
 
 namespace MA.Common
 {
+ 
   public class Contact
   {
    [BindProperty]

@@ -86,23 +86,7 @@ namespace BusinessLogic
 
     public Contact GetContact(string contactId)
     {
-      return new Contact()
-      {
-        Id = contactId,
-        FirstName = "Wasi",
-        LastName = "Ahmed",
-        CellPhone = "222-1111-1111",
-        HomePhone = "",
-        DOB = DateTime.Parse("1/1/1995"),
-        State = "NJ",
-        Street = "1 Bloomer Drive",
-        Zip = "08016",
-        City = "Burlington",
-        Email = "wasi@hotmail.com",
-        Gender = "1"
-        
-
-      };
+      return _Contacts.Single(x => x.Id == contactId);
     }
     public List<Contact> GetContacts(int userId, int pageNumber, int pageSize)
     {

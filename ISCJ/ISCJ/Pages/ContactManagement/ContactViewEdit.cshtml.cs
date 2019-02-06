@@ -48,10 +48,11 @@ namespace ISCJ.Pages.ContactManagement
       return true;
     }
 
+    [BindProperty]
     public Contact Contact
     {
       get;
-      private set;
+      set;
     }
   }
 
