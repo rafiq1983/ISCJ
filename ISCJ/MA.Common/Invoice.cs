@@ -19,4 +19,5 @@ namespace MA.Common
     public List<Product> InvoiceItems { get; set; }
 
   }
+
 }

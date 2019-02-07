@@ -15,7 +15,7 @@ namespace BusinessLogic
       var item = new Product();
 
       item.Id = "443cc8fe-29c3-4a5e-b42d-1d00ad26977f";
-      item.Description = "ISCJ Masjid Membership.";
+      item.Description = "Yearly Membership Fee.";
       item.Amount = 365;
 
       _BillableItems.Add(item);
@@ -28,6 +28,7 @@ namespace BusinessLogic
 
       _BillableItems.Add(item);
 
+      item = new Product();
       item.Id = Guid.NewGuid().ToString();
       item.Description = "Child School Fee delayed registration.";
       item.Amount = 25;

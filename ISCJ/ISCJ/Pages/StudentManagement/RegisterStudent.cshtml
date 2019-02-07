@@ -17,11 +17,8 @@
               <div class="row">
                 <div class="form-group  col-xs-4">
                   <label for="lstProgram">Program</label>
-                  <select id="lstProgram">
-                    <option>Taqwa Sunday School 2018-2019</option>
-                  </select>
+                  @Html.DropDownListFor(x=>x.Programs, new SelectList(Model.Programs, "ProgramId", "ProgramName"), htmlAttributes: new { @class = "form-control", id = "ProgramId" })
                 </div>
-
               </div>
 
             </div>

@@ -12,7 +12,7 @@ namespace ISCJ.Pages.StudentManagement
     {
         public void OnGet()
         {
-
+            
         }
 
     public List<Registration> Registrations { get; set; } = new List<Registration>();

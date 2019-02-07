@@ -22,11 +22,13 @@ namespace BusinessLogic
 <li>Registration: Fee: $20 Per child. $25.00 after 09/2018</li></ul>"
 
     });
-    
+
+      ProductManager productMgr = new ProductManager();
+      _programs[0].Products.AddRange(productMgr.GetBillingItems());
     }
     public List<ProgramDetail> GetPrograms()
     {
-    return _programs;
+        return _programs;
     }
 
     public string AddProgram(ProgramDetail programDetail)

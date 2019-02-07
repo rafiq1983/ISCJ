@@ -18,5 +18,7 @@ namespace MA.Common
     public List<DayOfWeek> Days { get; set; }
 
     public DateTime Time { get; set; }
+
+    public List<Product> Products { get; set; } = new List<Product>();
   }
 }
