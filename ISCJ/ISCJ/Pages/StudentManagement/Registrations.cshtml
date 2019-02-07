@@ -1,0 +1,70 @@
+﻿@page
+@model ISCJ.Pages.StudentManagement.RegistrationsModel
+@{
+  ViewData["Title"] = "Registrations";
+}
+
+<h2>Registrations</h2>
+<form method="post">
+  
+  <table class="table-bordered" border="0">
+    <thead>
+      <tr>
+        <th>
+          RegistrationId
+        </th>
+        <th>
+          Student Name
+        </th>
+
+        <th>
+          Mother Name
+        </th>
+        <th>
+          Father Name
+        </th>
+        <th>
+          Islamic School Grade
+        </th>
+        <th>
+          Sunday School Grade
+        </th>
+
+        <th>
+          Due Amount
+        </th>
+        <th>
+
+        </th>
+
+      </tr>
+    </thead>
+    <tbody>
+      @for (var i = 0; i < Model.Registrations.Count; i++)
+      {
+        <tr>
+          <td>@Model.Registrations[i].RegistrationId</td>
+          <td>
+            <input type="submit" class="btn-sm btn-success" value="Details" id="btnDetails" name="btnAction" onClick="return SetRegistrationId('@Model.Registrations[i].RegistrationId');" />
+          </td>
+        </tr>
+      }
+
+    </tbody>
+
+  </table>
+  <div>
+    <input type="submit" id="btnAddNew" name="btnAction" class="btn-sm btn-success" value="Add New" />
+  </div>
+  <input type="hidden" id="regId" name="regId" />
+
+</form>
+<script language="javascript">
+  function SetRegistrationId(regId) {
+
+    $("#regId").val(contactId);
+
+    return true;
+  }
+</script>
+

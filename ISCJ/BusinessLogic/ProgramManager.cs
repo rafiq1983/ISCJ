@@ -14,7 +14,8 @@ namespace BusinessLogic
     {
       _programs = new List<ProgramDetail>();
 
-      _programs.Add(new ProgramDetail() { ProgramName = "ISCJ Sunday School 2018-2019", StartDate = DateTime.Parse("9/1/2018"), EndDate = DateTime.Parse("6/1/2019"),
+      _programs.Add(new ProgramDetail() { ProgramId = "333e070b-58b5-4f28-91b0-c20c56072859", ProgramName = "ISCJ Sunday School 2018-2019",
+        StartDate = DateTime.Parse("9/1/2018"), EndDate = DateTime.Parse("6/1/2019"),
 
         ProgramDescription = @"<ul><li>Membership: $365 per year Membership can also be paid 3 installments as follows: <br/> <ul><li>165 at time of registration</li 
                                   <li>100 in December 2018</li><li>100 in March 2019</ul></li>
