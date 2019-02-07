@@ -68,6 +68,17 @@ namespace BusinessLogic
 
     }
 
+    public bool SaveBulkContact(List<Contact> contacts)
+    {
+      foreach(Contact c in contacts)
+      {
+        c.Id = Guid.NewGuid().ToString();
+        _Contacts.Add(c);
+      }
+
+      return true;
+    }
+
     public bool DeleteContact(int userId, string contactId)
     {
       return false;
