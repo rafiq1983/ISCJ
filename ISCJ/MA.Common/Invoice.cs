@@ -16,8 +16,22 @@ namespace MA.Common
 
     public string ResponsibleParty4 { get; set; }
 
-    public List<Product> InvoiceItems { get; set; }
+    public List<InvoiceItem> InvoiceItems { get; set; }
 
+    public DateTime DueDate { get; set; }
+    public DateTime GenerationDate { get; set; }
+
+    public decimal Amount { get; set; }
+
+  }
+
+  public class InvoiceItem
+  {
+    public string ItemId { get; set; }
+    public string Description { get; set; }
+    public decimal Amount { get; set; }
+
+    public string InvoiceCategory { get; set; }
   }
 
 }

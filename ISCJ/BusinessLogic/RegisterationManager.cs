@@ -25,7 +25,7 @@ namespace BusinessLogic
         invoice.ResponsibleParty1 = fatherId;
         invoice.ResponsibleParty2 = motherId;
         invoice.ResponsibleParty3 = studentId;
-        invoice.InvoiceItems.Add(billing);
+        invoice.InvoiceItems.Add(new InvoiceItem() { ItemId = Guid.NewGuid().ToString(), Amount = billing.Amount, Description = billing.Description, InvoiceCategory = "School Registration" });
         InvoiceManager invoiceMgr = new InvoiceManager();
         invoiceMgr.CreateInvoice(invoice);
       }

@@ -1,0 +1,24 @@
+﻿@page
+@model InvoiceListModel
+@{
+}
+<table>
+
+ <tr>
+    <th>Invoice Id</th>
+    <th>Generation Date</th>
+  <th>Due Date</th>
+    <th>Invoice Amount</th>
+ </tr>
+  <tbody>
+    @for(var i=0;i<Model.Invoices.Count;i++)
+    {
+      <tr>
+      <td>@Model.Invoices[i].InvoiceId</td>
+      <td>@Model.Invoices[i].GenerationDate</td>
+      <td>@Model.Invoices[i].DueDate</td>
+      <td>@Model.Invoices[i].Amount</td>
+        </tr>
+    }
+  </tbody>
+</table>
