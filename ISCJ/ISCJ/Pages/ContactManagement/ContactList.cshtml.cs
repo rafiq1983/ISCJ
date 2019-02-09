@@ -36,6 +36,7 @@ namespace ISCJ.Pages.ContactManagement
       _contacts = new List<Contact>();
     }
 
+    [BindProperty]
     public List<Contact> Contacts
     {
       get
