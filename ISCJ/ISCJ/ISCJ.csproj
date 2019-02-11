@@ -18,7 +18,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="js\" />
     <Folder Include="Pages\Admin\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\app.js" />
   </ItemGroup>
 
   <ItemGroup>
