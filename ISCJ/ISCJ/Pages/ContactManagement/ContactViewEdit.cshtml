@@ -2,6 +2,7 @@
 @model ContactViewEditModel
 @{
 }
+<script language="javascript" src="~/js/ContactManager.js"></script>
 <!--<ul class="nav nav-tabs">
   <li class="nav-item">
     <a class="nav-link active" href="#">Name</a>
@@ -79,7 +80,7 @@
   </div>
 
   <input type="hidden" asp-for="@Model.Contact.Id" />
-  <button type="submit" class="btn btn-primary" id="btnCancel">Cancel</button>
+  <button type="submit" class="btn btn-primary" id="btnCancel" onclick="return ContactManager.CancelSaveContact({});">Cancel</button>
   <button type="submit" class="btn btn-primary" id="btnReset">Reset</button>
   <button type="submit" class="btn btn-primary" id="btnSubmit">Submit</button>
 </form>
