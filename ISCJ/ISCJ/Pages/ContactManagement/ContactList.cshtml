@@ -55,15 +55,15 @@
         <td>@Model.Contacts[i].FirstName</td>
         <td>@Model.Contacts[i].LastName</td>
         <td>@Model.Contacts[i].Email</td>
-        <td>@Model.Contacts[i].ContactTypeId</td>
+        <td>@Model.Contacts[i].ContactType</td>
         <td>@Model.Contacts[i].HomePhone</td>
         <td>@Model.Contacts[i].CellPhone</td>
-        <td>@Model.Contacts[i].Street</td>
+        <td>@Model.Contacts[i].StreetAddress</td>
         <td>@Model.Contacts[i].City</td>
         <td>@Model.Contacts[i].State</td>
-        <td>@Model.Contacts[i].Zip</td>
+        <td>@Model.Contacts[i].ZipCode</td>
         <td>
-          <input type="submit" class="btn-sm btn-success" value="Details" id="btnDetails" name="btnAction" onClick="return SetContactId('@Model.Contacts[i].Id');" />
+          <input type="submit" class="btn-sm btn-success" value="Details" id="btnDetails" name="btnAction" onClick="return SetContactId('@Model.Contacts[i].Guid');" />
         </td>
       </tr>
       }

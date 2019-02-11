@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using MA.Common;
 
 namespace ISCJ
 {
@@ -18,6 +19,8 @@ namespace ISCJ
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+           ConnectionString.Value= Configuration.GetConnectionString("Primary");
         }
 
         public IConfiguration Configuration { get; }

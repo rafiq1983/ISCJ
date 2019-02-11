@@ -13,21 +13,24 @@ namespace ISCJ.Pages.ContactManagement
     BusinessLogic.ContactManager mgr = new BusinessLogic.ContactManager();
     public ContactViewEditModel()
     {
-      Contact = new Contact();
+     
     }
     public void OnGet()
     {
       string editContactId = Request.Query["contactId"];
 
-      if(string.IsNullOrEmpty(editContactId)==false)
-      {
-        Contact = mgr.GetContact(editContactId);
+     // if(string.IsNullOrEmpty(editContactId)==false)
+     // {
+       // Contact = mgr.GetContact(editContactId);
       }
+
+ private bool Validate(Contact input, out List<string> errors)
+    {
+      errors = new List<string>();
+      return true;
     }
 
-
-
-    //TODO: Wire Post Method with Form Submit button.
+          //TODO: Wire Post Method with Form Submit button.
     public void OnPost()
     {
       //TODO: How to do model binding.
@@ -35,28 +38,27 @@ namespace ISCJ.Pages.ContactManagement
        if(Validate(Contact, out errors))
       {
 
-        BusinessLogic.ContactManager mgr = new BusinessLogic.ContactManager();
+       BusinessLogic.ContactManager mgr = new BusinessLogic.ContactManager();
 
-        mgr.AddUpdateContact(0, Contact);
+       mgr.AddUpdateContact(Contact);
 
         Response.Redirect("ContactList");
       }
 
     }
 
-    private bool Validate(Contact input, out List<string> errors)
-    {
-      errors = new List<string>();
-      return true;
-    }
-
+        
     [BindProperty]
     public Contact Contact
     {
       get;
       set;
     }
+
+    }
+
+  
+
   }
 
  
-}
