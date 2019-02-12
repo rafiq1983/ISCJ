@@ -6,6 +6,7 @@ using BusinessLogic;
 using MA.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Configuration;
 
 namespace ISCJ.Pages.ContactManagement
 {
@@ -13,8 +14,14 @@ namespace ISCJ.Pages.ContactManagement
     {
     private List<Contact> _contacts;
 
+    public ContactListModel(IConfiguration configSection)
+    {
+      string s = configSection["ConnectionStrings:Primary"];
+    }
+
     public void OnGet()
     {
+     
       ContactManager mgr = new ContactManager();
       _contacts = mgr.GetContacts(1, 1, 1000);
 

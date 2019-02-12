@@ -6,9 +6,7 @@ namespace MA.Common
  
   public class Contact
   {
- 
-
-        public Contact()
+         public Contact()
             {
                 ModifiedBy="Rafiq";
                 ModifiedDate=DateTime.Now;

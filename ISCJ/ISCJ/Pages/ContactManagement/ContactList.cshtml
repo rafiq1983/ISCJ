@@ -1,11 +1,11 @@
 ﻿@page
 @model ISCJ.Pages.ContactManagement.ContactListModel
+
 @{
-    ViewData["Title"] = "ContactList";
+  ViewData["Title"] = "ContactList";
 }
 <form method="post">
   <h2>ContactList</h2>
-
   <table class="table-bordered" border="0">
     <thead>
       <tr>
@@ -51,21 +51,25 @@
     <tbody>
       @for (var i = 0; i < Model.Contacts.Count; i++)
       {
-      <tr>
-        <td>@Model.Contacts[i].FirstName</td>
-        <td>@Model.Contacts[i].LastName</td>
-        <td>@Model.Contacts[i].Email</td>
-        <td>@Model.Contacts[i].ContactType</td>
-        <td>@Model.Contacts[i].HomePhone</td>
-        <td>@Model.Contacts[i].CellPhone</td>
-        <td>@Model.Contacts[i].StreetAddress</td>
-        <td>@Model.Contacts[i].City</td>
-        <td>@Model.Contacts[i].State</td>
-        <td>@Model.Contacts[i].ZipCode</td>
-        <td>
-          <input type="submit" class="btn-sm btn-success" value="Details" id="btnDetails" name="btnAction" onClick="return SetContactId('@Model.Contacts[i].Guid');" />
-        </td>
-      </tr>
+        <tr>
+          <td>@Model.Contacts[i].FirstName</td>
+          <td>@Model.Contacts[i].LastName</td>
+          <td>@Model.Contacts[i].Email</td>
+          <td>
+            <h1><Code code-type="contacttype" code="@Model.Contacts[i].ContactType"></Code></h1>
+            
+          </td>
+          <td>@Model.Contacts[i].HomePhone</td>
+          <td>@Model.Contacts[i].CellPhone</td>
+          <td>@Model.Contacts[i].StreetAddress</td>
+          <td>@Model.Contacts[i].City</td>
+          <td>@Model.Contacts[i].State</td>
+          <td>@Model.Contacts[i].ZipCode</td>
+          <td><email>Support</email></td>
+          <td>
+            <input type="submit" class="btn-sm btn-success" value="Details" id="btnDetails" name="btnAction" onClick="return SetContactId('@Model.Contacts[i].Guid');" />
+          </td>
+        </tr>
       }
 
 
@@ -81,9 +85,9 @@
 
 <script language="javascript">
   function SetContactId(contactId) {
-   
+
     $("#contactId").val(contactId);
-    
+
     return true;
   }
 </script>
