@@ -21,9 +21,11 @@ namespace ISCJ.TagHelpers
     public string Code { get; set; }
     public TypeToNameService TypeToNameService { get; }
 
+    public string TagName { get; set; } = "span"; //replaces code with span
+
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
-      output.TagName = "span";    // Replaces <email> with <a> tag
+      output.TagName = TagName ; 
       string desc = TypeToNameService.GetDescription(CodeType, Code);
 
      

@@ -13,9 +13,16 @@ namespace BusinessLogic
 
         public ContactManager()
         {
-           
-     
-        }
+      _Contacts = new List<Contact>();
+      _Contacts.Add(new Contact()
+      {
+        FirstName = "Iftikhar",
+        LastName = "Alil",
+        ContactType = 1
+      });
+    
+
+    }
         public string AddUpdateContact(Contact input)
         {
             //TODO: logic to save here.
@@ -71,6 +78,7 @@ namespace BusinessLogic
         }
     public List<Contact> GetContacts(int userId, int pageNumber, int pageSize)
     {
+      //return _Contacts;
       using (var _ContextContact = new ContactContext())
       {
         return _ContextContact.Contacts.ToList();
