@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MA.Common;
+using MA.Common.Entities.Contacts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using BusinessLogic;
 
 namespace ISCJ.Pages.ContactManagement
 {
@@ -19,10 +21,18 @@ namespace ISCJ.Pages.ContactManagement
     {
       string editContactId = Request.Query["contactId"];
 
-     // if(string.IsNullOrEmpty(editContactId)==false)
-     // {
-       // Contact = mgr.GetContact(editContactId);
+      if (string.IsNullOrEmpty(editContactId) == false)
+      {
+        Contact = mgr.GetContact(Guid.Parse(editContactId));
       }
+    }
+    public List<ContactType> ContactTypes
+    {
+      get
+      {
+        return ContactManager.GetContacTypes();
+      }
+    }
 
  private bool Validate(Contact input, out List<string> errors)
     {

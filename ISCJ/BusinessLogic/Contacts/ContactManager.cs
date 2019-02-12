@@ -3,46 +3,45 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MA.Common;
+using MA.Common.Entities.Contacts;
 
 namespace BusinessLogic
 {
     public class ContactManager
     {
-        //TEmp;
-        static List<Contact> _Contacts = new List<Contact>();
-
-        public ContactManager()
-        {
-      _Contacts = new List<Contact>();
-      _Contacts.Add(new Contact()
+     static ContactManager()
+    {
+      using (ContactContext ctx = new ContactContext())
       {
-        FirstName = "Iftikhar",
-        LastName = "Alil",
-        ContactType = 1,
-        Email="i_syed2000@yahoo.com"
-      });
-    
 
+        CacheService.AddData(CacheService.ContactTypesKey, ctx.ContactTypes.ToList());
+      }
+    }
+       
+    public static List<ContactType> GetContacTypes()
+    {
+      return CacheService.GetData(CacheService.ContactTypesKey) as List<ContactType>;
     }
         public string AddUpdateContact(Contact input)
         {
-            //TODO: logic to save here.
-            if (string.IsNullOrEmpty(input.Guid.ToString()) == false)
-            {
-                using (var _ContextContact = new ContactContext())
-                {
-                    _ContextContact.Contacts.Add(input);
-                    _ContextContact.SaveChanges();
-                }             
-                //int indexToUpdate = _Contacts.IndexOf(_Contacts.Single(x => x.Guid.ToString() == input.Guid.ToString()));
-                //_Contacts[indexToUpdate] = input;
-            }
-            else
-            {
-                input.Guid = Guid.NewGuid();
-                _Contacts.Add(input);
-            }
-            return input.Guid.ToString();
+      using (var _ContextContact = new ContactContext())
+      {
+       
+        _ContextContact.Contacts.Add(input);
+        if (input.Guid == Guid.Empty)
+        {
+          input.Guid = Guid.NewGuid();
+          _ContextContact.Entry(input).State = Microsoft.EntityFrameworkCore.EntityState.Added;
+        }
+        else
+          _ContextContact.Entry(input).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+
+        _ContextContact.SaveChanges();
+
+        return input.Guid.ToString();
+      }
+
+    
 
         }
 
@@ -50,8 +49,7 @@ namespace BusinessLogic
         {
             foreach (Contact c in contacts)
             {
-                c.Guid = Guid.NewGuid();
-                _Contacts.Add(c);
+        ;
             }
 
             return true;
@@ -73,10 +71,15 @@ namespace BusinessLogic
         }
 
 
-        public Contact GetContact(string contactId)
+        public Contact GetContact(Guid contactId)
         {
-            return _Contacts.Single(x => x.Guid.ToString() == contactId);
-        }
+      using (var _ContextContact = new ContactContext())
+      {
+       return _ContextContact.Contacts.SingleOrDefault(x => x.Guid == contactId);
+       
+      }
+
+    }
     public List<Contact> GetContacts(int userId, int pageNumber, int pageSize)
     {
      

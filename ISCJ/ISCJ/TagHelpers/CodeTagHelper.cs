@@ -12,7 +12,6 @@ namespace ISCJ.TagHelpers
     {
       TypeToNameService = typeToNameService;
     }
-    private const string EmailDomain = "contoso.com";
 
     // Can be passed via <email mail-to="..." />. 
     // PascalCase gets translated into kebab-case.

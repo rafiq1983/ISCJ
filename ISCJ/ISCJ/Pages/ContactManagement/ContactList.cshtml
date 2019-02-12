@@ -67,7 +67,8 @@
         <td>@Model.Contacts[i].State</td>
         <td>@Model.Contacts[i].ZipCode</td>
 
-        <input type="submit" class="btn-sm btn-success" value="Details" id="btnDetails" name="btnAction" onClick="return SetContactId('@Model.Contacts[i].Guid');" />
+        <td><input type="submit" class="btn-sm btn-success" value="Details" id="btnDetails" name="btnAction"
+                   onClick="return SetContactId('@Model.Contacts[i].Guid');" />
         </td>
       </tr>
       }

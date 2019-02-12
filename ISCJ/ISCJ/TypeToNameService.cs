@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BusinessLogic;
+using MA.Common.Entities.Contacts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,14 +13,13 @@ namespace ISCJ
     {
       if(type=="contacttype")
       {
-        switch(value)
-        {
-          case "1":
-            return "Student";
-          default:
-            return "Unknown";
-        }
-      }
+        List<ContactType> contactTypes = ContactManager.GetContacTypes();
+        var contactType = contactTypes.SingleOrDefault(x => x.ContactTypeId.ToString() == value);
+        if (contactType == null)
+          return "unknown";
+        else
+          return contactType.Name;
+     }
       return type + ":" + value;
     }
   }
