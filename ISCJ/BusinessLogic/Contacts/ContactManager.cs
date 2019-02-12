@@ -69,11 +69,14 @@ namespace BusinessLogic
         {
             return _Contacts.Single(x => x.Guid.ToString() == contactId);
         }
-        public List<Contact> GetContacts(int userId, int pageNumber, int pageSize)
-        {
+    public List<Contact> GetContacts(int userId, int pageNumber, int pageSize)
+    {
+      using (var _ContextContact = new ContactContext())
+      {
+        return _ContextContact.Contacts.ToList();
 
-            return _Contacts;
-        }
+      }
+    }
 
     }
 }
