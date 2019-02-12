@@ -18,7 +18,8 @@ namespace BusinessLogic
       {
         FirstName = "Iftikhar",
         LastName = "Alil",
-        ContactType = 1
+        ContactType = 1,
+        Email="i_syed2000@yahoo.com"
       });
     
 
@@ -78,7 +79,7 @@ namespace BusinessLogic
         }
     public List<Contact> GetContacts(int userId, int pageNumber, int pageSize)
     {
-      //return _Contacts;
+      return _Contacts;
       using (var _ContextContact = new ContactContext())
       {
         return _ContextContact.Contacts.ToList();
