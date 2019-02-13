@@ -6,8 +6,8 @@ namespace MA.Common.Entities.Contacts
 {
   public class ContactType
   {
-    public int ContactTypeId { get; set; }
+    public int ID { get; set; }
 
-    public string Name { get; set; }
+    public string Description { get; set; }
   }
 }

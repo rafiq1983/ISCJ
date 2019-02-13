@@ -14,11 +14,11 @@ namespace ISCJ
       if(type=="contacttype")
       {
         List<ContactType> contactTypes = ContactManager.GetContacTypes();
-        var contactType = contactTypes.SingleOrDefault(x => x.ContactTypeId.ToString() == value);
+        var contactType = contactTypes.SingleOrDefault(x => x.ID.ToString() == value);
         if (contactType == null)
           return "unknown";
         else
-          return contactType.Name;
+          return contactType.Description;
      }
       return type + ":" + value;
     }

@@ -28,7 +28,7 @@ namespace BusinessLogic
         entity.ToTable("Contacts");
         entity.HasKey(e => e.Guid);
 
-      }).Entity<ContactType>(entity => { entity.ToTable("ContactTypes");  entity.HasKey(e => e.ContactTypeId); });
+      }).Entity<ContactType>(entity => { entity.ToTable("ContactType");  entity.HasKey(e => e.ID); });
 
         }
 
