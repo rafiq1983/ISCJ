@@ -42,7 +42,7 @@
   <div class="form-group">
     <label for="lstContactType">Contact Type:</label>
     <select asp-for="@Model.Contact.ContactType"  class="form-control"
-            asp-items="@(new SelectList(Model.ContactTypes,"ContactTypeId","Name"))">
+            asp-items="@(new SelectList(Model.ContactTypes,"ID","Description"))">
       <option>Please select one</option>
     </select>
 

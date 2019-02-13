@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogic;
 using MA.Common;
+using MA.Common.Entities.Contacts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -22,6 +23,14 @@ namespace ISCJ.Pages.ContactManagement
     public void OnGet()
     {
      
+    }
+
+    public List<ContactType> ContactTypes
+    {
+      get
+      {
+        return ContactManager.GetContacTypes();
+      }
     }
 
     public void OnPost()

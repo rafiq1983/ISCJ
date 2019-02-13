@@ -12,7 +12,6 @@ namespace MA.Common
                 ModifiedDate=DateTime.Now;
                 CreatedBy="Rafiq";
                 CreatedDate=DateTime.Now;
-                Guid=Guid.NewGuid();
                 ContactType=1;
             }
 

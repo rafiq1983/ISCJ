@@ -5,7 +5,7 @@
 }
 
 <h2>BulkContactEntry</h2>
-<form method="post">
+<form method="post" name="bulkSaveContact">
 <table>
   <tr>
     <th>First Name</th>
@@ -22,8 +22,10 @@
     <td><input type="text" asp-for="@Model.BulkContacts[i].LastName" class="form-control" placeholder="Last"></td>
     <td><input type="text" asp-for="@Model.BulkContacts[i].Email" class="form-control" placeholder="Email" /></td>
     <td>
-      <select asp-for="@Model.BulkContacts[i]ContactTypeId" class="form-control" placeholder="Contact Type" />
-
+      <select asp-for="@Model.BulkContacts[i].ContactType" class="form-control"
+              asp-items="@(new SelectList(Model.ContactTypes,"ID","Description"))">
+        <option>Please select one</option>
+      </select>
     </td>
 
     <td><input type="text" asp-for="@Model.BulkContacts[i].HomePhone" class="form-control" placeholder="Home Phone" /></td>
