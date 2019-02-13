@@ -51,11 +51,8 @@ namespace BusinessLogic
       {
         foreach (Contact c in contacts)
         {
-          if (c.Guid == Guid.Empty && !string.IsNullOrEmpty(c.FirstName))
-          {
+          if(string.IsNullOrEmpty(c.FirstName)==false)
             _ContextContact.Contacts.Add(c); //this auto assign Guid column.  Not sure why?
-            _ContextContact.Entry(c).State = Microsoft.EntityFrameworkCore.EntityState.Added;
-          }
         }
 
         _ContextContact.SaveChanges();
