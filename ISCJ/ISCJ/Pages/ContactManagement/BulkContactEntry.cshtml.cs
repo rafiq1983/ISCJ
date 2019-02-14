@@ -20,7 +20,7 @@ namespace ISCJ.Pages.ContactManagement
       _GenderList.Add(new SelectListItem() { Text = "Female", Value = "2" });
 
       BulkContacts = new List<Contact>();
-      for(int i=0;i<20;i++)
+      for(int i=0;i<10;i++)
       {
         BulkContacts.Add(new Contact());
       }

@@ -26,22 +26,10 @@ namespace BusinessLogic
         {
       using (var _ContextContact = new ContactContext())
       {
-       
         _ContextContact.Contacts.Add(input);
-        if (input.Guid == Guid.Empty)
-        {
-          input.Guid = Guid.NewGuid();
-          _ContextContact.Entry(input).State = Microsoft.EntityFrameworkCore.EntityState.Added;
-        }
-        else
-          _ContextContact.Entry(input).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-
         _ContextContact.SaveChanges();
-
         return input.Guid.ToString();
       }
-
-    
 
         }
 

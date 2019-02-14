@@ -2,114 +2,223 @@
 @model RegisterStudent2Model
 @{
 }
-<div class="panel panel-primary">
-  <div class="panel-heading"><h4>Program</h4></div>
-  <div class="panel-body">
+<form method="post" name="frmRegister2">
+  <div class="panel panel-primary">
+    <div class="panel-heading"><h4>Program</h4></div>
+    <div class="panel-body">
 
-    <div class="row">
-      <div class="form-group  col-xs-4">
-        <label for="lstProgram">Program</label>
-        @Html.DropDownListFor(x => x.Programs, new SelectList(Model.Programs, "ProgramId", "ProgramName"), htmlAttributes: new { @class = "form-control", id = "ProgramId" })
-      </div>
+      <div class="row">
+        <div class="form-group  col-xs-4">
+          <label for="lstProgram">Program</label>
+          @Html.DropDownListFor(x => x.StudentRegistration.ProgramId, new SelectList(Model.Programs, "ProgramId", "ProgramName"), "--Select--",
+       htmlAttributes: new { @class = "form-control" })
+        </div>
 
-    </div>
-
-  </div>
-</div>
-
-<div class="panel panel-primary">
-  <div class="panel-heading"><h4>Guardian(s)/Parent</h4></div>
-  <div class="panel-body">
-    <div class="row">
-      <div class="form-group  col-xs-4">
-        <label for="txtFFirstName">Father</label>
-        <a href="#" class="form-control">Select Father</a>
-      </div>
-      <div class="form-group  col-xs-4">
-        <label for="txtFFirstName">Mother</label>
-        <a href="#" class="form-control">Select Mother</a>
-      </div>
-    </div>
-  </div>
-</div>
-<!--<div class="panel panel-primary">
-  <div class="panel-heading"><h4>Payment</h4></div>
-  <div class="panel-body">
-    <div class="row">
-      <div class="form-group  col-xs-4">
-        <label for="txtPaymentAmount">Amount</label>
-        <input id="txtPaymentAmount" name="txtPaymentAmount" class="form-control" />
-      </div>
-      <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="chkIsPartialPayment">
-        <label class="form-check-label" for="chkIsPartialPayment">Is Partial Payment</label>
-      </div>
-    </div>
-  </div>
-</div>
-    -->
-
-<div class="panel panel-primary">
-  <div class="panel-heading"><h4>Student 1 Information</h4></div>
-  <div class="panel-body">
-    <div class="row">
-      <div class="form-group  col-xs-4">
-        <label for="txtFFirstName">Student 1</label>
-        <a href="#" class="form-control">Select</a>
-      </div>
-      <div class="form-group  col-xs-4">
-        <label for="txtFMName">Public School Grade</label>
-        <input id="txtFMName" name="txtFMName" class="form-control" />
-      </div>
-
-      <div class="form-group  col-xs-4">
-        <label for="txtFLastName">Islamic School Grade</label>
-        <input id="txtFLastName" name="txtFLastName" class="form-control" />
       </div>
 
     </div>
   </div>
-</div>
-<div class="panel panel-primary">
-  <div class="panel-heading"><h4>Student 2 Information</h4></div>
-  <div class="panel-body">
-    <div class="row">
-      <div class="form-group  col-xs-4">
-        <label for="txtFFirstName">Student 2</label>
-        <a href="#" class="form-control">Select</a>
-      </div>
-      <div class="form-group  col-xs-4">
-        <label for="txtFMName">Public School Grade</label>
-        <input id="txtFMName" name="txtFMName" class="form-control" />
-      </div>
 
-      <div class="form-group  col-xs-4">
-        <label for="txtFLastName">Islamic School Grade</label>
-        <input id="txtFLastName" name="txtFLastName" class="form-control" />
-      </div>
+  <div class="panel panel-primary">
+    <div class="panel-heading"><h4>Guardian(s)/Parent</h4></div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="form-group  col-xs-4">
+          <label for="txtFFirstName">Father</label>
+          <input type="text" placeholder="Type Father name here" autocomplete="off"
+                 data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_FatherId"
+                 class="autocomplete form-control" />
+          <input type="hidden" asp-for="@Model.StudentRegistration.FatherId" />
+          <br />
 
+
+
+        </div>
+        <div class="form-group  col-xs-4">
+          <label for="txtFFirstName">Mother</label>
+          <input type="text" placeholder="Type Mother name here" autocomplete="off"
+                 data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_MotherId"
+                 class="autocomplete form-control" />
+          <input type="hidden" asp-for="@Model.StudentRegistration.MotherId" />
+        </div>
+      </div>
     </div>
   </div>
-</div>
-<div class="panel panel-primary">
-  <div class="panel-heading"><h4>Student 3 Information</h4></div>
-  <div class="panel-body">
-    <div class="row">
-      <div class="form-group  col-xs-4">
-        <label for="txtFFirstName">Student 1</label>
-        <a href="#" class="form-control">Select</a>
+  <!--<div class="panel panel-primary">
+    <div class="panel-heading"><h4>Payment</h4></div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="form-group  col-xs-4">
+          <label for="txtPaymentAmount">Amount</label>
+          <input id="txtPaymentAmount" name="txtPaymentAmount" class="form-control" />
+        </div>
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="chkIsPartialPayment">
+          <label class="form-check-label" for="chkIsPartialPayment">Is Partial Payment</label>
+        </div>
       </div>
-      <div class="form-group  col-xs-4">
-        <label for="txtFMName">Public School Grade</label>
-        <input id="txtFMName" name="txtFMName" class="form-control" />
-      </div>
-
-      <div class="form-group  col-xs-4">
-        <label for="txtFLastName">Islamic School Grade</label>
-        <input id="txtFLastName" name="txtFLastName" class="form-control" />
-      </div>
-
     </div>
   </div>
-</div>
+      -->
 
+  <div class="panel panel-primary">
+    <div class="panel-heading"><h4>Student 1 Information</h4></div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="form-group  col-xs-4">
+          <label for="txtFFirstName">Student 1</label>
+          <input type="text" placeholder="Student name here" autocomplete="off"
+                 data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_StudentRegistration_0__StudentId"
+                 class="autocomplete form-control" />
+          <input type="hidden" asp-for="@Model.StudentRegistration.StudentRegistration[0].StudentId" />
+        </div>
+        <div class="form-group  col-xs-4">
+          <label for="txtFMName">Public School Grade</label>
+          <select asp-for="@Model.StudentRegistration.StudentRegistration[0].PublicSchoolGrade" class="form-control"
+                  asp-items="@Model.PublicSchoolGradeList">
+            <option>Please select one</option>
+          </select>
+        </div>
+
+        <div class="form-group  col-xs-4">
+          <label for="txtFLastName">Islamic School Grade</label>
+          <select asp-for="@Model.StudentRegistration.StudentRegistration[0].IslamicSchoolGrade" class="form-control"
+                  asp-items="@Model.IslamicSchoolGradeList">
+            <option>Please select one</option>
+          </select>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-primary">
+    <div class="panel-heading"><h4>Student 2 Information</h4></div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="form-group  col-xs-4">
+          <label for="txtFFirstName">Student 2</label>
+          <input type="text" placeholder="Student name here" autocomplete="off"
+                 data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_StudentRegistration_1__StudentId"
+                 class="autocomplete form-control" />
+          <input type="hidden" asp-for="@Model.StudentRegistration.StudentRegistration[1].StudentId" />
+        </div>
+        <div class="form-group  col-xs-4">
+          <label for="txtFMName">Public School Grade</label>
+          <select asp-for="@Model.StudentRegistration.StudentRegistration[1].PublicSchoolGrade" class="form-control"
+                  asp-items="@Model.PublicSchoolGradeList">
+            <option>Please select one</option>
+          </select>
+        </div>
+
+        <div class="form-group  col-xs-4">
+          <label for="txtFLastName">Islamic School Grade</label>
+          <select asp-for="@Model.StudentRegistration.StudentRegistration[1].IslamicSchoolGrade" class="form-control"
+                  asp-items="@Model.IslamicSchoolGradeList">
+            <option>Please select one</option>
+          </select>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-primary">
+    <div class="panel-heading"><h4>Student 3 Information</h4></div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="form-group  col-xs-4">
+          <label for="txtFFirstName">Student 1</label>
+          <input type="text" placeholder="Student name here" autocomplete="off"
+                 data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_StudentRegistration_2__StudentId"
+                 class="autocomplete form-control" />
+          <input type="hidden" asp-for="@Model.StudentRegistration.StudentRegistration[2].StudentId" />
+        </div>
+        <div class="form-group  col-xs-4">
+          <label for="txtFMName">Public School Grade</label>
+          <select asp-for="@Model.StudentRegistration.StudentRegistration[2].PublicSchoolGrade" class="form-control"
+                  asp-items="@Model.PublicSchoolGradeList">
+            <option>Please select one</option>
+          </select>
+        </div>
+
+        <div class="form-group  col-xs-4">
+          <label for="txtFLastName">Islamic School Grade</label>
+          <select asp-for="@Model.StudentRegistration.StudentRegistration[2].IslamicSchoolGrade" class="form-control"
+                  asp-items="@Model.IslamicSchoolGradeList">
+            <option>Please select one</option>
+          </select>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-primary">
+    <div class="panel-heading"><h4>Student 4 Information</h4></div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="form-group  col-xs-4">
+          <label for="txtFFirstName">Student 1</label>
+          <input type="text" placeholder="Student name here" autocomplete="off"
+                 data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_StudentRegistration_3__StudentId"
+                 class="autocomplete form-control" />
+          <input type="hidden" asp-for="@Model.StudentRegistration.StudentRegistration[3].StudentId" />
+        </div>
+        <div class="form-group  col-xs-4">
+          <label for="txtFMName">Public School Grade</label>
+          <select asp-for="@Model.StudentRegistration.StudentRegistration[3].PublicSchoolGrade" class="form-control"
+                  asp-items="@Model.PublicSchoolGradeList">
+            <option>Please select one</option>
+          </select>
+        </div>
+
+        <div class="form-group  col-xs-4">
+          <label for="txtFLastName">Islamic School Grade</label>
+          <select asp-for="@Model.StudentRegistration.StudentRegistration[3].IslamicSchoolGrade" class="form-control"
+                  asp-items="@Model.IslamicSchoolGradeList">
+            <option>Please select one</option>
+          </select>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <input type="submit" value="submit" />
+</form>
+
+@section  Scripts
+{
+<script language="javascript">
+  $("document").ready(function () {
+    SetupContactAutoComplete();
+  });
+  function SetupContactAutoComplete() {
+
+    $(".autocomplete").autoComplete({
+
+      formatResult: function (item) {
+        console.log("Format result called with item " + item);
+        return {
+          id: item.guid, text: item.firstName + " " + item.lastName
+        }
+      },
+
+      events: {
+
+        searchPost: function (resultsFromServer) {
+          console.log("Search Post Called. " + resultsFromServer[0].guid);
+          return resultsFromServer;
+        }
+      }
+
+    });
+
+    $(".autocomplete").on('autocomplete.select', function (evt, item) {
+      $("#" + evt.currentTarget.attributes["data-target-id"].value).val(item.guid);
+      console.log(evt.currentTarget.attributes["data-target-id"].value);
+      console.log("added item " + item.guid);
+    });
+
+  }
+
+</script>
+  }

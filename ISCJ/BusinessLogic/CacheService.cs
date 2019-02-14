@@ -7,6 +7,8 @@ namespace BusinessLogic
   class CacheService
   {
     public const string ContactTypesKey = "ContactTypes";
+    public const string IslamicSchoolGradeListKey = "IslamicSchoolGradeKey";
+    public const string PublicSchoolGradeListKey = "PublicSchoolGradeKey";
 
     private static System.Collections.Generic.Dictionary<string, object> _cacheData = new Dictionary<string, object>();
     

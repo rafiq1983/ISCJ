@@ -16,11 +16,18 @@ namespace ISCJ.webapi
   public class ContactController : Controller
   {
 
-    [HttpGet("Search/{prefix}")]
-    public List<Contact> PrefixSearch(string prefix)
+    [HttpGet("Search")]
+    public List<Contact> PrefixSearch([FromQuery]string q)
     {
-      ContactManager mgr = new ContactManager();
-      return mgr.GetContacts(0, 1, 100).Where(x=>(x.FirstName + " " + x.LastName).Contains(prefix)).ToList();
+      if (string.IsNullOrEmpty(q) == false)
+      {
+        ContactManager mgr = new ContactManager();
+        var lst = mgr.GetContacts(0, 1, 100);
+         lst = lst.Where(x => (x.FirstName.ToLower() + " " + x.LastName.ToLower()).IndexOf(q.ToLower())>=0).ToList();
+        return lst;
+      }
+      else
+        return new List<Contact>();
     }
     // GET: api/<controller>
     [HttpGet]
