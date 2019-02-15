@@ -20,7 +20,7 @@ namespace ISCJ.Pages.ContactManagement
         }
     public void OnGet()
     {
-      string editContactId = Request.Query["contactId"];
+            string editContactId = Request.Query["contactId"];
            
             if (string.IsNullOrEmpty(editContactId) == false)
       {                
@@ -28,15 +28,9 @@ namespace ISCJ.Pages.ContactManagement
       }
     }
     
-
- private bool Validate(Contact input, out List<string> errors)
-    {
-      errors = new List<string>();
-      return true;
-    }
-
-        //TODO: Wire Post Method with Form Submit button.
-        public IActionResult Post()
+       //TODO: Wire Post Method with Form Submit button.
+        [HttpPost]
+        public IActionResult OnPost()
         {
                
         BusinessLogic.ContactManager mgr = new BusinessLogic.ContactManager();
@@ -55,12 +49,9 @@ namespace ISCJ.Pages.ContactManagement
         
     [BindProperty]
     public Contact Contact { get; set; }
-    [BindProperty]
     public List<ContactType> ContactTypes { get { return ContactManager.GetContacTypes(); } }
     }
-
-  
-
+     
   }
 
  
