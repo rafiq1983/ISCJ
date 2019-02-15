@@ -3,7 +3,6 @@ using MA.Common.Entities.Registration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace BusinessLogic
 {
@@ -83,11 +82,11 @@ namespace BusinessLogic
       }
     }
 
-    public List<RegistrationDetail> GetRegistrations()
+    public List<Registration> GetRegistrations()
     {
       using (var db = new Database())
       {
-        return db.Registrations.ToList().Select(x => new RegistrationDetail() { RegistrationId = x.RegistrationId }).ToList();
+        return db.Registrations.ToList();
       }
     }
 

@@ -194,7 +194,7 @@
   function SetupContactAutoComplete() {
 
     $(".autocomplete").autoComplete({
-
+    minLength:1,
       formatResult: function (item) {
         console.log("Format result called with item " + item);
         return {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using MA.Common.Entities.Registration;
 using MA.Common;
+using MA.Common.Entities.Contacts;
 
 namespace BusinessLogic
 {
@@ -25,10 +26,12 @@ namespace BusinessLogic
       {
         entity.ToTable("Registration");
         entity.HasKey(e => e.RegistrationId);
+      }).Entity<Contact>(entity =>
+      {
+        entity.ToTable("Contacts");
+        entity.HasKey(e => e.Guid);
       });
     }
-
-
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

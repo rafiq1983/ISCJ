@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogic;
 using MA.Common;
+using MA.Common.Entities.Registration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -15,8 +16,9 @@ namespace ISCJ.Pages.StudentManagement
         {
             RegistrationManager mgr = new RegistrationManager();
       Registrations = mgr.GetRegistrations();
+      
         }
 
-    public List<RegistrationDetail> Registrations { get; set; } = new List<RegistrationDetail>();
+    public List<Registration> Registrations { get; set; } = new List<Registration>();
     }
 }
