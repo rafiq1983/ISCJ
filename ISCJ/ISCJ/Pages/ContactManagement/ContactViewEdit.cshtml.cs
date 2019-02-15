@@ -7,6 +7,7 @@ using MA.Common.Entities.Contacts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using BusinessLogic;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ISCJ.Pages.ContactManagement
 {
@@ -15,24 +16,18 @@ namespace ISCJ.Pages.ContactManagement
     BusinessLogic.ContactManager mgr = new BusinessLogic.ContactManager();
     public ContactViewEditModel()
     {
-     
-    }
+         
+        }
     public void OnGet()
     {
       string editContactId = Request.Query["contactId"];
-
-      if (string.IsNullOrEmpty(editContactId) == false)
-      {
-        Contact = mgr.GetContact(Guid.Parse(editContactId));
+           
+            if (string.IsNullOrEmpty(editContactId) == false)
+      {                
+                Contact = mgr.GetContact(Guid.Parse(editContactId));
       }
     }
-    public List<ContactType> ContactTypes
-    {
-      get
-      {
-        return ContactManager.GetContacTypes();
-      }
-    }
+    
 
  private bool Validate(Contact input, out List<string> errors)
     {
@@ -40,31 +35,28 @@ namespace ISCJ.Pages.ContactManagement
       return true;
     }
 
-          //TODO: Wire Post Method with Form Submit button.
-    public void OnPost()
-    {
-      //TODO: How to do model binding.
-      List<string> errors = new List<string>();
-       if(Validate(Contact, out errors))
-      {
+        //TODO: Wire Post Method with Form Submit button.
+        public IActionResult Post()
+        {
+               
+        BusinessLogic.ContactManager mgr = new BusinessLogic.ContactManager();
+            if (ModelState.IsValid)
+            {
+                mgr.AddUpdateContact(Contact);
 
-       BusinessLogic.ContactManager mgr = new BusinessLogic.ContactManager();
+                Response.Redirect("ContactList");
 
-       mgr.AddUpdateContact(Contact);
+            }
 
-        Response.Redirect("ContactList");
-      }
-
-    }
+           return Page();
+           
+        }
 
         
     [BindProperty]
-    public Contact Contact
-    {
-      get;
-      set;
-    }
-
+    public Contact Contact { get; set; }
+    [BindProperty]
+    public List<ContactType> ContactTypes { get { return ContactManager.GetContacTypes(); } }
     }
 
   

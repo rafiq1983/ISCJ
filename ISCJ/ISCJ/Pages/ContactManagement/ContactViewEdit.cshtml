@@ -3,84 +3,98 @@
 @{
 }
 
+<h1>Create New Contact</h1>
+<hr />
 <form name="frmCreateContact" method="post">
-  <div class="form-group">
-    <label for="txtFirstName">First Name</label>
-    <input type="text" asp-for="@Model.Contact.FirstName" class="form-control" placeholder="First Name">
-  </div>
-  <div class="form-group">
-    <label for="txtLastName">Last Name</label>
-    <input type="text" asp-for="@Model.Contact.LastName" class="form-control" id="txtLastName" placeholder="Last Name">
-  </div>
-  <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email" asp-for="@Model.Contact.Email">
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-  </div>
-  <div class="form-group">
-    <label for="txtDOB">DOB:</label>
-    <input type="text" class="form-control" placeholder="DOB" asp-for="@Model.Contact.DOB">
-    <small id="emailHelp" class="form-text text-muted">optional</small>
-  </div>
-  @*<div class="form-group">
-      <label for="lstContactType">Gender:</label>
-      <select class="form-control" asp-for="@Model.Contact.ContactType">
-        <option value="1">Student</option>
-        <option value="2">Parent</option>
-        <option value="3">Donor</option>
-        <option value="3">Other</option>
-      </select>
-    </div>*@
-  <div class="form-group">
-    <label for="lstGender">Gender:</label>
-    <select id="lstGender" class="form-control" asp-for="@Model.Contact.Gender">
-      <option value="1">Male</option>
-      <option value="2">Female</option>
-    </select>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label for="txtFirstName" class="control-label">First Name</label>
+        <input type="text" asp-for="Contact.FirstName" class="form-control" placeholder="First Name">
+        <span asp-validation-for="Contact.FirstName" class="text-danger"></span>
+    </div>
 
-  </div>
-  <div class="form-group">
-    <label for="lstContactType">Contact Type:</label>
-    <select asp-for="@Model.Contact.ContactType"  class="form-control"
-            asp-items="@(new SelectList(Model.ContactTypes,"ID","Description"))">
-      <option>Please select one</option>
-    </select>
+    <div class="form-group">
+        <label for="txtMiddleName" class="control-label">Middle Name</label>
+        <input type="text" asp-for="Contact.MiddleName" class="form-control" placeholder="Middle Name" />       
+    </div>
 
 
-  </div>
-  <div class="form-group">
-    <label for="txtHomePhone">Home Phone</label>
-    <input type="text" class="form-control" placeholder="Home Phone" asp-for="@Model.Contact.HomePhone">
-  </div>
-  <div class="form-group">
-    <label for="txtCellPhone">Cell Phone</label>
-    <input type="text" class="form-control" placeholder="Cell Phone" asp-for="@Model.Contact.CellPhone">
-  </div>
+    <div class="form-group">
+        <label for="txtLastName" class="control-label">Last Name</label>
+        <input type="text" asp-for="Contact.LastName" class="form-control" id="txtLastName" placeholder="Last Name">
+        <span asp-validation-for="Contact.LastName" class="text-danger"></span>
+    </div>
 
-  <div class="form-group">
-    <label for="txtStreet">Street</label>
-    <input type="text" class="form-control" placeholder="Street" asp-for="@Model.Contact.StreetAddress">
-  </div>
-  <div class="form-group">
-    <label for="txtZip">Apt</label>
-    <input type="text" class="form-control" placeholder="APT Number" asp-for="@Model.Contact.Apt">
-  </div>
-  <div class="form-group">
-    <label for="txtCity">City</label>
-    <input type="text" class="form-control" placeholder="City" asp-for="@Model.Contact.City" />
-  </div>
+    <div class="form-group">
+        <label for="lstGender" class="control-label">Gender</label>
+        <select id="lstGender" class="form-control" asp-for="Contact.Gender">
+            <option value="1">Male</option>
+            <option value="2">Female</option>
+        </select>
+    </div>
 
-  <div class="form-group">
-    <label for="txtCity">State</label>
-    <input type="text" class="form-control" placeholder="City" asp-for="@Model.Contact.State" />
-  </div>
-  <div class="form-group">
-    <label for="txtZip">ZipCode</label>
-    <input type="text" class="form-control" placeholder="Zip" asp-for="@Model.Contact.ZipCode">
-  </div>
+    <div class="form-group">
+        <label for="txtStreet" class="control-label">Street</label>
+        <input type="text" class="form-control" placeholder="Street" asp-for="Contact.StreetAddress">
+        <span asp-validation-for="Contact.StreetAddress" class="text-danger"></span>
+    </div>
 
-  <input type="hidden" asp-for="@Model.Contact.Guid" />
-  <button type="submit" class="btn btn-primary" id="btnCancel">Cancel</button>
-  <button type="submit" class="btn btn-primary" id="btnReset">Reset</button>
-  <button type="submit" class="btn btn-primary" id="btnSubmit">Submit</button>
+
+    <div class="form-group">
+        <label for="txtZip" class="control-label">Apt</label>
+        <input type="text" class="form-control" placeholder="Apt Number" asp-for="Contact.Apt">
+    </div>
+
+    <div class="form-group">
+        <label for="txtCity" class="control-label">City</label>
+        <input type="text" class="form-control" placeholder="City" asp-for="Contact.City" />
+        <span asp-validation-for="Contact.City" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="txtCity" class="control-label">State</label>
+        <input type="text" class="form-control" placeholder="City" asp-for="Contact.State" />
+       <span class="text-danger" asp-validation-for="Contact.State"></span>
+    </div>
+    <div class="form-group">
+        <label for="txtZip" class="control-label">ZipCode</label>
+        <input type="text" class="form-control" placeholder="Zip" asp-for="Contact.ZipCode">
+        <span class="text-danger" asp-validation-for="Contact.ZipCode"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="txtHomePhone" class="control-label">Home Phone</label>
+        <input type="text" class="form-control" placeholder="Home Phone" asp-for="Contact.HomePhone">
+        <span class="text-danger" asp-validation-for="Contact.HomePhone"></span>
+    </div>
+    <div class="form-group">
+        <label for="txtCellPhone" class="control-label">Cell Phone</label>
+        <input type="text" class="form-control" placeholder="Cell Phone" asp-for="Contact.CellPhone">
+        <span class="text-danger" asp-validation-for="Contact.CellPhone"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="exampleInputEmail1" class="control-label">Email address</label>
+        <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email" asp-for="Contact.Email">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <span class="text-danger" asp-validation-for="Contact.Email"></span>
+    </div>
+
+
+
+    <div class="form-group">
+        <label class="control-label">Contact Type</label>
+        <select asp-for="Contact.ContactType" class="form-control"
+                asp-items="@(new SelectList(Model.ContactTypes,"ID","Description"))">
+            <option>Please select one</option>
+        </select>
+
+
+    </div>
+
+
+    <input type="hidden" asp-for="Contact.Guid" />
+    <button type="submit" class="btn btn-primary" id="btnCancel">Cancel</button>
+    <button type="submit" class="btn btn-primary" id="btnReset">Reset</button>
+    <button type="submit" class="btn btn-primary" id="btnSubmit">Submit</button>
 </form>
