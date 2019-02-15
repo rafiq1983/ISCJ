@@ -13,26 +13,25 @@ namespace MA.Common.Entities.Contacts
       ModifiedDate = DateTime.Now;
       CreatedBy = "Rafiq";
       CreatedDate = DateTime.Now;
-      ContactType = 1;
-    }
+     }
 
 
     public Guid Guid { get; set; }
-    [Required]
+
     public string FirstName { get; set; }
-        [Required]
+
     public string LastName { get; set; }
     public string MiddleName { get; set; }
-        [Required]
+
     public int Gender { get; set; }
     public string CompanyName { get; set; }
-        [Required]
+
     public string StreetAddress { get; set; }
-        [Required]
+
     public string City { get; set; }
-        [Required]
+
     public string ZipCode { get; set; }
-        [Required]
+
     public string State { get; set; }
     public int ContactType { get; set; }
     public Boolean IsParent { get; set; }
@@ -41,13 +40,13 @@ namespace MA.Common.Entities.Contacts
     public string CreatedBy { get; set; }
     public DateTime ModifiedDate { get; set; }
     public string ModifiedBy { get; set; }
-        [Required]
+
     public string Email { get; set; }
     public DateTime DOB { get; set; }
     public string Apt { get; set; }
-        [Required]
+
     public string CellPhone { get; set; }
-        [Required]
+
     public string HomePhone { get; set; }
 
   }

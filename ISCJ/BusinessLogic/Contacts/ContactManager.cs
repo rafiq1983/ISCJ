@@ -20,7 +20,9 @@ namespace BusinessLogic
        
     public static List<ContactType> GetContacTypes()
     {
-      return CacheService.GetData(CacheService.ContactTypesKey) as List<ContactType>;
+      var Types= CacheService.GetData(CacheService.ContactTypesKey) as List<ContactType>;
+
+      return Types;
     }
         public string AddUpdateContact(Contact input)
         {
