@@ -24,7 +24,7 @@ namespace BusinessLogic
     }
         public string AddUpdateContact(Contact input)
         {
-      using (var _ContextContact = new ContactContext())
+         using (var _ContextContact = new ContactContext())
       {
         _ContextContact.Contacts.Add(input);
         _ContextContact.SaveChanges();
