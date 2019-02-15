@@ -55,7 +55,7 @@ namespace ISCJ.Pages.ContactManagement
         
     [BindProperty]
     public Contact Contact { get; set; }
-    [BindProperty]
+    
     public List<ContactType> ContactTypes { get { return ContactManager.GetContacTypes(); } }
     }
 
