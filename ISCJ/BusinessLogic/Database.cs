@@ -19,7 +19,7 @@ namespace BusinessLogic
     {; }
 
     public virtual DbSet<Registration> Registrations { get; set; }
-
+    public virtual DbSet<Invoice> Invoices { get; set; }
    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -32,6 +32,15 @@ namespace BusinessLogic
       {
         entity.ToTable("Contacts");
         entity.HasKey(e => e.Guid);
+      }).Entity<Invoice>(entity =>
+      {
+        entity.ToTable("Invoice");
+        entity.HasKey(e => e.InvoiceId);
+      })
+      .Entity<InvoiceItem>(entity =>
+      {
+        entity.ToTable("InvoiceItem");
+        entity.HasKey(e => e.ItemId);
       });
     }
 

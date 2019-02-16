@@ -17,7 +17,40 @@ namespace BusinessLogic
     {
       using (var db = new Database())
       {
+        Invoice invoice = null;
 
+        if (input.AddSchoolMemberShipFee || input.AddStudentRegistrationFee)
+          invoice = new Invoice();
+
+
+        if (invoice != null)
+        {
+
+          invoice.DueDate = DateTime.Now;
+          invoice.GenerationDate = DateTime.Now;
+          invoice.InvoiceAmount = 0;
+          invoice.ResponsibleParty1Id = input.FatherId;
+          invoice.ResponsibleParty2Id = input.MotherId;
+            invoice.Description = "Yearly Palmyra Masjid Membership fee";
+        }
+
+
+        if (input.AddSchoolMemberShipFee)
+        {
+          invoice.InvoiceItems = new List<InvoiceItem>()
+              {
+                 new InvoiceItem()
+                 {
+                    Amount = 365, Description="School Yearly Membership Fee", ItemTypeId=Guid.Empty, SalesTax = 0
+                 }
+              };
+
+          invoice.InvoiceAmount += 365;
+        }
+          
+
+          db.Invoices.Add(invoice);
+        
         for (int i = 0; i < input.StudentRegistration.Count; i++)
         {
           if (input.StudentRegistration[i].StudentId.HasValue)
@@ -30,12 +63,39 @@ namespace BusinessLogic
             reg.PublicSchoolGradeId = input.StudentRegistration[i].PublicSchoolGrade;
             reg.StudentId = input.StudentRegistration[i].StudentId.Value;
             db.Registrations.Add(reg);
+
+            if (input.AddStudentRegistrationFee)
+            {
+              using (ContactContext contactCtx = new ContactContext())
+              {
+
+                if (invoice.InvoiceItems == null)
+                  invoice.InvoiceItems = new List<InvoiceItem>();
+
+                var studentInfo = contactCtx.Contacts.Single(x => x.Guid == input.StudentRegistration[i].StudentId);
+                string studentName = studentInfo.FirstName + " " + studentInfo.LastName;
+
+                invoice.InvoiceItems.Add(new InvoiceItem()
+                {
+                  Amount = 20,
+                  Description = "Fee for " + studentName,
+                  ItemTypeId = Guid.Empty,
+                  SalesTax = 0
+
+                });
+
+                invoice.InvoiceAmount += 20;
+              }
+
+            }
           }
         }
-        db.SaveChanges();
-      }
 
-      return true;
+        db.SaveChanges();
+
+        return true;
+      }
+      
     }
 
 
@@ -43,36 +103,7 @@ namespace BusinessLogic
                       Guid studentId, Guid fatherId, Guid motherId,
                       string islamicSchoolGrade, string publicSchoolGrade)
     {
-      ProductManager productMgr = new ProductManager();
-
-      if(programId == Guid.Parse("333e070b-58b5-4f28-91b0-c20c56072859"))//islamic sunday school
-      {
-        var billing = productMgr.GetBillingItem("4aab2eb7-ae52-4101-bd6d-b9142829a50d");
-
-        Invoice invoice = new Invoice();
-        invoice.ResponsibleParty1 = fatherId.ToString();
-        invoice.ResponsibleParty2 = motherId.ToString();
-        invoice.ResponsibleParty3 = studentId.ToString();
-        invoice.InvoiceItems.Add(new InvoiceItem() { ItemId = Guid.NewGuid().ToString(), Amount = billing.Amount, Description = billing.Description, InvoiceCategory = "School Registration" });
-        InvoiceManager invoiceMgr = new InvoiceManager();
-        invoiceMgr.CreateInvoice(invoice);
-      }
-
-      Registration reg = new Registration();
-      reg.FatherId = fatherId;
-      reg.MotherId = motherId;
-      reg.ProgramId = programId;
-      reg.IslamicSchoolGradeId = islamicSchoolGrade;
-      reg.PublicSchoolGradeId = publicSchoolGrade;
-      reg.StudentId = studentId;
-
-      using (var db = new Database())
-      {
-        db.Registrations.Add(reg);
-        db.SaveChanges();
-      }
-        
-      return reg.RegistrationId;
+      return Guid.Empty;
     }
 
     public Registration GetRegistration(Guid registrationId)

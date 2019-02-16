@@ -10,6 +10,9 @@ namespace MA.Common
     public Guid FatherId { get; set; }
     public Guid MotherId { get; set; }
     public Guid ProgramId { get; set; }
+    public bool AddSchoolMemberShipFee { get; set; }
+    public bool AddStudentRegistrationFee { get; set; }
+    public int StudentRegistrationFeeCount { get; set; }
     public List<CreateStudentRegistrationInput> StudentRegistration { get; set; }
   }
 

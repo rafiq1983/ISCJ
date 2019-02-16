@@ -13,31 +13,18 @@ namespace BusinessLogic
 
     public List<Invoice> GetInvoices()
     {
-      return _Invoices;
+      using (Database db = new Database())
+      {
+        return db.Invoices.ToList();
+      }
     }
 
-    public Invoice GetInvoice(string invoiceId)
+    public Invoice GetInvoice(Guid invoiceId)
     {
       return _Invoices.SingleOrDefault(x => x.InvoiceId == invoiceId);
     }
 
-    public string CreateInvoice(Invoice invoice)
-    {
-      if(string.IsNullOrEmpty(invoice.InvoiceId))
-      {
-        invoice.InvoiceId = Guid.NewGuid().ToString();
-        _Invoices.Add(invoice);
-      }
-      else
-      {
-        var index = _Invoices.IndexOf(_Invoices.Single(x => x.InvoiceId == invoice.InvoiceId));
-        _Invoices[index] = invoice;
-        
-      }
-
-      return invoice.InvoiceId;
-    }
-       
+    
   }
 
  

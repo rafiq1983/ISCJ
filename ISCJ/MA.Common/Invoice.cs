@@ -7,21 +7,23 @@ namespace MA.Common
   public class Invoice
   {
     
-    public string InvoiceId { get; set; }
-    public string ResponsibleParty1 { get; set; }
+    public Guid InvoiceId { get; set; }
+    public Guid ResponsibleParty1Id { get; set; }
 
-    public string ResponsibleParty2 { get; set; }
+    public Guid ResponsibleParty2Id { get; set; }
 
-    public string ResponsibleParty3 { get; set; }
-
-    public string ResponsibleParty4 { get; set; }
 
     public List<InvoiceItem> InvoiceItems { get; set; }
 
     public DateTime DueDate { get; set; }
+
     public DateTime GenerationDate { get; set; }
 
-    public decimal Amount { get; set; }
+    public decimal InvoiceAmount { get; set; }
+
+    public string Description { get; set; }
+
+    public bool IsPaid { get; set; }
 
   }
 
@@ -30,8 +32,8 @@ namespace MA.Common
     public string ItemId { get; set; }
     public string Description { get; set; }
     public decimal Amount { get; set; }
-
-    public string InvoiceCategory { get; set; }
+    public decimal SalesTax { get; set; }
+    public Guid ItemTypeId { get; set; }
   }
 
 }

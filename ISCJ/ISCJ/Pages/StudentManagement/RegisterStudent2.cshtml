@@ -13,6 +13,31 @@
           @Html.DropDownListFor(x => x.StudentRegistration.ProgramId, new SelectList(Model.Programs, "ProgramId", "ProgramName"), "--Select--",
        htmlAttributes: new { @class = "form-control" })
         </div>
+        <div class="form-group  col-xs-4">
+          <label>Charges</label>
+          <table>
+           
+            <tr>
+              <td>
+                <input type="checkbox" asp-for="@Model.StudentRegistration.AddSchoolMemberShipFee" /> Membership Fee $365
+
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="checkbox" asp-for="@Model.StudentRegistration.AddStudentRegistrationFee" /> Student Registration Fee $20.  Quantity:
+                <select asp-for="@Model.StudentRegistration.StudentRegistrationFeeCount">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                </select>
+
+              </td>
+            </tr>
+          </table>
+        </div>
+
 
       </div>
 
@@ -28,7 +53,7 @@
           <input type="text" placeholder="Type Father name here" autocomplete="off"
                  data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_FatherId"
                  class="autocomplete form-control" />
-          <input type="hidden" asp-for="@Model.StudentRegistration.FatherId" />
+                <input type="hidden" asp-for="@Model.StudentRegistration.FatherId" />
           <br />
 
 
