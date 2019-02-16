@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using MA.Common.Entities.Contacts;
 
@@ -9,6 +10,7 @@ namespace MA.Common.Entities.Registration
   {
     public Guid RegistrationId { get; set; }
 
+   
     public Guid FatherId { get; set; } //isa:may not need these.
 
     public Guid MotherId { get; set; }
@@ -21,14 +23,15 @@ namespace MA.Common.Entities.Registration
 
     public Guid StudentId { get; set; }
 
-    //TODO:
-    /*
-    public Contact FatherContactInfo { get; set; }//needs to map to contact table.
+    [ForeignKey("FatherId")] //can be done with fluent api as well.
+    public Contact FatherContactInfo { get; set; }
 
-    public Contact MotherContactInfo { get; set; }//needs to map to contact table.
+    [ForeignKey("MotherId")]
+    public Contact MotherContactInfo { get; set; }
 
+    [ForeignKey("StudentId")]
     public Contact StudentContactInfo { get; set; }//needs to map to contact table.
-    */
+    
   }
 
 

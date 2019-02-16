@@ -10,9 +10,7 @@
   <table class="table-bordered" border="0">
     <thead>
       <tr>
-        <th>
-          RegistrationId
-        </th>
+      
         <th>
           Student Name
         </th>
@@ -27,11 +25,11 @@
           Islamic School Grade
         </th>
         <th>
-          Sunday School Grade
+          Public School Grade
         </th>
 
         <th>
-          Due Amount
+         Invoice Amount
         </th>
         <th>
 
@@ -42,12 +40,24 @@
     <tbody>
       @for (var i = 0; i < Model.Registrations.Count; i++)
       {
-        <tr>
-          <td>@Model.Registrations[i].RegistrationId</td>
-           <td>
-            <input type="submit" class="btn-sm btn-success" value="Details" id="btnDetails" name="btnAction" onClick="return SetRegistrationId('@Model.Registrations[i].RegistrationId');" />
-          </td>
-        </tr>
+      <tr>
+        
+        <td>@(Model.Registrations[i].StudentContactInfo.FirstName + " " + @Model.Registrations[i].StudentContactInfo.LastName)</td>
+        <td>@(Model.Registrations[i].MotherContactInfo.FirstName + " " + @Model.Registrations[i].MotherContactInfo.LastName)</td>
+        <td>@(Model.Registrations[i].FatherContactInfo.FirstName + " " + @Model.Registrations[i].FatherContactInfo.LastName)</td>
+        <td>
+          <Code code-type="islamicschoolgradelist" code="@Model.Registrations[i].IslamicSchoolGradeId"></Code>
+          
+          
+        </td>
+        <td>
+          <Code code-type="publicschoolgradelist" code="@Model.Registrations[i].PublicSchoolGradeId"></Code>
+        </td>
+        <td>$0.00</td>
+        <td>
+          <input type="submit" class="btn-sm btn-success" value="Details" id="btnDetails" name="btnAction" onClick="return SetRegistrationId('@Model.Registrations[i].RegistrationId');" />
+        </td>
+      </tr>
       }
 
     </tbody>

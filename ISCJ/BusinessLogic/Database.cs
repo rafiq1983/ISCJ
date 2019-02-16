@@ -20,12 +20,14 @@ namespace BusinessLogic
 
     public virtual DbSet<Registration> Registrations { get; set; }
 
+   
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       modelBuilder.Entity<Registration>(entity =>
       {
         entity.ToTable("Registration");
         entity.HasKey(e => e.RegistrationId);
+       
       }).Entity<Contact>(entity =>
       {
         entity.ToTable("Contacts");

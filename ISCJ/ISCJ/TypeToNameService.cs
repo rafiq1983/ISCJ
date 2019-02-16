@@ -20,6 +20,25 @@ namespace ISCJ
         else
           return contactType.Description;
      }
+      else if(type=="islamicschoolgradelist")
+      {
+        var gradeList = ListService.GetIslamicSchoolGradesList();
+        var grade = gradeList.SingleOrDefault(x => x.GradeId.ToString() == value);
+        if (grade == null)
+          return "unknown";
+        else
+          return grade.GradeName;
+      }
+      else if (type == "publicschoolgradelist")
+      {
+        var gradeList = ListService.GetPublicSchoolGradeList();
+        var grade = gradeList.SingleOrDefault(x => x.GradeId.ToString() == value);
+        if (grade == null)
+          return "unknown";
+        else
+          return grade.GradeName;
+      }
+
       return type + ":" + value;
     }
   }

@@ -1,5 +1,6 @@
 ﻿using MA.Common;
 using MA.Common.Entities.Registration;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -86,7 +87,11 @@ namespace BusinessLogic
     {
       using (var db = new Database())
       {
-        return db.Registrations.ToList();
+        return db.Registrations
+          .Include(Registration => Registration.FatherContactInfo)
+          .Include(registration=>registration.MotherContactInfo)
+          .Include(Registration=>Registration.StudentContactInfo)
+          .ToList();
       }
     }
 

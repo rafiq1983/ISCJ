@@ -13,10 +13,9 @@ namespace MA.Common.Entities.Contacts
       ModifiedDate = DateTime.Now;
       CreatedBy = "Rafiq";
       CreatedDate = DateTime.Now;
-      
-     }
 
-
+    }
+    
     public Guid Guid { get; set; }
     [Required]
     public string FirstName { get; set; }
