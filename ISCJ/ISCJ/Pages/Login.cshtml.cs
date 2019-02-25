@@ -19,7 +19,7 @@ namespace ISCJ.Pages.Admin
         public LoginData loginData { get; set; }
         public void OnGet()
         {
-
+          
         }
 
         public async Task OnPostAsync()
@@ -45,8 +45,9 @@ namespace ISCJ.Pages.Admin
                 identity.AddClaim(new Claim(ClaimTypes.Name, loginData.Username));
                 var principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = loginData.RememberMe });
-                RedirectToPage("Index");
-            }
+               RedirectToPage("ContactManagement/Contacts");
+        
+      }
             else
             {
                 ModelState.AddModelError("", "username or password is blank");
