@@ -38,7 +38,7 @@ namespace ISCJ.Pages.ContactManagement
             {
                 mgr.AddUpdateContact(Contact);
 
-                Response.Redirect("ContactList");
+                Response.Redirect("Contacts");
 
             }
 
