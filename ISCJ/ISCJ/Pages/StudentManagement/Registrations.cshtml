@@ -1,73 +1,70 @@
 ﻿@page
 @model ISCJ.Pages.StudentManagement.RegistrationsModel
 @{
-  ViewData["Title"] = "Registrations";
+    ViewData["Title"] = "Registrations";
+    Layout = "~/Pages/Shared/_LayoutModern.cshtml";
 }
-
-<h2>Registrations</h2>
 <form method="post">
-  
-  <table class="table-bordered" border="0">
-    <thead>
-      <tr>
-      
-        <th>
-          Student Name
-        </th>
+  <div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-9">
+      <h2>Registrations</h2>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+          Student Management
+        </li>
+        <li class="active breadcrumb-item">
+          <strong>Registrations</strong>
+        </li>
+      </ol>
+    </div>
+  </div>
 
-        <th>
-          Mother Name
-        </th>
-        <th>
-          Father Name
-        </th>
-        <th>
-          Islamic School Grade
-        </th>
-        <th>
-          Public School Grade
-        </th>
-
-        <th>
-         Invoice Amount
-        </th>
-        <th>
-
-        </th>
-
-      </tr>
-    </thead>
-    <tbody>
+  <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
       @for (var i = 0; i < Model.Registrations.Count; i++)
       {
-      <tr>
-        
-        <td>@(Model.Registrations[i].StudentContactInfo.FirstName + " " + @Model.Registrations[i].StudentContactInfo.LastName)</td>
-        <td>@(Model.Registrations[i].MotherContactInfo.FirstName + " " + @Model.Registrations[i].MotherContactInfo.LastName)</td>
-        <td>@(Model.Registrations[i].FatherContactInfo.FirstName + " " + @Model.Registrations[i].FatherContactInfo.LastName)</td>
-        <td>
-          <Code code-type="islamicschoolgradelist" code="@Model.Registrations[i].IslamicSchoolGradeId"></Code>
-          
-          
-        </td>
-        <td>
-          <Code code-type="publicschoolgradelist" code="@Model.Registrations[i].PublicSchoolGradeId"></Code>
-        </td>
-        <td>$0.00</td>
-        <td>
-          <input type="submit" class="btn-sm btn-success" value="Details" id="btnDetails" name="btnAction" onClick="return SetRegistrationId('@Model.Registrations[i].RegistrationId');" />
-        </td>
-      </tr>
+        <div class="col-lg-3">
+          <div class="contact-box center-version">
+
+            <a href="profile.html">
+
+              <img alt="image" class="rounded-circle" src="~/Images/a2.jpg">
+
+
+              <h3 class="m-b-xs">
+                <strong>
+                  @(Model.Registrations[i].StudentContactInfo.FirstName + " " + @Model.Registrations[i].StudentContactInfo.LastName)
+                </strong>
+              </h3>
+
+              <div class="font-bold">Student</div>
+              <address class="m-t-md">
+                <strong>TBD</strong><br>
+                @Model.Registrations[i].StudentContactInfo.StreetAddress<br>
+                @Model.Registrations[i].StudentContactInfo.City, @Model.Registrations[i].StudentContactInfo.State, @Model.Registrations[i].StudentContactInfo.ZipCode<br>
+                <abbr title="Islamic School Grade">Islamic School Grade:</abbr> <Code code-type="islamicschoolgradelist" code="@Model.Registrations[i].IslamicSchoolGradeId"></Code>
+                <br />
+                <abbr title="Islamic School Grade">Public School Grade:</abbr> <Code code-type="publicschoolgradelist" code="@Model.Registrations[i].PublicSchoolGradeId"></Code>
+              </address>
+            </a>
+            <div class="contact-box-footer">
+              <div class="m-t-xs btn-group">
+                <a class="btn btn-xs btn-white"><i class="fa fa-phone"></i> Call Parent </a>
+                <a class="btn btn-xs btn-white"><i class="fa fa-envelope"></i> Email</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
       }
 
-    </tbody>
-
-  </table>
-  <div>
-    <input type="button" id="btnAddNew" name="btnAction" class="btn-sm btn-success" value="Add New" onclick="window.location = 'RegisterStudent2'" />
+    </div>
   </div>
+  <input type="button" id="btnAddNew" name="btnAction" class="btn-sm btn-success" value="Add New" onclick="window.location = 'RegisterStudent2'" />
   <input type="hidden" id="regId" name="regId" />
-
 </form>
 <script language="javascript">
   function SetRegistrationId(regId) {
