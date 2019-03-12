@@ -12,13 +12,34 @@ namespace ISCJ.Pages.StudentManagement
 {
     public class RegistrationsModel : PageModel
     {
+    ProgramManager programMgr;
+    public RegistrationsModel()
+    {
+      programMgr = new ProgramManager();
+
+      Programs = programMgr.GetPrograms();
+    }
         public void OnGet()
         {
             RegistrationManager mgr = new RegistrationManager();
-      Registrations = mgr.GetRegistrations();
-      
+            Registrations = mgr.GetRegistrations(Guid.Parse(Programs[0].ProgramId));
+      ProgramId = Guid.Parse(Programs[0].ProgramId);
         }
 
-    public List<Registration> Registrations { get; set; } = new List<Registration>();
+    public void OnPost()
+    {
+      RegistrationManager mgr = new RegistrationManager();
+      Registrations = mgr.GetRegistrations(ProgramId);
     }
+
+       
+
+    public List<Registration> Registrations { get; set; } = new List<Registration>();
+
+    public List<ProgramDetail> Programs { get; set; }
+
+    [BindProperty]
+    public Guid ProgramId { get; set; }
+
+  }
 }

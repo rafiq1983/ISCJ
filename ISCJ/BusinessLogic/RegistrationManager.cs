@@ -126,6 +126,19 @@ namespace BusinessLogic
       }
     }
 
+    public List<Registration> GetRegistrations(Guid programId)
+    {
+      using (var db = new Database())
+      {
+        return db.Registrations
+          .Include(Registration => Registration.FatherContactInfo)
+          .Include(registration => registration.MotherContactInfo)
+          .Include(Registration => Registration.StudentContactInfo)
+          .Where(x => x.ProgramId == programId).ToList();
+      }
+    }
+
+
 
   }
 }
