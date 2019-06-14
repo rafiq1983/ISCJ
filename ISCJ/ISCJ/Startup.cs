@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using MA.Common;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace ISCJ
 {
@@ -21,6 +22,8 @@ namespace ISCJ
             Configuration = configuration;
 
            ConnectionString.Value= Configuration.GetConnectionString("Primary");
+
+           
         }
 
         public IConfiguration Configuration { get; }
@@ -29,6 +32,10 @@ namespace ISCJ
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "ICSJ API", Version = "v1" });
+            });
 
             services.AddAuthentication(options =>
             {
@@ -64,6 +71,16 @@ namespace ISCJ
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = "";
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -79,6 +96,7 @@ namespace ISCJ
             app.UseCookiePolicy();
              app.UseAuthentication();
             app.UseMvc();
+          
         }
     }
 }

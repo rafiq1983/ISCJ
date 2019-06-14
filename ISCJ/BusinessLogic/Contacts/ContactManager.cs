@@ -85,6 +85,13 @@ namespace BusinessLogic
 
       }
     }
+        public List<Contact> GetContactsByContactType(string userId, int contactType)
+        {
+            using (var _ContextContact = new ContactContext())
+            {
+                return _ContextContact.Contacts.Where(x => x.ContactType == contactType).ToList();
+            }
+        }
 
     }
 }

@@ -4,32 +4,35 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogic;
 using MA.Common;
-using MA.Common.Entities.Contacts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using MA.Common.Entities;
+using MA.Common.Entities.Contacts;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ISCJ.webapi
 {
-  [Route("api/[controller]")]
-  [Authorize]
-  public class ContactController : Controller
-  {
-
-    [HttpGet("Search")]
-    public List<Contact> PrefixSearch([FromQuery]string q)
+    [Route("api/[controller]")]
+    [Authorize]
+    public class ContactController : MA.Core.Web.BaseController
     {
-      if (string.IsNullOrEmpty(q) == false)
-      {
-        ContactManager mgr = new ContactManager();
-        var lst = mgr.GetContacts(0, 1, 100);
-         lst = lst.Where(x => (x.FirstName.ToLower() + " " + x.LastName.ToLower()).IndexOf(q.ToLower())>=0).ToList();
-        return lst;
-      }
-      else
-        return new List<Contact>();
-    }
+
+        [HttpGet("Search")]
+        public List<MA.Common.Entities.Contacts.Contact> PrefixSearch([FromQuery]string q)
+        {
+            if (string.IsNullOrEmpty(q) == false)
+            {
+                ContactManager mgr = new ContactManager();
+                var lst = mgr.GetContacts(0, 1, 100);
+                lst = lst.Where(x => (x.FirstName.ToLower() + " " + x.LastName.ToLower()).IndexOf(q.ToLower()) >= 0).ToList();
+                return lst;
+            }
+            else
+                return new List<MA.Common.Entities.Contacts.Contact>();
+        }
+
+      
+
     // GET: api/<controller>
     [HttpGet]
     public IEnumerable<string> Get()
@@ -61,5 +64,15 @@ namespace ISCJ.webapi
     public void Delete(int id)
     {
     }
-  }
+        
+        [HttpGet("/ContactsByType/{contactTypeInput}")]
+        [ProducesResponseType(200,Type=typeof(Contact))]
+        [Produces("application/json")]
+        public List<Contact> GetContactByType(MA.Common.Models.EnumContactType contactTypeInput)
+        {
+            ContactManager mgr = new ContactManager();
+            return mgr.GetContactsByContactType(GetUserId(), Convert.ToInt32(contactTypeInput));
+        }
+        
+    }
 }
