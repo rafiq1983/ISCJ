@@ -6,11 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ISCJ.webapi
 {
-    public class RegistrationController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class RegistrationController : ControllerBase
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+       
     }
 }
