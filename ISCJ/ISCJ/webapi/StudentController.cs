@@ -27,11 +27,29 @@ namespace ISCJ.webapi
         /// <returns></returns>
         [Route("{programId}")]
         [HttpGet()]
-        public ActionResult<List<StudentBasicInfo>> GetStudentsList(Guid programId)
+        public ActionResult<List<StudentBasicInfo>> GetStudentsListByProgamId(Guid programId)
         {
             var output = _studentManager.GetStudentList(programId);
             return Ok(output.Students);
         }
+
+       
+        [HttpGet()]
+        public ActionResult<List<StudentBasicInfo>> GetStudentsList([FromQuery]string filterParams)
+        {
+            var output = _studentManager.GetStudentList(Guid.Empty);
+            return Ok(output.Students);
+        }
+
+        [Route("detail/{studentId}")]
+        [HttpGet()]
+        [ProducesResponseType(typeof(StudentDetail), 200)]
+        public ActionResult<StudentDetail> GetStudentDetail(Guid studentId)
+        {
+            var output = _studentManager.GetStudentDetail(studentId);
+            return Ok(output);
+        }
+
 
         [Route("attendance/{ClassSessionId}/{studentId}/{attendance}")]
         [HttpGet()]

@@ -18,4 +18,13 @@ namespace MA.Common.Models.api
         public string ClassGrade { get; set; }
     }
 
+    public class StudentDetail
+    {
+        public StudentBasicInfo BasicInfo { get; set; }
+    }
+    public class GetStudentDetail
+    {
+        public StudentDetail StudentBasicInfo { get; set; }
+    }
+
 }

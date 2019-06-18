@@ -21,5 +21,19 @@ namespace BusinessLogic
         output.Students.Add(new StudentBasicInfo(){ClassGrade = "1", DOB = DateTime.MaxValue, FirstName = "Test First", LastName = "Test Last"});
         return output;
     }
-  }
+
+    public GetStudentDetail GetStudentDetail(Guid studentId)
+    {
+        var output = new GetStudentDetail();
+
+        output.StudentBasicInfo = new StudentDetail()
+        {
+             BasicInfo = new StudentBasicInfo()
+                 { ClassGrade = "1", DOB = DateTime.MaxValue, FirstName = "Test First", LastName = "Test Last" }
+        };
+
+        return output;
+    }
+
+    }
 }
