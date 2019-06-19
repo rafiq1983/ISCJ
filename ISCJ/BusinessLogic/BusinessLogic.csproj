@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MA.Common\MA.Common.csproj" />
+    <ProjectReference Include="..\MA.Core\MA.Core.csproj" />
   </ItemGroup>
 
 </Project>

@@ -5,6 +5,7 @@ using System.Text;
 using MA.Common.Entities.Registration;
 using MA.Common;
 using MA.Common.Entities.Contacts;
+using MA.Common.Entities.Product;
 
 namespace BusinessLogic
 {
@@ -20,8 +21,10 @@ namespace BusinessLogic
 
     public virtual DbSet<Registration> Registrations { get; set; }
     public virtual DbSet<Invoice> Invoices { get; set; }
-   
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+
+    public virtual DbSet<BillableProduct> BillableProducts { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       modelBuilder.Entity<Registration>(entity =>
       {
@@ -41,8 +44,13 @@ namespace BusinessLogic
       {
         entity.ToTable("InvoiceItem");
         entity.HasKey(e => e.ItemId);
-      });
-    }
+      })
+       .Entity<BillableProduct>(entity =>
+       {
+           entity.ToTable("BillableProduct");
+           entity.HasKey(e => e.ProductId);
+       });
+        }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

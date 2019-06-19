@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MA.Common.Entities.Product;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -19,6 +20,6 @@ namespace MA.Common
 
     public DateTime Time { get; set; }
 
-    public List<Product> Products { get; set; } = new List<Product>();
+    public List<BillableProduct> Products { get; set; } = new List<BillableProduct>();
   }
 }

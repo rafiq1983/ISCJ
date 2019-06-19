@@ -67,8 +67,9 @@ namespace ISCJ
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<TypeToNameService>();
-
+            
             services.AddTransient<StudentManager>();
+            services.AddTransient<ProductManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
