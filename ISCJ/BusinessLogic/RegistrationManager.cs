@@ -22,7 +22,6 @@ namespace BusinessLogic
         if (input.AddSchoolMemberShipFee || input.AddStudentRegistrationFee)
           invoice = new Invoice();
 
-
         if (invoice != null)
         {
 

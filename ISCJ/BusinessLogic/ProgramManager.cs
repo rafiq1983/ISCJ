@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MA.Core;
 
 namespace BusinessLogic
 {
@@ -49,5 +50,18 @@ namespace BusinessLogic
       return programDetail.ProgramId;
 
     }
-  }
+
+    public List<ProgramDetail> GetAllPrograms(CallContext callerContext)
+    {
+        var programs = _programs.ToList();
+        return programs;
+
+    }
+    public ProgramDetail GetProgram(CallContext callerContext, string programId)
+    {
+        return _programs.SingleOrDefault(x => x.ProgramId == programId);
+
+    }
+
+    }
 }

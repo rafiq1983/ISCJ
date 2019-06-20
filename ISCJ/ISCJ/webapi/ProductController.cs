@@ -69,11 +69,8 @@ namespace ISCJ.webapi
 
         private CallContext GetCallContext()
         {
-            return new CallContext()
-            {
-                UserId = "1",
-                CallerIp = "127.0.0.1"
-            };
+            return new CallContext("34234", "127.0.0.1", "32423434");
+
         }
     }
 }
