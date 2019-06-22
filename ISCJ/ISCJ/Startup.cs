@@ -37,6 +37,8 @@ namespace ISCJ
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "ICSJ API", Version = "v1" });
+                //TODO: See what it does.  How to customize swagger.
+                // c.DocumentFilter<MA.Core.Web.SwaggerSecurityRequirementsDocumentFilter>();
             });
 
             services.AddAuthentication(options =>
@@ -49,19 +51,17 @@ namespace ISCJ
 
             services.AddMvc().AddRazorPagesOptions(options =>
             {
-
                 options.Conventions.AuthorizeFolder("/");
                 options.Conventions.AllowAnonymousToPage("/Login");
 
             });
-
-
 
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
+              
             });
 
 
@@ -85,6 +85,7 @@ namespace ISCJ
                 c.RoutePrefix = "";
             });
 
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -94,7 +95,7 @@ namespace ISCJ
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

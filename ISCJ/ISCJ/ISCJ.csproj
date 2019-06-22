@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="js\" />
+    <Folder Include="Filters\" />
     <Folder Include="Pages\Admin\" />
     <Folder Include="Pages\NewFolder\" />
   </ItemGroup>

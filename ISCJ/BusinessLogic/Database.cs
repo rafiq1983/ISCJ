@@ -8,14 +8,15 @@ using MA.Common.Entities.Contacts;
 using MA.Common.Entities.Product;
 using MA.Common.Entities.MasjidMembership;
 using MA.Common.Entities.Invoices;
+using MA.Common.Entities.User;
 
 namespace BusinessLogic
 {
-  class Database:DbContext
+  public class Database:DbContext
   {
     public Database(DbContextOptions<ContactContext> options) : base(options)
     {
-
+        
     }
 
     public Database()
@@ -24,7 +25,8 @@ namespace BusinessLogic
     public virtual DbSet<Registration> Registrations { get; set; }
     public virtual DbSet<Invoice> Invoices { get; set; }
 
-    
+        public virtual DbSet<User> Users { get; set; }
+
     public virtual DbSet<MasjidMembership> MasjidMembers { get; set; }
 
         public virtual DbSet<BillableProduct> BillableProducts { get; set; }
@@ -68,6 +70,22 @@ namespace BusinessLogic
             {
                 entity.HasKey(e => e.FinancialAccountId);
             });
+
+            modelBuilder.Entity<AppRole>(entity =>
+            {
+                entity.HasKey(e => e.RoleCd);
+            });
+
+            modelBuilder.Entity<UserLoginHistory>(entity =>
+            {
+                entity.HasKey(e => e.SessionId);
+            });
+
+            modelBuilder.Entity<UserRoleLink>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.RoleCd});
+            });
+
         }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
