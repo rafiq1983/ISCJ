@@ -6,6 +6,8 @@ using MA.Common.Entities.Registration;
 using MA.Common;
 using MA.Common.Entities.Contacts;
 using MA.Common.Entities.Product;
+using MA.Common.Entities.MasjidMembership;
+using MA.Common.Entities.Invoices;
 
 namespace BusinessLogic
 {
@@ -22,8 +24,12 @@ namespace BusinessLogic
     public virtual DbSet<Registration> Registrations { get; set; }
     public virtual DbSet<Invoice> Invoices { get; set; }
 
-    public virtual DbSet<BillableProduct> BillableProducts { get; set; }
+    
+    public virtual DbSet<MasjidMembership> MasjidMembers { get; set; }
 
+        public virtual DbSet<BillableProduct> BillableProducts { get; set; }
+
+    public virtual DbSet<Contact> Contacts { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       modelBuilder.Entity<Registration>(entity =>
@@ -50,6 +56,18 @@ namespace BusinessLogic
            entity.ToTable("BillableProduct");
            entity.HasKey(e => e.ProductId);
        });
+
+            modelBuilder.Entity<MasjidMembership>(entity =>
+            {
+               entity.ToTable("MasjidMembership");
+                entity.HasKey(e => e.MembershipId);
+            });
+
+
+            modelBuilder.Entity<FinancialAccount>(entity =>
+            {
+                entity.HasKey(e => e.FinancialAccountId);
+            });
         }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -5,7 +5,7 @@ using System.Text;
 namespace MA.Common.Models
 {
 
-    public class AddContact
+    public class AddContactInput
     {
        public Contact Contact { get; set; }
     }

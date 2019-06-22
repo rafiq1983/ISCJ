@@ -1,4 +1,5 @@
 ﻿using MA.Common;
+using MA.Common.Entities.Invoices;
 using MA.Common.Entities.Registration;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -28,8 +29,7 @@ namespace BusinessLogic
           invoice.DueDate = DateTime.Now;
           invoice.GenerationDate = DateTime.Now;
           invoice.InvoiceAmount = 0;
-          invoice.ResponsibleParty1Id = input.FatherId;
-          invoice.ResponsibleParty2Id = input.MotherId;
+         
             invoice.Description = "Yearly Palmyra Masjid Membership fee";
         }
 
@@ -40,7 +40,7 @@ namespace BusinessLogic
               {
                  new InvoiceItem()
                  {
-                    Amount = 365, Description="School Yearly Membership Fee", ItemTypeId=Guid.Empty, SalesTax = 0
+                   InvoiceAmount = 365, Description="School Yearly Membership Fee"                     
                  }
               };
 
@@ -76,11 +76,8 @@ namespace BusinessLogic
 
                 invoice.InvoiceItems.Add(new InvoiceItem()
                 {
-                  Amount = 20,
+                  InvoiceAmount = 20,
                   Description = "Fee for " + studentName,
-                  ItemTypeId = Guid.Empty,
-                  SalesTax = 0
-
                 });
 
                 invoice.InvoiceAmount += 20;
