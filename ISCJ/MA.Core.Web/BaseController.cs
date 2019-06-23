@@ -10,5 +10,10 @@ namespace MA.Core.Web
         {
             return "0";
         }
+
+        protected virtual MA.Core.CallContext GetCallContext()
+        {
+            return new CallContext("Iftikhar", "", "", Guid.Empty);
+        }
     }
 }

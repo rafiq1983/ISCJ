@@ -2,16 +2,22 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MA.Common.Models
+namespace MA.Common.Models.api
 {
 
     public class AddContactInput
     {
-       public ContactTBD Contact { get; set; }
+        public ContactApi Contact { get; set; }
     }
 
+    public class AddContactOutput
+    {
+        public Guid ContactId { get; set; }
+    }
+    
+
     #region "Common"
-        public class ContactTBD
+        public class ContactApi //TODO: Iftikhar; Renaming it to ContactApi otherwise, swagger fails.  It gets confused between Contact class in Entities vs this.
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -21,11 +27,11 @@ namespace MA.Common.Models
 
         public Address Address { get; set; }
 
-        public Phone[] Phone { get; set; }
+        public Phone Phone { get; set; }
 
         public string Email { get; set; }
 
-        public DateTime DOB { get; set; }
+        public DateTime? DOB { get; set; }
     }
     public class Address
     {
@@ -35,7 +41,7 @@ namespace MA.Common.Models
         public string CountryCode { get; set; }
         public string StateCode { get; set; }
         
-
+        public string ZipCode { get; set; }
     }
 
     public class Phone

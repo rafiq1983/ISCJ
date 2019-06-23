@@ -9,7 +9,7 @@ namespace MA.Common.Models.api
         public string UserName { get; set; }
         public string[] Roles { get; set; }
 
-        public ContactTBD ContactInformation { get; set; }
+        public ContactApi ContactInformation { get; set; }
 
     }
 

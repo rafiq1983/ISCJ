@@ -41,7 +41,7 @@ namespace MA.Common.Entities.Contacts
     public string ModifiedBy { get; set; }
         [Required]
     public string Email { get; set; }
-    public DateTime DOB { get; set; }
+    public DateTime? DOB { get; set; }
     public string Apt { get; set; }
         [Required]
     public string CellPhone { get; set; }
