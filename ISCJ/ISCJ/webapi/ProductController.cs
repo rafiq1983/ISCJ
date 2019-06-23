@@ -69,7 +69,7 @@ namespace ISCJ.webapi
 
         private CallContext GetCallContext()
         {
-            return new CallContext("34234", "127.0.0.1", "32423434");
+            return new CallContext("34234", "127.0.0.1", "32423434", Guid.Empty);
 
         }
     }

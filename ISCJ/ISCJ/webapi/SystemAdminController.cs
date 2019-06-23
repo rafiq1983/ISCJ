@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MA.Core.Web.Filters;
+using Microsoft.EntityFrameworkCore;
 
 namespace ISCJ.webapi
 {
@@ -25,13 +26,27 @@ namespace ISCJ.webapi
             return new JsonResult(userName);
         }
 
-        [HttpGet()]
+        [HttpGet("allusers")]
         //TODO: Some how tell swagger to take this value in header without having to specify that as method param.
         public JsonResult GetAllUsers([FromHeader(Name = "x-super-admin-proof")]string signedClaim)
         {
             using (var db = new BusinessLogic.Database())
             {
-                return new JsonResult(db.Users.ToList());
+                var users = db.Users.Include(x=>x.Contact).AsNoTracking().ToList();
+                
+                return new JsonResult(users);
+            }
+        }
+
+        [HttpGet("alltenants")]
+        //TODO: Some how tell swagger to take this value in header without having to specify that as method param.
+        public JsonResult GetAllTenants([FromHeader(Name = "x-super-admin-proof")]string signedClaim)
+        {
+            using (var db = new BusinessLogic.Database())
+            {
+                var users = db.Tenants.AsNoTracking().ToList();
+
+                return new JsonResult(users);
             }
         }
     }

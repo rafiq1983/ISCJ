@@ -14,12 +14,14 @@ namespace MA.Common.Entities.User
         public bool RequirePasswordChangeAtLogin { get; set; }
 
         //TODO: iftikhar; If contact id is commented out and contact object is present, it looks for 
-        //column ContactGuid. So need to understand what is going on there
-       // public Guid ContactId { get; set; }
+        //column ContactGuid. So need to understand what is going on there.
+        //Resolution:  That's just the nature of the EF.  When it sees contact entity which has a primary key, it tries to retrieve that column from this table.
+        public Guid ContactId { get; set; }
+
         public Contacts.Contact Contact { get; set; }
 
         public string LastLoginIP{ get; set; }
-        public DateTime LastLoginDate { get; set; }
+        public DateTime? LastLoginDate { get; set; }
         public ICollection<UserLoginHistory> LoginHistory { get; set; }
 
         public ICollection<UserRoleLink> UserRoles { get; set; }

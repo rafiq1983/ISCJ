@@ -25,14 +25,14 @@ namespace ISCJ.webapi
         public List<ProgramDetail> GetAllPrograms()
         {
             ProgramManager mgr = new ProgramManager();
-            return mgr.GetAllPrograms(new CallContext("34234", "127.0.0.1", "32423434"));
+            return mgr.GetAllPrograms(new CallContext("34234", "127.0.0.1", "32423434", Guid.Empty));
         }
 
         [HttpGet("{programId}")]
         public ActionResult GetProgramDetail(string programId)
         {
             ProgramManager mgr = new ProgramManager();
-            var output = mgr.GetProgram(new CallContext("34234", "127.0.0.1", "32423434"), programId);
+            var output = mgr.GetProgram(new CallContext("34234", "127.0.0.1", "32423434", Guid.Empty), programId);
             if (output == null)
                 return NotFound();
             else

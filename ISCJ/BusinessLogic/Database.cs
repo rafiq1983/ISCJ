@@ -9,6 +9,10 @@ using MA.Common.Entities.Product;
 using MA.Common.Entities.MasjidMembership;
 using MA.Common.Entities.Invoices;
 using MA.Common.Entities.User;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
+using MA.Common.Entities.Tenants;
 
 namespace BusinessLogic
 {
@@ -25,9 +29,9 @@ namespace BusinessLogic
     public virtual DbSet<Registration> Registrations { get; set; }
     public virtual DbSet<Invoice> Invoices { get; set; }
 
-        public virtual DbSet<User> Users { get; set; }
-
-    public virtual DbSet<MasjidMembership> MasjidMembers { get; set; }
+      public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Tenant> Tenants { get; set; }
+        public virtual DbSet<MasjidMembership> MasjidMembers { get; set; }
 
         public virtual DbSet<BillableProduct> BillableProducts { get; set; }
 
@@ -86,6 +90,20 @@ namespace BusinessLogic
                 entity.HasKey(e => new { e.UserId, e.RoleCd});
             });
 
+            modelBuilder.Entity<Tenant>(entity =>
+            {
+                entity.Property(x => x.RowVersion).HasConversion(DataConverters.SqlTimeStampColumnConverter);
+            });
+
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasKey(e => e.UserId);
+                entity.Property(x => x.IsAccountLocked).HasConversion(DataConverters.IntToBoolConverter());
+                entity.Property(x => x.IsEncrypted).HasConversion(DataConverters.IntToBoolConverter());
+                entity.Property(x => x.RequirePasswordChangeAtLogin).HasConversion(DataConverters.IntToBoolConverter());
+            });
+
         }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -93,8 +111,44 @@ namespace BusinessLogic
       if (!optionsBuilder.IsConfigured)
       {
         optionsBuilder.UseSqlServer(ConnectionString.Value);
-      }
+                optionsBuilder.UseLoggerFactory(
+  DbCommandConsoleLoggerFactory).EnableSensitiveDataLogging(true);
+            }
     }
 
-  }
+        public static readonly LoggerFactory DbCommandConsoleLoggerFactory
+  = new LoggerFactory(new[] {
+      new ConsoleLoggerProvider ((category, level) =>
+        category == DbLoggerCategory.Database.Command.Name &&
+        level == LogLevel.Information, true)
+    });
+
+    }
+
+    static class DataConverters
+    {
+
+        public static readonly ValueConverter<string, byte[]> SqlTimeStampColumnConverter = new ValueConverter<string, byte[]>(
+    v => GetBytes(v),
+    v => Convert.ToBase64String(v));
+
+        private static byte[] GetBytes(string v)
+        {
+            return System.Text.ASCIIEncoding.ASCII.GetBytes(v);
+        }
+        //note: byte is a EF Provider Type for tinyint data in sql server.
+        //Here we are using a built in convert to convert sql server stored value into boolean.
+        private static BoolToZeroOneConverter<byte> _intToBoolConvert = new BoolToZeroOneConverter<byte>();
+
+        private static BytesToStringConverter _bytesToStringConverter = new BytesToStringConverter();
+        public static ValueConverter IntToBoolConverter()
+        {
+            return _intToBoolConvert;
+        }
+
+        public static ValueConverter BytesToStringConverter()
+        {
+            return _bytesToStringConverter;
+        }
+    }
 }

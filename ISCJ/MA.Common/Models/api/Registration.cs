@@ -43,14 +43,25 @@ namespace MA.Common.Models.api
         public Guid FatherContactId { get; set; }
         public Guid MotherContactId { get; set; }
         public List<StudentRegistrationApplication> StudentRegistration;
-        public string ProgramId { get; set; }
+        public Guid ProgramId { get; set; }
+
+        public List<RegistrationApplicationBilling> BillProducts { get; set; }
     }
 
-    
+    public class RegistrationApplicationBilling
+    {
+        public Guid ProductId { get; set; }
+        public int Count { get; set; }
+    }
     public class StudentRegistrationApplication
     {
         public Guid studentContactId { get; set; }
         public string IslamicSchoolGrade { get; set; }
         public string PublicSchoolGrade { get; set; }
+    }
+
+    public class CreateRegistrationApplicationOutput
+    {
+        public Guid ApplicationId { get; set; }
     }
 }

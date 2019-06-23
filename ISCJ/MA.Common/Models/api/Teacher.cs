@@ -9,7 +9,7 @@ namespace MA.Common.Models.api
     /// </summary>
    public class AddTeacherInput
     {
-        public Contact TeacherInfo { get; set; }
+        public ContactTBD TeacherInfo { get; set; }
         public Guid? ContactId { get; set; }
     }
     public class AddTeacherOutput

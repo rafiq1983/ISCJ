@@ -7,11 +7,11 @@ namespace MA.Common.Models
 
     public class AddContactInput
     {
-       public Contact Contact { get; set; }
+       public ContactTBD Contact { get; set; }
     }
 
     #region "Common"
-        public class Contact
+        public class ContactTBD
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
