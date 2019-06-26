@@ -7,6 +7,7 @@ using MA.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using MA.Common.Entities.Registration;
 
 namespace ISCJ.Pages.StudentManagement
 {
@@ -16,7 +17,7 @@ namespace ISCJ.Pages.StudentManagement
 
     public RegisterStudent2Model()
     {
-      Programs = mgr.GetPrograms();
+            Programs = mgr.GetAllPrograms(new MA.Core.CallContext("Iftikhar", "3234", "sfasfd", Guid.Empty));
     }
     public void OnGet()
     {

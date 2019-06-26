@@ -6,7 +6,7 @@ using BusinessLogic;
 using MA.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
+using MA.Common.Entities.Registration;
 namespace ISCJ.Pages.ProgramManagement
 {
   public class ProgramListModel : PageModel
@@ -15,7 +15,7 @@ namespace ISCJ.Pages.ProgramManagement
 
     public void OnGet()
     {
-      ProgramDetails = mgr.GetPrograms();
+            ProgramDetails = mgr.GetAllPrograms(new MA.Core.CallContext("Iftikhar", "23434", "234234234", Guid.Empty));
     }
 
 

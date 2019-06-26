@@ -17,13 +17,14 @@ namespace ISCJ.Pages.StudentManagement
     {
       programMgr = new ProgramManager();
 
-      Programs = programMgr.GetPrograms();
+            Programs = programMgr.GetAllPrograms(new MA.Core.CallContext("Iftikhar", "23234", "asfasf", Guid.Empty));
     }
         public void OnGet()
         {
             RegistrationManager mgr = new RegistrationManager();
-            Registrations = mgr.GetRegistrations(Guid.Parse(Programs[0].ProgramId));
-      ProgramId = Guid.Parse(Programs[0].ProgramId);
+            Registrations = mgr.GetRegistrations(Programs[0].ProgramId);
+            if(Programs.Any())
+                ProgramId = Programs[0].ProgramId;
         }
 
     public void OnPost()

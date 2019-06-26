@@ -7,7 +7,7 @@ using MA.Common;
 using MA.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using MA.Common.Entities.Registration;
 namespace ISCJ.webapi
 {
     [Route("api/[controller]")]
@@ -15,7 +15,7 @@ namespace ISCJ.webapi
     public class ProgramController : ControllerBase
     {
         [HttpPost]
-        public string AddProgram(ProgramDetail detail)
+        public Guid AddProgram(ProgramDetail detail)
         {
             ProgramManager mgr = new ProgramManager();
             return mgr.AddProgram(detail);
@@ -29,7 +29,7 @@ namespace ISCJ.webapi
         }
 
         [HttpGet("{programId}")]
-        public ActionResult GetProgramDetail(string programId)
+        public ActionResult GetProgramDetail(Guid programId)
         {
             ProgramManager mgr = new ProgramManager();
             var output = mgr.GetProgram(new CallContext("34234", "127.0.0.1", "32423434", Guid.Empty), programId);
