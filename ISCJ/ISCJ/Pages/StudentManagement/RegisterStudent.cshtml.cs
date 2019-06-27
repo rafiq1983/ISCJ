@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogic;
 using MA.Common;
+using MA.Common.Entities.Registration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -14,7 +15,7 @@ namespace ISCJ.Pages.StudentManagement
     public void OnGet()
     {
       ProgramManager mgr = new ProgramManager();
-      Programs = mgr.GetPrograms();
+            Programs = mgr.GetAllPrograms(new MA.Core.CallContext("Iftikhar", "2424", "asfasf", Guid.Empty));
     }
 
     public void OnPost()

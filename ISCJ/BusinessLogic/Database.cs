@@ -35,10 +35,16 @@ namespace BusinessLogic
 
         public virtual DbSet<BillableProduct> BillableProducts { get; set; }
 
+        public virtual DbSet<ProgramDetail> Programs { get; set; }
     public virtual DbSet<Contact> Contacts { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-      modelBuilder.Entity<Registration>(entity =>
+            modelBuilder.Entity<ProgramDetail>(entity =>
+            {
+                entity.HasKey(x => x.ProgramId);
+            });
+
+            modelBuilder.Entity<Registration>(entity =>
       {
         entity.ToTable("Registration");
         entity.HasKey(e => e.RegistrationId);
