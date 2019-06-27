@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogic;
 using MA.Common.Models.api;
+using MA.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -37,6 +38,26 @@ namespace ISCJ.webapi
             return new JsonResult(output);
         }
 
+
+        [HttpPost("/financialaccount")]
+        public JsonResult CreateFinancialAccount([FromBody]CreateFinancialAccountInput input)
+        {
+            FinancialAccountManager mgr = new FinancialAccountManager();
+
+            return new JsonResult(mgr.CreateFinancialAccount(GetCallContext(),input));
+
+        }
+
+        [HttpGet("/financialaccount")]
+        public JsonResult GetFinancialAccounts()
+        {
+            FinancialAccountManager mgr = new FinancialAccountManager();
+
+            return new JsonResult(mgr.GetFinancialAccounts(GetCallContext()));
+
+        }
+
+
         [HttpGet("{invoiceId}")]
         public JsonResult GetInvoiceDetail(Guid invoiceId)
         {
@@ -44,10 +65,13 @@ namespace ISCJ.webapi
             var output = mgr.GetInvoiceById(invoiceId);
             if (output == null)
             {
-                return new NotFoundJsonResult();
+                var js = new JsonResult(null);
+                js.StatusCode = 404;
+                return js;
+                //return new NotFoundJsonResult();
             }
-
-            return new JsonResult(output);
+           
+           return new JsonResult(output);
         }
 
         public class NotFoundJsonResult:JsonResult
@@ -58,6 +82,11 @@ namespace ISCJ.webapi
             }
 
             }
+
+        private CallContext GetCallContext()
+        {
+            return new CallContext("Iftikhar", "DSFsfsd", "FDSDF", Guid.Empty);
+        }
 
     }
 }

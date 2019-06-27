@@ -42,7 +42,7 @@ namespace ISCJ.Pages.StudentManagement
       if(ModelState.IsValid)
       {
         BusinessLogic.RegistrationManager mgr = new RegistrationManager();
-        mgr.CreateRegistration(StudentRegistration);
+        mgr.CreateRegistration(GetCallContext(), StudentRegistration);
       }
 
       Response.Redirect("Registrations");
@@ -69,7 +69,7 @@ namespace ISCJ.Pages.StudentManagement
     public List<MA.Common.Entities.Product.BillableProduct> Products { get; set; }
 
     [BindProperty]
-    public CreateRegistrationInput StudentRegistration
+    public CreateRegistrationApplicationInput StudentRegistration
     {
       get;
       set;

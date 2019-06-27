@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BusinessLogic;
+using MA.Common;
 using MA.Common.Models.api;
+using MA.Core;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ISCJ.webapi
@@ -14,11 +17,13 @@ namespace ISCJ.webapi
        [HttpPost("registratonapplication")]
        public CreateRegistrationApplicationOutput CreateRegistration(CreateRegistrationApplicationInput input)
         {
-            return new CreateRegistrationApplicationOutput()
-            {
-                ApplicationId = Guid.Empty
-            };
+            RegistrationManager mgr = new RegistrationManager();
+            return mgr.CreateRegistration(GetCallerContext(), input);
+        }
 
+        private CallContext GetCallerContext()
+        {
+            return new CallContext("Iftikhar", "sdfsdf", "DSFSDF", Guid.Empty);
         }
     }
 }

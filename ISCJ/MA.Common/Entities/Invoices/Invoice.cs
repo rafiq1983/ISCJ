@@ -1,5 +1,7 @@
-﻿using System;
+﻿using MA.Common.Models.api;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace MA.Common.Entities.Invoices
@@ -32,15 +34,22 @@ namespace MA.Common.Entities.Invoices
 
     public string Description { get; set; }
 
-    public decimal InvoiceAmount { get; set; }
+    public decimal Amount { get; set; }
 
   }
 
-    public class FinancialAccount
+    public class FinancialAccount:BaseEntity
     {
         public Guid FinancialAccountId { get; set; }
-        public Guid FinancialEntityId { get; set; }
-        public string FinancialEntityType { get; set; }
+        public FinancialAccountType FinancialAccountType { get; set; }
+
+
+        public string FinancialAccountName { get; set; }
+
+        public Guid TenantId { get; set; }
+
+        [ForeignKey("FinancialAccountId")]
+        public List<Invoice> Invoices { get; set; }
     }
 
     //TOOD: FOR Rafiq We have to use discrimnator column to return Contact FinancialAccount or Base FinancialAccount.

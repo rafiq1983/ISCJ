@@ -19,7 +19,6 @@ namespace BusinessLogic
       else if (update == true)
         _cacheData[key] = data;
     
-     
     }
 
     public static object GetData(string key)

@@ -125,7 +125,7 @@ namespace BusinessLogic
 
             using (var _ContextContact = new ContactContext())
             {
-                return _ContextContact.Contacts.ToList();
+                return _ContextContact.Contacts.ToList();//.Where(x => x.Guid == Guid.Parse("6358BD29-A24B-4294-9D5C-00CD2B3606A7")).ToList();
 
             }
         }

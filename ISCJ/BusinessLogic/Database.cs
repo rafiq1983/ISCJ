@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 using MA.Common.Entities.Tenants;
+using MA.Common.Models.api;
 
 namespace BusinessLogic
 {
@@ -27,6 +28,8 @@ namespace BusinessLogic
     {; }
 
     public virtual DbSet<Registration> Registrations { get; set; }
+
+        public virtual DbSet<RegistrationApplication> RegistrationApplications { get; set; }
     public virtual DbSet<Invoice> Invoices { get; set; }
 
       public virtual DbSet<User> Users { get; set; }
@@ -37,8 +40,23 @@ namespace BusinessLogic
 
         public virtual DbSet<ProgramDetail> Programs { get; set; }
     public virtual DbSet<Contact> Contacts { get; set; }
+
+        public DbSet<FinancialAccount> FinancialAccounts { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+            modelBuilder.Entity<FinancialAccount>(entity =>
+            {
+            entity.HasKey(x => x.FinancialAccountId);
+            entity.ToTable("FinancialAccount");
+                entity.Property(x => x.FinancialAccountType).HasConversion(new EnumToStringConverter<FinancialAccountType>());
+            });
+
+            modelBuilder.Entity<RegistrationApplication>(entity =>
+            {
+               entity.HasKey(x => x.ApplicationId);
+                entity.ToTable("RegistrationApplication");
+            });
+
             modelBuilder.Entity<ProgramDetail>(entity =>
             {
                 entity.HasKey(x => x.ProgramId);

@@ -26,18 +26,64 @@
 <div class="wrapper wrapper-content animated fadeInRight">
 <div class="row">
 <div class="col-lg-12">
-<div class="ibox ">
-    <div class="ibox-title">
-        <h5>Program and Fees</h5>
-        @{ var i = 0; }
-        @foreach (var product in Model.Products)
-        {
+    <div class="ibox ">
+        <div class="ibox-title">
+            <h5>Fees</h5>
+        </div>
+        <div class="ibox-content">
+            @{ var i = 0; }
+            <table>
+                @foreach (var product in Model.Products)
+                {
+                    <tr>
+                        <td><input type="checkbox" asp-for="@Model.StudentRegistration.BillingInstructions[i].IsSelected" /></td>
+                        <td><label class="col-sm-2 col-form-label">@Model.Products[i].Description</label></td>
+                        <td><label class="col-sm-2 col-form-label">$ @Model.Products[i].Price</label></td>
+                        <input type="hidden" value="@Model.Products[i].ProductCode" asp-for="@Model.StudentRegistration.BillingInstructions[i].ProductCode" />
+                        <td>
+                            <div class="col-sm-10">
+                                <select asp-for="@Model.StudentRegistration.BillingInstructions[i].ProductCount">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
+
+                            </div>
+                        </td>
+                    </tr>
+                    i = i + 1;
+                }
+            </table>
+        </div>
+    </div>
+    <div class="ibox">
+        <div class="ibox-title">
+            <h5>Program</h5>
+        </div>
+        <div class="ibox-content">
             <div class="form-group  row">
-                <input type="checkbox" asp-for="@Model.StudentRegistration.BillingInstructions[i].IsSelected" />
-                <label class="col-sm-2 col-form-label">@Model.Products[i].Description</label>
-                <input type="hidden" value="@Model.Products[i].ProductCode" asp-for="@Model.StudentRegistration.BillingInstructions[i].ProductCode" />
+                <label class="col-sm-2 col-form-label">Program</label>
+
                 <div class="col-sm-10">
-                    <select asp-for="@Model.StudentRegistration.BillingInstructions[i].ProductCount">
+                    @Html.DropDownListFor(x => x.StudentRegistration.ProgramId, new SelectList(Model.Programs, "ProgramId", "ProgramName"), "--Select--",
+                        htmlAttributes: new { @class = "form-control m-b" })
+
+                </div>
+            </div>
+            <div class="form-group  row">
+                <label class="col-sm-2 col-form-label">Membership Fee $365</label>
+
+                <div class="col-sm-10">
+                    <input type="checkbox" asp-for="@Model.StudentRegistration.AddSchoolMemberShipFee" />
+
+                </div>
+            </div>
+            <div class="form-group  row">
+                <label class="col-sm-2 col-form-label">Registration Fee $20</label>
+
+                <div class="col-sm-10">
+                    <select asp-for="@Model.StudentRegistration.StudentRegistrationFeeCount">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -46,44 +92,11 @@
 
                 </div>
             </div>
-            i = i + 1;
-        }
+
+            <div class="hr-line-dashed"></div>
+        </div>
     </div>
-    <div class="ibox-content">
-        <div class="form-group  row">
-            <label class="col-sm-2 col-form-label">Program</label>
 
-            <div class="col-sm-10">
-                @Html.DropDownListFor(x => x.StudentRegistration.ProgramId, new SelectList(Model.Programs, "ProgramId", "ProgramName"), "--Select--",
-                    htmlAttributes: new { @class = "form-control m-b" })
-
-            </div>
-        </div>
-        <div class="form-group  row">
-            <label class="col-sm-2 col-form-label">Membership Fee $365</label>
-
-            <div class="col-sm-10">
-                <input type="checkbox" asp-for="@Model.StudentRegistration.AddSchoolMemberShipFee" />
-
-            </div>
-        </div>
-        <div class="form-group  row">
-            <label class="col-sm-2 col-form-label">Registration Fee $20</label>
-
-            <div class="col-sm-10">
-                <select asp-for="@Model.StudentRegistration.StudentRegistrationFeeCount">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                </select>
-
-            </div>
-        </div>
-
-        <div class="hr-line-dashed"></div>
-    </div>
-</div>
 <div class="ibox ">
     <div class="ibox-title">
         <h5>Guardians/Parent</h5>
@@ -126,9 +139,9 @@
 
             <div class="col-sm-10">
                 <input type="text" placeholder="Student name here" autocomplete="off"
-                       data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_StudentRegistration_0__StudentId"
+                       data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_StudentRegistrations_0__StudentId"
                        class="autocomplete form-control" />
-                <input type="hidden" asp-for="@Model.StudentRegistration.StudentRegistration[0].StudentId" />
+                <input type="hidden" asp-for="@Model.StudentRegistration.StudentRegistrations[0].StudentId" />
 
             </div>
         </div>
@@ -136,7 +149,7 @@
             <label class="col-sm-2 col-form-label">Public School Grade</label>
 
             <div class="col-sm-10">
-                <select asp-for="@Model.StudentRegistration.StudentRegistration[0].PublicSchoolGrade" class="form-control"
+                <select asp-for="@Model.StudentRegistration.StudentRegistrations[0].PublicSchoolGrade" class="form-control"
                         asp-items="@Model.PublicSchoolGradeList">
                     <option>Please select one</option>
                 </select>
@@ -147,7 +160,7 @@
             <label class="col-sm-2 col-form-label">Islamic School Grade</label>
 
             <div class="col-sm-10">
-                <select asp-for="@Model.StudentRegistration.StudentRegistration[0].IslamicSchoolGrade" class="form-control"
+                <select asp-for="@Model.StudentRegistration.StudentRegistrations[0].IslamicSchoolGrade" class="form-control"
                         asp-items="@Model.IslamicSchoolGradeList">
                     <option>Please select one</option>
                 </select>
@@ -170,7 +183,7 @@
                 <input type="text" placeholder="Student name here" autocomplete="off"
                        data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_StudentRegistration_1__StudentId"
                        class="autocomplete form-control" />
-                <input type="hidden" asp-for="@Model.StudentRegistration.StudentRegistration[1].StudentId" />
+                <input type="hidden" asp-for="@Model.StudentRegistration.StudentRegistrations[1].StudentId" />
 
             </div>
         </div>
@@ -178,7 +191,7 @@
             <label class="col-sm-2 col-form-label">Public School Grade</label>
 
             <div class="col-sm-10">
-                <select asp-for="@Model.StudentRegistration.StudentRegistration[1].PublicSchoolGrade" class="form-control"
+                <select asp-for="@Model.StudentRegistration.StudentRegistrations[1].PublicSchoolGrade" class="form-control"
                         asp-items="@Model.PublicSchoolGradeList">
                     <option>Please select one</option>
                 </select>
@@ -189,7 +202,7 @@
             <label class="col-sm-2 col-form-label">Islamic School Grade</label>
 
             <div class="col-sm-10">
-                <select asp-for="@Model.StudentRegistration.StudentRegistration[1].IslamicSchoolGrade" class="form-control"
+                <select asp-for="@Model.StudentRegistration.StudentRegistrations[1].IslamicSchoolGrade" class="form-control"
                         asp-items="@Model.IslamicSchoolGradeList">
                     <option>Please select one</option>
                 </select>
@@ -212,7 +225,7 @@
                 <input type="text" placeholder="Student name here" autocomplete="off"
                        data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_StudentRegistration_2__StudentId"
                        class="autocomplete form-control" />
-                <input type="hidden" asp-for="@Model.StudentRegistration.StudentRegistration[2].StudentId" />
+                <input type="hidden" asp-for="@Model.StudentRegistration.StudentRegistrations[2].StudentId" />
 
             </div>
         </div>
@@ -220,7 +233,7 @@
             <label class="col-sm-2 col-form-label">Public School Grade</label>
 
             <div class="col-sm-10">
-                <select asp-for="@Model.StudentRegistration.StudentRegistration[2].PublicSchoolGrade" class="form-control"
+                <select asp-for="@Model.StudentRegistration.StudentRegistrations[2].PublicSchoolGrade" class="form-control"
                         asp-items="@Model.PublicSchoolGradeList">
                     <option>Please select one</option>
                 </select>
@@ -231,7 +244,7 @@
             <label class="col-sm-2 col-form-label">Islamic School Grade</label>
 
             <div class="col-sm-10">
-                <select asp-for="@Model.StudentRegistration.StudentRegistration[2].IslamicSchoolGrade" class="form-control"
+                <select asp-for="@Model.StudentRegistration.StudentRegistrations[2].IslamicSchoolGrade" class="form-control"
                         asp-items="@Model.IslamicSchoolGradeList">
                     <option>Please select one</option>
                 </select>
@@ -254,7 +267,7 @@
                 <input type="text" placeholder="Student name here" autocomplete="off"
                        data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_StudentRegistration_3__StudentId"
                        class="autocomplete form-control" />
-                <input type="hidden" asp-for="@Model.StudentRegistration.StudentRegistration[3].StudentId" />
+                <input type="hidden" asp-for="@Model.StudentRegistration.StudentRegistrations[3].StudentId" />
 
             </div>
         </div>
@@ -262,7 +275,7 @@
             <label class="col-sm-2 col-form-label">Public School Grade</label>
 
             <div class="col-sm-10">
-                <select asp-for="@Model.StudentRegistration.StudentRegistration[3].PublicSchoolGrade" class="form-control"
+                <select asp-for="@Model.StudentRegistration.StudentRegistrations[3].PublicSchoolGrade" class="form-control"
                         asp-items="@Model.PublicSchoolGradeList">
                     <option>Please select one</option>
                 </select>
@@ -273,7 +286,7 @@
             <label class="col-sm-2 col-form-label">Islamic School Grade</label>
 
             <div class="col-sm-10">
-                <select asp-for="@Model.StudentRegistration.StudentRegistration[3].IslamicSchoolGrade" class="form-control"
+                <select asp-for="@Model.StudentRegistration.StudentRegistrations[3].IslamicSchoolGrade" class="form-control"
                         asp-items="@Model.IslamicSchoolGradeList">
                     <option>Please select one</option>
                 </select>

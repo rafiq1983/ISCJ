@@ -7,136 +7,133 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
 using MA.Common.Models.api;
+using MA.Core;
 
 namespace BusinessLogic
 {
 
   public class RegistrationManager
   {
-    private static List<Registration> _Registrations = new List<Registration>();
-
-
-    public bool CreateRegistration(CreateRegistrationInput input)
+    public CreateRegistrationApplicationOutput CreateRegistration(CallContext context, CreateRegistrationApplicationInput input)
     {
-            using (TransactionScope ts = new TransactionScope())
+            using (TransactionScope scope = new TransactionScope())
             {
-                SaveRegistrationApplication(input);
-                CreateSingleRegistration(input);
-                PerformBilling(input);
-               return true;
-               
+                var id = SaveRegistrationApplication(context, input);
+                //CreateSingleRegistration(input);
+                PerformBilling(context, input);
+                scope.Complete();
+                return new CreateRegistrationApplicationOutput() { ApplicationId = id };
+
             }
-
-            return false;
-
+           
     }
 
 
-    private void CreateSingleRegistration(CreateRegistrationInput input)
+    private void CreateSingleRegistration(CallContext context, CreateRegistrationApplicationInput input)
     {
         using (var db = new Database())
         {
-            for (int i = 0; i < input.StudentRegistration.Count; i++)
+            for (int i = 0; i < input.StudentRegistrations.Count; i++)
             {
-                if (input.StudentRegistration[i].StudentId.HasValue)
-                {
+                    if (input.StudentRegistrations[i].StudentId.HasValue == false)
+                        continue;
                     Registration reg = new Registration();
                     reg.FatherId = input.FatherId;
                     reg.MotherId = input.MotherId;
                     reg.ProgramId = input.ProgramId;
-                    reg.IslamicSchoolGradeId = input.StudentRegistration[i].IslamicSchoolGrade;
-                    reg.PublicSchoolGradeId = input.StudentRegistration[i].PublicSchoolGrade;
-                    reg.StudentId = input.StudentRegistration[i].StudentId.Value;
+                    reg.IslamicSchoolGradeId = input.StudentRegistrations[i].IslamicSchoolGrade;
+                    reg.PublicSchoolGradeId = input.StudentRegistrations[i].PublicSchoolGrade;
+                    reg.StudentContactId = input.StudentRegistrations[i].StudentId.Value;
                     db.Registrations.Add(reg);
-                }
+               
             }
         }
     }
 
-    private void SaveRegistrationApplication(CreateRegistrationInput input)
+    private Guid SaveRegistrationApplication(CallContext context, CreateRegistrationApplicationInput input)
                 {
-                    using (var db = new Database())
-                    {
-                      
-                    }
-                }
-
-    private void PerformBilling(CreateRegistrationInput input)
-        {
             using (var db = new Database())
             {
-                Invoice invoice = null;
-
-                if (input.AddSchoolMemberShipFee || input.AddStudentRegistrationFee)
-                    invoice = new Invoice();
-
-                if (invoice != null)
+                RegistrationApplication application = new RegistrationApplication()
                 {
+                    ApplicationId = Guid.NewGuid(),
+                    ApplicationDate = DateTime.UtcNow,
+                    FatherContactId = input.FatherId,
+                    MotherContactId = input.MotherId,
+                    ProgramId = input.ProgramId,
+                    MembershipId = Guid.Empty,
+                    CreateUser = context.UserId
+                };
+               
+                application.Registrations = new List<Registration>();
 
-                    invoice.DueDate = DateTime.Now;
-                    invoice.GenerationDate = DateTime.Now;
-                    invoice.InvoiceAmount = 0;
-
-                    invoice.Description = "Yearly Palmyra Masjid Membership fee";
-                }
-
-
-                if (input.AddSchoolMemberShipFee)
+                foreach (var reg in input.StudentRegistrations)
                 {
-                    invoice.InvoiceItems = new List<InvoiceItem>()
+                    if (reg.StudentId.HasValue == false)
+                        continue;
+
+                    application.Registrations.Add(new Registration()
                     {
-                        new InvoiceItem()
-                        {
-                            InvoiceAmount = 365, Description = "School Yearly Membership Fee"
-                        }
-                    };
-
-                    invoice.InvoiceAmount += 365;
+                        FatherId = input.FatherId,
+                        MotherId = input.MotherId,
+                        ProgramId = input.ProgramId,
+                        IslamicSchoolGradeId = reg.IslamicSchoolGrade,
+                        PublicSchoolGradeId = reg.PublicSchoolGrade,
+                        RegistrationId = Guid.NewGuid(),
+                        StudentContactId = reg.StudentId.Value,
+                    });
                 }
-
-
-                db.Invoices.Add(invoice);
-
-                for (int i = 0; i < input.StudentRegistration.Count; i++)
-                {
-                    if (input.StudentRegistration[i].StudentId.HasValue)
-                    {
-                        Registration reg = new Registration();
-                        reg.FatherId = input.FatherId;
-                        reg.MotherId = input.MotherId;
-                        reg.ProgramId = input.ProgramId;
-                        reg.IslamicSchoolGradeId = input.StudentRegistration[i].IslamicSchoolGrade;
-                        reg.PublicSchoolGradeId = input.StudentRegistration[i].PublicSchoolGrade;
-                        reg.StudentId = input.StudentRegistration[i].StudentId.Value;
-                        db.Registrations.Add(reg);
-
-                        if (input.AddStudentRegistrationFee)
-                        {
-                            using (ContactContext contactCtx = new ContactContext())
-                            {
-
-                                if (invoice.InvoiceItems == null)
-                                    invoice.InvoiceItems = new List<InvoiceItem>();
-
-                                var studentInfo = contactCtx.Contacts.Single(x =>
-                                    x.Guid == input.StudentRegistration[i].StudentId);
-                                string studentName = studentInfo.FirstName + " " + studentInfo.LastName;
-
-                                invoice.InvoiceItems.Add(new InvoiceItem()
-                                {
-                                    InvoiceAmount = 20,
-                                    Description = "Fee for " + studentName,
-                                });
-
-                                invoice.InvoiceAmount += 20;
-                            }
-
-                        }
-                    }
-                }
+                
+                db.RegistrationApplications.Add(application);
+                                
+                db.SaveChanges();
+                return application.ApplicationId;
             }
+
         }
 
+    
+    private void PerformBilling(CallContext context, CreateRegistrationApplicationInput input)
+        {
+            if (input.BillingInstructions.Count == 0)
+                return;
+
+            using (var db = new Database())
+            {
+                var productIds = input.BillingInstructions.Where(y => y.IsSelected).Select(z => z.ProductCode).ToArray();
+
+                var products = db.BillableProducts.Where(x => productIds.Contains(x.ProductCode)).ToDictionary(y=>y.ProductCode);
+
+                Invoice invoice = new Invoice();
+                invoice.DueDate = DateTime.Now;
+                invoice.GenerationDate = DateTime.Now;
+                invoice.CreateUser = context.UserId;
+                
+                invoice.InvoiceItems = new List<InvoiceItem>();
+                foreach (var item in input.BillingInstructions.Where(x=>x.IsSelected))
+                {
+                    if(products.ContainsKey(item.ProductCode))
+                       {
+                        invoice.InvoiceAmount += item.ProductCount * products[item.ProductCode].Price;
+                        invoice.InvoiceItems.Add(new InvoiceItem()
+                        {
+                            Amount = products[item.ProductCode].Price * item.ProductCount,
+                            Description = products[item.ProductCode].Description + "x" + item.ProductCount
+                        });
+                    }                    
+                    else
+                    {
+                        throw new Exception("Invalid Product id " + item.ProductId);
+                    }
+                }
+
+                    invoice.Description = "Invoice generated during registration application.";
+
+                    db.Invoices.Add(invoice);
+                db.SaveChanges();
+                }
+            }
+    
         public Guid CreateRegistration(Guid programId, 
                       Guid studentId, Guid fatherId, Guid motherId,
                       string islamicSchoolGrade, string publicSchoolGrade)

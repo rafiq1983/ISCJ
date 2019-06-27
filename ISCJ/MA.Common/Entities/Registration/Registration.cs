@@ -10,6 +10,7 @@ namespace MA.Common.Entities.Registration
   {
     public Guid RegistrationId { get; set; }
    
+        public Guid RegistrationApplicationId { get; set; }
     public Guid FatherId { get; set; } //isa:may not need these.
 
     public Guid MotherId { get; set; }
@@ -20,7 +21,7 @@ namespace MA.Common.Entities.Registration
 
     public string PublicSchoolGradeId { get; set; }
 
-    public Guid StudentId { get; set; }
+    public Guid StudentContactId { get; set; }
 
     [ForeignKey("FatherId")] //can be done with fluent api as well.
     public Contact FatherContactInfo { get; set; }
@@ -28,10 +29,31 @@ namespace MA.Common.Entities.Registration
     [ForeignKey("MotherId")]
     public Contact MotherContactInfo { get; set; }
 
-    [ForeignKey("StudentId")]
+    [ForeignKey("StudentContactId")]
     public Contact StudentContactInfo { get; set; }//needs to map to contact table.
     
   }
 
+    public class RegistrationApplication:BaseEntity
+    {
+        public Guid ApplicationId { get; set; }
+        public DateTime ApplicationDate { get; set; }
+        public Guid ProgramId { get; set; }
 
+        public Guid? MembershipId { get; set; }
+        public Guid FatherContactId { get; set; } //isa:may not need these.
+
+        public Guid MotherContactId { get; set; }
+
+        [ForeignKey("RegistrationApplicationId")]
+        public List<Registration> Registrations { get; set; }//needs to map to contact table.*/
+
+        /*[ForeignKey("FatherContactId")] //can be done with fluent api as well.
+        public Contact FatherContactInfo { get; set; }
+
+        [ForeignKey("MotherContactId")]
+        public Contact MotherContactInfo { get; set; }
+
+      */
+    }
 }

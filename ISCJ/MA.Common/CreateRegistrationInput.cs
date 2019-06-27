@@ -6,7 +6,7 @@ using MA.Common.Entities.Product;
 namespace MA.Common
 {
  
-  public class CreateRegistrationInput
+  public class CreateRegistrationApplicationInput
   {
     public Guid FatherId { get; set; }
     public Guid MotherId { get; set; }
@@ -14,7 +14,7 @@ namespace MA.Common
     public bool AddSchoolMemberShipFee { get; set; }
     public bool AddStudentRegistrationFee { get; set; }
     public int StudentRegistrationFeeCount { get; set; }
-    public List<CreateStudentRegistrationInput> StudentRegistration { get; set; }
+    public List<CreateStudentRegistrationInput> StudentRegistrations { get; set; }
     public List<ProductSelected> BillingInstructions { get; set; }
   }
 

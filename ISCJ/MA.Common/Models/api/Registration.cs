@@ -38,21 +38,7 @@ namespace MA.Common.Models.api
         public string ClassId { get; set; }
     }
 
-    public class CreateRegistrationApplicationInput
-    {
-        public Guid FatherContactId { get; set; }
-        public Guid MotherContactId { get; set; }
-        public List<StudentRegistrationApplication> StudentRegistration;
-        public Guid ProgramId { get; set; }
-
-        public List<RegistrationApplicationBilling> BillProducts { get; set; }
-    }
-
-    public class RegistrationApplicationBilling
-    {
-        public Guid ProductId { get; set; }
-        public int Count { get; set; }
-    }
+   
     public class StudentRegistrationApplication
     {
         public Guid studentContactId { get; set; }
