@@ -13,6 +13,5 @@ namespace BusinessLogic.CustomerAccountManagementPOC.Entities
         public string CustomerName { get; set; }
         public string CustomerNumber { get; set; }
         public ICollection<CustomerAccount> Accounts { get; set; }
-       
     }
 }

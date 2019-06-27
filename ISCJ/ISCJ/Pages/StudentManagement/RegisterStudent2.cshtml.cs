@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogic;
 using MA.Common;
+using MA.Common.Models.api;
+using MA.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,11 +15,19 @@ namespace ISCJ.Pages.StudentManagement
     public class RegisterStudent2Model : PageModel
     {
      ProgramManager mgr = new ProgramManager();
+     private ProductManager productMgr = new ProductManager();
 
     public RegisterStudent2Model()
     {
       Programs = mgr.GetPrograms();
+      Products = productMgr.GetAllProducts(GetCallContext());
     }
+
+    private CallContext GetCallContext()
+    {
+        return new CallContext("Iftikhar", "234234", "askfj", Guid.Empty);
+    }
+
     public void OnGet()
     {
 
@@ -53,7 +63,8 @@ namespace ISCJ.Pages.StudentManagement
     }
 
     public List<ProgramDetail> Programs { get; set; }
-  
+    public List<MA.Common.Entities.Product.BillableProduct> Products { get; set; }
+
     [BindProperty]
     public CreateRegistrationInput StudentRegistration
     {

@@ -13,6 +13,6 @@ namespace BusinessLogic.CustomerAccountManagementPOC.Entities
         public string Region { get; set; }
         public string City { get; set; }
         public string PostalCode { get; set; }
-        public ICollection<AccountAddress> AccountsLink { get; set; }
+        public ICollection<AccountAddressLink> AccountsLink { get; set; }
     }
 }

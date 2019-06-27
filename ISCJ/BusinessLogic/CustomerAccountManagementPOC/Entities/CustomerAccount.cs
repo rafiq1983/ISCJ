@@ -16,7 +16,8 @@ namespace BusinessLogic.CustomerAccountManagementPOC.Entities
         public string AccountName { get; set; }
         [JsonIgnore]//otherwise, json.net fails with circular dependency error.  Need to figure out.
         public Customer Customer { get; set; }
-        //public List<DBAddress> Addresses { get; set; } //Ideally I would have like this.
-        public ICollection<AccountAddress> AddressesLink { get; set; }
+        public ICollection<AccountAddressLink> AddressesLink { get; set; }
+        public ICollection<AccountPaymentSetting> PaymentSettings { get; set; }
+        public ICollection<AccountContactLink> ContactsLink { get; set; }
     }
 }

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using BusinessLogic.CustomerAccountManagementPOC.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using BusinessLogic.CustomerAccountManagementPOC.Entities;
 
-namespace BusinessLogic.CustomerAccountManagementPOC
+namespace Vcc.EM.Application
 {
     public class CustomerAccountManagementDBContext : DbContext
     {
@@ -19,7 +19,7 @@ namespace BusinessLogic.CustomerAccountManagementPOC
         public DbSet<Phone> Phones { get; set; }
         public DbSet<AccountPaymentSetting> AccountPaymentSettings { get; set; }
         public DbSet<AccountEmailRecipient> AccountEmailRecipients { get; set; }
-
+        public DbSet<ContactWithOnlyOneEmail> ContactWithSingleEmail { get; set; }
         public CustomerAccountManagementDBContext(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -101,24 +101,70 @@ namespace BusinessLogic.CustomerAccountManagementPOC
                 entity.HasKey(e => e.AddressId);
             });
 
-            modelBuilder.Entity<AccountAddress>(entity =>
+            modelBuilder.Entity<AccountAddressLink>(entity =>
             {
                 entity.ToTable("account_address");
                 entity.HasKey(x => new { x.AccountId, x.AddressId });
             });
 
-            modelBuilder.Entity<AccountAddress>(entity =>
+            modelBuilder.Entity<AccountAddressLink>(entity =>
             {
                 entity.HasOne(pt => pt.CustomerAccount)
                      .WithMany(p => p.AddressesLink)
                      .HasForeignKey(pt => pt.AccountId);
             });
 
-            modelBuilder.Entity<AccountAddress>(entity =>
+            modelBuilder.Entity<AccountAddressLink>(entity =>
             {
                 entity.HasOne(pt => pt.DBAddress)
                  .WithMany(p => p.AccountsLink)
                 .HasForeignKey(pt => pt.AddressId);
+            });
+
+            modelBuilder.Entity<AccountContactLink>(entity =>
+            {
+                entity.ToTable("account_contact");
+                entity.HasKey(x => new { x.AccountId, x.ContactId });
+
+                entity.HasOne(pt => pt.CustomerAccount)
+                    .WithMany(p => p.ContactsLink)
+                    .HasForeignKey(pt => pt.AccountId);
+
+            });
+
+            modelBuilder.Entity<ContactPhone>(entity =>
+            {
+                entity.ToTable("contact_phone");
+                entity.HasKey(x => new { x.ContactId, x.PhoneId });
+
+                entity.HasOne(pt => pt.Contact)
+                    .WithMany(p => p.Phones)
+                    .HasForeignKey(pt => pt.ContactId);
+            });
+
+            modelBuilder.Entity<ContactEmail>(entity =>
+            {
+                entity.ToTable("contact_email");
+                entity.HasKey(x => new { x.ContactId, x.EmailId });
+
+                entity.HasOne(pt => pt.Contact)
+                    .WithMany(p => p.Emails)
+                    .HasForeignKey(pt => pt.ContactId);
+            });
+
+            //Contact with only 1 email poc.
+            modelBuilder.Entity<ContactWithOnlyOneEmail>(entity =>
+            {
+                entity.ToTable("contact");
+                entity.HasKey(x => x.ContactId);
+                entity.HasOne(x => x.Email).WithOne(b => b.ContactWithOnlyOneEmail)
+                    .HasForeignKey<EmailSingle>(b => b.ContactId);
+            });
+
+            modelBuilder.Entity<EmailSingle>(entity =>
+            {
+                entity.ToTable("contact_email");
+                entity.HasKey(x => new { x.ContactId, x.EmailId });
             });
         }
 
@@ -127,11 +173,67 @@ namespace BusinessLogic.CustomerAccountManagementPOC
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.EnableSensitiveDataLogging(true);
-                //optionsBuilder.UseMySQL(_configuration["key"]);
-                optionsBuilder.UseSqlServer("");
-
+                //optionsBuilder.UseMySQL(_configuration["BT_VCC_ENROLLMENT_CONNECTIONSTRING"]);
+                
             }
         }
     }
 
+
+    public class CustomerAccountManagementDBContext2 : DbContext
+    {
+        private readonly IConfiguration _configuration;
+
+        public DbSet<ContactWithOnlyOneEmail> ContactWithSingleEmail { get; set; }
+
+        public CustomerAccountManagementDBContext2(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            ConfigureTables(modelBuilder);
+            ConfigureRelations(modelBuilder);
+        }
+
+        private void ConfigureRelations(ModelBuilder modelBuilder)
+        {
+            ;
+        }
+
+        private void ConfigureTables(ModelBuilder modelBuilder)
+        {
+            //Contact with only 1 email poc.
+            modelBuilder.Entity<ContactWithOnlyOneEmail>(entity =>
+            {
+                entity.ToTable("contact");
+                entity.HasKey(x => x.ContactId);
+                entity.HasOne(x => x.Email).WithOne(x=>x.ContactWithOnlyOneEmail)
+                    .HasForeignKey<EmailSingle>(b => b.ContactId);
+            });
+
+            modelBuilder.Entity<EmailSingle>(entity =>
+            {
+                entity.ToTable("contact_email");
+                entity.HasKey(x => new { x.ContactId, x.EmailId });
+            });
+
+            modelBuilder.Entity<Email>(entity =>
+            {
+                entity.ToTable("email");
+                entity.HasKey(x => x.EmailId);
+            });
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.EnableSensitiveDataLogging(true);
+               // optionsBuilder.UseMySQL(_configuration["BT_VCC_ENROLLMENT_CONNECTIONSTRING"]);
+
+            }
+        }
+    }
 }

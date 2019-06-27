@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MA.Common.Entities.Product;
 
 namespace MA.Common
 {
@@ -14,6 +15,7 @@ namespace MA.Common
     public bool AddStudentRegistrationFee { get; set; }
     public int StudentRegistrationFeeCount { get; set; }
     public List<CreateStudentRegistrationInput> StudentRegistration { get; set; }
+    public List<ProductSelected> ProductionSelected { get; set; }
   }
 
   public class CreateStudentRegistrationInput
@@ -26,5 +28,13 @@ namespace MA.Common
   public class RegistrationDetail
   {
     public Guid RegistrationId { get; set; }
+  }
+
+  public class ProductSelected
+  {
+      public Guid ProductId { get; set; }
+      public int ProductCount { get; set; }
+      public bool IsSelected { get; set; }
+      public string ProductName { get; set; }
   }
 }

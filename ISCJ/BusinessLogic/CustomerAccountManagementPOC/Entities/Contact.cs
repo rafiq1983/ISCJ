@@ -9,5 +9,7 @@ namespace BusinessLogic.CustomerAccountManagementPOC.Entities
         public string ContactId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public ICollection<ContactPhone> Phones { get; set; }
+        public ICollection<ContactEmail> Emails { get; set; }
     }
 }
