@@ -17,272 +17,291 @@
           Student Management
         </li>
         <li class="active breadcrumb-item">
-          <strong>Registration Application</strong>
+          <strong>Student Registration</strong>
         </li>
       </ol>
     </div>
   </div>
 
-  <div class="wrapper wrapper-content animated fadeInRight">
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="ibox ">
-          <div class="ibox-title">
-            <h5>Program and Fees</h5>
-
-          </div>
-          <div class="ibox-content">
+<div class="wrapper wrapper-content animated fadeInRight">
+<div class="row">
+<div class="col-lg-12">
+<div class="ibox ">
+    <div class="ibox-title">
+        <h5>Program and Fees</h5>
+        @{ var i = 0; }
+        @foreach (var product in Model.Products)
+        {
             <div class="form-group  row">
-              <label class="col-sm-2 col-form-label">Program</label>
+                <input type="checkbox" asp-for="@Model.StudentRegistration.BillingInstructions[i].IsSelected" />
+                <label class="col-sm-2 col-form-label">@Model.Products[i].Description</label>
+                <input type="hidden" value="@Model.Products[i].ProductCode" asp-for="@Model.StudentRegistration.BillingInstructions[i].ProductCode" />
+                <div class="col-sm-10">
+                    <select asp-for="@Model.StudentRegistration.BillingInstructions[i].ProductCount">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
 
-              <div class="col-sm-10">
-                @Html.DropDownListFor(x => x.StudentRegistration.ProgramId, new SelectList(Model.Programs, "ProgramId", "ProgramName"), "--Select--",
-       htmlAttributes: new { @class = "form-control m-b" })
-
-              </div>
+                </div>
             </div>
-            <div class="form-group  row">
-              <label class="col-sm-2 col-form-label">Membership Fee $365</label>
+            i = i + 1;
+        }
+    </div>
+    <div class="ibox-content">
+        <div class="form-group  row">
+            <label class="col-sm-2 col-form-label">Program</label>
 
-              <div class="col-sm-10">
+            <div class="col-sm-10">
+                @Html.DropDownListFor(x => x.StudentRegistration.ProgramId, new SelectList(Model.Programs, "ProgramId", "ProgramName"), "--Select--",
+                    htmlAttributes: new { @class = "form-control m-b" })
+
+            </div>
+        </div>
+        <div class="form-group  row">
+            <label class="col-sm-2 col-form-label">Membership Fee $365</label>
+
+            <div class="col-sm-10">
                 <input type="checkbox" asp-for="@Model.StudentRegistration.AddSchoolMemberShipFee" />
 
-              </div>
             </div>
-            <div class="form-group  row">
-              <label class="col-sm-2 col-form-label">Registration Fee $20</label>
+        </div>
+        <div class="form-group  row">
+            <label class="col-sm-2 col-form-label">Registration Fee $20</label>
 
-              <div class="col-sm-10">
+            <div class="col-sm-10">
                 <select asp-for="@Model.StudentRegistration.StudentRegistrationFeeCount">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
                 </select>
 
-              </div>
             </div>
-
-            <div class="hr-line-dashed"></div>
-          </div>
         </div>
-        <div class="ibox ">
-          <div class="ibox-title">
-            <h5>Guardians/Parent</h5>
 
-          </div>
-          <div class="ibox-content">
-            <div class="form-group  row">
-              <label class="col-sm-2 col-form-label">Father</label>
+        <div class="hr-line-dashed"></div>
+    </div>
+</div>
+<div class="ibox ">
+    <div class="ibox-title">
+        <h5>Guardians/Parent</h5>
 
-              <div class="col-sm-10">
+    </div>
+    <div class="ibox-content">
+        <div class="form-group  row">
+            <label class="col-sm-2 col-form-label">Father</label>
+
+            <div class="col-sm-10">
                 <input type="text" placeholder="Type Father name here" autocomplete="off"
                        data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_FatherId"
                        class="autocomplete form-control" />
                 <input type="hidden" asp-for="@Model.StudentRegistration.FatherId" />
 
-              </div>
             </div>
-            <div class="form-group  row">
-              <label class="col-sm-2 col-form-label">Mother</label>
+        </div>
+        <div class="form-group  row">
+            <label class="col-sm-2 col-form-label">Mother</label>
 
-              <div class="col-sm-10">
+            <div class="col-sm-10">
                 <input type="text" placeholder="Type Mother name here" autocomplete="off"
                        data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_MotherId"
                        class="autocomplete form-control" />
                 <input type="hidden" asp-for="@Model.StudentRegistration.MotherId" />
-              </div>
             </div>
-
-            <div class="hr-line-dashed"></div>
-          </div>
         </div>
-        <div class="ibox ">
-          <div class="ibox-title">
-            <h5>Student 1</h5>
 
-          </div>
-          <div class="ibox-content">
-            <div class="form-group  row">
-              <label class="col-sm-2 col-form-label">Student</label>
+        <div class="hr-line-dashed"></div>
+    </div>
+</div>
+<div class="ibox ">
+    <div class="ibox-title">
+        <h5>Student 1</h5>
 
-              <div class="col-sm-10">
+    </div>
+    <div class="ibox-content">
+        <div class="form-group  row">
+            <label class="col-sm-2 col-form-label">Student</label>
+
+            <div class="col-sm-10">
                 <input type="text" placeholder="Student name here" autocomplete="off"
                        data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_StudentRegistration_0__StudentId"
                        class="autocomplete form-control" />
                 <input type="hidden" asp-for="@Model.StudentRegistration.StudentRegistration[0].StudentId" />
 
-              </div>
             </div>
-            <div class="form-group  row">
-              <label class="col-sm-2 col-form-label">Public School Grade</label>
+        </div>
+        <div class="form-group  row">
+            <label class="col-sm-2 col-form-label">Public School Grade</label>
 
-              <div class="col-sm-10">
+            <div class="col-sm-10">
                 <select asp-for="@Model.StudentRegistration.StudentRegistration[0].PublicSchoolGrade" class="form-control"
                         asp-items="@Model.PublicSchoolGradeList">
-                  <option>Please select one</option>
+                    <option>Please select one</option>
                 </select>
-              </div>
             </div>
-
-            <div class="form-group  row">
-              <label class="col-sm-2 col-form-label">Islamic School Grade</label>
-
-              <div class="col-sm-10">
-                <select asp-for="@Model.StudentRegistration.StudentRegistration[0].IslamicSchoolGrade" class="form-control"
-                        asp-items="@Model.IslamicSchoolGradeList">
-                  <option>Please select one</option>
-                </select>
-              </div>
-            </div>
-            <div class="hr-line-dashed"></div>
-          </div>
         </div>
 
-        <div class="ibox ">
-          <div class="ibox-title">
-            <h5>Student 2</h5>
+        <div class="form-group  row">
+            <label class="col-sm-2 col-form-label">Islamic School Grade</label>
 
-          </div>
-          <div class="ibox-content">
-            <div class="form-group  row">
-              <label class="col-sm-2 col-form-label">Student</label>
+            <div class="col-sm-10">
+                <select asp-for="@Model.StudentRegistration.StudentRegistration[0].IslamicSchoolGrade" class="form-control"
+                        asp-items="@Model.IslamicSchoolGradeList">
+                    <option>Please select one</option>
+                </select>
+            </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+    </div>
+</div>
 
-              <div class="col-sm-10">
+<div class="ibox ">
+    <div class="ibox-title">
+        <h5>Student 2</h5>
+
+    </div>
+    <div class="ibox-content">
+        <div class="form-group  row">
+            <label class="col-sm-2 col-form-label">Student</label>
+
+            <div class="col-sm-10">
                 <input type="text" placeholder="Student name here" autocomplete="off"
                        data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_StudentRegistration_1__StudentId"
                        class="autocomplete form-control" />
                 <input type="hidden" asp-for="@Model.StudentRegistration.StudentRegistration[1].StudentId" />
 
-              </div>
             </div>
-            <div class="form-group  row">
-              <label class="col-sm-2 col-form-label">Public School Grade</label>
+        </div>
+        <div class="form-group  row">
+            <label class="col-sm-2 col-form-label">Public School Grade</label>
 
-              <div class="col-sm-10">
+            <div class="col-sm-10">
                 <select asp-for="@Model.StudentRegistration.StudentRegistration[1].PublicSchoolGrade" class="form-control"
                         asp-items="@Model.PublicSchoolGradeList">
-                  <option>Please select one</option>
+                    <option>Please select one</option>
                 </select>
-              </div>
             </div>
-
-            <div class="form-group  row">
-              <label class="col-sm-2 col-form-label">Islamic School Grade</label>
-
-              <div class="col-sm-10">
-                <select asp-for="@Model.StudentRegistration.StudentRegistration[1].IslamicSchoolGrade" class="form-control"
-                        asp-items="@Model.IslamicSchoolGradeList">
-                  <option>Please select one</option>
-                </select>
-              </div>
-            </div>
-            <div class="hr-line-dashed"></div>
-          </div>
         </div>
 
-        <div class="ibox ">
-          <div class="ibox-title">
-            <h5>Student 3</h5>
+        <div class="form-group  row">
+            <label class="col-sm-2 col-form-label">Islamic School Grade</label>
 
-          </div>
-          <div class="ibox-content">
-            <div class="form-group  row">
-              <label class="col-sm-2 col-form-label">Student</label>
+            <div class="col-sm-10">
+                <select asp-for="@Model.StudentRegistration.StudentRegistration[1].IslamicSchoolGrade" class="form-control"
+                        asp-items="@Model.IslamicSchoolGradeList">
+                    <option>Please select one</option>
+                </select>
+            </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+    </div>
+</div>
 
-              <div class="col-sm-10">
+<div class="ibox ">
+    <div class="ibox-title">
+        <h5>Student 3</h5>
+
+    </div>
+    <div class="ibox-content">
+        <div class="form-group  row">
+            <label class="col-sm-2 col-form-label">Student</label>
+
+            <div class="col-sm-10">
                 <input type="text" placeholder="Student name here" autocomplete="off"
                        data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_StudentRegistration_2__StudentId"
                        class="autocomplete form-control" />
                 <input type="hidden" asp-for="@Model.StudentRegistration.StudentRegistration[2].StudentId" />
 
-              </div>
             </div>
-            <div class="form-group  row">
-              <label class="col-sm-2 col-form-label">Public School Grade</label>
+        </div>
+        <div class="form-group  row">
+            <label class="col-sm-2 col-form-label">Public School Grade</label>
 
-              <div class="col-sm-10">
+            <div class="col-sm-10">
                 <select asp-for="@Model.StudentRegistration.StudentRegistration[2].PublicSchoolGrade" class="form-control"
                         asp-items="@Model.PublicSchoolGradeList">
-                  <option>Please select one</option>
+                    <option>Please select one</option>
                 </select>
-              </div>
             </div>
-
-            <div class="form-group  row">
-              <label class="col-sm-2 col-form-label">Islamic School Grade</label>
-
-              <div class="col-sm-10">
-                <select asp-for="@Model.StudentRegistration.StudentRegistration[2].IslamicSchoolGrade" class="form-control"
-                        asp-items="@Model.IslamicSchoolGradeList">
-                  <option>Please select one</option>
-                </select>
-              </div>
-            </div>
-            <div class="hr-line-dashed"></div>
-          </div>
         </div>
 
-        <div class="ibox ">
-          <div class="ibox-title">
-            <h5>Student 4</h5>
+        <div class="form-group  row">
+            <label class="col-sm-2 col-form-label">Islamic School Grade</label>
 
-          </div>
-          <div class="ibox-content">
-            <div class="form-group  row">
-              <label class="col-sm-2 col-form-label">Student</label>
+            <div class="col-sm-10">
+                <select asp-for="@Model.StudentRegistration.StudentRegistration[2].IslamicSchoolGrade" class="form-control"
+                        asp-items="@Model.IslamicSchoolGradeList">
+                    <option>Please select one</option>
+                </select>
+            </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+    </div>
+</div>
 
-              <div class="col-sm-10">
+<div class="ibox ">
+    <div class="ibox-title">
+        <h5>Student 4</h5>
+
+    </div>
+    <div class="ibox-content">
+        <div class="form-group  row">
+            <label class="col-sm-2 col-form-label">Student</label>
+
+            <div class="col-sm-10">
                 <input type="text" placeholder="Student name here" autocomplete="off"
                        data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_StudentRegistration_3__StudentId"
                        class="autocomplete form-control" />
                 <input type="hidden" asp-for="@Model.StudentRegistration.StudentRegistration[3].StudentId" />
 
-              </div>
             </div>
-            <div class="form-group  row">
-              <label class="col-sm-2 col-form-label">Public School Grade</label>
+        </div>
+        <div class="form-group  row">
+            <label class="col-sm-2 col-form-label">Public School Grade</label>
 
-              <div class="col-sm-10">
+            <div class="col-sm-10">
                 <select asp-for="@Model.StudentRegistration.StudentRegistration[3].PublicSchoolGrade" class="form-control"
                         asp-items="@Model.PublicSchoolGradeList">
-                  <option>Please select one</option>
+                    <option>Please select one</option>
                 </select>
-              </div>
             </div>
+        </div>
 
-            <div class="form-group  row">
-              <label class="col-sm-2 col-form-label">Islamic School Grade</label>
+        <div class="form-group  row">
+            <label class="col-sm-2 col-form-label">Islamic School Grade</label>
 
-              <div class="col-sm-10">
+            <div class="col-sm-10">
                 <select asp-for="@Model.StudentRegistration.StudentRegistration[3].IslamicSchoolGrade" class="form-control"
                         asp-items="@Model.IslamicSchoolGradeList">
-                  <option>Please select one</option>
+                    <option>Please select one</option>
                 </select>
-              </div>
             </div>
-            <div class="hr-line-dashed"></div>
-          </div>
         </div>
-
-
-      </div>
+        <div class="hr-line-dashed"></div>
     </div>
-    <div class="row">
-      <div class="col-lg-12">
+</div>
+
+
+</div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
         <div class="form-group row" style="text-align:right">
-          <div class="col-sm-12 col-sm-offset-2">
-            <button class="btn btn-white btn-sm" type="submit" name="btnCancel">Cancel</button>
+            <div class="col-sm-12 col-sm-offset-2">
+                <button class="btn btn-white btn-sm" type="submit" name="btnCancel">Cancel</button>
 
-            <button class="btn btn-white btn-sm" type="submit" name="btnReset">Reset</button>
+                <button class="btn btn-white btn-sm" type="submit" name="btnReset">Reset</button>
 
-            <button class="btn btn-primary btn-sm" type="submit" name="btnSave">Save</button>
+                <button class="btn btn-primary btn-sm" type="submit" name="btnSave">Save</button>
 
-          </div>
-          s
+            </div>
+            s
         </div>
-      </div>
     </div>
+</div>
+</div>
 </form>
 
 

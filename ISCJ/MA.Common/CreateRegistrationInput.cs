@@ -15,7 +15,7 @@ namespace MA.Common
     public bool AddStudentRegistrationFee { get; set; }
     public int StudentRegistrationFeeCount { get; set; }
     public List<CreateStudentRegistrationInput> StudentRegistration { get; set; }
-    public List<ProductSelected> ProductionSelected { get; set; }
+    public List<ProductSelected> BillingInstructions { get; set; }
   }
 
   public class CreateStudentRegistrationInput
@@ -35,6 +35,6 @@ namespace MA.Common
       public Guid ProductId { get; set; }
       public int ProductCount { get; set; }
       public bool IsSelected { get; set; }
-      public string ProductName { get; set; }
+      public string ProductCode { get; set; }
   }
 }

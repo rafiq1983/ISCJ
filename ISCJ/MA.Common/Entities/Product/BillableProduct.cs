@@ -27,6 +27,9 @@ namespace MA.Common.Entities.Product
         public byte IsActive { get; set; }
 
         public string ProductCode { get; set; }
+
+        [NotMapped] public bool IsSelected { get; set; }
+        [NotMapped] public int SelectedCount { get; set; }
     }
 
 }

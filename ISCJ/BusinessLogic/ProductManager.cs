@@ -91,6 +91,10 @@ namespace BusinessLogic
 
         public List<BillableProduct> GetAllProducts(CallContext callContext)
         {
+            var output = new List<BillableProduct>();
+            output.Add(new BillableProduct() {Price = 33, Description = "sunday school fee regular", ProductCode = "afafdsa"});
+            output.Add(new BillableProduct() { Price = 45, Description = "sunday school fee late", ProductCode = "afafdsa2" });
+            //return output;
             using (var db = new Database())
             {
                 return db.BillableProducts.ToList();

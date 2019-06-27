@@ -9,7 +9,6 @@ namespace MA.Common.Entities.Registration
   public class Registration
   {
     public Guid RegistrationId { get; set; }
-
    
     public Guid FatherId { get; set; } //isa:may not need these.
 

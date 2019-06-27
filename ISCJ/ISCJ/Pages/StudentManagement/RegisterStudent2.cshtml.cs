@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogic;
 using MA.Common;
+using MA.Common.Entities.Registration;
 using MA.Common.Models.api;
 using MA.Core;
 using Microsoft.AspNetCore.Mvc;
@@ -19,19 +20,20 @@ namespace ISCJ.Pages.StudentManagement
 
     public RegisterStudent2Model()
     {
-      Programs = mgr.GetPrograms();
-      Products = productMgr.GetAllProducts(GetCallContext());
-    }
+        Programs = mgr.GetAllPrograms(GetCallContext());
+        Products = productMgr.GetAllProducts(GetCallContext());
+        }
 
     private CallContext GetCallContext()
     {
         return new CallContext("Iftikhar", "234234", "askfj", Guid.Empty);
     }
 
+
     public void OnGet()
     {
-
-      ;
+        
+            ;
     }
 
     public void OnPost()
@@ -63,6 +65,7 @@ namespace ISCJ.Pages.StudentManagement
     }
 
     public List<ProgramDetail> Programs { get; set; }
+    [BindProperty]
     public List<MA.Common.Entities.Product.BillableProduct> Products { get; set; }
 
     [BindProperty]

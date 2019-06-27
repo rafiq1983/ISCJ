@@ -26,6 +26,9 @@ namespace BusinessLogic
 
     public List<ProgramDetail> GetAllPrograms(CallContext callerContext)
     {
+        List<ProgramDetail> details = new List<ProgramDetail>();
+        details.Add(new ProgramDetail() {ProgramId = Guid.Empty, ProgramName = "2019"});
+        //return details;
             using (var db = new Database())
             {
                 return db.Programs.ToList();
