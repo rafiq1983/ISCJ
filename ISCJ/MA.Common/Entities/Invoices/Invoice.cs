@@ -11,6 +11,7 @@ namespace MA.Common.Entities.Invoices
     public Guid InvoiceId { get; set; }
     public decimal InvoiceAmount { get; set; }
 
+        public Guid TennantId { get; set; }
     public Guid FinancialAccountId { get; set; }
 
     public DateTime DueDate { get; set; }
@@ -18,15 +19,18 @@ namespace MA.Common.Entities.Invoices
     public string Description { get; set; }
 
     public DateTime GenerationDate { get; set; }
-
+        public decimal TotalPaid { get; set; }
     public bool IsPaid { get; set; }
     public List<InvoiceItem> InvoiceItems { get; set; }
 
         public FinancialAccount FinancialAccount;
 
+        public string OrderId { get; set; }
+        public InvoiceOrderType OrderType { get; set; }
+
   }
 
-  public class InvoiceItem
+  public class InvoiceItem:BaseEntity
   { 
     public Guid ItemId { get; set; }
 
@@ -35,6 +39,8 @@ namespace MA.Common.Entities.Invoices
     public string Description { get; set; }
 
     public decimal Amount { get; set; }
+    
+    public int Quantity { get; set; }
 
   }
 
@@ -52,9 +58,8 @@ namespace MA.Common.Entities.Invoices
         public List<Invoice> Invoices { get; set; }
     }
 
-    //TOOD: FOR Rafiq We have to use discrimnator column to return Contact FinancialAccount or Base FinancialAccount.
-    public class ContactFinancialAccount:FinancialAccount
+    public enum InvoiceOrderType
     {
-
+        None,RegistrationApplication
     }
 }

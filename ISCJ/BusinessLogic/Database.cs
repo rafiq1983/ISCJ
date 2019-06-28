@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 using MA.Common.Entities.Tenants;
 using MA.Common.Models.api;
+using MA.Common.Entities.Payments;
 
 namespace BusinessLogic
 {
@@ -32,7 +33,8 @@ namespace BusinessLogic
         public virtual DbSet<RegistrationApplication> RegistrationApplications { get; set; }
     public virtual DbSet<Invoice> Invoices { get; set; }
 
-      public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Payment> Payments { get; set; }
+        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Tenant> Tenants { get; set; }
         public virtual DbSet<MasjidMembership> MasjidMembers { get; set; }
 
@@ -44,6 +46,18 @@ namespace BusinessLogic
         public DbSet<FinancialAccount> FinancialAccounts { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+            modelBuilder.Entity<Payment>(entity =>
+            {
+                entity.HasKey(x => x.PaymentId);
+                entity.ToTable("Payment");
+                entity.Property(x => x.PaymentMethod).HasConversion(new EnumToStringConverter<PaymentMethod>());
+            });
+
+            modelBuilder.Entity<CheckPayment>(entity =>
+            {
+                entity.ToTable("CheckPayment");
+            });
+
             modelBuilder.Entity<FinancialAccount>(entity =>
             {
             entity.HasKey(x => x.FinancialAccountId);
@@ -75,6 +89,7 @@ namespace BusinessLogic
       {
         entity.ToTable("Invoice");
         entity.HasKey(e => e.InvoiceId);
+          entity.Property(x => x.OrderType).HasConversion(new EnumToStringConverter<InvoiceOrderType>());
       })
       .Entity<InvoiceItem>(entity =>
       {

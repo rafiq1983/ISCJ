@@ -18,16 +18,12 @@ namespace BusinessLogic
     {
             using (TransactionScope scope = new TransactionScope())
             {
-                var id = SaveRegistrationApplication(context, input);
-                //CreateSingleRegistration(input);
-                PerformBilling(context, input);
+                var registrationApplicationId = SaveRegistrationApplication(context, input);
+                PerformBilling(context, input, registrationApplicationId);
                 scope.Complete();
-                return new CreateRegistrationApplicationOutput() { ApplicationId = id };
-
+                return new CreateRegistrationApplicationOutput() { ApplicationId = registrationApplicationId};
             }
-           
     }
-
 
     private void CreateSingleRegistration(CallContext context, CreateRegistrationApplicationInput input)
     {
@@ -93,7 +89,7 @@ namespace BusinessLogic
         }
 
     
-    private void PerformBilling(CallContext context, CreateRegistrationApplicationInput input)
+    private void PerformBilling(CallContext context, CreateRegistrationApplicationInput input, Guid registrationApplicationId)
         {
             if (input.BillingInstructions.Count == 0)
                 return;
@@ -105,10 +101,15 @@ namespace BusinessLogic
                 var products = db.BillableProducts.Where(x => productIds.Contains(x.ProductCode)).ToDictionary(y=>y.ProductCode);
 
                 Invoice invoice = new Invoice();
-                invoice.DueDate = DateTime.Now;
-                invoice.GenerationDate = DateTime.Now;
+                invoice.DueDate = DateTime.UtcNow;
+                invoice.GenerationDate = DateTime.UtcNow;
                 invoice.CreateUser = context.UserId;
-                
+                invoice.OrderId = registrationApplicationId.ToString();
+                invoice.OrderType = InvoiceOrderType.RegistrationApplication;
+                invoice.TennantId = context.TenantId;
+                invoice.CreateDate = DateTime.UtcNow;
+                invoice.ModifiedDate = null;
+
                 invoice.InvoiceItems = new List<InvoiceItem>();
                 foreach (var item in input.BillingInstructions.Where(x=>x.IsSelected))
                 {
@@ -118,7 +119,10 @@ namespace BusinessLogic
                         invoice.InvoiceItems.Add(new InvoiceItem()
                         {
                             Amount = products[item.ProductCode].Price * item.ProductCount,
-                            Description = products[item.ProductCode].Description + "x" + item.ProductCount
+                            Description = products[item.ProductCode].Description,
+                            Quantity = products[item.ProductCode].SelectedCount,
+                            CreateUser = context.UserId,
+                            CreateDate = DateTime.UtcNow
                         });
                     }                    
                     else

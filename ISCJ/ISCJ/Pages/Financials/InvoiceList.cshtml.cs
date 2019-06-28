@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BusinessLogic;
 using MA.Common;
 using MA.Common.Entities.Invoices;
+using MA.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -15,9 +16,15 @@ namespace ISCJ.Pages.Financials
     readonly InvoiceManager _invoiceMgr = new InvoiceManager();
         public void OnGet()
         {
-      Invoices = _invoiceMgr.GetInvoices();
+      Invoices = _invoiceMgr.GetInvoices(GetCallContext());
         }
 
     public List<Invoice> Invoices { get; set; } = new List<Invoice>();
+
+        private CallContext GetCallContext()
+        {
+            return new CallContext("Iftikhar", "asfasfdds", "asdfasfsd", Guid.Empty);
+        }
     }
+
 }

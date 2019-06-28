@@ -6,10 +6,10 @@ namespace MA.Core
 {
    public class CallContext
     {
-        public CallContext(string userId, string callerId, string loggedInAccountId, Guid tenantId)
+        public CallContext(string userId, string callerIP, string loggedInAccountId, Guid tenantId)
         {
             UserId = userId;
-            CallerIp = callerId;
+            CallerIp = callerIP;
             LoggedInAccountId = loggedInAccountId;
             TenantId = tenantId;
         }

@@ -34,7 +34,7 @@ namespace ISCJ.webapi
         public JsonResult GetAllInvoices()
         {
             InvoiceManager mgr = new InvoiceManager();
-            var output = mgr.GetInvoices();
+            var output = mgr.GetInvoices(GetCallContext());
             return new JsonResult(output);
         }
 

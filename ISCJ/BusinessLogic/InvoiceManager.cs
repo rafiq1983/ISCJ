@@ -1,6 +1,7 @@
 ﻿using MA.Common;
 using MA.Common.Entities.Invoices;
 using MA.Common.Models.api;
+using MA.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +14,11 @@ namespace BusinessLogic
   {
     private static List<Invoice> _Invoices = new List<Invoice>();
 
-    public List<Invoice> GetInvoices()
+    public List<Invoice> GetInvoices(CallContext context)
     {
       using (Database db = new Database())
       {
-        return db.Invoices.ToList();
+                return db.Invoices.Where(x => x.TennantId == context.TenantId).ToList();
       }
     }
 
