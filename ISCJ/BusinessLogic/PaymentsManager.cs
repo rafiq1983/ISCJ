@@ -3,6 +3,8 @@ using MA.Common.Models.api;
 using MA.Core;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Policy;
 using System.Text;
 
 namespace BusinessLogic
@@ -29,7 +31,7 @@ namespace BusinessLogic
                     pmt.CheckNumber = input.CheckPaymentDetail.CheckNumber;
                     pmt.CreateDate = DateTime.UtcNow;
                     pmt.CreateUser = context.UserId;
-                    //db.Payments.Add(pmt);
+                    db.Payments.Add(pmt);
                     db.SaveChanges();
                     return new CreatePaymentOutput() { PaymentId = pmt.PaymentId };
                 }
@@ -44,7 +46,7 @@ namespace BusinessLogic
                     pmt.PaymentMethod = input.PaymentMethod;
                     pmt.CreateDate = DateTime.UtcNow;
                     pmt.CreateUser = context.UserId;
-                   // db.Payments.Add(pmt);
+                    db.Payments.Add(pmt);
                     db.SaveChanges();
                     return new CreatePaymentOutput() { PaymentId = pmt.PaymentId };
                 }
@@ -52,6 +54,14 @@ namespace BusinessLogic
                 {
                     return new CreatePaymentOutput() { Success = false };
                 }
+            }
+        }
+
+        public List<Payment> GetPayments(CallContext context)
+        {
+            using (var db = new Database())
+            {
+                return db.Payments.ToList();
             }
         }
     }
