@@ -19,7 +19,7 @@ namespace MA.Common.Entities.Invoices
     public string Description { get; set; }
 
     public DateTime GenerationDate { get; set; }
-        public decimal TotalPaid { get; set; }
+        public decimal? TotalPaid { get; set; }
     public bool IsPaid { get; set; }
     public List<InvoiceItem> InvoiceItems { get; set; }
 

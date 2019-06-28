@@ -29,7 +29,7 @@ namespace BusinessLogic
                     pmt.CheckNumber = input.CheckPaymentDetail.CheckNumber;
                     pmt.CreateDate = DateTime.UtcNow;
                     pmt.CreateUser = context.UserId;
-                    db.Payments.Add(pmt);
+                    //db.Payments.Add(pmt);
                     db.SaveChanges();
                     return new CreatePaymentOutput() { PaymentId = pmt.PaymentId };
                 }
@@ -44,7 +44,7 @@ namespace BusinessLogic
                     pmt.PaymentMethod = input.PaymentMethod;
                     pmt.CreateDate = DateTime.UtcNow;
                     pmt.CreateUser = context.UserId;
-                    db.Payments.Add(pmt);
+                   // db.Payments.Add(pmt);
                     db.SaveChanges();
                     return new CreatePaymentOutput() { PaymentId = pmt.PaymentId };
                 }
