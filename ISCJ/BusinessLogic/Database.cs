@@ -28,13 +28,13 @@ namespace BusinessLogic
     public Database()
     {; }
 
-    public virtual DbSet<Registration> Registrations { get; set; }
+    public virtual DbSet<Enrollment> Enrollments { get; set; }
 
         public virtual DbSet<RegistrationApplication> RegistrationApplications { get; set; }
     public virtual DbSet<Invoice> Invoices { get; set; }
-    public virtual DbSet<Payment> Payments { get; set; }
+    public virtual DbSet<CashPayment> CashPayments { get; set; }
    public virtual DbSet<CheckPayment> CheckPayments { get; set; }
-
+       // public virtual DbQuery<string> AllPaymentIds { get; set; }
     public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Tenant> Tenants { get; set; }
         public virtual DbSet<MasjidMembership> MasjidMembers { get; set; }
@@ -47,16 +47,17 @@ namespace BusinessLogic
         public DbSet<FinancialAccount> FinancialAccounts { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-            modelBuilder.Entity<Payment>(entity =>
+            modelBuilder.Entity<CashPayment>(entity =>
             {
                 entity.HasKey(x => x.PaymentId);
-                entity.ToTable("Payment");
-                entity.Property(x => x.PaymentMethod).HasConversion(new EnumToStringConverter<PaymentMethod>());
-                entity.HasDiscriminator(x => x.PaymentMethod).HasValue<CheckPayment>(PaymentMethod.Check).HasValue<Payment>(PaymentMethod.Cash);
+                entity.ToTable("CashPayment");
+                //entity.Property(x => x.PaymentMethod).HasConversion(new EnumToStringConverter<PaymentMethod>());
+               // entity.HasDiscriminator(x => x.PaymentMethod).HasValue<CheckPayment>(PaymentMethod.Check).HasValue<Payment>(PaymentMethod.Cash);
             });
 
             modelBuilder.Entity<CheckPayment>(entity =>
             {
+                entity.HasKey(x => x.PaymentId);
                 entity.ToTable("CheckPayment");
             });
 
@@ -78,10 +79,10 @@ namespace BusinessLogic
                 entity.HasKey(x => x.ProgramId);
             });
 
-            modelBuilder.Entity<Registration>(entity =>
+            modelBuilder.Entity<Enrollment>(entity =>
       {
-        entity.ToTable("Registration");
-        entity.HasKey(e => e.RegistrationId);
+        entity.ToTable("Enrollments");
+        entity.HasKey(e => e.EnrollmentId);
        
       }).Entity<Contact>(entity =>
       {

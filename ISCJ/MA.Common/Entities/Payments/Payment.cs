@@ -4,14 +4,18 @@ using System.Text;
 
 namespace MA.Common.Entities.Payments
 {
-  public class Payment:BaseEntity
+    public abstract class Payment : BaseEntity
     {
+        public Guid PayerId { get; set; }
         public Guid PaymentId { get; set; }
         public DateTime PaymentDate { get; set; }
         public decimal PaymentAmount { get; set; }
-        public Guid PayerId { get; set; }
+      
         public Guid FinancialAccountId { get; set; }
-        public PaymentMethod PaymentMethod { get; set; }
+
+    }
+  public class CashPayment:Payment
+    {  
 
     }
 
@@ -20,7 +24,6 @@ namespace MA.Common.Entities.Payments
         Cash, CreditCard, Check
     }
 
-    //TODO: Rafiq: Needs to specify discriminator column.
     public class CheckPayment:Payment
     {
         public string CheckNumber { get; set; }

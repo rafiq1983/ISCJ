@@ -28,6 +28,13 @@ namespace ISCJ.webapi
             return new JsonResult(mgr.GetPayments(GetCallContext()));
         }
 
+        [HttpGet("cashpayments")]
+        public JsonResult GetCashPayments()
+        {
+            PaymentsManager mgr = new PaymentsManager();
+            return new JsonResult(mgr.GetCashPaments(GetCallContext()));
+        }
+
         private CallContext GetCallContext()
         {
             return new CallContext("Iftikhar", "sdfasfds", "SDFSDF", Guid.Empty);

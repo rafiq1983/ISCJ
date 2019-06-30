@@ -35,7 +35,7 @@ namespace ISCJ.Pages.StudentManagement
 
        
 
-    public List<Registration> Registrations { get; set; } = new List<Registration>();
+    public List<Enrollment> Registrations { get; set; } = new List<Enrollment>();
 
     public List<ProgramDetail> Programs { get; set; }
 

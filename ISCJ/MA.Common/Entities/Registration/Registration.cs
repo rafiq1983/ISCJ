@@ -6,9 +6,9 @@ using MA.Common.Entities.Contacts;
 
 namespace MA.Common.Entities.Registration
 {
-  public class Registration
+  public class Enrollment
   {
-    public Guid RegistrationId { get; set; }
+    public Guid EnrollmentId { get; set; }
    
         public Guid RegistrationApplicationId { get; set; }
     public Guid FatherId { get; set; } //isa:may not need these.
@@ -46,7 +46,7 @@ namespace MA.Common.Entities.Registration
         public Guid MotherContactId { get; set; }
 
         [ForeignKey("RegistrationApplicationId")]
-        public List<Registration> Registrations { get; set; }//needs to map to contact table.*/
+        public List<Enrollment> Registrations { get; set; }//needs to map to contact table.*/
 
         /*[ForeignKey("FatherContactId")] //can be done with fluent api as well.
         public Contact FatherContactInfo { get; set; }

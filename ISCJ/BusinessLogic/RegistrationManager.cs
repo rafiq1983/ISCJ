@@ -33,14 +33,14 @@ namespace BusinessLogic
             {
                     if (input.StudentRegistrations[i].StudentId.HasValue == false)
                         continue;
-                    Registration reg = new Registration();
+                    Enrollment reg = new Enrollment();
                     reg.FatherId = input.FatherId;
                     reg.MotherId = input.MotherId;
                     reg.ProgramId = input.ProgramId;
                     reg.IslamicSchoolGradeId = input.StudentRegistrations[i].IslamicSchoolGrade;
                     reg.PublicSchoolGradeId = input.StudentRegistrations[i].PublicSchoolGrade;
                     reg.StudentContactId = input.StudentRegistrations[i].StudentId.Value;
-                    db.Registrations.Add(reg);
+                    db.Enrollments.Add(reg);
                
             }
         }
@@ -61,21 +61,21 @@ namespace BusinessLogic
                     CreateUser = context.UserId
                 };
                
-                application.Registrations = new List<Registration>();
+                application.Registrations = new List<Enrollment>();
 
                 foreach (var reg in input.StudentRegistrations)
                 {
                     if (reg.StudentId.HasValue == false)
                         continue;
 
-                    application.Registrations.Add(new Registration()
+                    application.Registrations.Add(new Enrollment()
                     {
                         FatherId = input.FatherId,
                         MotherId = input.MotherId,
                         ProgramId = input.ProgramId,
                         IslamicSchoolGradeId = reg.IslamicSchoolGrade,
                         PublicSchoolGradeId = reg.PublicSchoolGrade,
-                        RegistrationId = Guid.NewGuid(),
+                        EnrollmentId = Guid.NewGuid(),
                         StudentContactId = reg.StudentId.Value,
                     });
                 }
@@ -145,19 +145,19 @@ namespace BusinessLogic
       return Guid.Empty;
     }
 
-    public Registration GetRegistration(Guid registrationId)
+    public Enrollment GetRegistration(Guid registrationId)
     {
       using (var db = new Database())
       {
-        return db.Registrations.SingleOrDefault(x => x.RegistrationId == registrationId);
+        return db.Enrollments.SingleOrDefault(x => x.EnrollmentId == registrationId);
       }
     }
 
-    public List<Registration> GetRegistrations()
+    public List<Enrollment> GetRegistrations()
     {
       using (var db = new Database())
       {
-        return db.Registrations
+        return db.Enrollments
           .Include(Registration => Registration.FatherContactInfo)
           .Include(registration=>registration.MotherContactInfo)
           .Include(Registration=>Registration.StudentContactInfo)
@@ -165,11 +165,11 @@ namespace BusinessLogic
       }
     }
 
-    public List<Registration> GetRegistrations(Guid programId)
+    public List<Enrollment> GetRegistrations(Guid programId)
     {
       using (var db = new Database())
       {
-        return db.Registrations
+        return db.Enrollments
           .Include(Registration => Registration.FatherContactInfo)
           .Include(registration => registration.MotherContactInfo)
           .Include(Registration => Registration.StudentContactInfo)
