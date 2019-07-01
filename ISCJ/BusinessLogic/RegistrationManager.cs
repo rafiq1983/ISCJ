@@ -25,7 +25,52 @@ namespace BusinessLogic
             }
     }
 
-    private void CreateSingleRegistration(CallContext context, CreateRegistrationApplicationInput input)
+    public List<RegistrationApplication> GetAllApplications(CallContext context)
+    {
+        using (var db = new Database())
+        {
+            return db.RegistrationApplications.ToList();
+        }
+    }
+
+
+    public AddRegistrationOutput AddRegistrationToRegistrationApplication(CallContext context, AddRegistrationInput input)
+    {
+        using (TransactionScope scope = new TransactionScope())
+        {
+            using (var db = new Database())
+            {
+                var enrollment = new Enrollment();
+                var existingApplication =
+                    db.RegistrationApplications.Where(x => x.ApplicationId == input.RegistrationApplicationId).Include(x=>x.Enrollments).Single();
+
+                enrollment.ProgramId = existingApplication.ProgramId;
+                enrollment.StudentContactId = input.StudentId;
+                enrollment.IslamicSchoolGradeId = input.IslamicSchoolGrade;
+                enrollment.PublicSchoolGradeId = input.PublicSchoolGrade;
+                enrollment.CreateUser = context.UserId;
+                enrollment.CreateDate = DateTime.UtcNow;
+                //TODO: FOR Rafiq: Why Father and Mother id not getting populated automatically from parent.  Are relationships missing?
+                enrollment.FatherId = existingApplication.FatherContactId;
+                enrollment.MotherId = existingApplication.MotherContactId;
+                
+                existingApplication.Enrollments.Add(enrollment);
+              
+                db.SaveChanges();
+            }
+
+            //PerformBilling(context, input, registrationApplicationId);
+            scope.Complete();
+            return new AddRegistrationOutput()
+            {
+                Success = true
+            };
+
+        }
+    }
+
+
+        private void CreateSingleRegistration(CallContext context, CreateRegistrationApplicationInput input)
     {
         using (var db = new Database())
         {
@@ -49,7 +94,7 @@ namespace BusinessLogic
     private Guid SaveRegistrationApplication(CallContext context, CreateRegistrationApplicationInput input)
                 {
             using (var db = new Database())
-            {
+            {   
                 RegistrationApplication application = new RegistrationApplication()
                 {
                     ApplicationId = Guid.NewGuid(),
@@ -61,14 +106,14 @@ namespace BusinessLogic
                     CreateUser = context.UserId
                 };
                
-                application.Registrations = new List<Enrollment>();
+                application.Enrollments = new List<Enrollment>();
 
                 foreach (var reg in input.StudentRegistrations)
                 {
                     if (reg.StudentId.HasValue == false)
                         continue;
 
-                    application.Registrations.Add(new Enrollment()
+                    application.Enrollments.Add(new Enrollment()
                     {
                         FatherId = input.FatherId,
                         MotherId = input.MotherId,
@@ -77,6 +122,8 @@ namespace BusinessLogic
                         PublicSchoolGradeId = reg.PublicSchoolGrade,
                         EnrollmentId = Guid.NewGuid(),
                         StudentContactId = reg.StudentId.Value,
+                        CreateDate = DateTime.UtcNow,
+                        CreateUser = context.UserId
                     });
                 }
                 

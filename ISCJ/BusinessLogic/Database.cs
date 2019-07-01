@@ -86,7 +86,6 @@ namespace BusinessLogic
       {
         entity.ToTable("Enrollments");
         entity.HasKey(e => e.EnrollmentId);
-       
       }).Entity<Contact>(entity =>
       {
         entity.ToTable("Contacts");

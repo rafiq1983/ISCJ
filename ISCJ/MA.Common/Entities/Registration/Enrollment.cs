@@ -6,14 +6,13 @@ using MA.Common.Entities.Contacts;
 
 namespace MA.Common.Entities.Registration
 {
-  public class Enrollment
+  public class Enrollment:BaseEntity
   {
     public Guid EnrollmentId { get; set; }
    
         public Guid RegistrationApplicationId { get; set; }
-    public Guid FatherId { get; set; } //isa:may not need these.
-
-    public Guid MotherId { get; set; }
+        public Guid FatherId { get; set; } //isa:may not need these.
+        public Guid MotherId { get; set; }
 
     public Guid ProgramId { get; set; }
 
@@ -46,12 +45,12 @@ namespace MA.Common.Entities.Registration
         public Guid MotherContactId { get; set; }
 
         [ForeignKey("RegistrationApplicationId")]
-        public List<Enrollment> Registrations { get; set; }//needs to map to contact table.*/
+        public List<Enrollment> Enrollments { get; set; }//needs to map to contact table.*/
 
-        /*[ForeignKey("FatherContactId")] //can be done with fluent api as well.
+        /*[ForeignKey("FatherId")] //can be done with fluent api as well.
         public Contact FatherContactInfo { get; set; }
 
-        [ForeignKey("MotherContactId")]
+        [ForeignKey("MotherId")]
         public Contact MotherContactInfo { get; set; }
 
       */

@@ -23,6 +23,23 @@ namespace MA.Common
     public Guid? StudentId { get; set; }
     public string IslamicSchoolGrade { get; set; }
     public string PublicSchoolGrade { get; set; }
+    public string StudentName { get; set; }
+
+  }
+
+  public class AddRegistrationInput
+  {
+      public Guid RegistrationApplicationId { get; set; }
+
+      public Guid StudentId { get; set; }
+      public string IslamicSchoolGrade { get; set; }
+      public string PublicSchoolGrade { get; set; }
+      public List<ProductSelected> BillingInstructions { get; set; }
+    }
+
+  public class AddRegistrationOutput
+  {
+      public bool Success { get; set; }
   }
 
   public class RegistrationDetail
