@@ -22,17 +22,24 @@ namespace ISCJ.webapi
         }
 
         [HttpGet()]
-        public JsonResult GetPayments()
+        public JsonResult GetAllPayments()
         {
             PaymentsManager mgr = new PaymentsManager();
-            return new JsonResult(mgr.GetPayments(GetCallContext()));
+            return new JsonResult(mgr.GetAllPayments(GetCallContext()));
         }
 
         [HttpGet("cashpayments")]
         public JsonResult GetCashPayments()
         {
             PaymentsManager mgr = new PaymentsManager();
-            return new JsonResult(mgr.GetCashPaments(GetCallContext()));
+            return new JsonResult(mgr.GetCashPayments(GetCallContext()));
+        }
+
+        [HttpGet("checkpayments")]
+        public JsonResult GetCheckPayments()
+        {
+            PaymentsManager mgr = new PaymentsManager();
+            return new JsonResult(mgr.GetCheckPayments(GetCallContext()));
         }
 
         private CallContext GetCallContext()

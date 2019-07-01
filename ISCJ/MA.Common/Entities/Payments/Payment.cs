@@ -19,6 +19,13 @@ namespace MA.Common.Entities.Payments
 
     }
 
+  public class AllPayment
+  {
+      public Guid PaymentId { get; set; }
+      public decimal PaymentAmount { get; set; }
+      public PaymentMethod PaymentMethod { get; set; }
+  }
+
     public enum PaymentMethod
     {
         Cash, CreditCard, Check

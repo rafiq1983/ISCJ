@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic
 {
@@ -59,20 +60,31 @@ namespace BusinessLogic
             }
         }
 
-        public List<CheckPayment> GetPayments(CallContext context)
+        public List<CheckPayment> GetCheckPayments(CallContext context)
         {
             using (var db = new Database())
-            {
-                
+            {   
                 return db.CheckPayments.ToList();
             }
         }
 
-        public List<CashPayment> GetCashPaments(CallContext context)
+        public List<CashPayment> GetCashPayments(CallContext context)
+        {
+            using (var db = new Database())
+            {   
+                return db.CashPayments.ToList();
+
+            }
+        }
+
+        public List<AllPayment> GetAllPayments(CallContext context)
         {
             using (var db = new Database())
             {
-                return db.CashPayments.ToList();
+                return db.AllPaymentIds
+                    .FromSql(
+                        "SELECT PaymentId, PaymentAmount, 'Cash' as PaymentMethod from CashPayment union SELECT PaymentId, PaymentAmount, 'Check' as PaymentMethod from CheckPayment;")
+                    .ToList();
             }
         }
     }
