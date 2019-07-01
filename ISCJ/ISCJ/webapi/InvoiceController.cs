@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BusinessLogic;
 using MA.Common.Models.api;
 using MA.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,7 @@ namespace ISCJ.webapi
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize()]
     public class InvoiceController : ControllerBase
     {
         [HttpPost]

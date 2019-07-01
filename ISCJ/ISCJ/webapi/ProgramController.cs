@@ -8,10 +8,13 @@ using MA.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MA.Common.Entities.Registration;
+using Microsoft.AspNetCore.Authorization;
+
 namespace ISCJ.webapi
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize()]
     public class ProgramController : ControllerBase
     {
         [HttpPost]

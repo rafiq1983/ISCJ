@@ -12,6 +12,7 @@ namespace ISCJ.webapi
     [Route("api/[controller]")]
     [ApiController]
     [SuperAdminAccessFilter]
+    
     public class SystemAdminController : ControllerBase
     {
        [HttpPost()]
