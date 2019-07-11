@@ -98,40 +98,44 @@
                 </table>
             </div>
         </div>
-        <div class="ibox ">
-            <div class="ibox-title">
-                <h5>Guardians/Parent</h5>
+    <div class="ibox ">
+        <div class="ibox-title">
+            <h5>Guardians/Parent</h5>
 
-            </div>
-            <div class="ibox-content">
-                <div class="form-group  row">
-                    <label class="col-sm-2 col-form-label">Father</label>
-
-                    <div class="col-sm-10">
-                        <input type="text" placeholder="Type Father name here" autocomplete="off"
-                               data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_FatherId"
-                               class="autocomplete form-control" />
-                        <input type="hidden" asp-for="@Model.StudentRegistration.FatherId" />
-
-                    </div>
-                </div>
-                <div class="form-group  row">
-                    <label class="col-sm-2 col-form-label">Mother</label>
-
-                    <div class="col-sm-10">
-                        <input type="text" placeholder="Type Mother name here" autocomplete="off"
-                               data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_MotherId"
-                               class="autocomplete form-control" />
-                        <input type="hidden" asp-for="@Model.StudentRegistration.MotherId" />
-                    </div>
-                </div>
-
-                <div class="hr-line-dashed"></div>
-            </div>
         </div>
+        <div class="ibox-content">
+            <div class="form-group  row">
+                <label class="col-sm-2 col-form-label">Father</label>
+
+                <div class="col-sm-10">
+                    <input type="text" placeholder="Type Father name here" autocomplete="off"
+                           data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_FatherId"
+                           class="autocomplete form-control" />
+                    <input type="hidden" asp-for="@Model.StudentRegistration.FatherId" />
+
+                </div>
+            </div>
+            <div class="form-group  row">
+                <label class="col-sm-2 col-form-label">Mother</label>
+
+                <div class="col-sm-10">
+                    <input type="text" placeholder="Type Mother name here" autocomplete="off"
+                           data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_MotherId"
+                           class="autocomplete form-control" />
+                    <input type="hidden" asp-for="@Model.StudentRegistration.MotherId" />
+                </div>
+            </div>
+
+            <div class="hr-line-dashed"></div>
+        </div>
+    </div>
+
+    @for(int j=0;j<Model.StudentRegistration.StudentRegistrations.Count;j++)
+    {
         <div class="ibox ">
             <div class="ibox-title">
-                <h5>Student 1</h5>
+                <h5>Student @(j + 1)</h5>
+                <button class="btn btn-white btn-sm" type="submit" name="btnStudentRemove_@j.ToString()">Remove</button>
 
             </div>
             <div class="ibox-content">
@@ -140,17 +144,16 @@
 
                     <div class="col-sm-10">
                         <input type="text" placeholder="Student name here" autocomplete="off"
-                               data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_StudentRegistrations_0__StudentId"
-                               class="autocomplete form-control" />
-                        <input type="hidden" asp-for="@Model.StudentRegistration.StudentRegistrations[0].StudentId" />
-
+                               data-url="@Url.Content("~/api/Contact/Search")" data-target-id='StudentRegistration_StudentRegistrations_' + @j.ToString() + '__StudentId';
+                               class="autocomplete form-control"/>
+                        <input type="hidden" asp-for="@Model.StudentRegistration.StudentRegistrations[j].StudentId"/>
                     </div>
                 </div>
                 <div class="form-group  row">
                     <label class="col-sm-2 col-form-label">Public School Grade</label>
 
                     <div class="col-sm-10">
-                        <select asp-for="@Model.StudentRegistration.StudentRegistrations[0].PublicSchoolGrade" class="form-control"
+                        <select asp-for="@Model.StudentRegistration.StudentRegistrations[j].PublicSchoolGrade" class="form-control"
                                 asp-items="@Model.PublicSchoolGradeList">
                             <option>Please select one</option>
                         </select>
@@ -161,7 +164,7 @@
                     <label class="col-sm-2 col-form-label">Islamic School Grade</label>
 
                     <div class="col-sm-10">
-                        <select asp-for="@Model.StudentRegistration.StudentRegistrations[0].IslamicSchoolGrade" class="form-control"
+                        <select asp-for="@Model.StudentRegistration.StudentRegistrations[j].IslamicSchoolGrade" class="form-control"
                                 asp-items="@Model.IslamicSchoolGradeList">
                             <option>Please select one</option>
                         </select>
@@ -170,145 +173,19 @@
                 <div class="hr-line-dashed"></div>
             </div>
         </div>
-
-        <div class="ibox ">
-            <div class="ibox-title">
-                <h5>Student 2</h5>
-
-            </div>
-            <div class="ibox-content">
-                <div class="form-group  row">
-                    <label class="col-sm-2 col-form-label">Student</label>
-
-                    <div class="col-sm-10">
-                        <input type="text" placeholder="Student name here" autocomplete="off"
-                               data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_StudentRegistration_1__StudentId"
-                               class="autocomplete form-control" />
-                        <input type="hidden" asp-for="@Model.StudentRegistration.StudentRegistrations[1].StudentId" />
-
-                    </div>
-                </div>
-                <div class="form-group  row">
-                    <label class="col-sm-2 col-form-label">Public School Grade</label>
-
-                    <div class="col-sm-10">
-                        <select asp-for="@Model.StudentRegistration.StudentRegistrations[1].PublicSchoolGrade" class="form-control"
-                                asp-items="@Model.PublicSchoolGradeList">
-                            <option>Please select one</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group  row">
-                    <label class="col-sm-2 col-form-label">Islamic School Grade</label>
-
-                    <div class="col-sm-10">
-                        <select asp-for="@Model.StudentRegistration.StudentRegistrations[1].IslamicSchoolGrade" class="form-control"
-                                asp-items="@Model.IslamicSchoolGradeList">
-                            <option>Please select one</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="hr-line-dashed"></div>
-            </div>
-        </div>
-
-        <div class="ibox ">
-            <div class="ibox-title">
-                <h5>Student 3</h5>
-
-            </div>
-            <div class="ibox-content">
-                <div class="form-group  row">
-                    <label class="col-sm-2 col-form-label">Student</label>
-
-                    <div class="col-sm-10">
-                        <input type="text" placeholder="Student name here" autocomplete="off"
-                               data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_StudentRegistration_2__StudentId"
-                               class="autocomplete form-control" />
-                        <input type="hidden" asp-for="@Model.StudentRegistration.StudentRegistrations[2].StudentId" />
-
-                    </div>
-                </div>
-                <div class="form-group  row">
-                    <label class="col-sm-2 col-form-label">Public School Grade</label>
-
-                    <div class="col-sm-10">
-                        <select asp-for="@Model.StudentRegistration.StudentRegistrations[2].PublicSchoolGrade" class="form-control"
-                                asp-items="@Model.PublicSchoolGradeList">
-                            <option>Please select one</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group  row">
-                    <label class="col-sm-2 col-form-label">Islamic School Grade</label>
-
-                    <div class="col-sm-10">
-                        <select asp-for="@Model.StudentRegistration.StudentRegistrations[2].IslamicSchoolGrade" class="form-control"
-                                asp-items="@Model.IslamicSchoolGradeList">
-                            <option>Please select one</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="hr-line-dashed"></div>
-            </div>
-        </div>
-
-        <div class="ibox ">
-            <div class="ibox-title">
-                <h5>Student 4</h5>
-
-            </div>
-            <div class="ibox-content">
-                <div class="form-group  row">
-                    <label class="col-sm-2 col-form-label">Student</label>
-
-                    <div class="col-sm-10">
-                        <input type="text" placeholder="Student name here" autocomplete="off"
-                               data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_StudentRegistration_3__StudentId"
-                               class="autocomplete form-control" />
-                        <input type="hidden" asp-for="@Model.StudentRegistration.StudentRegistrations[3].StudentId" />
-
-                    </div>
-                </div>
-                <div class="form-group  row">
-                    <label class="col-sm-2 col-form-label">Public School Grade</label>
-
-                    <div class="col-sm-10">
-                        <select asp-for="@Model.StudentRegistration.StudentRegistrations[3].PublicSchoolGrade" class="form-control"
-                                asp-items="@Model.PublicSchoolGradeList">
-                            <option>Please select one</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group  row">
-                    <label class="col-sm-2 col-form-label">Islamic School Grade</label>
-
-                    <div class="col-sm-10">
-                        <select asp-for="@Model.StudentRegistration.StudentRegistrations[3].IslamicSchoolGrade" class="form-control"
-                                asp-items="@Model.IslamicSchoolGradeList">
-                            <option>Please select one</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="hr-line-dashed"></div>
-            </div>
-        </div>
-
-
+    }
+        
     </div>
 </div>
 <div class="row">
     <div class="col-lg-12">
         <div class="form-group row" style="text-align:right">
             <div class="col-sm-12 col-sm-offset-2">
-                <button class="btn btn-white btn-sm" type="submit" name="btnCancel">Cancel</button>
+                <button class="btn btn-white btn-sm" type="submit" asp-page-handler="Cancel">Cancel</button>
 
-                <button class="btn btn-white btn-sm" type="submit" name="btnReset">Reset</button>
+                <button class="btn btn-white btn-sm" type="submit" asp-page-handler="Reset">Reset</button>
 
-                <button class="btn btn-primary btn-sm" type="submit" name="btnSave">Save</button>
+                <button class="btn btn-primary btn-sm" type="submit" asp-page-handler="Save">Save</button>
 
             </div>
             s

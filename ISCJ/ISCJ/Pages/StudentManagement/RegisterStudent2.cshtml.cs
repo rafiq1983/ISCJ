@@ -22,8 +22,36 @@ namespace ISCJ.Pages.StudentManagement
     {
         Programs = mgr.GetAllPrograms(GetCallContext());
         Products = productMgr.GetAllProducts(GetCallContext());
-        }
+        StudentRegistration = BuildForDisplay();
+    }
 
+    private CreateRegistrationApplicationInput BuildForDisplay()
+    {
+       var output = new CreateRegistrationApplicationInput();
+       
+        output.StudentRegistrations = new List<CreateStudentRegistrationInput>();
+        output.StudentRegistrations.Add(new CreateStudentRegistrationInput()
+        {
+             
+        });
+
+        output.StudentRegistrations.Add(new CreateStudentRegistrationInput()
+        {
+
+        });
+
+        output.StudentRegistrations.Add(new CreateStudentRegistrationInput()
+        {
+
+        });
+
+        output.StudentRegistrations.Add(new CreateStudentRegistrationInput()
+        {
+
+        });
+
+            return output;
+    }
     private CallContext GetCallContext()
     {
         return new CallContext("Iftikhar", "234234", "askfj", Guid.Empty);
@@ -36,19 +64,31 @@ namespace ISCJ.Pages.StudentManagement
             ;
     }
 
-    public void OnPost()
+    public void OnPostSave()
     {
       //validation.
       if(ModelState.IsValid)
       {
         BusinessLogic.RegistrationManager mgr = new RegistrationManager();
         mgr.CreateRegistration(GetCallContext(), StudentRegistration);
+        Response.Redirect("Registrations");
       }
 
-      Response.Redirect("Registrations");
+      
     }
 
-    public IEnumerable<SelectListItem> PublicSchoolGradeList
+    public void OnPostCancel()
+    {
+        
+    }
+
+    public void OnPostReset()
+    {
+       
+    }
+
+
+        public IEnumerable<SelectListItem> PublicSchoolGradeList
     {
       get
       {
@@ -74,6 +114,8 @@ namespace ISCJ.Pages.StudentManagement
       get;
       set;
     }
+
+
     }
 
   
