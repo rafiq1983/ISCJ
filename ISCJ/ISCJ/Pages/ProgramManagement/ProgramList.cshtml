@@ -33,8 +33,6 @@
       {
         <tr>
           <td>@Model.ProgramDetails[i].ProgramName</td>
-          <td>@Model.ProgramDetails[i].StartDate</td>
-          <td>@Model.ProgramDetails[i].EndDate</td>
           
           <td>
             <input type="submit" class="btn-sm btn-success" value="Details" id="btnDetails" name="btnAction" onClick="return SetProgramId('@Model.ProgramDetails[i].ProgramId');" />
@@ -53,13 +51,7 @@
                 <th>Billable Item</th>
                 <th>Amount</th>
               </tr>
-              @for (var j = 0; j < Model.ProgramDetails[i].Products.Count; j++)
-              {
-                <tr>
-                <td>@Model.ProgramDetails[i].Products[j].Description</td>
-                <td>@Model.ProgramDetails[i].Products[j].Amount</td>
-                  </tr>
-              }
+            
             </table>
           </td>
         </tr>

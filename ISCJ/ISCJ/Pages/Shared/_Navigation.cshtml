@@ -23,20 +23,45 @@
       <li class="@Html.IsSelected(controller: "ContactManagement")">
         <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Contact Management</span> <span class="fa arrow"></span></a>
         <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "ContactManagement", cssClass: "in")">
-          <li class="@Html.IsSelected(action: "Contacts")"><a href="@Url.Page("~/ContactManagement/Contacts")">Contacts</a></li>
-          <li class="@Html.IsSelected(action: "ViewEditContact")"><a href="@Url.Page("~/ContactManagement/ContactViewEdit?mode=new")">Add Contact</a></li>
-          <li class="@Html.IsSelected(action: "Bulk Entry")"><a href="@Url.Page("~/ContactManagement/BulkEntry")">Bulk Entry</a></li>
+          <li class="@Html.IsSelected(action: "Contacts")"><a href="/ContactManagement/Contacts">Contacts</a></li>
+          <li class="@Html.IsSelected(action: "ViewEditContact")"><a href="/ContactManagement/ContactViewEdit?mode=new">Add Contact</a></li>
         </ul>
       </li>
       <li class="@Html.IsSelected(controller: "StudentManagement")">
-        <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Student Management</span> <span class="fa arrow"></span></a>
+        <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">School</span> <span class="fa arrow"></span></a>
         <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "StudentManagement", cssClass: "in")">
-          <li class="@Html.IsSelected(action: "RegisterStudent")"><a href="@Url.Page("~/StudentManagement/RegisterStudent")">Register Student</a></li>
-          <li class="@Html.IsSelected(action: "RegisterStudent2")"><a href="@Url.Page("~/StudentManagement/RegisterStudent2")">Register Student 2</a></li>
-          <li class="@Html.IsSelected(action: "Registration")"><a href="@Url.Page("~/StudentManagement/Registrations")">Register Student 2</a></li>
-
+            <li class="@Html.IsSelected(action: "Registration")"><a href="/StudentManagement/Students">Programs</a></li>
+            <li class="@Html.IsSelected(action: "RegisterStudent2")"><a href="/StudentManagement/RegisterStudent2">New Registration Application</a></li>
+            <li class="@Html.IsSelected(action: "RegisterStudent2")"><a href="/StudentManagement/RegisterStudent2">Renew Registration</a></li>
+            <li class="@Html.IsSelected(action: "Registration")"><a href="/StudentManagement/Students">Enrollments</a></li>
+            <li class="@Html.IsSelected(action: "RegisterStudent2")"><a href="/StudentManagement/Registrations">Instructors</a></li>
+            <li class="@Html.IsSelected(action: "RegisterStudent2")"><a href="/StudentManagement/Registrations">Courses</a></li>
         </ul>
       </li>
+      <li class="@Html.IsSelected(controller: "Financials")">
+        <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Financials</span> <span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Financials", cssClass: "in")">
+            <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/Financials/InvoiceList">Add Payment</a></li>
+            <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/Financials/InvoiceList">Invoices</a></li>
+            <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/Financials/InvoiceList">Add Donation</a></li>
+        </ul>
+      </li>
+      <li class="@Html.IsSelected(controller: "Donors")">
+        <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Donors</span> <span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Financials", cssClass: "in")">
+          <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/Financials/InvoiceList">Donations</a></li>
+          <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/Financials/InvoiceList">Add Donation</a></li>
+        </ul>
+      </li>
+      <li class="@Html.IsSelected(controller: "Members")">
+        <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Members</span> <span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Financials", cssClass: "in")">
+          <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/Financials/InvoiceList">Add a Member</a></li>
+          <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/Financials/InvoiceList">Renew Membership</a></li>
+        </ul>
+      </li>
+
+
 
 
     </ul>

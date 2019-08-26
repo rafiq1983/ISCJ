@@ -5,7 +5,7 @@
     Layout = "~/Pages/Shared/_LayoutModern.cshtml";
 }
 <form method="post">
-  <div class="row wrapper border-bottom white-bg page-heading">
+  <div class="row wrapper border-bottom white-bg page-heading" >
     <div class="col-lg-9">
       <h2>Registrations</h2>
       <ol class="breadcrumb">
@@ -19,6 +19,13 @@
           <strong>Registrations</strong>
         </li>
       </ol>
+    </div>
+    <div class="col-lg-3">
+      <div class="title-action">
+        @Html.DropDownListFor(x => x.ProgramId, new SelectList(Model.Programs, "ProgramId", "ProgramName"), "--Select--",
+htmlAttributes: new { @class = "form-control m-b" })
+
+      </div>
     </div>
   </div>
 
@@ -66,12 +73,22 @@
   <input type="button" id="btnAddNew" name="btnAction" class="btn-sm btn-success" value="Add New" onclick="window.location = 'RegisterStudent2'" />
   <input type="hidden" id="regId" name="regId" />
 </form>
+
+@section scripts
+{
 <script language="javascript">
-  function SetRegistrationId(regId) {
+  $(document).ready(function () {
+    Startup();
+  });
 
-    $("#regId").val(contactId);
-
-    return true;
+  function Startup() {
+    var ctlId = "#ProgramId";//todo: isa: need to generate like we do in asp-for.
+    $(ctlId).change(function (x) {
+     
+      $("form").submit();
+    });
   }
+  
 </script>
 
+}

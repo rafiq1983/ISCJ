@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MA.Common.Tests", "MA.Commo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{8937B307-8372-49E1-8E6F-74C872B7F779}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MA.Core.Web", "MA.Core.Web\MA.Core.Web.csproj", "{30129060-F7B5-4FFA-844D-AE29392ED2D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{8937B307-8372-49E1-8E6F-74C872B7F779}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8937B307-8372-49E1-8E6F-74C872B7F779}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8937B307-8372-49E1-8E6F-74C872B7F779}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30129060-F7B5-4FFA-844D-AE29392ED2D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30129060-F7B5-4FFA-844D-AE29392ED2D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30129060-F7B5-4FFA-844D-AE29392ED2D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30129060-F7B5-4FFA-844D-AE29392ED2D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,51 +3,46 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MA.Core;
+using MA.Common.Entities.Registration;
 
 namespace BusinessLogic
 {
   public class ProgramManager
   {
-    static List<ProgramDetail> _programs;
+    
+        public Guid AddProgram(ProgramDetail programDetail)
+        {
+            using (var db = new Database())
+            {
+                programDetail.ProgramId = Guid.NewGuid();
+                programDetail.CreateUser = "Iftikhar";
+                programDetail.CreateDate = DateTime.Now;
+                db.Programs.Add(programDetail);
+                db.SaveChanges();
+                return programDetail.ProgramId;
+            }
+        }
 
-    static ProgramManager()
+    public List<ProgramDetail> GetAllPrograms(CallContext callerContext)
     {
-      _programs = new List<ProgramDetail>();
-
-      _programs.Add(new ProgramDetail() { ProgramId = "333e070b-58b5-4f28-91b0-c20c56072859", ProgramName = "ISCJ Sunday School 2018-2019",
-        StartDate = DateTime.Parse("9/1/2018"), EndDate = DateTime.Parse("6/1/2019"),
-
-        ProgramDescription = @"<ul><li>Membership: $365 per year Membership can also be paid 3 installments as follows: <br/> <ul><li>165 at time of registration</li 
-                                  <li>100 in December 2018</li><li>100 in March 2019</ul></li>
-<li>Registration: Fee: $20 Per child. $25.00 after 09/2018</li></ul>"
-
-    });
-
-      ProductManager productMgr = new ProductManager();
-      _programs[0].Products.AddRange(productMgr.GetBillingItems());
+        List<ProgramDetail> details = new List<ProgramDetail>();
+        details.Add(new ProgramDetail() {ProgramId = Guid.Empty, ProgramName = "2019"});
+        //return details;
+            using (var db = new Database())
+            {
+                return db.Programs.ToList();
+            }
     }
-    public List<ProgramDetail> GetPrograms()
+
+    public ProgramDetail GetProgram(CallContext callerContext, Guid programId)
     {
-        return _programs;
-    }
+            using (var db = new Database())
+            {
+                return db.Programs.SingleOrDefault(x => x.ProgramId == programId);
+            }
 
-    public string AddProgram(ProgramDetail programDetail)
-    {
-      var program = _programs.SingleOrDefault(x => x.ProgramId == programDetail.ProgramId);
-
-      if (program == null)
-      {
-        //new
-        programDetail.ProgramId = Guid.NewGuid().ToString();
-        _programs.Add(programDetail);
-      }
-      else
-      {
-        _programs[_programs.IndexOf(program)] = programDetail;
-      }
-
-      return programDetail.ProgramId;
+        }
 
     }
-  }
 }

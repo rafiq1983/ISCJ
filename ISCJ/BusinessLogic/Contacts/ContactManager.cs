@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using MA.Common;
 using MA.Common.Entities.Contacts;
+using MA.Common.Models.api;
+using MA.Core;
 
 namespace BusinessLogic
 {
@@ -32,6 +34,38 @@ namespace BusinessLogic
         _ContextContact.SaveChanges();
         return input.Guid.ToString();
       }
+
+        }
+
+        public AddContactOutput AddNewContact(CallContext callContext, AddContactInput input)
+        {
+            var inputContact = input.Contact;
+            Contact contact = new Contact();
+            contact.FirstName = inputContact.FirstName;
+            contact.LastName = inputContact.LastName;
+            contact.HomePhone = inputContact.Phone?.PhoneNumber;
+            contact.StreetAddress = inputContact.Address?.AddressLine1;
+            contact.City = inputContact.Address?.City;
+            contact.State = inputContact.Address?.StateCode;
+            contact.ZipCode = inputContact.Address?.ZipCode;
+            contact.Email = inputContact.Email;
+            if (inputContact.DOB.HasValue)
+                contact.DOB = inputContact.DOB.Value;
+
+            contact.CellPhone = inputContact.Phone?.PhoneNumber;
+            contact.CreatedBy = callContext.UserId;
+            contact.CreatedDate = System.DateTime.UtcNow;
+            contact.Guid = Guid.NewGuid();
+
+            using (var _ContextContact = new ContactContext())
+            {
+                _ContextContact.Contacts.Add(contact);
+                _ContextContact.SaveChanges();
+                return new AddContactOutput()
+                {
+                    ContactId = contact.Guid
+                };
+            }
 
         }
 
@@ -85,6 +119,23 @@ namespace BusinessLogic
 
       }
     }
+
+        public List<Contact> GetAllContacts()
+        {
+
+            using (var _ContextContact = new ContactContext())
+            {
+                return _ContextContact.Contacts.ToList();//.Where(x => x.Guid == Guid.Parse("6358BD29-A24B-4294-9D5C-00CD2B3606A7")).ToList();
+
+            }
+        }
+        public List<Contact> GetContactsByContactType(string userId, int contactType)
+        {
+            using (var _ContextContact = new ContactContext())
+            {
+                return _ContextContact.Contacts.Where(x => x.ContactType == contactType).ToList();
+            }
+        }
 
     }
 }

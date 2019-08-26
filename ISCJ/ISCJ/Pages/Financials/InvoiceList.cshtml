@@ -2,25 +2,45 @@
 @model InvoiceListModel
 @{
 }
+@{
+  ViewData["Title"] = "Contacts";
+  Layout = "~/Pages/Shared/_LayoutModern.cshtml";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-lg-9">
+    <h2>Invoices</h2>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
+      </li>
+      <li class="breadcrumb-item">
+        Financials
+      </li>
+      <li class="active breadcrumb-item">
+        <strong>Invoices</strong>
+      </li>
+    </ol>
+  </div>
+</div>
+
 <table class="table-bordered">
+  <tr>
 
- <tr>
-  
     <th>Generation Date</th>
-  <th>Due Date</th>
+    <th>Due Date</th>
     <th>Invoice Amount</th>
-   <th>Is Paid</th>
-
- </tr>
+    <th>Is Paid</th>
+  </tr>
   <tbody>
-    @for(var i=0;i<Model.Invoices.Count;i++)
+    @for (var i = 0; i < Model.Invoices.Count; i++)
     {
       <tr>
-      <td>@Model.Invoices[i].GenerationDate</td>
-      <td>@Model.Invoices[i].DueDate</td>
-      <td>@Model.Invoices[i].InvoiceAmount</td>
+        <td>@Model.Invoices[i].GenerationDate</td>
+        <td>@Model.Invoices[i].DueDate</td>
+        <td>@Model.Invoices[i].InvoiceAmount</td>
         <td>@Model.Invoices[i].IsPaid</td>
-        </tr>
+      </tr>
     }
   </tbody>
 </table>

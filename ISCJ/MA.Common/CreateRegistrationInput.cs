@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MA.Common.Entities.Product;
 
 namespace MA.Common
 {
  
-  public class CreateRegistrationInput
+  public class CreateRegistrationApplicationInput
   {
     public Guid FatherId { get; set; }
     public Guid MotherId { get; set; }
@@ -13,7 +14,8 @@ namespace MA.Common
     public bool AddSchoolMemberShipFee { get; set; }
     public bool AddStudentRegistrationFee { get; set; }
     public int StudentRegistrationFeeCount { get; set; }
-    public List<CreateStudentRegistrationInput> StudentRegistration { get; set; }
+    public List<CreateStudentRegistrationInput> StudentRegistrations { get; set; }
+    public List<ProductSelected> BillingInstructions { get; set; }
   }
 
   public class CreateStudentRegistrationInput
@@ -21,10 +23,35 @@ namespace MA.Common
     public Guid? StudentId { get; set; }
     public string IslamicSchoolGrade { get; set; }
     public string PublicSchoolGrade { get; set; }
+    public string StudentName { get; set; }
+
+  }
+
+  public class AddRegistrationInput
+  {
+      public Guid RegistrationApplicationId { get; set; }
+
+      public Guid StudentId { get; set; }
+      public string IslamicSchoolGrade { get; set; }
+      public string PublicSchoolGrade { get; set; }
+      public List<ProductSelected> BillingInstructions { get; set; }
+    }
+
+  public class AddRegistrationOutput
+  {
+      public bool Success { get; set; }
   }
 
   public class RegistrationDetail
   {
     public Guid RegistrationId { get; set; }
+  }
+
+  public class ProductSelected
+  {
+      public Guid ProductId { get; set; }
+      public int ProductCount { get; set; }
+      public bool IsSelected { get; set; }
+      public string ProductCode { get; set; }
   }
 }
