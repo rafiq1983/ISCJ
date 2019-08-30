@@ -21,13 +21,14 @@ namespace MA.Common.Models.api
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public int ContactType { get; set; }
+       public int ContactType { get; set; }
         public int Gender { get; set; }
         public string CompanyName { get; set; }
 
         public Address Address { get; set; }
 
-        public Phone Phone { get; set; }
+        public string HomePhone { get; set; }
+        public string CellPhone { get; set; }
 
         public string Email { get; set; }
 

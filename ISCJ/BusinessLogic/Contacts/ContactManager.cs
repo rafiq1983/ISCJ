@@ -6,6 +6,7 @@ using MA.Common;
 using MA.Common.Entities.Contacts;
 using MA.Common.Models.api;
 using MA.Core;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BusinessLogic
 {
@@ -37,13 +38,13 @@ namespace BusinessLogic
 
         }
 
-        public AddContactOutput AddNewContact(CallContext callContext, AddContactInput input)
+        public AddContactOutput AddNewContact(CallContext callContext,AddContactInput input)
         {
             var inputContact = input.Contact;
             Contact contact = new Contact();
             contact.FirstName = inputContact.FirstName;
             contact.LastName = inputContact.LastName;
-            contact.HomePhone = inputContact.Phone?.PhoneNumber;
+            contact.HomePhone = inputContact.HomePhone;
             contact.StreetAddress = inputContact.Address?.AddressLine1;
             contact.City = inputContact.Address?.City;
             contact.State = inputContact.Address?.StateCode;
@@ -51,8 +52,7 @@ namespace BusinessLogic
             contact.Email = inputContact.Email;
             if (inputContact.DOB.HasValue)
                 contact.DOB = inputContact.DOB.Value;
-
-            contact.CellPhone = inputContact.Phone?.PhoneNumber;
+            contact.CellPhone = inputContact.CellPhone;
             contact.CreatedBy = callContext.UserId;
             contact.CreatedDate = System.DateTime.UtcNow;
             contact.Guid = Guid.NewGuid();

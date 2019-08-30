@@ -19,10 +19,11 @@ namespace ISCJ.webapi
     {
 
         [HttpPost()]
-        public JsonResult AddContact(AddContactInput input)
+        public JsonResult AddContact([FromBody]AddContactInput input)
         {
             ContactManager contactManager = new ContactManager();
             return new JsonResult(contactManager.AddNewContact(GetCallContext(), input));
+          
         }
 
         [HttpGet("Search")]
@@ -77,5 +78,14 @@ namespace ISCJ.webapi
             return mgr.GetContactsByContactType(GetUserId(), Convert.ToInt32(contactTypeInput));
         }
         
+    }
+
+    public class Emp
+    {
+
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
+
     }
 }

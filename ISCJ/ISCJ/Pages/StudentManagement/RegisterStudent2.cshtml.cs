@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogic;
 using MA.Common;
+using MA.Common.Entities.Contacts;
 using MA.Common.Entities.Registration;
 using MA.Common.Models.api;
 using MA.Core;
@@ -47,7 +48,7 @@ namespace ISCJ.Pages.StudentManagement
 
         output.StudentRegistrations.Add(new CreateStudentRegistrationInput()
         {
-
+            
         });
 
             return output;
@@ -61,7 +62,7 @@ namespace ISCJ.Pages.StudentManagement
     public void OnGet()
     {
         
-            ;
+           
     }
 
     public void OnPostSave()
@@ -114,6 +115,8 @@ namespace ISCJ.Pages.StudentManagement
       get;
       set;
     }
+
+    public List<ContactType> ContactTypes { get { return ContactManager.GetContacTypes(); } }
 
 
     }
