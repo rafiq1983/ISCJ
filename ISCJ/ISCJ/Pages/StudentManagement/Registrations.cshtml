@@ -36,27 +36,28 @@ htmlAttributes: new { @class = "form-control m-b" })
         <div class="col-lg-3">
           <div class="contact-box center-version">
 
-            <a href="profile.html">
+              <a href="profile.html">
+                  <img alt="image" class="rounded-circle" src="@(Model.Registrations[i].StudentContactInfo.Gender == 1 ? "/images/male.png" : "/images/female.png")" />
 
-              <img alt="image" class="rounded-circle" src="~/Images/a2.jpg">
 
 
-              <h3 class="m-b-xs">
-                <strong>
-                  @(Model.Registrations[i].StudentContactInfo.FirstName + " " + @Model.Registrations[i].StudentContactInfo.LastName)
-                </strong>
-              </h3>
 
-              <div class="font-bold">Student</div>
-              <address class="m-t-md">
-                <strong>TBD</strong><br>
-                @Model.Registrations[i].StudentContactInfo.StreetAddress<br>
-                @Model.Registrations[i].StudentContactInfo.City, @Model.Registrations[i].StudentContactInfo.State, @Model.Registrations[i].StudentContactInfo.ZipCode<br>
-                <abbr title="Islamic School Grade">Islamic School Grade:</abbr> <Code code-type="islamicschoolgradelist" code="@Model.Registrations[i].IslamicSchoolGradeId"></Code>
-                <br />
-                <abbr title="Islamic School Grade">Public School Grade:</abbr> <Code code-type="publicschoolgradelist" code="@Model.Registrations[i].PublicSchoolGradeId"></Code>
-              </address>
-            </a>
+                  <h3 class="m-b-xs">
+                      <strong>
+                          @(Model.Registrations[i].StudentContactInfo.FirstName + " " + @Model.Registrations[i].StudentContactInfo.LastName)
+                      </strong>
+                  </h3>
+
+                  <div class="font-bold">Student</div>
+                  <address class="m-t-md">
+                      <strong>TBD</strong><br>
+                      @Model.Registrations[i].StudentContactInfo.StreetAddress<br>
+                      @Model.Registrations[i].StudentContactInfo.City, @Model.Registrations[i].StudentContactInfo.State, @Model.Registrations[i].StudentContactInfo.ZipCode<br>
+                      <abbr title="Islamic School Grade">Islamic School Grade:</abbr> <Code code-type="islamicschoolgradelist" code="@Model.Registrations[i].IslamicSchoolGradeId"></Code>
+                      <br />
+                      <abbr title="Islamic School Grade">Public School Grade:</abbr> <Code code-type="publicschoolgradelist" code="@Model.Registrations[i].PublicSchoolGradeId"></Code>
+                  </address>
+              </a>
             <div class="contact-box-footer">
               <div class="m-t-xs btn-group">
                 <a class="btn btn-xs btn-white"><i class="fa fa-phone"></i> Call Parent </a>
