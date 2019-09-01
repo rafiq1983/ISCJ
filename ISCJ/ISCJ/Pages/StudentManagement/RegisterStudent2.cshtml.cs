@@ -78,6 +78,14 @@ namespace ISCJ.Pages.StudentManagement
       
     }
 
+    public void OnPostRemove(int btnStudentRemove)
+    {
+        if (StudentRegistration.StudentRegistrations.Count >btnStudentRemove)
+        {
+            StudentRegistration.StudentRegistrations.RemoveAt(btnStudentRemove);
+        }
+    }
+
     public void OnPostCancel()
     {
         
