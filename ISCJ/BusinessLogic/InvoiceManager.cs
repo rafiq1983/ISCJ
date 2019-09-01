@@ -6,19 +6,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic
 {
   
   public class InvoiceManager
   {
-    private static List<Invoice> _Invoices = new List<Invoice>();
 
     public List<Invoice> GetInvoices(CallContext context)
     {
       using (Database db = new Database())
       {
-                return db.Invoices.Where(x => x.TennantId == context.TenantId).ToList();
+                var invoices = db.Invoices.Where(x => x.TennantId == context.TenantId).ToList();
+
+                return invoices;
+
       }
     }
 
@@ -30,11 +33,7 @@ namespace BusinessLogic
             }
         }
 
-        public Invoice GetInvoice(Guid invoiceId)
-    {
-      return _Invoices.SingleOrDefault(x => x.InvoiceId == invoiceId);
-    }
-
+       
     
     public CreateInvoiceOutput CreateInvoice(CreateInvoiceInput input)
         {
@@ -69,7 +68,7 @@ namespace BusinessLogic
                     throw new Exception("Invalid Invoice id " + input.InvoiceId);
 
                 invoice.IsPaid = input.IsPaid;
-                invoice.TotalPaid = invoice.TotalPaid == null?0:invoice.TotalPaid.Value + input.PaidAmount;
+                invoice.TotalPaid = invoice.TotalPaid + input.PaidAmount;
               
                 db.SaveChanges();
                 return new UpdateInvoiceOutput() { Success = true };

@@ -6,7 +6,7 @@
   ViewData["Title"] = "Contacts";
   Layout = "~/Pages/Shared/_LayoutModern.cshtml";
 }
-
+<form method="POST" name="InvoiceDisplay">
 <div class="row wrapper border-bottom white-bg page-heading">
   <div class="col-lg-9">
     <h2>Invoices</h2>
@@ -23,24 +23,43 @@
     </ol>
   </div>
 </div>
-
-<table class="table-bordered">
+    
+    <h3>Total Invoice Amount:</h3>$@Model.PageData.TotalInvoiceAmount <br/>
+    <h3>Total Remaining Amount:</h3>$@Model.PageData.TotalRemainingAmount<br/>
+    <table class="table-bordered">
   <tr>
 
     <th>Generation Date</th>
     <th>Due Date</th>
-    <th>Invoice Amount</th>
+      <th>Invoice Amount</th>
+      <th>Responsible Party</th>
+      <th>Total Paid</th>
+      <th>Pay Amount</th>
     <th>Is Paid</th>
   </tr>
   <tbody>
-    @for (var i = 0; i < Model.Invoices.Count; i++)
+    @for (var i = 0; i < Model.PageData.RowData.Count; i++)
     {
       <tr>
-        <td>@Model.Invoices[i].GenerationDate</td>
-        <td>@Model.Invoices[i].DueDate</td>
-        <td>@Model.Invoices[i].InvoiceAmount</td>
-        <td>@Model.Invoices[i].IsPaid</td>
+          <input type="hidden" asp-for="@Model.Invoices[i].InvoiceId" value="@Model.PageData.RowData[i].Invoice.InvoiceId" />
+
+          <td>@Model.PageData.RowData[i].Invoice.GenerationDate</td>
+          <td>@Model.PageData.RowData[i].Invoice.DueDate</td>
+          <td>$@Model.PageData.RowData[i].Invoice.InvoiceAmount</td>
+          <td><span>@Model.PageData.RowData[i].ResponsiblePartyName</span></td>
+          <td>$@Model.PageData.RowData[i].Invoice.TotalPaid</td>
+          <td>$<input type="text" value="@Model.PageData.RowData[i].Invoice.TotalPaid" asp-for="@Model.Invoices[i].TotalPaid" /></td>
+
+          <td><input type="checkbox" checked="@Model.PageData.RowData[i].Invoice.IsPaid" asp-for="@Model.Invoices[i].IsPaid" /></td>
+          <td>
+              <button class="btn btn-white btn-sm" type="submit" name="btnUpdateInvoice" value="@i"
+                      asp-page-handler="UpateInvoice">
+                  Update
+              </button>
+          </td>
+
       </tr>
     }
   </tbody>
 </table>
+    </form>
