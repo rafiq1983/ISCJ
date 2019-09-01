@@ -71,7 +71,7 @@ namespace ISCJ.webapi
 
         private CallContext GetCallContext()
         {
-            return new CallContext("34234", "127.0.0.1", "32423434", Guid.Empty);
+            return new CallContext("34234", "127.0.0.1", "32423434", Guid.Parse("697400B2-8AA0-4F01-A282-E58530DBC2A8"));
 
         }
     }

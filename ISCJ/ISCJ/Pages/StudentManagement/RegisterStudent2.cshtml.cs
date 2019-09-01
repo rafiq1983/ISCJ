@@ -55,8 +55,8 @@ namespace ISCJ.Pages.StudentManagement
     }
     private CallContext GetCallContext()
     {
-        return new CallContext("Iftikhar", "234234", "askfj", Guid.Empty);
-    }
+        return new CallContext("Iftikhar", "234234", "askfj", Guid.Parse("697400B2-8AA0-4F01-A282-E58530DBC2A8"));
+        }
 
 
     public void OnGet()

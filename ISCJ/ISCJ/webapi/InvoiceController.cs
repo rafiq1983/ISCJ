@@ -25,7 +25,7 @@ namespace ISCJ.webapi
         }
 
         [HttpPut]
-        public JsonResult CreateInvoice(UpdateInvoiceInput input)
+        public JsonResult UpdateInvoice(UpdateInvoiceInput input)
         {
             InvoiceManager mgr = new InvoiceManager();
             var output = mgr.UpdateInvoice(input);
@@ -87,7 +87,7 @@ namespace ISCJ.webapi
 
         private CallContext GetCallContext()
         {
-            return new CallContext("Iftikhar", "DSFsfsd", "FDSDF", Guid.Empty);
+            return new CallContext("Iftikhar", "DSFsfsd", "FDSDF", Guid.Parse("697400B2-8AA0-4F01-A282-E58530DBC2A8"));
         }
 
     }

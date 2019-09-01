@@ -65,8 +65,11 @@ namespace BusinessLogic
             using (Database db = new Database())
             {
                 var invoice = db.Invoices.SingleOrDefault(x => x.InvoiceId == input.InvoiceId);
+                if (invoice == null)
+                    throw new Exception("Invalid Invoice id " + input.InvoiceId);
+
                 invoice.IsPaid = input.IsPaid;
-                invoice.InvoiceAmount = input.Amount;
+                invoice.TotalPaid = invoice.TotalPaid == null?0:invoice.TotalPaid.Value + input.PaidAmount;
               
                 db.SaveChanges();
                 return new UpdateInvoiceOutput() { Success = true };

@@ -13,7 +13,7 @@ namespace MA.Core.Web
 
         protected virtual MA.Core.CallContext GetCallContext()
         {
-            return new CallContext("Iftikhar", "", "", Guid.Empty);
+            return new CallContext("Iftikhar", "", "", Guid.Parse("697400B2-8AA0-4F01-A282-E58530DBC2A8"));
         }
     }
 }

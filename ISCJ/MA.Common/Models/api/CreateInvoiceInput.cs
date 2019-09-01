@@ -19,7 +19,7 @@ namespace MA.Common.Models.api
 
     public class UpdateInvoiceInput
     {
-        public decimal Amount { get; set; }
+        public decimal PaidAmount { get; set; }
         public bool IsPaid { get; set; }
 
         public Guid InvoiceId { get; set; }

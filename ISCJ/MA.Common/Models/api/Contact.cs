@@ -41,7 +41,7 @@ namespace MA.Common.Models.api
         public string City { get; set; }
         public string CountryCode { get; set; }
         public string StateCode { get; set; }
-        
+        public string Apt { get; set; }
         public string ZipCode { get; set; }
     }
 

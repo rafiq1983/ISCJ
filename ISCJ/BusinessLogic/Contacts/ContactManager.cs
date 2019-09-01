@@ -46,6 +46,7 @@ namespace BusinessLogic
             contact.LastName = inputContact.LastName;
             contact.HomePhone = inputContact.HomePhone;
             contact.StreetAddress = inputContact.Address?.AddressLine1;
+            contact.Apt = input.Contact.Address?.Apt;
             contact.City = inputContact.Address?.City;
             contact.State = inputContact.Address?.StateCode;
             contact.ZipCode = inputContact.Address?.ZipCode;

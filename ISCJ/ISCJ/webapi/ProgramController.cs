@@ -35,7 +35,7 @@ namespace ISCJ.webapi
         public ActionResult GetProgramDetail(Guid programId)
         {
             ProgramManager mgr = new ProgramManager();
-            var output = mgr.GetProgram(new CallContext("34234", "127.0.0.1", "32423434", Guid.Empty), programId);
+            var output = mgr.GetProgram(new CallContext("34234", "127.0.0.1", "32423434", Guid.Parse("697400B2-8AA0-4F01-A282-E58530DBC2A8")), programId);
             if (output == null)
                 return NotFound();
             else
