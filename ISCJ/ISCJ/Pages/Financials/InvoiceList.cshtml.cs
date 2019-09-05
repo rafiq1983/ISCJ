@@ -73,7 +73,7 @@ namespace ISCJ.Pages.Financials
             {
                 PageData.TotalInvoiceAmount += rowData.Invoice.InvoiceAmount;
                 PageData.TotalRemainingAmount += rowData.Invoice.InvoiceAmount - rowData.Invoice.TotalPaid;
-
+                
             }
         }
 

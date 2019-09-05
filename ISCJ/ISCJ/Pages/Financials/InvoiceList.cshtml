@@ -34,6 +34,7 @@
       <th>Invoice Amount</th>
       <th>Responsible Party</th>
       <th>Total Paid</th>
+      <th>Remaining</th>
       <th>Pay Amount</th>
     <th>Is Paid</th>
   </tr>
@@ -48,6 +49,7 @@
           <td>$@Model.PageData.RowData[i].Invoice.InvoiceAmount</td>
           <td><span>@Model.PageData.RowData[i].ResponsiblePartyName</span></td>
           <td>$@Model.PageData.RowData[i].Invoice.TotalPaid</td>
+          <td>$@(Model.PageData.RowData[i].Invoice.InvoiceAmount - Model.PageData.RowData[i].Invoice.TotalPaid) </td>
           <td>$<input type="text" value="@Model.PageData.RowData[i].Invoice.TotalPaid" asp-for="@Model.Invoices[i].TotalPaid" /></td>
 
           <td><input type="checkbox" checked="@Model.PageData.RowData[i].Invoice.IsPaid" asp-for="@Model.Invoices[i].IsPaid" /></td>
