@@ -1,6 +1,7 @@
 ﻿using MA.Common.Models.api;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
@@ -18,6 +19,8 @@ namespace MA.Common.Entities.Invoices
     public string Description { get; set; }
 
     public DateTime GenerationDate { get; set; }
+    [Display(Name = "Paid Amount")]
+    [DataType(DataType.Currency)]
     public decimal TotalPaid { get; set; }
     public bool IsPaid { get; set; }
     public List<InvoiceItem> InvoiceItems { get; set; }

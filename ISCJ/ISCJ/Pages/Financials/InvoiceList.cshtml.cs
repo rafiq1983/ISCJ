@@ -10,6 +10,7 @@ using MA.Common.Entities.Invoices;
 using MA.Common.Models.api;
 using MA.Core;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -88,25 +89,44 @@ namespace ISCJ.Pages.Financials
 
         public void OnPost(int btnUpdateInvoice)
         {
-
-            var invoice = Invoices[btnUpdateInvoice];
-            InvoiceManager mgr = new InvoiceManager();
-            mgr.UpdateInvoice(new UpdateInvoiceInput()
+            if (ModelState.IsValid)
             {
-                InvoiceId = invoice.InvoiceId,
-                IsPaid = invoice.IsPaid,
-                PaidAmount = invoice.TotalPaid
-            });
+                var invoice = Invoices[btnUpdateInvoice];
+                InvoiceManager mgr = new InvoiceManager();
+                mgr.UpdateInvoice(new UpdateInvoiceInput()
+                {
+                    InvoiceId = invoice.InvoiceId,
+                    IsPaid = invoice.IsPaid,
+                    PaidAmount = invoice.TotalPaid
+                });
+            }
+            else
+            {
+                foreach (var errorKey in ModelState.Keys)
+                {
+                    if (ModelState[errorKey].ValidationState == ModelValidationState.Invalid)
+                    {
+                        string msg = ModelState[errorKey].Errors[0].ErrorMessage;
+                    }
+                }
+            }
 
             BuildPageData();
+            
         }
 
-      
+        [BindProperty]
+        public POC Name { get; set; }
 
 
     }
 
-    
+
+    public class POC
+    {
+        [System.ComponentModel.DataAnnotations.Required]
+        public string FirstName { get; set; }
+    }
 
     public class DataModel
     {

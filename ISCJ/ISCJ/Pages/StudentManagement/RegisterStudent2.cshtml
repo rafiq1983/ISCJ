@@ -40,6 +40,8 @@
                             htmlAttributes: new { @class = "form-control m-b" })
 
                     </div>
+                    
+                    <span asp-validation-for="@Model.StudentRegistration.ProgramId" class="text-danger"></span>
                 </div>
             <div class="hr-line-dashed"></div>
             </div>
@@ -269,6 +271,7 @@
                                data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_FatherId"
                                class="autocomplete form-control" />
                         <input type="hidden" asp-for="@Model.StudentRegistration.FatherId" />
+                        <span asp-validation-for="@Model.StudentRegistration.FatherId" class="text-danger"></span>
 
                     </div>
                 </div>
@@ -280,6 +283,8 @@
                                data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_MotherId"
                                class="autocomplete form-control" />
                         <input type="hidden" asp-for="@Model.StudentRegistration.MotherId" />
+
+                        <span asp-validation-for="@Model.StudentRegistration.MotherId" class="text-danger"></span>
                     </div>
                 </div>
 
@@ -310,6 +315,8 @@
                                data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_StudentRegistrations_@(j)__StudentId"
                                class="autocomplete form-control" />
                         <input type="hidden" asp-for="@Model.StudentRegistration.StudentRegistrations[j].StudentId" />
+                        
+                        <span asp-validation-for="@Model.StudentRegistration.StudentRegistrations[j].StudentId" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group  row">
@@ -321,6 +328,8 @@
                             <option>Please select one</option>
                         </select>
                     </div>
+                    
+                    <span asp-validation-for="@Model.StudentRegistration.StudentRegistrations[j].PublicSchoolGrade" class="text-danger"></span>
                 </div>
 
                 <div class="form-group  row">
@@ -331,6 +340,8 @@
                                 asp-items="@Model.IslamicSchoolGradeList">
                             <option>Please select one</option>
                         </select>
+                        <span asp-validation-for="@Model.StudentRegistration.StudentRegistrations[j].IslamicSchoolGrade" class="text-danger"></span>
+
                     </div>
                 </div>
                 <div class="hr-line-dashed"></div>

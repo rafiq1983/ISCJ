@@ -79,8 +79,8 @@ namespace BusinessLogic
                     if (input.StudentRegistrations[i].StudentId.HasValue == false)
                         continue;
                     Enrollment reg = new Enrollment();
-                    reg.FatherId = input.FatherId;
-                    reg.MotherId = input.MotherId;
+                    reg.FatherId = input.FatherId.Value;
+                    reg.MotherId = input.MotherId.Value;
                     reg.ProgramId = input.ProgramId;
                     reg.IslamicSchoolGradeId = input.StudentRegistrations[i].IslamicSchoolGrade;
                     reg.PublicSchoolGradeId = input.StudentRegistrations[i].PublicSchoolGrade;
@@ -99,8 +99,8 @@ namespace BusinessLogic
                 {
                     ApplicationId = Guid.NewGuid(),
                     ApplicationDate = DateTime.UtcNow,
-                    FatherContactId = input.FatherId,
-                    MotherContactId = input.MotherId,
+                    FatherContactId = input.FatherId.Value,
+                    MotherContactId = input.MotherId.Value,
                     ProgramId = input.ProgramId,
                     MembershipId = Guid.Empty,
                     CreateUser = context.UserId
@@ -115,8 +115,8 @@ namespace BusinessLogic
 
                     application.Enrollments.Add(new Enrollment()
                     {
-                        FatherId = input.FatherId,
-                        MotherId = input.MotherId,
+                        FatherId = input.FatherId.Value,
+                        MotherId = input.MotherId.Value,
                         ProgramId = input.ProgramId,
                         IslamicSchoolGradeId = reg.IslamicSchoolGrade,
                         PublicSchoolGradeId = reg.PublicSchoolGrade,

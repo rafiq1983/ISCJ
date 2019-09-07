@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using MA.Common.Entities.Product;
 
@@ -8,8 +10,14 @@ namespace MA.Common
  
   public class CreateRegistrationApplicationInput
   {
-    public Guid FatherId { get; set; }
-    public Guid MotherId { get; set; }
+
+      [Required(AllowEmptyStrings = false,
+          ErrorMessage = "Father must be selected when creating a registration application.")]
+      public Guid? FatherId { get; set; } = null;
+      [Required(AllowEmptyStrings = false,
+          ErrorMessage = "Mother must be selected when creating a registration application.")]
+        public Guid? MotherId { get; set; } = null;
+    [Required(AllowEmptyStrings = false, ErrorMessage="Program must be selected when creating a registration application.")]
     public Guid ProgramId { get; set; }
     public bool AddSchoolMemberShipFee { get; set; }
     public bool AddStudentRegistrationFee { get; set; }
@@ -20,9 +28,15 @@ namespace MA.Common
 
   public class CreateStudentRegistrationInput
   {
+      [Required(AllowEmptyStrings = false, ErrorMessage="Student must be selected.")]
     public Guid? StudentId { get; set; }
-    public string IslamicSchoolGrade { get; set; }
-    public string PublicSchoolGrade { get; set; }
+
+    [Required(AllowEmptyStrings = false, ErrorMessage = "Islamic school grade must be selected.")]
+        public string IslamicSchoolGrade { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Public school grade must be selected.")]
+        public string PublicSchoolGrade { get; set; }
+
     public string StudentName { get; set; }
 
   }

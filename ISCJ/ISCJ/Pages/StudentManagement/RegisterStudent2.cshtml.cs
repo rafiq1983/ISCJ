@@ -88,12 +88,12 @@ namespace ISCJ.Pages.StudentManagement
 
     public void OnPostCancel()
     {
-        
+        ModelState.Clear();
     }
 
     public void OnPostReset()
     {
-       
+        ModelState.Clear();
     }
 
 
