@@ -22,7 +22,16 @@ namespace ISCJ.Pages.StudentManagement
         public void OnGet()
         {
             RegistrationManager mgr = new RegistrationManager();
-            Registrations = mgr.GetRegistrations(Programs[0].ProgramId);
+            Guid registrationAppId;
+            bool validRegisAppId  = Guid.TryParse(Request.Query["regappid"], out registrationAppId);
+
+            if (validRegisAppId)
+                Registrations = mgr.GetRegistrations(Programs[0].ProgramId, registrationAppId);
+            else
+            {
+                Registrations = mgr.GetRegistrations(Programs[0].ProgramId);
+            }
+                   
             if(Programs.Any())
                 ProgramId = Programs[0].ProgramId;
         }

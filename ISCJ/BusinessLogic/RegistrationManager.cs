@@ -217,15 +217,22 @@ namespace BusinessLogic
       }
     }
 
-    public List<Enrollment> GetRegistrations(Guid programId)
+    public List<Enrollment> GetRegistrations(Guid programId, Guid? registrationApplicationId = null)
     {
       using (var db = new Database())
       {
-        return db.Enrollments
-          .Include(Registration => Registration.FatherContactInfo)
-          .Include(registration => registration.MotherContactInfo)
-          .Include(Registration => Registration.StudentContactInfo)
-          .Where(x => x.ProgramId == programId).ToList();
+          var query = db.Enrollments
+              .Include(Registration => Registration.FatherContactInfo)
+              .Include(registration => registration.MotherContactInfo)
+              .Include(Registration => Registration.StudentContactInfo)
+              .Where(x => x.ProgramId == programId);
+
+        if (registrationApplicationId != null)
+        {
+           query = query.Where(x => x.RegistrationApplicationId == registrationApplicationId.Value);
+        }
+
+        return query.ToList();
       }
     }
 

@@ -78,30 +78,33 @@ namespace ISCJ.Pages.StudentManagement
       {
           Products = productMgr.GetAllProducts(GetCallContext());
           //StudentRegistration = BuildForDisplay();
-            }
+      }
 
-      
-
-      
     }
 
     public void OnPostRemove(int btnStudentRemove)
     {
+       
         if (StudentRegistration.StudentRegistrations.Count >btnStudentRemove)
         {
             StudentRegistration.StudentRegistrations.RemoveAt(btnStudentRemove);
         }
+
+        Products = productMgr.GetAllProducts(GetCallContext());
+        ModelState.Clear();
     }
 
     public void OnPostCancel()
     {
         ModelState.Clear();
-    }
+        Products = productMgr.GetAllProducts(GetCallContext());
+        }
 
     public void OnPostReset()
     {
         ModelState.Clear();
-    }
+        Products = productMgr.GetAllProducts(GetCallContext());
+        }
 
 
         public IEnumerable<SelectListItem> PublicSchoolGradeList

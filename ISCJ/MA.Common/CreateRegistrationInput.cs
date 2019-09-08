@@ -17,7 +17,11 @@ namespace MA.Common
       [Required(AllowEmptyStrings = false,
           ErrorMessage = "Mother must be selected when creating a registration application.")]
         public Guid? MotherId { get; set; } = null;
-    [Required(AllowEmptyStrings = false, ErrorMessage="Program must be selected when creating a registration application.")]
+
+        public string MotherName { get; set; }
+        public string FatherName { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage="Program must be selected when creating a registration application.")]
     public Guid ProgramId { get; set; }
     public bool AddSchoolMemberShipFee { get; set; }
     public bool AddStudentRegistrationFee { get; set; }

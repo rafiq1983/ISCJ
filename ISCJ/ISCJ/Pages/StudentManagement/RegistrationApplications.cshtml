@@ -13,7 +13,7 @@
                     <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
                 </li>
                 <li class="breadcrumb-item">
-                    Financials
+                   Registrations
                 </li>
                 <li class="active breadcrumb-item">
                     <strong>Registraton Applications</strong>
@@ -28,7 +28,7 @@
             <th>Application Date</th>
             <th>Father Name</th>
             <th>Mother Name</th>
-            <th>Total Enrollments</th>
+            <th>Enrollments</th>
             <th>Amount Due</th>
             <th>Amount Remaining</th>
             <th>Invoice</th>
@@ -43,7 +43,7 @@
                 <td>@Model.Registrations[i].ApplicationDate</td>
                 <td>@Model.Registrations[i].FatherContactId -- TODO</td>
                 <td>@Model.Registrations[i].MotherContactId --TODO</td>
-                <td><span>@Model.Registrations[i].Enrollments?.Count</span></td>
+                <td><a href="@Url.Page("Registrations", new {regAppId=Model.Registrations[i].ApplicationId})">Enrollments</a></td>
                 <td>TODO</td>
                 <td>TODO </td>
                 <td>
