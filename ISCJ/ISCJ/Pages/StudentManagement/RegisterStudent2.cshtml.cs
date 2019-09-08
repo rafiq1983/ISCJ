@@ -74,6 +74,13 @@ namespace ISCJ.Pages.StudentManagement
         mgr.CreateRegistration(GetCallContext(), StudentRegistration);
         Response.Redirect("Registrations");
       }
+      else
+      {
+          Products = productMgr.GetAllProducts(GetCallContext());
+          //StudentRegistration = BuildForDisplay();
+            }
+
+      
 
       
     }

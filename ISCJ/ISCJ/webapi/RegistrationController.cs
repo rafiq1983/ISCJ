@@ -35,7 +35,7 @@ namespace ISCJ.webapi
        public List<RegistrationApplication> GetAllRegistrations()
        {
            RegistrationManager mgr = new RegistrationManager();
-           return mgr.GetAllApplications(GetCallerContext());
+           return mgr.GetAllApplications(GetCallerContext(), Guid.Empty);
        }
 
 

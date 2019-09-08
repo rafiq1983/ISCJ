@@ -53,13 +53,13 @@
             </div>
             <div class="ibox-content">
                 @{ var i = 0; }
-                <table>
+                <table width="100%">
                     @foreach (var product in Model.Products)
                     {
                         <tr>
                             <td><input type="checkbox" asp-for="@Model.StudentRegistration.BillingInstructions[i].IsSelected" /></td>
-                            <td><label class="col-sm-4 col-form-label">@Model.Products[i].Description</label></td>
-                            <td><label class="col-sm-4 col-form-label">$ @Model.Products[i].Price</label></td>
+                            <td><label class="col-sm-10 col-form-label">@Model.Products[i].Description</label></td>
+                            <td><label class="col-sm-8 col-form-label">$ @Model.Products[i].Price</label></td>
                             <input type="hidden" value="@Model.Products[i].ProductCode" asp-for="@Model.StudentRegistration.BillingInstructions[i].ProductCode" />
                             <td>
                                 <div class="col-sm-10">

@@ -25,11 +25,16 @@ namespace BusinessLogic
             }
     }
 
-    public List<RegistrationApplication> GetAllApplications(CallContext context)
+    public List<RegistrationApplication> GetAllApplications(CallContext context, Guid programId)
     {
         using (var db = new Database())
         {
-            return db.RegistrationApplications.ToList();
+             if(programId!=Guid.Empty)
+                 return db.RegistrationApplications.Where(x=>x.ProgramId == programId).ToList();
+             else
+             {
+                 return db.RegistrationApplications.ToList();
+             }
         }
     }
 

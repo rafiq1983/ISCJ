@@ -39,9 +39,6 @@ htmlAttributes: new { @class = "form-control m-b" })
               <a href="profile.html">
                   <img alt="image" class="rounded-circle" src="@(Model.Registrations[i].StudentContactInfo.Gender == 1 ? "/images/male.png" : "/images/female.png")" />
 
-
-
-
                   <h3 class="m-b-xs">
                       <strong>
                           @(Model.Registrations[i].StudentContactInfo.FirstName + " " + @Model.Registrations[i].StudentContactInfo.LastName)

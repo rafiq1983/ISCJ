@@ -35,7 +35,7 @@ namespace ISCJ.Pages.Financials
 
             var contacts = _contactManager.GetAllContacts();
 
-            var registrationApplications = _registrationManager.GetAllApplications(GetCallContext());
+            var registrationApplications = _registrationManager.GetAllApplications(GetCallContext(), Guid.Empty);
 
             PageData.RowData = new List<RowData>();
 
@@ -100,16 +100,7 @@ namespace ISCJ.Pages.Financials
                     PaidAmount = invoice.TotalPaid
                 });
             }
-            else
-            {
-                foreach (var errorKey in ModelState.Keys)
-                {
-                    if (ModelState[errorKey].ValidationState == ModelValidationState.Invalid)
-                    {
-                        string msg = ModelState[errorKey].Errors[0].ErrorMessage;
-                    }
-                }
-            }
+          
 
             BuildPageData();
             
