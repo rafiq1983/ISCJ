@@ -1,13 +1,13 @@
 ﻿@page
 @model RegistrationsModel
 @{
-    ViewData["Title"] = "Registrations";
+    ViewData["Title"] = "Enrollments";
     Layout = "~/Pages/Shared/_LayoutModern.cshtml";
 }
 <form method="post">
   <div class="row wrapper border-bottom white-bg page-heading" >
     <div class="col-lg-9">
-      <h2>Registrations</h2>
+      <h2>Enrollments</h2>
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
           <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
@@ -16,7 +16,7 @@
           Student Management
         </li>
         <li class="active breadcrumb-item">
-          <strong>Registrations</strong>
+          <strong>Enrollments</strong>
         </li>
       </ol>
     </div>
@@ -31,28 +31,28 @@ htmlAttributes: new { @class = "form-control m-b" })
 
   <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
-      @for (var i = 0; i < Model.Registrations.Count; i++)
+      @for (var i = 0; i < Model.Enrollments.Count; i++)
       {
         <div class="col-lg-3">
           <div class="contact-box center-version">
 
               <a href="profile.html">
-                  <img alt="image" class="rounded-circle" src="@(Model.Registrations[i].StudentContactInfo.Gender == 1 ? "/images/male.png" : "/images/female.png")" />
+                  <img alt="image" class="rounded-circle" src="@(Model.Enrollments[i].StudentContactInfo.Gender == 1 ? "/images/male.png" : "/images/female.png")" />
 
                   <h3 class="m-b-xs">
                       <strong>
-                          @(Model.Registrations[i].StudentContactInfo.FirstName + " " + @Model.Registrations[i].StudentContactInfo.LastName)
+                          @(Model.Enrollments[i].StudentContactInfo.FirstName + " " + @Model.Enrollments[i].StudentContactInfo.LastName)
                       </strong>
                   </h3>
 
                   <div class="font-bold">Student</div>
                   <address class="m-t-md">
                       <strong>TBD</strong><br>
-                      @Model.Registrations[i].StudentContactInfo.StreetAddress<br>
-                      @Model.Registrations[i].StudentContactInfo.City, @Model.Registrations[i].StudentContactInfo.State, @Model.Registrations[i].StudentContactInfo.ZipCode<br>
-                      <abbr title="Islamic School Grade">Islamic School Grade:</abbr> <Code code-type="islamicschoolgradelist" code="@Model.Registrations[i].IslamicSchoolGradeId"></Code>
+                      @Model.Enrollments[i].StudentContactInfo.StreetAddress<br>
+                      @Model.Enrollments[i].StudentContactInfo.City, @Model.Enrollments[i].StudentContactInfo.State, @Model.Enrollments[i].StudentContactInfo.ZipCode<br>
+                      <abbr title="Islamic School Grade">Islamic School Grade:</abbr> <Code code-type="islamicschoolgradelist" code="@Model.Enrollments[i].IslamicSchoolGradeId"></Code>
                       <br />
-                      <abbr title="Islamic School Grade">Public School Grade:</abbr> <Code code-type="publicschoolgradelist" code="@Model.Registrations[i].PublicSchoolGradeId"></Code>
+                      <abbr title="Islamic School Grade">Public School Grade:</abbr> <Code code-type="publicschoolgradelist" code="@Model.Enrollments[i].PublicSchoolGradeId"></Code>
                   </address>
               </a>
             <div class="contact-box-footer">

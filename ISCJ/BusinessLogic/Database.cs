@@ -75,6 +75,9 @@ namespace BusinessLogic
             {
                entity.HasKey(x => x.ApplicationId);
                 entity.ToTable("RegistrationApplication");
+                entity.HasOne(x => x.MotherContactInfo);
+                entity.HasOne(x => x.FatherContactInfo);
+
             });
 
             modelBuilder.Entity<ProgramDetail>(entity =>
@@ -90,7 +93,7 @@ namespace BusinessLogic
       {
         entity.ToTable("Contacts");
         entity.HasKey(e => e.Guid);
-      }).Entity<Invoice>(entity =>
+      }).Entity<ContactType>(entity => { entity.ToTable("ContactTypes"); entity.HasKey(e => e.ID); }).Entity<Invoice>(entity =>
       {
         entity.ToTable("Invoice");
         entity.HasKey(e => e.InvoiceId);
@@ -150,7 +153,7 @@ namespace BusinessLogic
 
         }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
       if (!optionsBuilder.IsConfigured)
       {

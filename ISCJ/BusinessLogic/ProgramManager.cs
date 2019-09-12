@@ -11,13 +11,16 @@ namespace BusinessLogic
   public class ProgramManager
   {
     
-        public Guid AddProgram(ProgramDetail programDetail)
+        public Guid AddProgram(CallContext context, string programName, string programDesc)
         {
             using (var db = new Database())
             {
+                var programDetail = new ProgramDetail();
                 programDetail.ProgramId = Guid.NewGuid();
-                programDetail.CreateUser = "Iftikhar";
-                programDetail.CreateDate = DateTime.Now;
+                programDetail.ProgramName = programName;
+                programDetail.ProgramDescription = programDesc;
+                programDetail.CreateUser = context.UserId;
+                programDetail.CreateDate = DateTime.UtcNow;
                 db.Programs.Add(programDetail);
                 db.SaveChanges();
                 return programDetail.ProgramId;
@@ -44,5 +47,16 @@ namespace BusinessLogic
 
         }
 
+    public ProgramDetail GetProgramByname(CallContext callerContext, string programName)
+    {
+        using (var db = new Database())
+        {
+            return db.Programs.SingleOrDefault(x => x.ProgramName == programName);
+        }
+
     }
+
+  }
+
 }
+

@@ -2,75 +2,45 @@
 @model ProgramListModel
 @{
 }
-<form method="post">
-  <h2>Program List</h2>
 
-  <table class="table-bordered" border="0">
-    <thead>
-      <tr>
-        <th>
-          Program Name
-        </th>
-        <th>
-          Start Date
-        </th>
+@{
+    ViewData["Title"] = "Contacts";
+    Layout = "~/Pages/Shared/_LayoutModern.cshtml";
+}
+<form method="POST" name="InvoiceDisplay">
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-9">
+            <h2>Invoices</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    Program Management
+                </li>
+                <li class="active breadcrumb-item">
+                    <strong>Programs</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
 
-        <th>
-          End Date
-        </th>
-        <th>
-          Description
-        </th>
-        
-        <th>
-
-        </th>
-
-      </tr>
-    </thead>
-    <tbody>
-      @for (var i = 0; i < Model.ProgramDetails.Count; i++)
-      {
+    <table class="table-bordered">
         <tr>
-          <td>@Model.ProgramDetails[i].ProgramName</td>
-          
-          <td>
-            <input type="submit" class="btn-sm btn-success" value="Details" id="btnDetails" name="btnAction" onClick="return SetProgramId('@Model.ProgramDetails[i].ProgramId');" />
-            <input type="submit" class="btn-sm btn-success" value="Add Teachers" id="btnDetails" name="btnAction" onClick="return SetProgramId('@Model.ProgramDetails[i].ProgramId');" />
-            <input type="submit" class="btn-sm btn-success" value="Add Students" id="btnDetails" name="btnAction" onClick="return SetProgramId('@Model.ProgramDetails[i].ProgramId');" />
 
-          </td>
+            <th>Program Name</th>
+            <th>Description</th>
         </tr>
-        <tr>
-          <td colspan="4"><div>@Html.Raw(@Model.ProgramDetails[i].ProgramDescription)</div></td>
-        </tr>
-        <tr>
-          <td colspan="4">
-            <table>
-              <tr>
-                <th>Billable Item</th>
-                <th>Amount</th>
-              </tr>
-            
-            </table>
-          </td>
-        </tr>
-      }
+        <tbody>
+            @for (var i = 0; i < Model.ProgramDetails.Count; i++)
+            {
+                <tr>
+                    <input type="hidden" asp-for="@Model.ProgramDetails[i].ProgramId" value="@Model.ProgramDetails[i].ProgramId" />
 
-    </tbody>
-
-  </table>
-  <div>
-    <input type="submit" id="btnAddNew" name="btnAction" class="btn-sm btn-success" value="Add New" />
-   </div>
-  <input type="hidden" id="programId" name="programId" />
-
+                    <td>@Model.ProgramDetails[i].ProgramName</td>
+                    <td>@Html.Raw(Model.ProgramDetails[i].ProgramDescription)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </form>
-<script language="javascript">
-  function SetProgramId(programId) {
-
-    $("#programId").val(programId);
-
-    return true;
-  }
-</script>

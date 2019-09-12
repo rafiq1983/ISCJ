@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using MA.Common.Entities.Contacts;
+using MA.Common.Entities.Invoices;
 
 namespace MA.Common.Entities.Registration
 {
@@ -47,12 +48,15 @@ namespace MA.Common.Entities.Registration
         [ForeignKey("RegistrationApplicationId")]
         public List<Enrollment> Enrollments { get; set; }//needs to map to contact table.*/
 
-        /*[ForeignKey("FatherId")] //can be done with fluent api as well.
+        [ForeignKey("FatherContactId")]
         public Contact FatherContactInfo { get; set; }
-
-        [ForeignKey("MotherId")]
+        [ForeignKey("MotherContactId")]
         public Contact MotherContactInfo { get; set; }
 
-      */
+       // [ForeignKey("OrderId")]
+        //public List<Invoice> Invoices { get; set; }
+
     }
+
+
 }

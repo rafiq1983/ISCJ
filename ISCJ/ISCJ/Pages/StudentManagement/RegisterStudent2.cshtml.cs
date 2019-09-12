@@ -72,7 +72,7 @@ namespace ISCJ.Pages.StudentManagement
       {
         BusinessLogic.RegistrationManager mgr = new RegistrationManager();
         mgr.CreateRegistration(GetCallContext(), StudentRegistration);
-        Response.Redirect("Registrations");
+        Response.Redirect("Enrollments");
       }
       else
       {

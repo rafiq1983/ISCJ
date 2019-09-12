@@ -104,7 +104,7 @@
                                 <label class="col-sm-2 col-form-label">First Name</label>
 
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control"id="txtfirstname"  name="txtfirstname" placeholder="First Name">
+                                    <input type="text" class="form-control" id="txtfirstname" name="txtfirstname" placeholder="First Name">
                                     @*<span asp-validation-for="Contact.FirstName" class="text-danger"></span>*@
 
                                 </div>
@@ -130,7 +130,20 @@
 
                                 </div>
                             </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">Contact Type</label>
 
+                                <div class="col-sm-10">
+                                    <select id="slContactTypes" class="form-control m-b"
+                                            asp-items="@(new SelectList(Model.ContactTypes,"ID","Description"))">
+                                        <option>Please select one</option>
+                                    </select>
+
+                                </div>
+                            </div>
+
+                        </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Gender</label>
@@ -239,20 +252,7 @@
                                 </div>
                             </div>
 
-                            <div class="hr-line-dashed"></div>
-                            <div class="form-group  row">
-                                <label class="col-sm-2 col-form-label">Contact Type</label>
-
-                                <div class="col-sm-10">
-                                    <select id="slContactTypes" class="form-control m-b"
-                                            asp-items="@(new SelectList(Model.ContactTypes,"ID","Description"))">
-                                        <option>Please select one</option>
-                                    </select>
-
-                                </div>
-                            </div>
-
-                        </div>
+                            
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="button" id="btnSave" name="btnSave" class="btn btn-primary">Save changes</button>
@@ -313,7 +313,7 @@
 
                     <div class="col-sm-10">
                         <input type="text" placeholder="Student name here" autocomplete="off"
-                               data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_StudentRegistrations_@(j)__StudentId"
+                               data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_StudentEnrollments_@(j)__StudentId"
                                class="autocomplete form-control"  asp-for="@Model.StudentRegistration.StudentRegistrations[j].StudentName"/>
                         <input type="hidden" asp-for="@Model.StudentRegistration.StudentRegistrations[j].StudentId" />
                         

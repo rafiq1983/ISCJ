@@ -21,7 +21,7 @@ namespace ISCJ.webapi
         public Guid AddProgram(ProgramDetail detail)
         {
             ProgramManager mgr = new ProgramManager();
-            return mgr.AddProgram(detail);
+            return mgr.AddProgram(new CallContext("Iftikhar", "test", "", Guid.Empty), detail.ProgramName, detail.ProgramDescription);
         }
 
         [HttpGet("")]

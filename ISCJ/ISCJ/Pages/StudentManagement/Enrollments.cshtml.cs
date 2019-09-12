@@ -26,10 +26,10 @@ namespace ISCJ.Pages.StudentManagement
             bool validRegisAppId  = Guid.TryParse(Request.Query["regappid"], out registrationAppId);
 
             if (validRegisAppId)
-                Registrations = mgr.GetRegistrations(Programs[0].ProgramId, registrationAppId);
+                Enrollments = mgr.GetEnrollments(Programs[0].ProgramId, registrationAppId);
             else
             {
-                Registrations = mgr.GetRegistrations(Programs[0].ProgramId);
+                Enrollments = mgr.GetEnrollments(Programs[0].ProgramId);
             }
                    
             if(Programs.Any())
@@ -39,12 +39,12 @@ namespace ISCJ.Pages.StudentManagement
     public void OnPost()
     {
       RegistrationManager mgr = new RegistrationManager();
-      Registrations = mgr.GetRegistrations(ProgramId);
+      Enrollments = mgr.GetEnrollments(ProgramId);
     }
 
        
 
-    public List<Enrollment> Registrations { get; set; } = new List<Enrollment>();
+    public List<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
 
     public List<ProgramDetail> Programs { get; set; }
 

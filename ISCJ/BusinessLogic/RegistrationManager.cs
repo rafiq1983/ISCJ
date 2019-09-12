@@ -29,12 +29,16 @@ namespace BusinessLogic
     {
         using (var db = new Database())
         {
-             if(programId!=Guid.Empty)
-                 return db.RegistrationApplications.Where(x=>x.ProgramId == programId).ToList();
-             else
-             {
-                 return db.RegistrationApplications.ToList();
-             }
+            var query = db.RegistrationApplications.AsQueryable();
+
+            if (programId != Guid.Empty)
+                query = db.RegistrationApplications.Where(x => x.ProgramId == programId);
+
+            query = query.Include(x => x.MotherContactInfo)
+                    .Include(x => x.FatherContactInfo);
+
+            var applications = query.ToList();
+            return applications;
         }
     }
 
@@ -71,28 +75,6 @@ namespace BusinessLogic
                 Success = true
             };
 
-        }
-    }
-
-
-        private void CreateSingleRegistration(CallContext context, CreateRegistrationApplicationInput input)
-    {
-        using (var db = new Database())
-        {
-            for (int i = 0; i < input.StudentRegistrations.Count; i++)
-            {
-                    if (input.StudentRegistrations[i].StudentId.HasValue == false)
-                        continue;
-                    Enrollment reg = new Enrollment();
-                    reg.FatherId = input.FatherId.Value;
-                    reg.MotherId = input.MotherId.Value;
-                    reg.ProgramId = input.ProgramId;
-                    reg.IslamicSchoolGradeId = input.StudentRegistrations[i].IslamicSchoolGrade;
-                    reg.PublicSchoolGradeId = input.StudentRegistrations[i].PublicSchoolGrade;
-                    reg.StudentContactId = input.StudentRegistrations[i].StudentId.Value;
-                    db.Enrollments.Add(reg);
-               
-            }
         }
     }
 
@@ -190,14 +172,14 @@ namespace BusinessLogic
                 }
             }
     
-        public Guid CreateRegistration(Guid programId, 
+        public Guid CreateEnrollment(Guid programId, 
                       Guid studentId, Guid fatherId, Guid motherId,
                       string islamicSchoolGrade, string publicSchoolGrade)
     {
       return Guid.Empty;
     }
 
-    public Enrollment GetRegistration(Guid registrationId)
+    public Enrollment GetEnrollment(Guid registrationId)
     {
       using (var db = new Database())
       {
@@ -205,10 +187,11 @@ namespace BusinessLogic
       }
     }
 
-    public List<Enrollment> GetRegistrations()
+    public List<Enrollment> GetEnrollments()
     {
       using (var db = new Database())
       {
+
         return db.Enrollments
           .Include(Registration => Registration.FatherContactInfo)
           .Include(registration=>registration.MotherContactInfo)
@@ -217,7 +200,7 @@ namespace BusinessLogic
       }
     }
 
-    public List<Enrollment> GetRegistrations(Guid programId, Guid? registrationApplicationId = null)
+    public List<Enrollment> GetEnrollments(Guid programId, Guid? registrationApplicationId = null)
     {
       using (var db = new Database())
       {
