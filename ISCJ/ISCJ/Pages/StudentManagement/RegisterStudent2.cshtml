@@ -4,7 +4,17 @@
 @{
   ViewData["Title"] = "Contacts";
   Layout = "~/Pages/Shared/_LayoutModern.cshtml";
+
 }
+
+<style>
+
+    #olErrors li {     
+        color:red;
+    }
+
+</style>
+
 <form method="post" name="frmRegister2">
   <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-9">
@@ -18,16 +28,20 @@
         </li>
         <li class="active breadcrumb-item">
           <strong>Student Registration</strong>
-        </li>
+        </li>                             
       </ol>
-    </div>
+    </div>   
   </div>
 
 <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <input type="button" class="btn btn-primary modal1" value="Add New Contact" data-toggle="modal" data-target="#exampleModal" />
+        </div>       
+    </div>    
 <div class="row">
     <div class="col-lg-12">
-
-        <div class="ibox">
+        <div class="ibox">           
             <div class="ibox-title">
                 <h5>Program</h5>
             </div>
@@ -40,10 +54,10 @@
                             htmlAttributes: new { @class = "form-control m-b" })
 
                     </div>
-                    
+
                     <span asp-validation-for="@Model.StudentRegistration.ProgramId" class="text-danger"></span>
                 </div>
-            <div class="hr-line-dashed"></div>
+                <div class="hr-line-dashed"></div>
             </div>
         </div>
 
@@ -83,11 +97,7 @@
                 <h5>Guardians/Parent</h5>
                 
             </div>          
-            <div>
-                <input type="button" class="btn btn-primary" value="Add New" data-toggle="modal" data-target="#exampleModal" />
-
-
-            </div>
+            
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -99,7 +109,16 @@
                             </button>
                         </div>
                         <div class="modal-body">
-
+                            <div class="form-group row" id="dvErrorsRow" style="display:none;">
+                                <div class="col-sm-10">
+                                    <h5>Error(s)</h5>
+                                    <div>
+                                        <ul class="olErrors" id="olErrors"></ul>
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                            </div>
+                        
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">First Name</label>
 
@@ -136,14 +155,10 @@
 
                                 <div class="col-sm-10">
                                     <select id="slContactTypes" class="form-control m-b"
-                                            asp-items="@(new SelectList(Model.ContactTypes,"ID","Description"))">
-                                        <option>Please select one</option>
-                                    </select>
+                                            asp-items="@(new SelectList(Model.ContactTypes,"ID","Description"))"></select>
 
                                 </div>
                             </div>
-
-                        </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Gender</label>
@@ -252,6 +267,10 @@
                                 </div>
                             </div>
 
+                        </div>
+                            
+                           
+
                             
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -303,10 +322,7 @@
                     <button class="btn btn-white btn-sm" type="submit" name="btnStudentRemove" value="@j" asp-page-handler="Remove">Remove</button>
                 }
               
-            </div>
-            <div>
-                <input type="button" class="btn btn-primary" value="Add New" data-toggle="modal" data-target="#exampleModal" />
-            </div>
+            </div>            
             <div class="ibox-content">
                 <div class="form-group  row">
                     <label class="col-sm-2 col-form-label">Student</label>
@@ -370,16 +386,32 @@
 </div>
 </form>
 
-
-
 @section Scripts
   {
   <script src="https://cdn.rawgit.com/xcash/bootstrap-autocomplete/v2.0.0/dist/latest/bootstrap-autocomplete.min.js"></script>
 
   <script language="javascript">
-    $("document").ready(function () {
-        SetupContactAutoComplete();
+      $("document").ready(function ()
+      {
+          SetupContactAutoComplete();
 
+          $(".modal1").click(function ()
+          {
+              $("#olErrors").empty();
+              $("#dvErrorsRow").css("display", "none");
+              $('.modal-body').find('input').each(function ()
+              {
+                  $(this).val("");
+
+              });
+
+              $('.modal-body').find('select').each(function ()
+              {
+                  $(this).val("1");
+
+              });
+              
+          });
         $("#btnSave").click(function ()
         {                     
             var personAddress = {   
@@ -398,13 +430,13 @@
                 CellPhone: $("#txtcellphone").val(),
                 MiddleName: $("#txtmiddlename").val(),
                 Email: $("#txtemail").val(),
-                ContactType: $("#slContactTypes").val(),
+                ContactType: $("#slContactTypes").val()
             }
             
             var AddContactInputObj = {
                 Contact:contact
             }
-            var p = JSON.stringify(AddContactInputObj);       
+            var p = JSON.stringify(AddContactInputObj);    
             var pagePath = window.location.origin;
             pagePath += "/api/Contact"
             $.ajax({
@@ -415,12 +447,27 @@
                 dataType: "json",
                 success: function (d)
                 {
+                    $("#olErrors").empty();  
                     $('#exampleModal').find('input:text').val('');
                     $('#exampleModal').modal('hide');
                 },
-                error: function ()
-                {
-                    alert("error");
+                error: function (response)
+                {   
+                    $("#olErrors").empty();  
+                    $("#dvErrorsRow").css("display","block");
+                    if (response.status === 400)
+                    {  
+                        $("#olErrors").empty();                     
+                        var errorobj = JSON.parse(response.responseText);                     
+                        $.each(errorobj,function (i,val)
+                        {
+                            $("#olErrors").append($("<li>").text(val.errorMessage));                           
+                        });
+                    }
+                    else
+                    {
+                        alert("Error");
+                    }
                 }
             });
            
@@ -460,3 +507,5 @@
 
   </script>
 }
+
+

@@ -9,6 +9,12 @@ using Microsoft.AspNetCore.Mvc;
 using MA.Common.Entities;
 using MA.Common.Entities.Contacts;
 using MA.Common.Models.api;
+using FluentValidation;
+using FluentValidation.Results;
+using MA.Common.Validation;
+
+
+
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ISCJ.webapi
@@ -19,10 +25,25 @@ namespace ISCJ.webapi
     {
 
         [HttpPost()]
-        public JsonResult AddContact([FromBody]AddContactInput input)
+        [ProducesResponseType(201)]
+        [ProducesResponseType(typeof(IList<ValidationFailure>),400)]
+        [ProducesResponseType(201)]
+        public IActionResult AddContact([FromBody]AddContactInput input)
         {
+            ContactValidator ContactVObject = new ContactValidator();
+            var validationResult=ContactVObject.Validate(input.Contact);
+            if (validationResult.IsValid==false)
+            {
+
+                return BadRequest(validationResult.Errors);
+            }
             ContactManager contactManager = new ContactManager();
-            return new JsonResult(contactManager.AddNewContact(GetCallContext(), input));
+            var ContactObject=contactManager.AddNewContact(GetCallContext(), input);
+            if (ContactObject ==null)
+            {
+                return BadRequest(400);
+            }
+            return CreatedAtAction("AddContact", ContactObject.ContactId);
           
         }
 
