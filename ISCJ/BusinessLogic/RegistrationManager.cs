@@ -217,7 +217,7 @@ namespace BusinessLogic
               .Include(Registration => Registration.FatherContactInfo)
               .Include(registration => registration.MotherContactInfo)
               .Include(Registration => Registration.StudentContactInfo)
-              //.Include(Registration => Registration.RegistrationApplication)
+              .Include(Registration => Registration.RegistrationApplication)
               .Where(x => x.ProgramId == programId);
 
         if (registrationApplicationId != null)

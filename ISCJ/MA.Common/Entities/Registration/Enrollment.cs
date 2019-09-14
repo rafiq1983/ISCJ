@@ -33,7 +33,7 @@ namespace MA.Common.Entities.Registration
     public Contact StudentContactInfo { get; set; }//needs to map to contact table.
 
     [ForeignKey("RegistrationApplicationId")]
-    public Contact RegistrationApplication{ get; set; }
+    public RegistrationApplication RegistrationApplication{ get; set; }
 
 
     }

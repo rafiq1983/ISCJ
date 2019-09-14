@@ -22,7 +22,8 @@ namespace MA.Common.Validation
             RuleFor(p => p.Address.StateCode).NotEmpty().WithMessage("State is required");
             RuleFor(p => p.Address.ZipCode).NotEmpty().WithMessage("Zip Code is required");
             RuleFor(p => p.ContactType).NotEmpty().WithMessage("Contact type is required");
-            RuleFor(p => p.Gender).NotEmpty().WithMessage("Gender is required.");
+            RuleFor(p => p.Gender).GreaterThan(0).WithMessage("Gender is Required");
+
         }
 
     }
@@ -33,8 +34,8 @@ namespace MA.Common.Validation
        {
            RuleFor(p => p.FirstName).NotEmpty().WithMessage("First Name is required.");
            RuleFor(p => p.LastName).NotEmpty().WithMessage("Last Name is required.");
-           RuleFor(p => p.Gender).NotEmpty().WithMessage("Gender is required.");
             RuleFor(p => p.ContactType).NotEmpty().WithMessage("Contact type is required");
+            RuleFor(p => p.Gender).GreaterThan(0).WithMessage("Gender is Required");
         }
 
     }
