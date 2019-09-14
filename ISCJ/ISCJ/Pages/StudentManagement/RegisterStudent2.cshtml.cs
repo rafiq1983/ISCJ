@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using BusinessLogic;
 using MA.Common;
@@ -107,6 +108,30 @@ namespace ISCJ.Pages.StudentManagement
         }
      }
 
+    private void EnsureStudentDoesNotBelongToThisProgramAlready()
+    {
+        BusinessLogic.RegistrationManager mgr = new RegistrationManager();
+
+        if (ModelState.IsValid)
+        {
+            var enrollments = mgr.GetEnrollments(StudentRegistration.ProgramId.GetValueOrDefault(Guid.Empty));
+
+            for (int i = 0; i < StudentRegistration.StudentRegistrations.Count; i++)
+            {
+                var enrollment = enrollments.SingleOrDefault(x =>
+                    x.StudentContactId == StudentRegistration.StudentRegistrations[i].StudentId
+                        .GetValueOrDefault(Guid.Empty)
+                    && x.ProgramId == StudentRegistration.ProgramId.GetValueOrDefault());
+
+                if (enrollment != null)
+                {
+                        ModelState.AddModelError<CreateStudentRegistrationInput>(x=>x.StudentId,"Student " + StudentRegistration.StudentRegistrations[i].StudentName + " is already enrolled in this program.");
+
+                }
+            }
+        }
+
+    }
     public void OnPostSave()
     {
      
@@ -131,10 +156,12 @@ namespace ISCJ.Pages.StudentManagement
 
             }
 
+        EnsureStudentDoesNotBelongToThisProgramAlready();
+
             if (ModelState.IsValid)
-      {
-        BusinessLogic.RegistrationManager mgr = new RegistrationManager();
-        mgr.CreateRegistration(GetCallContext(), StudentRegistration);
+            {
+                RegistrationManager mgr = new RegistrationManager();
+                mgr.CreateRegistration(GetCallContext(), StudentRegistration);
         Response.Redirect("Enrollments");
       }
       else
