@@ -42,8 +42,17 @@ namespace BusinessLogic
         }
     }
 
+    public RegistrationApplication GetApplication(CallContext context, Guid regisId)
+    {
+        using (var db = new Database())
+        {
+            return db.RegistrationApplications.SingleOrDefault(x => x.ApplicationId == regisId);
+           
+        }
+    }
 
-    public AddRegistrationOutput AddRegistrationToRegistrationApplication(CallContext context, AddRegistrationInput input)
+
+        public AddRegistrationOutput AddRegistrationToRegistrationApplication(CallContext context, AddRegistrationInput input)
     {
         using (TransactionScope scope = new TransactionScope())
         {
@@ -88,7 +97,7 @@ namespace BusinessLogic
                     ApplicationDate = DateTime.UtcNow,
                     FatherContactId = input.FatherId.Value,
                     MotherContactId = input.MotherId.Value,
-                    ProgramId = input.ProgramId,
+                    ProgramId = input.ProgramId.Value,
                     MembershipId = Guid.Empty,
                     CreateUser = context.UserId
                 };
@@ -104,7 +113,7 @@ namespace BusinessLogic
                     {
                         FatherId = input.FatherId.Value,
                         MotherId = input.MotherId.Value,
-                        ProgramId = input.ProgramId,
+                        ProgramId = input.ProgramId.Value,
                         IslamicSchoolGradeId = reg.IslamicSchoolGrade,
                         PublicSchoolGradeId = reg.PublicSchoolGrade,
                         EnrollmentId = Guid.NewGuid(),
@@ -208,6 +217,7 @@ namespace BusinessLogic
               .Include(Registration => Registration.FatherContactInfo)
               .Include(registration => registration.MotherContactInfo)
               .Include(Registration => Registration.StudentContactInfo)
+              //.Include(Registration => Registration.RegistrationApplication)
               .Where(x => x.ProgramId == programId);
 
         if (registrationApplicationId != null)

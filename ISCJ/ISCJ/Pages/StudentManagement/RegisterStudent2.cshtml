@@ -14,7 +14,7 @@
     }
 
 </style>
-
+<div asp-validation-summary="All"></div>
 <form method="post" name="frmRegister2">
   <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-9">
@@ -50,12 +50,16 @@
                     <label class="col-sm-2 col-form-label">Program</label>
 
                     <div class="col-sm-10">
-                        @Html.DropDownListFor(x => x.StudentRegistration.ProgramId, new SelectList(Model.Programs, "ProgramId", "ProgramName"), "--Select--",
-                            htmlAttributes: new { @class = "form-control m-b" })
+                       
+                        <select asp-for="@Model.StudentRegistration.ProgramId" class="form-control m-b" asp-items="@Model.Programs">
+                           <option value="">--Select--</option>
+                        </select>
+
+                        
+                        <span asp-validation-for="@Model.StudentRegistration.ProgramId" class="text-danger"></span>
 
                     </div>
 
-                    <span asp-validation-for="@Model.StudentRegistration.ProgramId" class="text-danger"></span>
                 </div>
                 <div class="hr-line-dashed"></div>
             </div>
@@ -165,6 +169,7 @@
 
                                 <div class="col-sm-10">
                                     <select class="form-control m-b" id="slgender">
+                                        <option value="">--Select--</option>
                                         <option value="1">Male</option>
                                         <option value="2">Female</option>
                                     </select>
@@ -269,9 +274,6 @@
 
                         </div>
                             
-                           
-
-                            
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="button" id="btnSave" name="btnSave" class="btn btn-primary">Save changes</button>
@@ -288,7 +290,7 @@
                     <div class="col-sm-10">
                         <input type="text" placeholder="Type Father name here" autocomplete="off"
                                data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_FatherId"
-                               class="autocomplete form-control" value="@Model.StudentRegistration.FatherName" />
+                               class="autocomplete form-control" value="@Model.StudentRegistration.FatherName" asp-for="@Model.StudentRegistration.FatherName" />
                         <input type="hidden" asp-for="@Model.StudentRegistration.FatherName" /><!--todo-->
                         <input type="hidden" asp-for="@Model.StudentRegistration.FatherId" />
                         <span asp-validation-for="@Model.StudentRegistration.FatherId" class="text-danger" ></span>
@@ -301,7 +303,7 @@
                     <div class="col-sm-10">
                         <input type="text" placeholder="Type Mother name here" autocomplete="off"
                                data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_MotherId"
-                               class="autocomplete form-control" value="@Model.StudentRegistration.MotherName" />
+                               class="autocomplete form-control" value="@Model.StudentRegistration.MotherName" asp-for="@Model.StudentRegistration.MotherName" />
                         <input type="hidden" asp-for="@Model.StudentRegistration.MotherId" />
 
                         <span asp-validation-for="@Model.StudentRegistration.MotherId" class="text-danger"></span>
@@ -329,24 +331,25 @@
 
                     <div class="col-sm-10">
                         <input type="text" placeholder="Student name here" autocomplete="off"
-                               data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_StudentEnrollments_@(j)__StudentId"
+                               data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_StudentRegistrations_@(j)__StudentId"
                                class="autocomplete form-control"  asp-for="@Model.StudentRegistration.StudentRegistrations[j].StudentName"/>
                         <input type="hidden" asp-for="@Model.StudentRegistration.StudentRegistrations[j].StudentId" />
                         
                         <span asp-validation-for="@Model.StudentRegistration.StudentRegistrations[j].StudentId" class="text-danger"></span>
                     </div>
                 </div>
+
                 <div class="form-group  row">
                     <label class="col-sm-2 col-form-label">Public School Grade</label>
 
                     <div class="col-sm-10">
                         <select asp-for="@Model.StudentRegistration.StudentRegistrations[j].PublicSchoolGrade" class="form-control"
                                 asp-items="@Model.PublicSchoolGradeList">
-                            <option>Please select one</option>
+                            <option value="">Please select one</option>
                         </select>
+                        <span asp-validation-for="@Model.StudentRegistration.StudentRegistrations[j].PublicSchoolGrade" class="text-danger"></span>
                     </div>
                     
-                    <span asp-validation-for="@Model.StudentRegistration.StudentRegistrations[j].PublicSchoolGrade" class="text-danger"></span>
                 </div>
 
                 <div class="form-group  row">
@@ -355,7 +358,7 @@
                     <div class="col-sm-10">
                         <select asp-for="@Model.StudentRegistration.StudentRegistrations[j].IslamicSchoolGrade" class="form-control"
                                 asp-items="@Model.IslamicSchoolGradeList">
-                            <option>Please select one</option>
+                            <option value="">Please select one</option>
                         </select>
                         <span asp-validation-for="@Model.StudentRegistration.StudentRegistrations[j].IslamicSchoolGrade" class="text-danger"></span>
 
@@ -387,125 +390,125 @@
 </form>
 
 @section Scripts
-  {
-  <script src="https://cdn.rawgit.com/xcash/bootstrap-autocomplete/v2.0.0/dist/latest/bootstrap-autocomplete.min.js"></script>
+{
+    <script src="https://cdn.rawgit.com/xcash/bootstrap-autocomplete/v2.0.0/dist/latest/bootstrap-autocomplete.min.js"></script>
 
-  <script language="javascript">
-      $("document").ready(function ()
-      {
-          SetupContactAutoComplete();
+    <script language="javascript">
+        $("document").ready(function() {
+            SetupContactAutoComplete();
 
-          $(".modal1").click(function ()
-          {
-              $("#olErrors").empty();
-              $("#dvErrorsRow").css("display", "none");
-              $('.modal-body').find('input').each(function ()
-              {
-                  $(this).val("");
+            $(".modal1").click(function() {
+                $("#olErrors").empty();
+                $("#dvErrorsRow").css("display", "none");
+                $('.modal-body').find('input').each(function() {
+                    $(this).val("");
 
-              });
+                });
 
-              $('.modal-body').find('select').each(function ()
-              {
-                  $(this).val("1");
+                $('.modal-body').find('select').each(function() {
+                    $(this).val("1");
 
-              });
-              
-          });
-        $("#btnSave").click(function ()
-        {                     
-            var personAddress = {   
-                AddressLine1: $("#txtstreet").val(),
-                AddressLine2: "",
-                City: $("#txtcity").val(),
-                StateCode: $("#txtstate").val(),
-                ZipCode: $("#txtzip").val(),
-                CountryCode:""
-            }
-            var contact = {
-                FirstName: $("#txtfirstname").val(),
-                LastName: $("#txtlastname").val(), 
-                Address: personAddress,
-                HomePhone: $("#txthomephone").val(),
-                CellPhone: $("#txtcellphone").val(),
-                MiddleName: $("#txtmiddlename").val(),
-                Email: $("#txtemail").val(),
-                ContactType: $("#slContactTypes").val()
-            }
-            
-            var AddContactInputObj = {
-                Contact:contact
-            }
-            var p = JSON.stringify(AddContactInputObj);    
-            var pagePath = window.location.origin;
-            pagePath += "/api/Contact"
-            $.ajax({
-                type: "POST",
-                url: pagePath,
-                contentType: "application/json; charset=utf-8",
-                data: p,
-                dataType: "json",
-                success: function (d)
-                {
-                    $("#olErrors").empty();  
-                    $('#exampleModal').find('input:text').val('');
-                    $('#exampleModal').modal('hide');
-                },
-                error: function (response)
-                {   
-                    $("#olErrors").empty();  
-                    $("#dvErrorsRow").css("display","block");
-                    if (response.status === 400)
-                    {  
-                        $("#olErrors").empty();                     
-                        var errorobj = JSON.parse(response.responseText);                     
-                        $.each(errorobj,function (i,val)
-                        {
-                            $("#olErrors").append($("<li>").text(val.errorMessage));                           
-                        });
-                    }
-                    else
-                    {
-                        alert("Error");
-                    }
-                }
+                });
+
             });
-           
+            $("#btnSave").click(function() {
+                var personAddress = {
+                    AddressLine1: $("#txtstreet").val(),
+                    AddressLine2: "",
+                    City: $("#txtcity").val(),
+                    StateCode: $("#txtstate").val(),
+                    ZipCode: $("#txtzip").val(),
+                    CountryCode: ""
+                }
+                var contact = {
+                    FirstName: $("#txtfirstname").val(),
+                    LastName: $("#txtlastname").val(),
+                    Address: personAddress,
+                    HomePhone: $("#txthomephone").val(),
+                    CellPhone: $("#txtcellphone").val(),
+                    MiddleName: $("#txtmiddlename").val(),
+                    Email: $("#txtemail").val(),
+                    ContactType: $("#slContactTypes").val()
+                }
+
+                var AddContactInputObj = {
+                    Contact: contact
+                }
+                var p = JSON.stringify(AddContactInputObj);
+                var pagePath = window.location.origin;
+                pagePath += "/api/Contact"
+                $.ajax({
+                    type: "POST",
+                    url: pagePath,
+                    contentType: "application/json; charset=utf-8",
+                    data: p,
+                    dataType: "json",
+                    success: function(d) {
+                        $("#olErrors").empty();
+                        $('#exampleModal').find('input:text').val('');
+                        $('#exampleModal').modal('hide');
+                    },
+                    error: function(response) {
+                        $("#olErrors").empty();
+                        $("#dvErrorsRow").css("display", "block");
+                        if (response.status === 400) {
+                            $("#olErrors").empty();
+                            var errorobj = JSON.parse(response.responseText);
+                            $.each(errorobj,
+                                function(i, val) {
+                                    $("#olErrors").append($("<li>").text(val.errorMessage));
+                                });
+                        } else {
+                            alert("Error");
+                        }
+                    }
+                });
+
+
+            });
 
         });
 
-    });
-    function SetupContactAutoComplete() {
+        function SetupContactAutoComplete() {
 
-      $(".autocomplete").autoComplete({
-        minLength: 1,
-        formatResult: function (item) {
-          console.log("Format result called with item " + item);
-          return {
-            id: item.guid, text: item.firstName + " " + item.lastName
-          }
-        },
+            $(".autocomplete").autoComplete({
+                minLength: 1,
+                formatResult: function(item) {
+                    console.log("Format result called with item " + item);
+                    return {
+                        id: item.guid,
+                        text: item.firstName + " " + item.lastName
+                    }
+                },
 
-        events: {
+                events: {
+                    searchPost: function(resultsFromServer) {
+                        console.log("Search Post Called. " + resultsFromServer[0].guid);
+                        return resultsFromServer;
+                    }
+                }
 
-          searchPost: function (resultsFromServer) {
-            console.log("Search Post Called. " + resultsFromServer[0].guid);
-            return resultsFromServer;
-          }
+            });
+
+            $(".autocomplete").on('autocomplete.select',
+                function(evt, item) {
+                    $("#" + evt.currentTarget.attributes["data-target-id"].value).val(item.guid);
+                    console.log(evt.currentTarget.attributes["data-target-id"].value);
+                    console.log("added item " + item.guid);
+                    evt.preventDefault();
+                });
+
+            $(".autocomplete").change(function(evt) {
+                console.log("Textbox change");
+                console.log($("#" + evt.currentTarget.attributes["data-target-id"].value));
+                console.log($("#" + evt.currentTarget.attributes["data-target-id"].value).val());
+                
+                    $("#" + evt.currentTarget.attributes["data-target-id"].value).val("");
+                
+            });
         }
 
-      });
-
-      $(".autocomplete").on('autocomplete.select', function (evt, item) {
-        $("#" + evt.currentTarget.attributes["data-target-id"].value).val(item.guid);
-        console.log(evt.currentTarget.attributes["data-target-id"].value);
-          console.log("added item " + item.guid);
-        evt.preventDefault();
-      });
-
-    }
-
-  </script>
+    </script>
 }
 
 

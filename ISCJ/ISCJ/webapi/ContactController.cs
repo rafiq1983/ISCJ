@@ -30,11 +30,18 @@ namespace ISCJ.webapi
         [ProducesResponseType(201)]
         public IActionResult AddContact([FromBody]AddContactInput input)
         {
-            ContactValidator ContactVObject = new ContactValidator();
-            var validationResult=ContactVObject.Validate(input.Contact);
+            ValidationResult validationResult = null;
+
+            if (input.Contact.ContactType == 1)
+                validationResult = new StudentContactValidator().Validate(input.Contact);
+            else
+            {
+                validationResult = new ContactValidator().Validate(input.Contact);
+            }
+
+
             if (validationResult.IsValid==false)
             {
-
                 return BadRequest(validationResult.Errors);
             }
             ContactManager contactManager = new ContactManager();

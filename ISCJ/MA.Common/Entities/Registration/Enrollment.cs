@@ -31,8 +31,12 @@ namespace MA.Common.Entities.Registration
 
     [ForeignKey("StudentContactId")]
     public Contact StudentContactInfo { get; set; }//needs to map to contact table.
-    
-  }
+
+    [ForeignKey("RegistrationApplicationId")]
+    public Contact RegistrationApplication{ get; set; }
+
+
+    }
 
     public class RegistrationApplication:BaseEntity
     {

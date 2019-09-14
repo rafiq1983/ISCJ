@@ -22,7 +22,7 @@ namespace MA.Common
         public string FatherName { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage="Program must be selected when creating a registration application.")]
-    public Guid ProgramId { get; set; }
+    public Guid? ProgramId { get; set; }
     public bool AddSchoolMemberShipFee { get; set; }
     public bool AddStudentRegistrationFee { get; set; }
     public int StudentRegistrationFeeCount { get; set; }

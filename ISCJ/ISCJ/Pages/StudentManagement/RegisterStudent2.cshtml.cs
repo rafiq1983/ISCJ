@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogic;
@@ -9,8 +10,10 @@ using MA.Common.Entities.Registration;
 using MA.Common.Models.api;
 using MA.Core;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace ISCJ.Pages.StudentManagement
 {
@@ -21,7 +24,6 @@ namespace ISCJ.Pages.StudentManagement
 
     public RegisterStudent2Model()
     {
-        Programs = mgr.GetAllPrograms(GetCallContext());
         Products = productMgr.GetAllProducts(GetCallContext());
         StudentRegistration = BuildForDisplay();
     }
@@ -65,10 +67,71 @@ namespace ISCJ.Pages.StudentManagement
            
     }
 
+    private void ValidateStudents()
+    {
+        if (StudentRegistration.StudentRegistrations.Count == 0)
+        {
+            ModelState.AddModelError<CreateRegistrationApplicationInput>((x)=>x.StudentRegistrations[0].StudentId, "Atleast one student registration must be selected.");
+        }
+
+        for (int i = 0; i < StudentRegistration.StudentRegistrations.Count; i++)
+        {
+            bool runStudentValidation = i == 0 || StudentRegistration.StudentRegistrations[i].StudentId.HasValue;
+
+
+                if (runStudentValidation && StudentRegistration.StudentRegistrations[i].StudentId.HasValue == false)
+                {
+                    ModelState.AddModelError<CreateRegistrationApplicationInput>(
+                       (x) => x.StudentRegistrations[i].StudentId, "Student must be selected.");
+
+                  
+                }
+
+                if (runStudentValidation)
+                {
+                    if (string.IsNullOrEmpty(StudentRegistration.StudentRegistrations[i].PublicSchoolGrade))
+                    {
+                        ModelState.AddModelError<CreateRegistrationApplicationInput>(
+                            (x) => x.StudentRegistrations[i].StudentId,
+                            "Student public school grade must be selected.");
+
+                    }
+
+                    if (string.IsNullOrEmpty(StudentRegistration.StudentRegistrations[i].IslamicSchoolGrade))
+                    {
+                        ModelState.AddModelError("StudentRegistration.StudentRegistrations[{i}].IslamicSchoolGrade",
+                            "Student Islamic school grade must be selected.");
+
+                    }
+                }
+        }
+     }
+
     public void OnPostSave()
     {
-      //validation.
-      if(ModelState.IsValid)
+     
+        for (int i = 1; i < StudentRegistration.StudentRegistrations.Count; i++)
+        {
+            if (StudentRegistration.StudentRegistrations[i].StudentId.HasValue == false) //don't do validation on Student 2, 3, 4 if no student is selected.
+            {
+                //Clear model validation state only clears the state.  But Error stays.  So, clearing the errors.
+               ModelState.ClearValidationState($"StudentRegistration.StudentRegistrations[{i}].StudentId");
+                ModelState.ClearValidationState($"StudentRegistration.StudentRegistrations[{i}].PublicSchoolGrade");
+                ModelState.ClearValidationState($"StudentRegistration.StudentRegistrations[{i}].IslamicSchoolGrade");
+                ModelState[$"StudentRegistration.StudentRegistrations[{i}].StudentId"].Errors.Clear();
+                ModelState[$"StudentRegistration.StudentRegistrations[{i}].PublicSchoolGrade"].Errors.Clear();
+                ModelState[$"StudentRegistration.StudentRegistrations[{i}].IslamicSchoolGrade"].Errors.Clear();
+                ModelState[$"StudentRegistration.StudentRegistrations[{i}].IslamicSchoolGrade"].ValidationState =
+                    ModelValidationState.Skipped;
+                ModelState[$"StudentRegistration.StudentRegistrations[{i}].PublicSchoolGrade"].ValidationState =
+                    ModelValidationState.Skipped;
+                ModelState[$"StudentRegistration.StudentRegistrations[{i}].StudentId"].ValidationState =
+                    ModelValidationState.Skipped;
+            }
+
+            }
+
+            if (ModelState.IsValid)
       {
         BusinessLogic.RegistrationManager mgr = new RegistrationManager();
         mgr.CreateRegistration(GetCallContext(), StudentRegistration);
@@ -123,7 +186,16 @@ namespace ISCJ.Pages.StudentManagement
       }
     }
 
-    public List<ProgramDetail> Programs { get; set; }
+    public IEnumerable<SelectListItem> Programs
+    {
+        get
+        {
+           return mgr.GetAllPrograms(GetCallContext()).Select(x => new SelectListItem(x.ProgramName, x.ProgramId.ToString()));
+              
+        }
+    }
+
+
     [BindProperty]
     public List<MA.Common.Entities.Product.BillableProduct> Products { get; set; }
 
