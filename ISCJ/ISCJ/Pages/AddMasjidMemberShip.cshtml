@@ -1,0 +1,448 @@
+﻿@page
+@model ISCJ.Pages.AddMasjidMemberShipModel
+
+@{
+    ViewData["Title"] = "Contacts";
+    Layout = "~/Pages/Shared/_LayoutModern.cshtml";
+
+}
+
+<style>
+
+    #olErrors li {
+        color: red;
+    }
+</style>
+<div asp-validation-summary="All"></div>
+<form method="post" name="frmMembershipCreate">
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-9">
+            <h2>Student Registration</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    Membership
+                </li>
+                <li class="active breadcrumb-item">
+                    <strong>Add Masjid Membership</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+        
+        <div class="row">
+            <div class="col-lg-12">
+
+               
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <h5>Member Info</h5>
+
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Add Contact</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group row" id="dvErrorsRow" style="display:none;">
+                                        <div class="col-sm-10">
+                                            <h5>Error(s)</h5>
+                                            <div>
+                                                <ul class="olErrors" id="olErrors"></ul>
+                                            </div>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                    </div>
+
+                                    <div class="form-group  row">
+                                        <label class="col-sm-2 col-form-label">First Name</label>
+
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="txtfirstname" name="txtfirstname" placeholder="First Name">
+                                            @*<span asp-validation-for="Contact.FirstName" class="text-danger"></span>*@
+
+                                        </div>
+                                    </div>
+
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group  row">
+                                        <label class="col-sm-2 col-form-label">Last Name</label>
+
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="txtlastname" name="txtlastname" placeholder="Last Name">
+                                            @*<span asp-validation-for="Contact.LastName" class="text-danger"></span>*@
+
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group  row">
+                                        <label class="col-sm-2 col-form-label">Middle Initial</label>
+
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="txtmiddlename" placeholder="Middle Initial">
+                                            @*<span asp-validation-for="Contact.MiddleName" class="text-danger"></span>*@
+
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group  row">
+                                        <label class="col-sm-2 col-form-label">Contact Type</label>
+
+                                        <div class="col-sm-10">
+                                            <select id="slContactTypes" class="form-control m-b"
+                                                    asp-items="@(new SelectList(Model.ContactTypes,"ID","Description"))"></select>
+
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group  row">
+                                        <label class="col-sm-2 col-form-label">Gender</label>
+
+                                        <div class="col-sm-10">
+                                            <select class="form-control m-b" id="slgender">
+                                                <option value="0">--Select--</option>
+                                                <option value="1">Male</option>
+                                                <option value="2">Female</option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group  row">
+                                        <label class="col-sm-2 col-form-label">Street</label>
+
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="txtstreet" placeholder="Street Address">
+
+                                            @*<span asp-validation-for="Contact.StreetAddress" class="text-danger"></span>*@
+
+                                        </div>
+                                    </div>
+
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group  row">
+                                        <label class="col-sm-2 col-form-label">Apt</label>
+
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="txtapt" placeholder="">
+
+                                            @*<span asp-validation-for="Contact.Apt" class="text-danger"></span>*@
+
+                                        </div>
+                                    </div>
+
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group  row">
+                                        <label class="col-sm-2 col-form-label">City</label>
+
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="txtcity" placeholder="City">
+
+                                            @*<span asp-validation-for="Contact.City" class="text-danger"></span>*@
+
+                                        </div>
+                                    </div>
+
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group  row">
+                                        <label class="col-sm-2 col-form-label">State</label>
+
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="txtstate" placeholder="State">
+
+                                            @*<span asp-validation-for="Contact.State" class="text-danger"></span>*@
+
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group  row">
+                                        <label class="col-sm-2 col-form-label">Zip</label>
+
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="txtzip" placeholder="Zip">
+
+                                            @*<span asp-validation-for="Contact.ZipCode" class="text-danger"></span>*@
+
+                                        </div>
+                                    </div>
+
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group  row">
+                                        <label class="col-sm-2 col-form-label">Home Phone</label>
+
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="txthomephone" placeholder="Home Phone">
+
+                                            @*<span asp-validation-for="Contact.HomePhone" class="text-danger"></span>*@
+
+                                        </div>
+                                    </div>
+
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group  row">
+                                        <label class="col-sm-2 col-form-label">Cell Phone</label>
+
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="txtcellphone" placeholder="Cell Phone">
+
+                                            @*<span asp-validation-for="Contact.CellPhone" class="text-danger"></span>*@
+
+                                        </div>
+                                    </div>
+
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group  row">
+                                        <label class="col-sm-2 col-form-label">Email</label>
+
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="txtemail" placeholder="Email">
+
+                                            @*<span asp-validation-for="Contact.Email" class="text-danger"></span>*@
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" id="btnSave" name="btnSave" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="ibox-content">
+                        <div class="form-group  row">
+                            <label class="col-sm-2 col-form-label">Contact</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" placeholder="Type Membername here" autocomplete="off"
+                                       data-url="@Url.Content("~/api/Contact/Search")" data-target-id="ContactId"
+                                       class="autocomplete form-control" asp-for="@Model.ContactName" />
+
+                                <input type="hidden" asp-for="@Model.ContactId" />
+                                <span asp-validation-for="@Model.ContactId" class="text-danger"></span>
+                                <br /><input type="button" class="btn btn-primary modal1" value="Add New Contact" data-toggle="modal" data-target="#exampleModal" />
+                            </div>
+                        </div>
+
+                        <div class="form-group  row">
+                            <label class="col-sm-2 col-form-label">Effective Date</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" placeholder="Effective Date" class="form-control" asp-for="@Model.EffectiveDate" />
+
+                                <span asp-validation-for="@Model.EffectiveDate" class="text-danger"></span>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group  row">
+                            <label class="col-sm-2 col-form-label">Expiration Date</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" placeholder="Effective Date" class="form-control" asp-for="@Model.ExpirationDate" />
+
+                                <span asp-validation-for="@Model.ExpirationDate" class="text-danger"></span>
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="hr-line-dashed"></div>
+                    </div>
+                </div>
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>Fees</h5>
+                </div>
+                <div class="ibox-content">
+                    @{ var i = 0; }
+                    <table width="100%">
+                        @foreach (var product in Model.Products)
+                        {
+                            <tr>
+                                <td><input type="checkbox" asp-for="@Model.BillingInstructions[i].IsSelected" /></td>
+                                <td><label class="col-sm-10 col-form-label">@Model.Products[i].Description</label></td>
+                                <td><label class="col-sm-8 col-form-label">$ @Model.Products[i].Price</label></td>
+                                <input type="hidden" value="@Model.Products[i].ProductCode" asp-for="@Model.BillingInstructions[i].ProductCode" />
+                                <td>
+                                    <div class="col-sm-10">
+                                        <select asp-for="@Model.BillingInstructions[i].ProductCount">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                        </select>
+
+                                    </div>
+                                </td>
+                            </tr>
+                            i = i + 1;
+                        }
+                    </table>
+                </div>
+            </div>
+            </div>
+        </div>
+    
+    <div class="row">
+
+    </div>
+    <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group row" style="text-align:right">
+                    <div class="col-sm-12 col-sm-offset-2">
+                        <button class="btn btn-white btn-sm" type="submit" asp-page-handler="Cancel">Cancel</button>
+
+                        <button class="btn btn-white btn-sm" type="submit" asp-page-handler="Reset">Reset</button>
+
+                        <button class="btn btn-primary btn-sm" type="submit" asp-page-handler="Save">Save</button>
+
+                    </div>
+                    s
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts
+    {
+    <script src="https://cdn.rawgit.com/xcash/bootstrap-autocomplete/v2.0.0/dist/latest/bootstrap-autocomplete.min.js"></script>
+
+    <script language="javascript">
+        $("document").ready(function() {
+            SetupContactAutoComplete();
+
+            $(".modal1").click(function() {
+                $("#olErrors").empty();
+                $("#dvErrorsRow").css("display", "none");
+                $('.modal-body').find('input').each(function() {
+                    $(this).val("");
+
+                });
+
+                $('.modal-body').find('select').each(function() {
+                    $(this).val("1");
+
+                });
+
+            });
+            $("#btnSave").click(function() {
+                var personAddress = {
+                    AddressLine1: $("#txtstreet").val(),
+                    AddressLine2: "",
+                    City: $("#txtcity").val(),
+                    StateCode: $("#txtstate").val(),
+                    ZipCode: $("#txtzip").val(),
+                    CountryCode: ""
+                }
+                var contact = {
+                    FirstName: $("#txtfirstname").val(),
+                    LastName: $("#txtlastname").val(),
+                    Address: personAddress,
+                    HomePhone: $("#txthomephone").val(),
+                    CellPhone: $("#txtcellphone").val(),
+                    MiddleName: $("#txtmiddlename").val(),
+                    Email: $("#txtemail").val(),
+                    ContactType: $("#slContactTypes").val(),
+                    Gender: $("#slgender").val()
+                }
+
+                var AddContactInputObj = {
+                    Contact: contact
+                }
+                var p = JSON.stringify(AddContactInputObj);
+                var pagePath = window.location.origin;
+                pagePath += "/api/Contact"
+                $.ajax({
+                    type: "POST",
+                    url: pagePath,
+                    contentType: "application/json; charset=utf-8",
+                    data: p,
+                    dataType: "json",
+                    success: function(d) {
+                        $("#olErrors").empty();
+                        $('#exampleModal').find('input:text').val('');
+                        $('#exampleModal').modal('hide');
+                    },
+                    error: function(response) {
+                        $("#olErrors").empty();
+                        $("#dvErrorsRow").css("display", "block");
+                        if (response.status === 400) {
+                            $("#olErrors").empty();
+                            var errorobj = JSON.parse(response.responseText);
+                            $.each(errorobj,
+                                function(i, val) {
+                                    $("#olErrors").append($("<li>").text(val.errorMessage));
+                                });
+                        } else {
+                            alert("Error");
+                        }
+                    }
+                });
+
+
+            });
+
+        });
+
+        function SetupContactAutoComplete() {
+
+            $(".autocomplete").autoComplete({
+                minLength: 1,
+                formatResult: function(item) {
+                    console.log("Format result called with item " + item);
+                    return {
+                        id: item.guid,
+                        text: item.firstName + " " + item.lastName
+                    }
+                },
+
+                events: {
+                    searchPost: function(resultsFromServer) {
+                        console.log("Search Post Called. " + resultsFromServer[0].guid);
+                        return resultsFromServer;
+                    }
+                }
+
+            });
+
+            $(".autocomplete").on('autocomplete.select',
+                function(evt, item) {
+                    $("#" + evt.currentTarget.attributes["data-target-id"].value).val(item.guid);
+                    console.log(evt.currentTarget.attributes["data-target-id"].value);
+                    console.log("added item " + item.guid);
+                    evt.preventDefault();
+                });
+
+            $(".autocomplete").change(function(evt) {
+                console.log("Textbox change");
+                console.log($("#" + evt.currentTarget.attributes["data-target-id"].value));
+                console.log($("#" + evt.currentTarget.attributes["data-target-id"].value).val());
+
+                    $("#" + evt.currentTarget.attributes["data-target-id"].value).val("");
+
+            });
+        }
+
+    </script>
+}
+
+

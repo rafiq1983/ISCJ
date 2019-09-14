@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MA.Common.Entities.Invoices;
 using MA.Common.Entities.MasjidMembership;
 using MA.Common.Models.api;
+using MA.Core;
 using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic
@@ -18,8 +20,9 @@ namespace BusinessLogic
                 return db.MasjidMembers.Include(e=>e.Contact).ToList();
             }
         }
-        public CreateMasjidMembershipOutput CreateMasjidMembership(CreateMasjidMembershipInput input)
+        public CreateMasjidMembershipOutput CreateMasjidMembership(CallContext context, CreateMasjidMembershipInput input)
         {
+
             using (var db = new Database())
             {
                 MA.Common.Entities.MasjidMembership.MasjidMembership membership = new MA.Common.Entities.MasjidMembership.MasjidMembership();
@@ -27,18 +30,22 @@ namespace BusinessLogic
                 if (input.AddNewContact)
                 {
                     //db.Contacts.Add(input.Contact);
-                    db.Entry(input.Contact).State = Microsoft.EntityFrameworkCore.EntityState.Added;
+                    db.Entry(input.MemberContact).State = Microsoft.EntityFrameworkCore.EntityState.Added;
                 }
                 else
                 {
-                    membership.ContactId = input.ContactId.Value;
+                    membership.ContactId = input.ContactId.GetValueOrDefault(Guid.Empty);
                 }
-                membership.EffectiveDate = DateTime.Now;
-                membership.ExpirationDate = DateTime.Now.AddYears(1);
+
+                membership.EffectiveDate = input.EffectiveDate;
+
+                membership.ExpirationDate = input.ExpirationDate;
                 membership.CreateDate = DateTime.Now;
-                membership.Contact = input.Contact;
-                membership.CreateUser = "Iftikhar";
+                membership.Contact = input.MemberContact;
+                membership.CreateUser = context.UserId;
                 db.MasjidMembers.Add(membership);
+                InvoiceManager billingMgr = new InvoiceManager();
+                billingMgr.PerformBilling(context, db, input.BillingInstructions, "Invoice created for Membership registration", membership.ContactId.ToString(), InvoiceOrderType.MembershipCreation);
                 db.SaveChanges();
                 return new CreateMasjidMembershipOutput()
                 {

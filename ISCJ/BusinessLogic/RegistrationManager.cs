@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
+using FluentValidation.Results;
+using MA.Common.Entities.Product;
 using MA.Common.Models.api;
 using MA.Core;
 
@@ -19,7 +21,8 @@ namespace BusinessLogic
             using (TransactionScope scope = new TransactionScope())
             {
                 var registrationApplicationId = SaveRegistrationApplication(context, input);
-                PerformBilling(context, input, registrationApplicationId);
+                PerformBilling(context, input.BillingInstructions, registrationApplicationId,
+                    InvoiceOrderType.RegistrationApplication);
                 scope.Complete();
                 return new CreateRegistrationApplicationOutput() { ApplicationId = registrationApplicationId};
             }
@@ -52,18 +55,19 @@ namespace BusinessLogic
     }
 
 
-        public AddRegistrationOutput AddRegistrationToRegistrationApplication(CallContext context, AddRegistrationInput input)
+        public AddRegistrationOutput AddEnrollmentToRegistrationApplication(CallContext context, AddRegistrationInput input)
     {
         using (TransactionScope scope = new TransactionScope())
         {
             using (var db = new Database())
             {
+               
                 var enrollment = new Enrollment();
                 var existingApplication =
                     db.RegistrationApplications.Where(x => x.ApplicationId == input.RegistrationApplicationId).Include(x=>x.Enrollments).Single();
 
                 enrollment.ProgramId = existingApplication.ProgramId;
-                enrollment.StudentContactId = input.StudentId;
+                enrollment.StudentContactId = input.StudentId.GetValueOrDefault(Guid.Empty);
                 enrollment.IslamicSchoolGradeId = input.IslamicSchoolGrade;
                 enrollment.PublicSchoolGradeId = input.PublicSchoolGrade;
                 enrollment.CreateUser = context.UserId;
@@ -73,11 +77,10 @@ namespace BusinessLogic
                 enrollment.MotherId = existingApplication.MotherContactId;
                 
                 existingApplication.Enrollments.Add(enrollment);
-              
+              PerformBilling(context, input.BillingInstructions, existingApplication.ApplicationId, InvoiceOrderType.RegistrationApplication );
                 db.SaveChanges();
             }
 
-            //PerformBilling(context, input, registrationApplicationId);
             scope.Complete();
             return new AddRegistrationOutput()
             {
@@ -87,7 +90,48 @@ namespace BusinessLogic
         }
     }
 
-    private Guid SaveRegistrationApplication(CallContext context, CreateRegistrationApplicationInput input)
+        public AddEnrollmentOutput AddEnrollment(CallContext context, AddEnrollmentInput input)
+        {
+            using (TransactionScope scope = new TransactionScope())
+            {
+                using (var db = new Database())
+                {
+
+                    var enrollment = GetStudentEnrollment(input.StudentId,input.ProgramId);
+
+                    if (enrollment != null)
+                        return new AddEnrollmentOutput()
+                        {
+                            Success = false,
+                            Message = "Enrollment already exists for student."
+                        };
+
+                    enrollment = new Enrollment();
+
+                    enrollment.ProgramId = input.ProgramId;
+                    enrollment.StudentContactId = input.StudentId;
+                    enrollment.IslamicSchoolGradeId = input.IslamicSchoolGrade;
+                    enrollment.PublicSchoolGradeId = input.PublicSchoolGrade;
+                    enrollment.CreateUser = context.UserId;
+                    enrollment.CreateDate = DateTime.UtcNow;
+                    enrollment.FatherId = input.FatherId;
+                    enrollment.MotherId = input.MotherId;
+                    enrollment.RegistrationApplicationId = Guid.Empty;
+                    db.Enrollments.Add(enrollment);
+                    PerformBilling(context, input.BillingInstructions, enrollment.EnrollmentId, InvoiceOrderType.Enrollment);
+                    db.SaveChanges();
+                }
+
+                scope.Complete();
+                return new AddEnrollmentOutput()
+                {
+                    Success = true
+                };
+
+            }
+        }
+
+        private Guid SaveRegistrationApplication(CallContext context, CreateRegistrationApplicationInput input)
                 {
             using (var db = new Database())
             {   
@@ -95,9 +139,9 @@ namespace BusinessLogic
                 {
                     ApplicationId = Guid.NewGuid(),
                     ApplicationDate = DateTime.UtcNow,
-                    FatherContactId = input.FatherId.Value,
-                    MotherContactId = input.MotherId.Value,
-                    ProgramId = input.ProgramId.Value,
+                    FatherContactId = input.FatherId.GetValueOrDefault(Guid.Empty),
+                    MotherContactId = input.MotherId.GetValueOrDefault(Guid.Empty),
+                    ProgramId = input.ProgramId.GetValueOrDefault(Guid.Empty),
                     MembershipId = Guid.Empty,
                     CreateUser = context.UserId
                 };
@@ -132,14 +176,14 @@ namespace BusinessLogic
         }
 
     
-    private void PerformBilling(CallContext context, CreateRegistrationApplicationInput input, Guid registrationApplicationId)
+    private void PerformBilling(CallContext context, List<ProductSelected> billingInstructions, Guid registrationApplicationId, InvoiceOrderType invoiceOrderType)
         {
-            if (input.BillingInstructions.Count == 0)
+            if (billingInstructions.Count == 0)
                 return;
 
             using (var db = new Database())
             {
-                var productIds = input.BillingInstructions.Where(y => y.IsSelected).Select(z => z.ProductCode).ToArray();
+                var productIds = billingInstructions.Where(y => y.IsSelected).Select(z => z.ProductCode).ToArray();
 
                 var products = db.BillableProducts.Where(x => productIds.Contains(x.ProductCode)).ToDictionary(y=>y.ProductCode);
 
@@ -148,13 +192,13 @@ namespace BusinessLogic
                 invoice.GenerationDate = DateTime.UtcNow;
                 invoice.CreateUser = context.UserId;
                 invoice.OrderId = registrationApplicationId.ToString();
-                invoice.OrderType = InvoiceOrderType.RegistrationApplication;
+                invoice.OrderType = invoiceOrderType;
                 invoice.TennantId = context.TenantId;
                 invoice.CreateDate = DateTime.UtcNow;
                 invoice.ModifiedDate = null;
 
                 invoice.InvoiceItems = new List<InvoiceItem>();
-                foreach (var item in input.BillingInstructions.Where(x=>x.IsSelected))
+                foreach (var item in billingInstructions.Where(x=>x.IsSelected))
                 {
                     if(products.ContainsKey(item.ProductCode))
                        {
@@ -188,15 +232,23 @@ namespace BusinessLogic
       return Guid.Empty;
     }
 
-    public Enrollment GetEnrollment(Guid registrationId)
+    public Enrollment GetEnrollment(Guid enrollmentId)
     {
       using (var db = new Database())
       {
-        return db.Enrollments.SingleOrDefault(x => x.EnrollmentId == registrationId);
+        return db.Enrollments.SingleOrDefault(x => x.EnrollmentId == enrollmentId);
       }
     }
 
-    public List<Enrollment> GetEnrollments()
+    public Enrollment GetStudentEnrollment(Guid studentId, Guid programId)
+    {
+        using (var db = new Database())
+        {
+            return db.Enrollments.SingleOrDefault(x => x.StudentContactId == studentId && x.ProgramId == programId);
+        }
+    }
+
+        public List<Enrollment> GetEnrollments()
     {
       using (var db = new Database())
       {
@@ -208,6 +260,8 @@ namespace BusinessLogic
           .ToList();
       }
     }
+
+    
 
     public List<Enrollment> GetEnrollments(Guid programId, Guid? registrationApplicationId = null)
     {
@@ -229,7 +283,6 @@ namespace BusinessLogic
       }
     }
 
-
-
+  
   }
 }

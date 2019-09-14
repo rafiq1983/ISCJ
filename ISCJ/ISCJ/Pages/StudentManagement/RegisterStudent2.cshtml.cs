@@ -154,16 +154,16 @@ namespace ISCJ.Pages.StudentManagement
                     ModelValidationState.Skipped;
             }
 
-            }
+         }
 
-        EnsureStudentDoesNotBelongToThisProgramAlready();
+            EnsureStudentDoesNotBelongToThisProgramAlready();
 
             if (ModelState.IsValid)
             {
                 RegistrationManager mgr = new RegistrationManager();
                 mgr.CreateRegistration(GetCallContext(), StudentRegistration);
-        Response.Redirect("Enrollments");
-      }
+                Response.Redirect("Enrollments");
+            }
       else
       {
           Products = productMgr.GetAllProducts(GetCallContext());

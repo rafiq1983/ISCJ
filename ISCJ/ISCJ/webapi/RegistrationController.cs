@@ -28,7 +28,7 @@ namespace ISCJ.webapi
        public AddRegistrationOutput CreateRegistration(AddRegistrationInput input)
        {
            RegistrationManager mgr = new RegistrationManager();
-           return mgr.AddRegistrationToRegistrationApplication(GetCallerContext(), input);
+           return mgr.AddEnrollmentToRegistrationApplication(GetCallerContext(), input);
        }
 
        [HttpGet("registratonapplication")]

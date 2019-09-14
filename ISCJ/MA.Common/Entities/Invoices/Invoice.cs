@@ -62,6 +62,6 @@ namespace MA.Common.Entities.Invoices
 
     public enum InvoiceOrderType
     {
-        None,RegistrationApplication
+        None,RegistrationApplication, Enrollment, MembershipCreation
     }
 }

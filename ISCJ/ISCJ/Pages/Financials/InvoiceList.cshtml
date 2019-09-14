@@ -30,6 +30,7 @@
         <tr>
 
             <th>Generation Date</th>
+            <th>Order Type</th>
             <th>Due Date</th>
             <th>Invoice Amount</th>
             <th>Responsible Party</th>
@@ -45,6 +46,7 @@
                 <input type="hidden" asp-for="@Model.Invoices[i].InvoiceId" value="@Model.PageData.RowData[i].Invoice.InvoiceId"/>
 
                 <td>@Model.PageData.RowData[i].Invoice.GenerationDate</td>
+                <td>@Model.PageData.RowData[i].OrderType</td>
                 <td>@Model.PageData.RowData[i].Invoice.DueDate</td>
                 <td>$@Model.PageData.RowData[i].Invoice.InvoiceAmount</td>
                 <td><span>@Model.PageData.RowData[i].ResponsiblePartyName</span></td>

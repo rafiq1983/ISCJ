@@ -44,30 +44,41 @@ namespace ISCJ.Pages.Financials
                 RowData rowData = new RowData();
                 rowData.Invoice = v;
                 rowData.ResponsiblePartyName = "";
-
-                var registrationApplication = registrationApplications.SingleOrDefault(x => x.ApplicationId.ToString() == v.OrderId);
-
-                if (registrationApplication != null)
+                rowData.OrderType = v.OrderType.ToString();
+                if (v.OrderType == InvoiceOrderType.RegistrationApplication)
                 {
-                    rowData.FatherContact = _contactManager.GetContact(registrationApplication.FatherContactId);
-                    rowData.MotherContact = _contactManager.GetContact(registrationApplication.MotherContactId);
+                    var registrationApplication =
+                        registrationApplications.SingleOrDefault(x => x.ApplicationId.ToString() == v.OrderId);
 
-                    if (rowData.FatherContact != null)
+                    if (registrationApplication != null)
                     {
-                        rowData.ResponsiblePartyName =
-                            rowData.FatherContact.FirstName + " " + rowData.FatherContact.LastName;
-                    }
+                        rowData.FatherContact = _contactManager.GetContact(registrationApplication.FatherContactId);
+                        rowData.MotherContact = _contactManager.GetContact(registrationApplication.MotherContactId);
 
-                    if (rowData.MotherContact != null)
-                    {
-                        rowData.ResponsiblePartyName += "/" +
-                            rowData.MotherContact.FirstName + " " + rowData.MotherContact.LastName;
-                    }
+                        if (rowData.FatherContact != null)
+                        {
+                            rowData.ResponsiblePartyName =
+                                rowData.FatherContact.FirstName + " " + rowData.FatherContact.LastName;
+                        }
 
-                    rowData.ResponsiblePartyName = rowData.ResponsiblePartyName;
+                        if (rowData.MotherContact != null)
+                        {
+                            rowData.ResponsiblePartyName += "/" +
+                                                            rowData.MotherContact.FirstName + " " +
+                                                            rowData.MotherContact.LastName;
+                        }
+
+                        rowData.ResponsiblePartyName = rowData.ResponsiblePartyName;
+                    }
                 }
+                else if(v.OrderType == InvoiceOrderType.MembershipCreation || v.OrderType == InvoiceOrderType.Enrollment)
+                {
+                    var contact = _contactManager.GetContact(Guid.Parse(v.OrderId));
+                    rowData.ResponsiblePartyName = contact.FirstName + " " + contact.LastName;
+                }
+            
 
-                PageData.RowData.Add(rowData);
+            PageData.RowData.Add(rowData);
             }
 
             foreach (var rowData in PageData.RowData)
@@ -132,5 +143,6 @@ namespace ISCJ.Pages.Financials
         public MA.Common.Entities.Contacts.Contact FatherContact { get; set; }
         public MA.Common.Entities.Contacts.Contact MotherContact { get; set; }
         public string ResponsiblePartyName { get; set; }
+        public string OrderType { get; set; }
     }
 }

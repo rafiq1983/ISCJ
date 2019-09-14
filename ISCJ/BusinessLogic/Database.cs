@@ -15,6 +15,7 @@ using Microsoft.Extensions.Logging.Console;
 using MA.Common.Entities.Tenants;
 using MA.Common.Models.api;
 using MA.Common.Entities.Payments;
+using MA.Common.Entities.School;
 
 namespace BusinessLogic
 {
@@ -29,8 +30,9 @@ namespace BusinessLogic
     {; }
 
     public virtual DbSet<Enrollment> Enrollments { get; set; }
-
-        public virtual DbSet<RegistrationApplication> RegistrationApplications { get; set; }
+    public virtual DbSet<Subject> Subjects { get; set; }
+    public virtual DbSet<SubjectMapping> SubjectMappings { get; set; }
+    public virtual DbSet<RegistrationApplication> RegistrationApplications { get; set; }
     public virtual DbSet<Invoice> Invoices { get; set; }
     public virtual DbSet<CashPayment> CashPayments { get; set; }
    public virtual DbSet<CheckPayment> CheckPayments { get; set; }
@@ -54,6 +56,16 @@ namespace BusinessLogic
                 //entity.Property(x => x.PaymentMethod).HasConversion(new EnumToStringConverter<PaymentMethod>());
                // entity.HasDiscriminator(x => x.PaymentMethod).HasValue<CheckPayment>(PaymentMethod.Check).HasValue<Payment>(PaymentMethod.Cash);
             });
+
+            modelBuilder.Entity<SubjectMapping>(entity =>
+            {
+                entity.HasKey(x => x.ProgramId);
+                entity.HasKey(x => x.IslamicSchoolGradeId);
+                entity.HasKey(x => x.SubjectId);
+                entity.ToTable("SubjectMapping");
+                });
+
+
 
             modelBuilder.Query<AllPayment>(x =>
                 x.Property(y => y.PaymentMethod).HasConversion(new EnumToStringConverter<PaymentMethod>()));

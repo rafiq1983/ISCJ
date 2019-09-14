@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MA.Common.Entities.Contacts;
 
 namespace MA.Common.Models.api
 {
     public class CreateMasjidMembershipInput
     {
+       public Guid? ContactId { get; set; }
+       public List<ProductSelected> BillingInstructions { get; set; }
+       public Contact MemberContact { get; set; }
        public bool AddNewContact { get; set; }
-       public MA.Common.Entities.Contacts.Contact Contact{ get; set; } //iftikhar: should really take model contact.
-        public Guid? ContactId { get; set; }
-        
+       public DateTime EffectiveDate { get; set; }
+       public DateTime ExpirationDate { get; set; }
     }
 
     public class CreateMasjidMembershipOutput
