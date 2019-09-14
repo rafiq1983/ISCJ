@@ -289,11 +289,19 @@
 
                     <div class="col-sm-10">
                         <input type="text" placeholder="Type Father name here" autocomplete="off"
-                               data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_FatherId"
+                               data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_FatherId" data-member-check-id="isFatherMember"
                                class="autocomplete form-control" value="@Model.StudentRegistration.FatherName" asp-for="@Model.StudentRegistration.FatherName" />
                         <input type="hidden" asp-for="@Model.StudentRegistration.FatherName" /><!--todo-->
                         <input type="hidden" asp-for="@Model.StudentRegistration.FatherId" />
                         <span asp-validation-for="@Model.StudentRegistration.FatherId" class="text-danger" ></span>
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Is a Member</label>
+
+                    <div class="col-sm-10">
+                        <span class="badge" id="isFatherMember"></span>
 
                     </div>
                 </div>
@@ -302,13 +310,26 @@
 
                     <div class="col-sm-10">
                         <input type="text" placeholder="Type Mother name here" autocomplete="off"
-                               data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_MotherId"
+                               data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_MotherId" data-member-check-id="isMotherMember"
                                class="autocomplete form-control" value="@Model.StudentRegistration.MotherName" asp-for="@Model.StudentRegistration.MotherName" />
                         <input type="hidden" asp-for="@Model.StudentRegistration.MotherId" />
 
                         <span asp-validation-for="@Model.StudentRegistration.MotherId" class="text-danger"></span>
                     </div>
+                        
+                       
                 </div>
+                
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Is a Member</label>
+
+                    <div class="col-sm-10">
+                        <span class="badge" id="isMotherMember"></span>
+
+                    </div>
+                </div>
+                    
+                 
 
                 <div class="hr-line-dashed"></div>
             </div>
@@ -494,6 +515,7 @@
             $(".autocomplete").on('autocomplete.select',
                 function(evt, item) {
                     $("#" + evt.currentTarget.attributes["data-target-id"].value).val(item.guid);
+                    SetIsMemberFlag(evt.currentTarget.attributes["data-member-check-id"].value, item.guid);
                     console.log(evt.currentTarget.attributes["data-target-id"].value);
                     console.log("added item " + item.guid);
                     evt.preventDefault();
@@ -503,9 +525,31 @@
                 console.log("Textbox change");
                 console.log($("#" + evt.currentTarget.attributes["data-target-id"].value));
                 console.log($("#" + evt.currentTarget.attributes["data-target-id"].value).val());
-                
-                    $("#" + evt.currentTarget.attributes["data-target-id"].value).val("");
-                
+
+                $("#" + evt.currentTarget.attributes["data-target-id"].value).val("");
+
+            });
+        }
+
+        function SetIsMemberFlag(memberCheckId, id) {
+            if (memberCheckId == null || memberCheckId == "")
+                return;
+
+
+            $.ajax({
+                type: "GET",
+                url: "/api/membership/membershipbycontact/" + id,
+                contentType: "application/json; charset=utf-8",
+
+                dataType: "json",
+                success: function (d) {
+                   
+                    console.log(d);
+                    $("#"+ memberCheckId).text(d != null);
+                },
+                error: function(response) {
+                    console.Log("Error getting member status " + response);
+                }
             });
         }
 

@@ -20,7 +20,7 @@ namespace ISCJ.webapi
         public JsonResult CreateInvoice(CreateInvoiceInput input)
         {
             InvoiceManager mgr = new InvoiceManager();
-            var output = mgr.CreateInvoice(input);
+            var output = mgr.CreateInvoice(GetCallContext(), input);
             return new JsonResult(output.InvoiceId);
         }
 

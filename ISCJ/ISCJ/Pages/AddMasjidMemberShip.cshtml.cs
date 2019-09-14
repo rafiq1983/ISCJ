@@ -44,8 +44,12 @@ namespace ISCJ.Pages
                 mgr.CreateMasjidMembership(GetCallContext(), new CreateMasjidMembershipInput()
                 {
                     ContactId = ContactId.GetValueOrDefault(Guid.Empty),
-                    BillingInstructions = BillingInstructions.Where(x => x.IsSelected == true).ToList()
+                    BillingInstructions = BillingInstructions.Where(x => x.IsSelected == true).ToList(),
+                    EffectiveDate = EffectiveDate,
+                    ExpirationDate = ExpirationDate
                 });
+
+                Response.Redirect("Invoices");
             }
         }
 

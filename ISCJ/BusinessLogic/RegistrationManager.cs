@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Transactions;
 using FluentValidation.Results;
 using MA.Common.Entities.Product;
@@ -16,11 +17,46 @@ namespace BusinessLogic
 
   public class RegistrationManager
   {
+      private void AddMembershipIfNeeded(CallContext context, CreateRegistrationApplicationInput input)
+      {
+          MasjidMembershipManager mgr = new MasjidMembershipManager();
+         var membership = mgr.GetMembershipByContactId(input.FatherId.GetValueOrDefault());
+
+         if (membership == null)
+         {
+             mgr.CreateMasjidMembership(context, new CreateMasjidMembershipInput()
+             { 
+                  ContactId = input.FatherId,
+                  AddNewContact = false,
+                   BillingInstructions = new List<ProductSelected>(),
+                   EffectiveDate = DateTime.UtcNow,
+                   ExpirationDate = DateTime.UtcNow.AddYears(1)
+
+             });
+         }
+
+         membership = mgr.GetMembershipByContactId(input.MotherId.GetValueOrDefault());
+
+         if (membership == null)
+         {
+             mgr.CreateMasjidMembership(context, new CreateMasjidMembershipInput()
+             {
+                 ContactId = input.MotherId,
+                 AddNewContact = false,
+                 BillingInstructions = new List<ProductSelected>(),
+                 EffectiveDate = DateTime.UtcNow,
+                 ExpirationDate = DateTime.UtcNow.AddYears(1)
+
+             });
+         }
+
+        }
     public CreateRegistrationApplicationOutput CreateRegistration(CallContext context, CreateRegistrationApplicationInput input)
     {
             using (TransactionScope scope = new TransactionScope())
             {
                 var registrationApplicationId = SaveRegistrationApplication(context, input);
+                AddMembershipIfNeeded(context, input);
                 PerformBilling(context, input.BillingInstructions, registrationApplicationId,
                     InvoiceOrderType.RegistrationApplication);
                 scope.Complete();

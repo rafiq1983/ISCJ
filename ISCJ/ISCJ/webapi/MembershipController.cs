@@ -35,5 +35,12 @@ namespace ISCJ.webapi
             MasjidMembershipManager mgr = new MasjidMembershipManager();
             return new JsonResult(mgr.GetAllMembers());
         }
+
+        [HttpGet("membershipbycontact/{contactId}")]
+        public JsonResult GetMemberShip(Guid contactId)
+        {
+            MasjidMembershipManager mgr = new MasjidMembershipManager();
+            return new JsonResult(mgr.GetMembershipByContactId(contactId));
+        }
     }
 }

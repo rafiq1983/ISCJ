@@ -20,6 +20,19 @@ namespace BusinessLogic
                 return db.MasjidMembers.Include(e=>e.Contact).ToList();
             }
         }
+
+        public MasjidMembership GetMembershipByContactId(Guid contactId)
+        {
+            using (var db = new Database())
+            {
+
+                return db.MasjidMembers.Include(e => e.Contact).SingleOrDefault(x =>
+                    x.ContactId == contactId && x.EffectiveDate < DateTime.UtcNow &&
+                    x.ExpirationDate > DateTime.UtcNow);
+
+            }
+
+        }
         public CreateMasjidMembershipOutput CreateMasjidMembership(CallContext context, CreateMasjidMembershipInput input)
         {
 

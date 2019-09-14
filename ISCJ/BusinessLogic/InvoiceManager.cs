@@ -83,7 +83,7 @@ namespace BusinessLogic
 
        
     
-    public CreateInvoiceOutput CreateInvoice(CreateInvoiceInput input)
+    public CreateInvoiceOutput CreateInvoice(CallContext callContext, CreateInvoiceInput input)
         {
             using (Database db = new Database())
             {
@@ -95,9 +95,12 @@ namespace BusinessLogic
                     DueDate = DateTime.Now.AddMonths(1),
                     GenerationDate = DateTime.Now,
                     FinancialAccountId = Guid.Empty,
+                    OrderType = input.OrderType,
+                    OrderId = input.ReferenceId,
                     IsPaid = false,
-                    CreateDate = DateTime.Now,
-                    CreateUser = "Iftikhar"
+                    TennantId = callContext.TenantId,
+                    CreateDate = DateTime.UtcNow,
+                    CreateUser = callContext.UserId
                 };
 
                 db.Invoices.Add(invoice);

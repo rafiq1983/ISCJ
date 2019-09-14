@@ -8,12 +8,8 @@ namespace MA.Common.Models.api
     public class CreateInvoiceInput
     {
         public decimal Amount { get; set; }
-        public string ContactId { get; set; }
-
+        public string  ReferenceId { get; set; }
         public string Description { get; set; }
-
-        public string OrderId { get; set; }
-
         public InvoiceOrderType OrderType { get; set; }
     }
 

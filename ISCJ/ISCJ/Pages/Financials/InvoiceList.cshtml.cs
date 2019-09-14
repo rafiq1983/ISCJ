@@ -71,7 +71,7 @@ namespace ISCJ.Pages.Financials
                         rowData.ResponsiblePartyName = rowData.ResponsiblePartyName;
                     }
                 }
-                else if(v.OrderType == InvoiceOrderType.MembershipCreation || v.OrderType == InvoiceOrderType.Enrollment)
+                else if(v.OrderType == InvoiceOrderType.MembershipCreation || v.OrderType == InvoiceOrderType.Enrollment || v.OrderType == InvoiceOrderType.AdHocInvoiceAttachedToContact)
                 {
                     var contact = _contactManager.GetContact(Guid.Parse(v.OrderId));
                     rowData.ResponsiblePartyName = contact.FirstName + " " + contact.LastName;
