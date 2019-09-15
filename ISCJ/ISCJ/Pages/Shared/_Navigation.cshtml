@@ -33,8 +33,7 @@
             <li class="@Html.IsSelected(action: "ProgramsList")"><a href="../programManagement/programlist">Programs</a></li>
             <li class="@Html.IsSelected(action: "ProgramsList")"><a href="../programManagement/vieweditprogram">Add Program</a></li>
             <li class="@Html.IsSelected(action: "RegisterStudent2")"><a href="/StudentManagement/RegisterStudent2">New Registration Application</a></li>
-            <li class="@Html.IsSelected(action: "RegisterStudent2")"><a href="/StudentManagement/RegisterStudent2">Renew Registration</a></li>
-            <li class="@Html.IsSelected(action: "RegistrationApplications")"><a href="/StudentManagement/RegistrationApplications">Registration Applications</a></li>
+            <li class="@Html.IsSelected(action: "RegistrationApplications")"><a href="/StudentManagement/RegistrationApplications">View Registration Applications</a></li>
 
             <li class="@Html.IsSelected(action: "Enrollments")"><a href="/StudentManagement/Enrollments">Enrollments</a></li>
             <li class="@Html.IsSelected(action: "Instructors")"><a href="/School/Instructors">Instructors</a></li>
@@ -44,10 +43,7 @@
       <li class="@Html.IsSelected(controller: "Financials")">
         <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Financials</span> <span class="fa arrow"></span></a>
         <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Financials", cssClass: "in")">
-            <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/Financials/InvoiceList">Add Payment</a></li>
             <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/Financials/InvoiceList">Invoices</a></li>
-            <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/Financials/InvoiceList">Add Donation</a></li>
-
             <li class="@Html.IsSelected(action: "AddInvoice")"><a href="/Financials/AddInvoice">Add Invoice</a></li>
         </ul>
       </li>
@@ -61,8 +57,10 @@
       <li class="@Html.IsSelected(controller: "Members")">
         <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Members</span> <span class="fa arrow"></span></a>
         <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Financials", cssClass: "in")">
-          <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/AddMasjidMemberShip">Add a Member</a></li>
-          <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/Financials/InvoiceList">Renew Membership</a></li>
+            <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/AddMasjidMemberShip">Add a Member</a></li>
+            
+            <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/ViewMembers">Members</a></li>
+          <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/Financials/RenewMembership">Renew Membership</a></li>
         </ul>
       </li>
 

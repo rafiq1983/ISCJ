@@ -28,7 +28,7 @@ namespace ISCJ.Pages.Admin
             var isValid = false;
             if (ModelState.IsValid)
             {
-                if(loginData.Username =="iscjapp" && loginData.Password =="password")
+                if(loginData.Username.ToLower() =="icsjapp" && loginData.Password =="icsjappwelcome")
                 {
 
                     isValid = true;

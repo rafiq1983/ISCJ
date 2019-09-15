@@ -57,6 +57,7 @@ namespace BusinessLogic
             contact.CreatedBy = callContext.UserId;
             contact.CreatedDate = System.DateTime.UtcNow;
             contact.Guid = Guid.NewGuid();
+            contact.ContactType = input.Contact.ContactType;
 
             using (var _ContextContact = new ContactContext())
             {
