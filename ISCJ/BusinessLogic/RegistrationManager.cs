@@ -319,6 +319,13 @@ namespace BusinessLogic
       }
     }
 
+
+   public List<Enrollment> GetEnrollments(Guid parentID)
+        {
+            return this.GetEnrollments().Where(x => x.FatherId == parentID || x.MotherId == parentID).ToList<Enrollment>();
+       
+        }
+
   
   }
 }
