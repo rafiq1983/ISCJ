@@ -551,6 +551,25 @@
                     console.Log("Error getting member status " + response);
                 }
             });
+
+
+            $.ajax({
+                type: "GET",
+                url: "/api/Enrollment/Enrollments/parent/" + id,
+                contentType: "application/json; charset=utf-8",
+
+                dataType: "json",
+                success: function (d) {
+                   
+                    console.log(d);
+                    if (d.length > 0)
+                        alert('Enrollments found');
+                },
+                error: function(response) {
+                    console.Log("Error getting member status " + response);
+                }
+            });
+
         }
 
     </script>

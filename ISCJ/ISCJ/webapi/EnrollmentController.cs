@@ -18,11 +18,11 @@ namespace ISCJ.webapi
     {
 
         [HttpGet("Enrollments/parent/{parentid}")]
-        [ProducesResponseType(typeof(Enrollment),200)]
-        public List<Enrollment> GetEnrollmentsByParentID([FromQuery] string parentid)
+        [ProducesResponseType(typeof(List<Enrollment>),200)]
+        public List<Enrollment> GetEnrollmentsByParentID(string parentid)
         {
             RegistrationManager mgr = new RegistrationManager();
-            return mgr.GetEnrollments(Guid.Parse(parentid));
+            return mgr.GetEnrollmentsByParentId(Guid.Parse(parentid));
         }
          
     }
