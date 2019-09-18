@@ -1,0 +1,82 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
+using BusinessLogic;
+using MA.Common.Entities.School;
+using MA.Core;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace ISCJ.Pages.School
+{
+    public class SubjectAssignmentRulesModel : PageModel
+    {
+        public void OnGet()
+        {
+
+        }
+
+        public List<SubjectMapping> SubjectMappings
+        {
+            get
+            {
+                CourseManager mgr = new CourseManager();
+                return mgr.GetSubjectMappings(GetCallContext());
+
+            }
+        }
+
+        public List<SelectListItem> Programs
+        {
+            get
+            {
+                ProgramManager mgr = new ProgramManager();
+                return mgr.GetAllPrograms(GetCallContext())
+                    .Select(x => new SelectListItem(x.ProgramName, x.ProgramId.ToString())).ToList();
+            }
+        }
+
+        public List<SelectListItem> Subjects
+        {
+            get
+            {
+                CourseManager mgr = new CourseManager();
+                return mgr.GetSubjects(GetCallContext())
+                    .Select(x => new SelectListItem(x.SubjectDescription, x.SubjectId.ToString())).ToList();
+            }
+        }
+
+        public IEnumerable<SelectListItem> IslamicSchoolGradeList
+        {
+            get
+            {
+                return ListService.GetIslamicSchoolGradesList().Select(x => new SelectListItem(x.GradeName, x.GradeId));
+            }
+        }
+
+        public void OnPost()
+        {
+            if (ModelState.IsValid)
+            {
+                CourseManager mgr = new CourseManager();
+                mgr.AddSubjectMapping(GetCallContext(), ProgramId.Value, SubjectId.Value, IslamicSchoolGradeId);
+            }
+        }
+
+        [Required]
+        [BindProperty] public Guid? ProgramId { get; set; }
+        [Required]
+        [BindProperty] public Guid? SubjectId { get; set; }
+        [Required]
+        [BindProperty] public string IslamicSchoolGradeId { get; set; }
+
+
+        private CallContext GetCallContext()
+        {
+            return new MA.Core.CallContext("Iftikhar", "23434", "234234234", Guid.Empty);
+        }
+    }
+}

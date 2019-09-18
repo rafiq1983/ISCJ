@@ -20,6 +20,7 @@ namespace MA.Common.Entities.School
         
         public Guid SubjectId { get; set; }
         public Guid ProgramId { get; set; }
-        public Guid IslamicSchoolGradeId { get; set; }
+        public string IslamicSchoolGradeId { get; set; }
+        public Guid TenantId { get; set; }
     }
 }
