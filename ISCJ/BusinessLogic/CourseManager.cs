@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using MA.Common.Entities.School;
 using MA.Core;
@@ -39,6 +40,13 @@ namespace BusinessLogic
             }
         }
 
+        public List<Subject> GetSubjects(CallContext context)
+        {
+            using (var db = new Database())
+            {
+                return db.Subjects.Where(x => x.TenantId == context.TenantId).ToList();
+            }
 
+        }
     }
 }

@@ -4,5 +4,78 @@
     ViewData["Title"] = "Courses";
 }
 
-<h2>Courses</h2>
+@{
+    ViewData["Title"] = "Contacts";
+    Layout = "~/Pages/Shared/_LayoutModern.cshtml";
+}
+
+<form method="POST">
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-9">
+            <h2>Student Registration</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    School
+                </li>
+                <li class="active breadcrumb-item">
+                    <strong>Add/Edit Subjects</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <table>
+                    <tr>
+                       
+                        <td>Subjec Description</td>
+                        <td>Subject Long Description</td>
+                    </tr>
+                    <tbody>
+                    @for (var i = 0; i < Model.Subjects.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                <input type="hidden" asp-for="@Model.Subjects[i].SubjectId"/>
+                                @Model.Subjects[i].SubjectDescription
+                            </td>
+                            <td>
+                                @Model.Subjects[i].SubjectLongDesc
+                            </td>
+
+                        </tr>
+                    }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group  row">
+                <label class="col-sm-2 col-form-label">Subject Desc</label>
+
+                <div class="col-sm-10">
+                    <input type="text" placeholder="Subject Description" class="form-control" asp-for="@Model.SubjectDescription" />
+
+                    <span asp-validation-for="@Model.SubjectDescription" class="text-danger"></span>
+
+                </div>
+
+                <div class="col-sm-10">
+                    <button class="button" type="submit">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</form>
+
+
 

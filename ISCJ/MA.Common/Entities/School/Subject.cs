@@ -11,6 +11,8 @@ namespace MA.Common.Entities.School
         public string SubjectDescription { get; set; }
 
         public string SubjectLongDesc { get; set; }
+
+        public Guid TenantId { get; set; }
     }
 
     public class SubjectMapping : BaseEntity
