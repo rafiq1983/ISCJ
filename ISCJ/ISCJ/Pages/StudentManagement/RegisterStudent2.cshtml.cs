@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace ISCJ.Pages.StudentManagement
 {
@@ -172,6 +173,23 @@ namespace ISCJ.Pages.StudentManagement
 
     }
 
+    [BindProperty]
+    public string AutoEnrollmentJson { get; set; }
+
+    public void OnPostPopulateEnrollments()
+    {
+        List<Enrollment> enrollments = JsonConvert.DeserializeObject<List<Enrollment>>(AutoEnrollmentJson);
+        this.StudentRegistration.StudentRegistrations = new List<CreateStudentRegistrationInput>();
+
+        foreach (var enrollment in enrollments)
+        {
+            this.StudentRegistration.StudentRegistrations.Add(new CreateStudentRegistrationInput()
+            {
+                 StudentId = enrollment.StudentContactId,
+                 StudentName = enrollment.StudentContactInfo.FirstName + " " + enrollment.StudentContactInfo.LastName
+            });
+        }
+    }
     public void OnPostRemove(int btnStudentRemove)
     {
        

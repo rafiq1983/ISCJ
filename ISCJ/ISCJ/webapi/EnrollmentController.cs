@@ -17,7 +17,7 @@ namespace ISCJ.webapi
     public class EnrollmentController : ControllerBase
     {
 
-        [HttpGet("Enrollments/parent/{parentid}")]
+        [HttpGet("get-by-parent/{parentid}")]
         [ProducesResponseType(typeof(List<Enrollment>),200)]
         public List<Enrollment> GetEnrollmentsByParentID(string parentid)
         {
