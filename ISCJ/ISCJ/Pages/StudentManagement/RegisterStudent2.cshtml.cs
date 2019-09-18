@@ -178,7 +178,8 @@ namespace ISCJ.Pages.StudentManagement
 
     public void OnPostPopulateEnrollments()
     {
-        List<Enrollment> enrollments = JsonConvert.DeserializeObject<List<Enrollment>>(AutoEnrollmentJson);
+        ModelState.Clear();
+            List<Enrollment> enrollments = JsonConvert.DeserializeObject<List<Enrollment>>(AutoEnrollmentJson);
         this.StudentRegistration.StudentRegistrations = new List<CreateStudentRegistrationInput>();
 
         foreach (var enrollment in enrollments)
@@ -189,7 +190,9 @@ namespace ISCJ.Pages.StudentManagement
                  StudentName = enrollment.StudentContactInfo.FirstName + " " + enrollment.StudentContactInfo.LastName
             });
         }
-    }
+
+        Products = productMgr.GetAllProducts(GetCallContext());
+        }
     public void OnPostRemove(int btnStudentRemove)
     {
        
