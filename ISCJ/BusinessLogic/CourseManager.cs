@@ -63,11 +63,11 @@ namespace BusinessLogic
 
         }
 
-        public List<SubjectMapping> GetSubjectMappings(CallContext context, Guid subjectId)
+        public SubjectMapping GetSubjectMappings(CallContext context, Guid subjectId)
         {
             using (var db = new Database())
             {
-                return db.SubjectMappings.Where(x => x.TenantId == context.TenantId && x.SubjectId == subjectId).ToList();
+                return db.SubjectMappings.Include(x => x.Program).Include(x => x.Subject).SingleOrDefault(x => x.TenantId == context.TenantId && x.SubjectId == subjectId);
             }
 
         }
@@ -76,7 +76,7 @@ namespace BusinessLogic
         {
             using (var db = new Database())
             {
-                return db.SubjectMappings.Where(x => x.TenantId == context.TenantId).ToList();
+                return db.SubjectMappings.Where(x => x.TenantId == context.TenantId).Include(x=>x.Program).Include(y=>y.Subject).ToList();
             }
 
         }

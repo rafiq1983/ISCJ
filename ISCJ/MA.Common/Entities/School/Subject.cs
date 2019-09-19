@@ -26,6 +26,7 @@ namespace MA.Common.Entities.School
         public Guid ProgramId { get; set; }
         public string IslamicSchoolGradeId { get; set; }
         public Guid TenantId { get; set; }
+     
         [ForeignKey("SubjectId")]
         public Subject Subject { get; set; }
 
