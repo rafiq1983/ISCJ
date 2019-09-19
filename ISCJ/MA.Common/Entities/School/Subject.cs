@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using MA.Common.Entities.Registration;
 
 namespace MA.Common.Entities.School
 {
@@ -10,9 +12,11 @@ namespace MA.Common.Entities.School
 
         public string SubjectDescription { get; set; }
 
-        public string SubjectLongDesc { get; set; }
+        public string SubjectName{ get; set; }
 
         public Guid TenantId { get; set; }
+
+        
     }
 
     public class SubjectMapping : BaseEntity
@@ -22,5 +26,9 @@ namespace MA.Common.Entities.School
         public Guid ProgramId { get; set; }
         public string IslamicSchoolGradeId { get; set; }
         public Guid TenantId { get; set; }
+        [ForeignKey("SubjectId")]
+        public Subject Subject { get; set; }
+
+        [ForeignKey("ProgramId")] public ProgramDetail Program { get; set; }
     }
 }

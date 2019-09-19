@@ -24,7 +24,7 @@ namespace ISCJ.Pages.School
             get
             {
                 CourseManager mgr = new CourseManager();
-                return mgr.GetSubjectMappings(GetCallContext());
+                return mgr.GetAllSubjectMappings(GetCallContext());
 
             }
         }
@@ -45,7 +45,7 @@ namespace ISCJ.Pages.School
             {
                 CourseManager mgr = new CourseManager();
                 return mgr.GetSubjects(GetCallContext())
-                    .Select(x => new SelectListItem(x.SubjectDescription, x.SubjectId.ToString())).ToList();
+                    .Select(x => new SelectListItem(x.SubjectName, x.SubjectId.ToString())).ToList();
             }
         }
 
@@ -59,11 +59,23 @@ namespace ISCJ.Pages.School
 
         public void OnPost()
         {
+            PerformValidation();
             if (ModelState.IsValid)
             {
                 CourseManager mgr = new CourseManager();
                 mgr.AddSubjectMapping(GetCallContext(), ProgramId.Value, SubjectId.Value, IslamicSchoolGradeId);
             }
+        }
+
+        private void PerformValidation()
+        {
+            if (!ModelState.IsValid)
+                return;
+            CourseManager mgr = new CourseManager();
+            var subject = mgr.GetSubjectMappings(GetCallContext(), SubjectId.Value);
+            if(subject!=null)
+                ModelState.AddModelError("SubjectId", "This subject already has the mapping.");
+
         }
 
         [Required]

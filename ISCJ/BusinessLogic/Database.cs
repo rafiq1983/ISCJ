@@ -59,9 +59,9 @@ namespace BusinessLogic
 
             modelBuilder.Entity<SubjectMapping>(entity =>
             {
-                entity.HasKey(x => x.ProgramId);
-                entity.HasKey(x => x.IslamicSchoolGradeId);
+                entity.HasOne(x => x.Program);
                 entity.HasKey(x => x.SubjectId);
+                entity.HasKey(x => x.TenantId);
                 entity.ToTable("SubjectMapping");
                 });
 

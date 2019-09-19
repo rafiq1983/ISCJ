@@ -20,14 +20,29 @@ namespace ISCJ.Pages.School
 
         public void OnPost()
         {
-           CourseManager courseManager = new CourseManager();
-           if (ModelState.IsValid)
-           {
-
-               courseManager.AddSubject(GetCallContext(), SubjectDescription, "");
+            CourseManager courseManager = new CourseManager();
+            PerformValidation();
+            if (ModelState.IsValid)
+            {
+                courseManager.AddSubject(GetCallContext(), SubjectName, SubjectDescription);
             }
 
         }
+
+        public void PerformValidation()
+        {
+            if (!ModelState.IsValid)
+                return;
+               CourseManager courseManager = new CourseManager();
+
+               var subject = courseManager.GetSubjectByName(GetCallContext(), SubjectName);
+
+               if (subject != null)
+               {
+                   ModelState.AddModelError("SubjectName", "Subject name already exists");
+               }
+
+           }
 
         public List<Subject> Subjects
         {
@@ -45,6 +60,11 @@ namespace ISCJ.Pages.School
 
         [BindProperty]
         [Required]
+        [MaxLength(100)]
+        public string SubjectName { get; set; }
+
+        [BindProperty]
+        [MaxLength(500)]
         public string SubjectDescription { get; set; }
     }
 }

@@ -4,19 +4,20 @@ using System.Linq;
 using System.Text;
 using MA.Common.Entities.School;
 using MA.Core;
+using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic
 {
     public class CourseManager
     {
-        public Guid AddSubject(CallContext context, string shortDesc, string longDesc)
+        public Guid AddSubject(CallContext context, string subjectName, string subjectDescription)
         {
             using (var db = new Database())
             {
                 var subject = new Subject()
                 {
-                    SubjectDescription = shortDesc,
-                    SubjectLongDesc = longDesc,
+                    SubjectName = subjectName,
+                    SubjectDescription = subjectDescription,
                     CreateUser = context.UserId,
                     CreateDate = DateTime.UtcNow,
                     SubjectId = Guid.NewGuid()
@@ -53,7 +54,25 @@ namespace BusinessLogic
 
         }
 
-        public List<SubjectMapping> GetSubjectMappings(CallContext context)
+        public Subject GetSubjectByName(CallContext context, string subjectName)
+        {
+            using (var db = new Database())
+            {
+                return db.Subjects.SingleOrDefault(x => x.TenantId == context.TenantId && x.SubjectName == subjectName);
+            }
+
+        }
+
+        public List<SubjectMapping> GetSubjectMappings(CallContext context, Guid subjectId)
+        {
+            using (var db = new Database())
+            {
+                return db.SubjectMappings.Where(x => x.TenantId == context.TenantId && x.SubjectId == subjectId).ToList();
+            }
+
+        }
+
+        public List<SubjectMapping> GetAllSubjectMappings(CallContext context)
         {
             using (var db = new Database())
             {
