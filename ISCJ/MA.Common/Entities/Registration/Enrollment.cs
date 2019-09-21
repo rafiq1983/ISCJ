@@ -7,6 +7,13 @@ using MA.Common.Entities.Invoices;
 
 namespace MA.Common.Entities.Registration
 {
+    public class Room : BaseEntity
+    {
+        public int RoomId { get; set; }
+        public string RoomName { get; set; }
+        public Guid TenantId { get; set; }
+
+    }
   public class Enrollment:BaseEntity
   {
     public Guid EnrollmentId { get; set; }

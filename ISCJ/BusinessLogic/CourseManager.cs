@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MA.Common.Entities.Registration;
 using MA.Common.Entities.School;
 using MA.Core;
 using Microsoft.EntityFrameworkCore;
@@ -66,6 +67,28 @@ namespace BusinessLogic
             }
         }
 
+        public List<Room> GetRooms(CallContext context)
+        {
+            using (var db = new Database())
+            {
+                return db.Rooms.Where(x => x.TenantId == context.TenantId).ToList();
+            }
+
+        }
+
+        public int AddRoom(CallContext context, string roomName)
+        {
+            using (var db = new Database())
+            {
+                Room room = new Room();
+                room.TenantId = context.TenantId;
+
+                db.SaveChanges();
+
+                return room.RoomId;
+            }
+
+        }
         public List<Subject> GetSubjects(CallContext context)
         {
             using (var db = new Database())

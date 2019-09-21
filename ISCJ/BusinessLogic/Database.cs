@@ -29,6 +29,7 @@ namespace BusinessLogic
     public Database()
     {; }
 
+    public virtual DbSet<Room> Rooms { get; set; }
     public virtual DbSet<Enrollment> Enrollments { get; set; }
     public virtual DbSet<Subject> Subjects { get; set; }
     public virtual DbSet<Teacher> Teachers { get; set; }
@@ -64,6 +65,13 @@ namespace BusinessLogic
                 entity.HasKey(x => x.TenantId);
                 entity.ToTable("SubjectMapping");
                 });
+
+
+            modelBuilder.Entity<Room>(entity =>
+            {
+                entity.HasKey(x => x.RoomId);
+               
+            });
 
 
 
