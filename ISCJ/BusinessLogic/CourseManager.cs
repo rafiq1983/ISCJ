@@ -30,6 +30,27 @@ namespace BusinessLogic
             }
         }
 
+        public Guid AddTeacher(CallContext context, Guid contactId)
+        {
+            using (var db = new Database())
+            {
+                var teacher = new Teacher()
+                {
+                    TeacherId = Guid.NewGuid(),
+                    ContactId = contactId,
+                    CreateUser = context.UserId,
+                    CreateDate = DateTime.UtcNow
+                    
+                };
+
+                db.Teachers.Add(teacher);
+                db.SaveChanges();
+
+                return teacher.TeacherId;
+            }
+        }
+
+
         public bool AddSubjectMapping(CallContext context, Guid programId, Guid subjectId, string islamicSchoolGradeId)
         {
             using (var db = new Database())
@@ -53,6 +74,33 @@ namespace BusinessLogic
             }
 
         }
+        public List<Teacher> GetTeachers(CallContext context)
+        {
+            using (var db = new Database())
+            {
+                return db.Teachers.Where(x => x.TenantId == context.TenantId).Include(x=>x.Contact).ToList();
+            }
+
+        }
+
+        public Teacher GetTeacherByTeacherId(CallContext context, Guid teacherId)
+        {
+            using (var db = new Database())
+            {
+                return db.Teachers.SingleOrDefault(x => x.TenantId == context.TenantId && x.TeacherId == teacherId);
+            }
+
+        }
+
+        public Teacher GetTeacherByContactId(CallContext context, Guid contactId)
+        {
+            using (var db = new Database())
+            {
+                return db.Teachers.SingleOrDefault(x => x.TenantId == context.TenantId && x.ContactId == contactId);
+            }
+
+        }
+
 
         public Subject GetSubjectByName(CallContext context, string subjectName)
         {

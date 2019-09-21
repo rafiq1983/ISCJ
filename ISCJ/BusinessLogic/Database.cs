@@ -31,6 +31,7 @@ namespace BusinessLogic
 
     public virtual DbSet<Enrollment> Enrollments { get; set; }
     public virtual DbSet<Subject> Subjects { get; set; }
+    public virtual DbSet<Teacher> Teachers { get; set; }
     public virtual DbSet<SubjectMapping> SubjectMappings { get; set; }
     public virtual DbSet<RegistrationApplication> RegistrationApplications { get; set; }
     public virtual DbSet<Invoice> Invoices { get; set; }
@@ -80,6 +81,11 @@ namespace BusinessLogic
             entity.HasKey(x => x.FinancialAccountId);
             entity.ToTable("FinancialAccount");
                 entity.Property(x => x.FinancialAccountType).HasConversion(new EnumToStringConverter<FinancialAccountType>());
+            });
+
+            modelBuilder.Entity<Teacher>(entity =>
+            {
+                entity.HasKey(x => x.TeacherId);
             });
 
             modelBuilder.Entity<RegistrationApplication>(entity =>

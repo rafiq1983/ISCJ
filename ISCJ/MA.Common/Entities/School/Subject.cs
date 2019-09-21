@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using MA.Common.Entities.Contacts;
 using MA.Common.Entities.Registration;
 
 namespace MA.Common.Entities.School
@@ -31,5 +32,17 @@ namespace MA.Common.Entities.School
         public Subject Subject { get; set; }
 
         [ForeignKey("ProgramId")] public ProgramDetail Program { get; set; }
+    }
+
+    public class Teacher : BaseEntity
+    {
+
+        public Guid TeacherId { get; set; }
+        public Guid ContactId { get; set; }
+        public Guid TenantId { get; set; }
+
+        [ForeignKey("ContactId")]
+        public Contact Contact { get; set; }
+
     }
 }
