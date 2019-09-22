@@ -82,10 +82,15 @@ namespace BusinessLogic
             {
                 Room room = new Room();
                 room.TenantId = context.TenantId;
+                room.RoomName = roomName;
+                room.CreateDate = DateTime.UtcNow;
+                room.CreateUser = context.UserId;
 
+                db.Rooms.Add(room);
+                
                 db.SaveChanges();
 
-                return room.RoomId;
+                return room.RoomId; //Identity column auto populates.
             }
 
         }

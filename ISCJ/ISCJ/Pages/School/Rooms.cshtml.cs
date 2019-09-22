@@ -7,6 +7,7 @@ using BusinessLogic;
 using MA.Common.Entities.Registration;
 using MA.Common.Entities.School;
 using MA.Core;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -26,7 +27,7 @@ namespace ISCJ.Pages.School
 
             if (ModelState.IsValid)
             {
-                courseManager.AddRoom(GetCallContext(), RoomName);
+                int roomId = courseManager.AddRoom(GetCallContext(), RoomName);
             }
 
         }
@@ -55,7 +56,7 @@ namespace ISCJ.Pages.School
 
         [BindProperty]
         [Required]
-        public string RoomName{ get; set; }
+       public string RoomName{ get; set; }
 
     }
 }
