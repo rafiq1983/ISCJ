@@ -6,6 +6,15 @@
   ViewData["Title"] = "Contacts";
   Layout = "~/Pages/Shared/_LayoutModern.cshtml";
 }
+<style>
+    .validation-summary-valid {
+        display: none;
+    }
+</style>
+
+<div asp-validation-summary="All" >
+    <span>Please correct the following errors</span>
+</div>
 <form method="POST" name="InvoiceDisplay">
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-9">

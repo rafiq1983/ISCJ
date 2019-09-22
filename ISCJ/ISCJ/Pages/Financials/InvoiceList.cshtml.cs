@@ -117,17 +117,6 @@ namespace ISCJ.Pages.Financials
             
         }
 
-        [BindProperty]
-        public POC Name { get; set; }
-
-
-    }
-
-
-    public class POC
-    {
-        [System.ComponentModel.DataAnnotations.Required]
-        public string FirstName { get; set; }
     }
 
     public class DataModel
