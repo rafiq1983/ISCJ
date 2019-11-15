@@ -187,7 +187,10 @@ namespace ISCJ.Pages.StudentManagement
             this.StudentRegistration.StudentRegistrations.Add(new CreateStudentRegistrationInput()
             {
                  StudentId = enrollment.StudentContactId,
-                 StudentName = enrollment.StudentContactInfo.FirstName + " " + enrollment.StudentContactInfo.LastName
+                 StudentName = enrollment.StudentContactInfo.FirstName + " " + enrollment.StudentContactInfo.LastName,
+                 IslamicSchoolGrade=enrollment.IslamicSchoolGradeId,
+                 PublicSchoolGrade=enrollment.PublicSchoolGradeId
+
             });
         }
 
