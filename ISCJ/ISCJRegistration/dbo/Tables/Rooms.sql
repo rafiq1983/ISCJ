@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [dbo].[Rooms] (
     [RoomId]       INT              IDENTITY (1, 1) NOT NULL,
     [RoomName]     VARCHAR (75)     NOT NULL,
+	[RoomDescription] varchar(500)  NULL,
     [TenantId]     UNIQUEIDENTIFIER NOT NULL,
     [CreateDate]   DATETIME         NOT NULL,
     [CreateUser]   VARCHAR (50)     NOT NULL,

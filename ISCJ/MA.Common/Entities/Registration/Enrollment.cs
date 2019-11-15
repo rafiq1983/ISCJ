@@ -11,6 +11,7 @@ namespace MA.Common.Entities.Registration
     {
         public int RoomId { get; set; }
         public string RoomName { get; set; }
+        public string RoomDescription { get; set; }
         public Guid TenantId { get; set; }
 
     }

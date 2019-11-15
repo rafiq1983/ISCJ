@@ -25,6 +25,10 @@ namespace ISCJ.Pages.School
             if (ModelState.IsValid)
             {
                 courseManager.AddSubject(GetCallContext(), SubjectName, SubjectDescription);
+                SubjectName = string.Empty;
+                SubjectDescription = string.Empty;
+                ModelState.Clear();
+
             }
 
         }

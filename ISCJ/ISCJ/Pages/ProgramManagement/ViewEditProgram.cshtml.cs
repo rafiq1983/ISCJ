@@ -22,7 +22,7 @@ namespace ISCJ.Pages.ProgramManagement
          return   new MA.Core.CallContext("Iftikhar", "23434", "234234234", Guid.Empty);
         }
 
-        public void OnPost()
+        public void OnPostSave()
         {
             ProgramManager mgr = new ProgramManager();
 
@@ -39,6 +39,21 @@ namespace ISCJ.Pages.ProgramManagement
                
             }
         }
+
+        public void OnPostReset()
+        {
+            ProgramName = string.Empty;
+            ProgramDescription = string.Empty;
+            ModelState.Clear();
+
+        }
+
+        public void OnPostCancel()
+        {
+           Response.Redirect("ProgramList");
+
+        }
+
 
         [BindProperty] public string ProgramName { get; set; }
         [BindProperty] public string ProgramDescription { get; set; }

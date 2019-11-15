@@ -76,13 +76,14 @@ namespace BusinessLogic
 
         }
 
-        public int AddRoom(CallContext context, string roomName)
+        public int AddRoom(CallContext context, string roomName, string roomDescription)
         {
             using (var db = new Database())
             {
                 Room room = new Room();
                 room.TenantId = context.TenantId;
                 room.RoomName = roomName;
+                room.RoomDescription = string.IsNullOrEmpty(roomDescription) ? string.Empty : roomDescription;
                 room.CreateDate = DateTime.UtcNow;
                 room.CreateUser = context.UserId;
 

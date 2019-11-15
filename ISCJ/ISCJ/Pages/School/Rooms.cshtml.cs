@@ -27,7 +27,7 @@ namespace ISCJ.Pages.School
 
             if (ModelState.IsValid)
             {
-                int roomId = courseManager.AddRoom(GetCallContext(), RoomName);
+                int roomId = courseManager.AddRoom(GetCallContext(), RoomName, RoomDescription);
             }
 
         }
@@ -57,6 +57,8 @@ namespace ISCJ.Pages.School
         [BindProperty]
         [Required]
        public string RoomName{ get; set; }
+
+       [BindProperty] [Required] public string RoomDescription { get; set; }
 
     }
 }
