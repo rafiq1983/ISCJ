@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="4c0f709c-25b1-4d21-bef5-fe43c5c07168" ChangeDateTime="11/15/2019 21:32:46">
+    <Property Name="ElementName" Value="[dbo].[InvoiceTypes].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[InvoiceTypes]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="InvoiceTypeId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="c0275157-bff4-4c97-80cf-2f0893eb0e48" ChangeDateTime="11/15/2019 21:34:03">
+    <Property Name="ElementName" Value="[dbo].[InvoiceTypes].[ShortName]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[InvoiceTypes]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ShortCode" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="df083484-10dc-486b-8283-2e8ea3d89787" ChangeDateTime="11/15/2019 21:34:09">
+    <Property Name="ElementName" Value="[dbo].[InvoiceTypes].[LongName]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[InvoiceTypes]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="DisplayName" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="b86d1689-5ead-4c69-a07f-ba36baf1e5da" ChangeDateTime="11/15/2019 21:34:18">
+    <Property Name="ElementName" Value="[dbo].[InvoiceTypes].[DisplayName]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[InvoiceTypes]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Disp" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="6260c2ee-7e18-45f5-8651-096f08f4abd9" ChangeDateTime="11/15/2019 21:34:24">
+    <Property Name="ElementName" Value="[dbo].[InvoiceTypes].[ShortCode]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[InvoiceTypes]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="InvoiceTypeCd" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="a2b46cd6-d527-4091-a689-749d80962160" ChangeDateTime="11/15/2019 21:34:57">
+    <Property Name="ElementName" Value="[dbo].[InvoiceTypes].[Disp]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[InvoiceTypes]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ShortDescription" />
+  </Operation>
+</Operations>

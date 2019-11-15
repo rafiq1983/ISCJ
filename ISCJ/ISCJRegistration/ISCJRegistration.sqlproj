@@ -108,11 +108,16 @@
     <Build Include="dbo\Tables\Subjects.sql" />
     <Build Include="dbo\Tables\ProgramGradeMapping.sql" />
     <Build Include="dbo\Tables\SubjectMapping.sql" />
+    <Build Include="dbo\Tables\InvoiceTypes.sql" />
+    <Build Include="dbo\Tables\Unique_TenantId_InvoiceTypeCd.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Script.PreDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="ISCJRegistration.refactorlog" />
   </ItemGroup>
 </Project>
