@@ -1,5 +1,5 @@
 ﻿@page
-@model ISCJ.Pages.School.InstructorsModel
+@model ISCJ.Pages.School.InstructorsListModel
 @{
     ViewData["Title"] = "Instructors";
 }
@@ -22,180 +22,49 @@
                     School
                 </li>
                 <li class="active breadcrumb-item">
-                    <strong>Add/Edit Teachers</strong>
+                    <strong>Add/Edit Instructor</strong>
                 </li>
             </ol>
         </div>
     </div>
-
+   
     <div class="wrapper wrapper-content animated fadeInRight">
 
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="form-group  row">
-                    <label class="col-sm-2 col-form-label">Teacher</label>
-
-                    <div class="col-sm-10">
-                        <input type="text" placeholder="Type Teacher name here" autocomplete="off"
-                               data-url="@Url.Content("~/api/Contact/Search")" data-target-id="TeacherContactId" 
-                               class="autocomplete form-control" value="@Model.TeacherName" asp-for="@Model.TeacherName" />
-                        <input type="hidden" asp-for="@Model.TeacherContactId" /><!--todo-->
-                        <span asp-validation-for="@Model.TeacherContactId" class="text-danger"></span>
-
-                    </div>
-
-                </div>
-                <div class="form-group row" style="text-align:right">
-                    <div class="col-sm-12 col-sm-offset-2">
-                        <button class="btn btn-white btn-sm" type="submit" asp-page-handler="Cancel">Cancel</button>
-
-                        <button class="btn btn-white btn-sm" type="submit" asp-page-handler="Reset">Reset</button>
-
-                        <button class="btn btn-primary btn-sm" type="submit" asp-page-handler="Save">Save</button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-lg-12">
-
-                <table class="table-bordered" width="100%">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox-content">
+   
+                <table class="table">
+                    <thead>
                     <tr>
 
-                        <td>Name</td>
-                        <td></td>
+                        <th>Name</th>
+                        <th></th>
                     </tr>
+                    </thead>
                     <tbody>
-                        @for (var i = 0; i < Model.Teachers.Count; i++)
-                        {
-                            <tr>
-                                <td>
-                                    <input type="hidden" asp-for="@Model.Teachers[i].TeacherId" />
-                                    @Model.Teachers[i].Contact.FirstName  @Model.Teachers[i].Contact.LastName
-                                </td>
-                                <td>
-                                    <button class="btn btn-white btn-sm" type="submit" asp-page-handler="ViewEditTeacher">View/Edit</button>
-                                    <!--TOOD CHANGE TO HYPER LINK-->
-                                </td>
+                    @for (var i = 0; i < Model.Teachers.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                <input type="hidden" asp-for="@Model.Teachers[i].TeacherId"/>
+                                @Model.Teachers[i].Contact.FirstName @Model.Teachers[i].Contact.LastName
+                            </td>
+                            <td>
+                                <button style="display:none" class="btn btn-white btn-sm" type="submit" asp-page-handler="ViewEditTeacher">View/Edit</button>
+                                <!--TOOD CHANGE TO HYPER LINK-->
+                            </td>
 
-                            </tr>
-                        }
+                        </tr>
+                    }
                     </tbody>
 
                 </table>
+         
             </div>
         </div>
+    </div>
     </div>
 </form>
 
 
-@section Scripts
-    {
-    <script src="https://cdn.rawgit.com/xcash/bootstrap-autocomplete/v2.0.0/dist/latest/bootstrap-autocomplete.min.js"></script>
-
-    <script language="javascript">
-        $("document").ready(function() {
-            SetupContactAutoComplete();
-
-
-        });
-
-        function SetupContactAutoComplete() {
-
-            $(".autocomplete").autoComplete({
-                minLength: 1,
-                formatResult: function(item) {
-                    console.log("Format result called with item " + item);
-                    return {
-                        id: item.guid,
-                        text: item.firstName + " " + item.lastName
-                    }
-                },
-
-                events: {
-                    searchPost: function(resultsFromServer) {
-                        console.log("Search Post Called. " + resultsFromServer[0].guid);
-                        return resultsFromServer;
-                    }
-                }
-
-            });
-
-            $(".autocomplete").on('autocomplete.select',
-                function(evt, item) {
-                    $("#" + evt.currentTarget.attributes["data-target-id"].value).val(item.guid);
-                    SetIsMemberFlag(evt.currentTarget.attributes["data-member-check-id"].value, item.guid);
-                    console.log(evt.currentTarget.attributes["data-target-id"].value);
-                    console.log("added item " + item.guid);
-                    evt.preventDefault();
-                });
-
-            $(".autocomplete").change(function(evt) {
-                console.log("Textbox change");
-                console.log($("#" + evt.currentTarget.attributes["data-target-id"].value));
-                console.log($("#" + evt.currentTarget.attributes["data-target-id"].value).val());
-
-                $("#" + evt.currentTarget.attributes["data-target-id"].value).val("");
-
-            });
-        }
-
-        function SetIsMemberFlag(memberCheckId, id) {
-            if (memberCheckId == null || memberCheckId == "")
-                return;
-
-
-            $.ajax({
-                type: "GET",
-                url: "/api/membership/membershipbycontact/" + id,
-                contentType: "application/json; charset=utf-8",
-
-                dataType: "json",
-                success: function (d) {
-
-                    console.log(d);
-                    $("#"+ memberCheckId).text(d != null);
-                },
-                error: function(response) {
-                    console.Log("Error getting member status " + response);
-                }
-            });
-
-
-            $.ajax({
-                type: "GET",
-                url: "/api/Enrollment/get-by-parent/" + id,
-                contentType: "application/json; charset=utf-8",
-
-                dataType: "json",
-                success: function (d) {
-
-                    console.log(d);
-                    if (d.length > 0) {
-                        _enrollments = d;
-                         DisplayEnrollmentsFound();
-                    }
-                },
-                error: function(response) {
-                    console.Log("Error getting member status " + response);
-                }
-            });
-
-        }
-
-        $("#btnPopulateEnrollment").click(function (evt) {
-            $("#AutoEnrollmentJson").val(JSON.stringify(_enrollments));
-            $("#btnPostSelectedEnrollments").click();
-        });
-
-        function DisplayEnrollmentsFound() {
-
-            $("#enrollmentsFoundModal").modal();
-        }
-
-        var _enrollments;
-
-    </script>
-}

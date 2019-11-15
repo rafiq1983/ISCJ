@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ISCJ.Pages.School
 {
-    public class CoursesModel : PageModel
+    public class AddSubjectModel : PageModel
     {
         public void OnGet()
         {
@@ -37,24 +37,16 @@ namespace ISCJ.Pages.School
         {
             if (!ModelState.IsValid)
                 return;
-               CourseManager courseManager = new CourseManager();
+            CourseManager courseManager = new CourseManager();
 
-               var subject = courseManager.GetSubjectByName(GetCallContext(), SubjectName);
+            var subject = courseManager.GetSubjectByName(GetCallContext(), SubjectName);
 
-               if (subject != null)
-               {
-                   ModelState.AddModelError("SubjectName", "Subject name already exists");
-               }
-
-           }
-
-        public List<Subject> Subjects
-        {
-            get
+            if (subject != null)
             {
-                CourseManager courseManager = new CourseManager();
-                return courseManager.GetSubjects(GetCallContext());
+                ModelState.AddModelError("SubjectName", "Subject name already exists");
             }
+          
+            
         }
 
         private CallContext GetCallContext()

@@ -24,7 +24,7 @@
     </div>
 
     <div class="wrapper wrapper-content animated fadeInRight">
-    
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="form-group  row">
@@ -79,36 +79,36 @@
 
             </div>
         </div>
-        
-        <div class="row">
-            <div class="col-lg-12">
 
-                <table class="table-bordered" width="100%">
-                    <tr>
-                        <td>Program</td>
-                        <td>Subject</td>
-                        <td>IslamicSchoolGrade</td>
-                    </tr>
-                    <tbody>
-                    @for (var i = 0; i < Model.SubjectMappings.Count; i++)
-                    {
-                        <tr>
-                            <td>
-                                <input type="hidden" asp-for="@Model.SubjectMappings[i].ProgramId"  />
-                                @Model.SubjectMappings[i].Program.ProgramName
-                            </td>
-                            <td>
-                                @Model.SubjectMappings[i].Subject.SubjectName
-                            </td>
-                            <td>
-                                 @Model.SubjectMappings[i].IslamicSchoolGradeId
-                            </td>
-                        </tr>
-                    }
-                    </tbody>
+    </div>
 
-                </table>
-            </div>
-        </div>
+    <div class="wrapper border-bottom white-bg">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Program</th>
+                <th>Subject</th>
+                <th>IslamicSchoolGrade</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < Model.SubjectMappings.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <input type="hidden" asp-for="@Model.SubjectMappings[i].ProgramId" />
+                        @Model.SubjectMappings[i].Program.ProgramName
+                    </td>
+                    <td>
+                        @Model.SubjectMappings[i].Subject.SubjectName
+                    </td>
+                    <td>
+                        @Model.SubjectMappings[i].IslamicSchoolGradeId
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
     </div>
 </form>

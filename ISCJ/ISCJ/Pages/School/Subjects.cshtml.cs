@@ -11,21 +11,27 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ISCJ.Pages.School
 {
-    public class InstructorsListModel : PageModel
+    public class SubjectsListModel : PageModel
     {
         public void OnGet()
         {
 
         }
 
-   
+        public void OnPost()
+        {
+            ;
 
-        public List<Teacher> Teachers
+        }
+
+        
+
+        public List<Subject> Subjects
         {
             get
             {
                 CourseManager courseManager = new CourseManager();
-                return courseManager.GetTeachers(GetCallContext());
+                return courseManager.GetSubjects(GetCallContext());
             }
         }
 

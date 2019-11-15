@@ -1,5 +1,5 @@
 ﻿@page
-@model ISCJ.Pages.School.RoomsModel
+@model ISCJ.Pages.School.RoomsListModel
 @{
     ViewData["Title"] = "Rooms";
 }
@@ -28,105 +28,35 @@
         </div>
     </div>
 
-    <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="ibox-content">
 
-        <div class="row">
-            <div class="col-lg-12">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+               
+            </tr>
+            </thead>
+            <tbody>
+            @for (var i = 0; i < Model.Rooms.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <input type="hidden" asp-for="@Model.Rooms[i].RoomId" />
+                        @Model.Rooms[i].RoomName  @Model.Rooms[i].RoomName
+                    </td>
+                    <td>
+                        <button class="btn btn-white btn-sm" type="submit">Edit</button>
+                        <!--TOOD CHANGE TO HYPER LINK-->
+                    </td>
 
+                </tr>
+            }
+            </tbody>
+        </table>
 
-                <div class="ibox ">
-                    <div class="ibox-title">
-                        <h5>Add Class Room</h5>
-
-                    </div>
-
-
-                    <div class="ibox-content">
-
-                        <div class="form-group  row">
-                            <label class="col-sm-2 col-form-label">Subject Name:</label>
-
-                            <div class="col-sm-10">
-                                <input type="text" placeholder="Subject Name" class="form-control" asp-for="@Model.RoomName" />
-
-                                <span asp-validation-for="@Model.RoomName" class="text-danger"></span>
-
-                            </div>
-                        </div>
-
-                        <div class="form-group  row">
-                            <label class="col-sm-2 col-form-label">Description:</label>
-
-                            <div class="col-sm-10">
-                                <textarea rows="10" style="resize: none;width:100%" asp-for="@Model.RoomDescription">                            
-</textarea>
-
-                                <span asp-validation-for="@Model.RoomDescription" class="text-danger"></span>
-
-
-
-                            </div>
-                        </div>
-
-
-                        <div class="hr-line-dashed"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="form-group row" style="text-align:right">
-                    <div class="col-sm-12 col-sm-offset-2">
-                        <button class="btn btn-white btn-sm" type="submit" asp-page-handler="Cancel">Cancel</button>
-
-                        <button class="btn btn-white btn-sm" type="submit" asp-page-handler="Reset">Reset</button>
-
-                        <button class="btn btn-primary btn-sm" type="submit" asp-page-handler="Save">Save</button>
-
-                    </div>
-                    s
-                </div>
-            </div>
-        </div>
     </div>
-
-    <div class="wrapper wrapper-content animated fadeInRight">
-
-        <div class="row">
-            <div class="col-lg-12">
-
-                <table class="table-bordered" width="100%">
-                    <tr>
-
-                        <td>Name</td>
-                        <td></td>
-                    </tr>
-                    <tbody>
-                        @for (var i = 0; i < Model.Rooms.Count; i++)
-                        {
-                            <tr>
-                                <td>
-                                    <input type="hidden" asp-for="@Model.Rooms[i].RoomId" />
-                                    @Model.Rooms[i].RoomName  @Model.Rooms[i].RoomName
-                                </td>
-                                <td>
-                                    <button class="btn btn-white btn-sm" type="submit">Edit</button>
-                                    <!--TOOD CHANGE TO HYPER LINK-->
-                                </td>
-
-                            </tr>
-                        }
-                    </tbody>
-
-                </table>
-            </div>
-        </div>
-    </div>
+  
 </form>
 
 

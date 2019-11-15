@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ISCJ.Pages.School
 {
-    public class RoomsListModel : PageModel
+    public class AddRoomModel : PageModel
     {
         public void OnGet()
         {
@@ -28,6 +28,7 @@ namespace ISCJ.Pages.School
             if (ModelState.IsValid)
             {
                 int roomId = courseManager.AddRoom(GetCallContext(), RoomName, RoomDescription);
+                ModelState.Clear();
             }
 
         }
@@ -37,17 +38,9 @@ namespace ISCJ.Pages.School
             if (!ModelState.IsValid)
                 return;
 
-            
+
         }
 
-        public List<Room> Rooms
-        {
-            get
-            {
-                CourseManager courseManager = new CourseManager();
-                return courseManager.GetRooms(GetCallContext());
-            }
-        }
 
         private CallContext GetCallContext()
         {
@@ -56,9 +49,9 @@ namespace ISCJ.Pages.School
 
         [BindProperty]
         [Required]
-       public string RoomName{ get; set; }
+        public string RoomName { get; set; }
 
-       [BindProperty] [Required] public string RoomDescription { get; set; }
+        [BindProperty] [Required] public string RoomDescription { get; set; }
 
     }
 }

@@ -1,25 +1,27 @@
 ﻿@page
-@model ProgramListModel
+@model ISCJ.Pages.School.SubjectsListModel
 @{
+    ViewData["Title"] = "Courses";
 }
 
 @{
     ViewData["Title"] = "Contacts";
     Layout = "~/Pages/Shared/_LayoutModern.cshtml";
 }
-<form method="POST" name="ProgramsList">
+
+<form method="POST">
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-9">
-            <h2>Programs</h2>
+            <h2>Student Registration</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
                 </li>
                 <li class="breadcrumb-item">
-                    Program Management
+                    School
                 </li>
                 <li class="active breadcrumb-item">
-                    <strong>Programs</strong>
+                    <strong>Subjects</strong>
                 </li>
             </ol>
         </div>
@@ -30,25 +32,31 @@
         <table class="table">
             <thead>
             <tr>
-                <th>Program Name</th>
-                <th>Description</th>
-               
-            </tr>
+                <th>Subject Name</th>
+                <th>Subject Description</th>
+             </tr>
             </thead>
             <tbody>
-            @for (var i = 0; i < Model.ProgramDetails.Count; i++)
+            @for (var i = 0; i < Model.Subjects.Count; i++)
             {
                 <tr>
-                    <input type="hidden" asp-for="@Model.ProgramDetails[i].ProgramId" value="@Model.ProgramDetails[i].ProgramId"/>
+                    <td>
+                        <input type="hidden" asp-for="@Model.Subjects[i].SubjectId" />
+                        @Model.Subjects[i].SubjectName
+                    </td>
+                    <td>
+                        @Model.Subjects[i].SubjectDescription
+                    </td>
 
-                    <td>@Model.ProgramDetails[i].ProgramName</td>
-                    <td>@Html.Raw(Model.ProgramDetails[i].ProgramDescription)</td>
                 </tr>
             }
+         
             </tbody>
         </table>
 
     </div>
 
- 
 </form>
+
+
+

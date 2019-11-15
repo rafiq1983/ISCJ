@@ -32,10 +32,28 @@
             </ol>
         </div>
     </div>
-
-    <h3>Total Invoice Amount:</h3>$@Model.PageData.TotalInvoiceAmount <br/>
-    <h3>Total Remaining Amount:</h3>$@Model.PageData.TotalRemainingAmount<br/>
-    <table class="table-bordered">
+    
+    <div class="ibox-content">
+       
+        <div class="widget style1 yellow-bg">
+            <div class="row">
+                <div class="col-4">
+                    <i class="fa fa-money fa-5x"></i>
+                </div>
+                <div class="col-4 text-right">
+                    <span> Total Invoice Amounts </span>
+                    <h2 class="font-bold">$@Model.PageData.TotalInvoiceAmount</h2>
+                </div>
+                <div class="col-4 text-right">
+                    <span> Total Remaining Amount </span>
+                    <h2 class="font-bold">$@Model.PageData.TotalRemainingAmount</h2>
+                </div>
+            </div>
+        </div>
+        
+   
+        <table class="table">
+        <thead>
         <tr>
 
             <th>Generation Date</th>
@@ -48,6 +66,7 @@
             <th>Pay Amount</th>
             <th>Is Paid</th>
         </tr>
+        </thead>
         <tbody>
         @for (var i = 0; i < Model.PageData.RowData.Count; i++)
         {
@@ -77,4 +96,5 @@
         }
         </tbody>
     </table>
+    </div>
 </form>

@@ -4,30 +4,28 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogic;
-using MA.Common.Entities.Registration;
 using MA.Common.Entities.School;
 using MA.Core;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ISCJ.Pages.School
 {
-    public class RoomsListModel : PageModel
+    public class AddInstructorModel : PageModel
     {
         public void OnGet()
         {
 
         }
 
-        public void OnPostSave()
+        public void OnPost()
         {
             CourseManager courseManager = new CourseManager();
             PerformValidation();
 
             if (ModelState.IsValid)
             {
-                int roomId = courseManager.AddRoom(GetCallContext(), RoomName, RoomDescription);
+                courseManager.AddTeacher(GetCallContext(), TeacherContactId);
             }
 
         }
@@ -37,17 +35,14 @@ namespace ISCJ.Pages.School
             if (!ModelState.IsValid)
                 return;
 
-            
-        }
 
-        public List<Room> Rooms
-        {
-            get
+
+            if (TeacherContactId == Guid.Empty)
             {
-                CourseManager courseManager = new CourseManager();
-                return courseManager.GetRooms(GetCallContext());
+                ModelState.AddModelError("TeacherContactId", "Teacher must be selected.");
             }
         }
+
 
         private CallContext GetCallContext()
         {
@@ -56,9 +51,9 @@ namespace ISCJ.Pages.School
 
         [BindProperty]
         [Required]
-       public string RoomName{ get; set; }
+        public Guid TeacherContactId { get; set; }
 
-       [BindProperty] [Required] public string RoomDescription { get; set; }
-
+        [BindProperty]
+        public string TeacherName { get; set; }
     }
 }
