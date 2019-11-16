@@ -26,6 +26,7 @@ namespace ISCJ.Pages.School
             if (ModelState.IsValid)
             {
                 courseManager.AddTeacher(GetCallContext(), TeacherContactId);
+                ModelState.Clear();
             }
 
         }

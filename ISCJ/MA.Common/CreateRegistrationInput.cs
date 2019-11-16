@@ -24,6 +24,7 @@ namespace MA.Common
         [Required(AllowEmptyStrings = false, ErrorMessage="Program must be selected when creating a registration application.")]
     public Guid? ProgramId { get; set; }
     public bool AddSchoolMemberShipFee { get; set; }
+    public bool AutoAssignSubjects { get; set; }
     public bool AddStudentRegistrationFee { get; set; }
     public int StudentRegistrationFeeCount { get; set; }
     public List<CreateStudentRegistrationInput> StudentRegistrations { get; set; }

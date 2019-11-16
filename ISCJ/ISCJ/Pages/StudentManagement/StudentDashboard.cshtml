@@ -1,0 +1,58 @@
+﻿@page
+@model StudentDashboardModel
+
+@{
+    ViewData["Title"] = "Contacts";
+    Layout = "~/Pages/Shared/_LayoutModern.cshtml";
+
+}
+
+<style>
+
+    #olErrors li {
+        color: red;
+    }
+</style>
+<div asp-validation-summary="All"></div>
+<form method="post" name="frmRegister2">
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-9">
+            <h2>Student Registration</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    Student Management
+                </li>
+                <li class="active breadcrumb-item">
+                    <strong>Student Dashboard</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>Program</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="form-group  row">
+                        <label class="col-sm-2 col-form-label">Program</label>
+
+                        <div class="col-sm-10">
+                            Data here.
+                        </div>
+
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
