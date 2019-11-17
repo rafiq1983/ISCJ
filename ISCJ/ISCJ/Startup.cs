@@ -25,7 +25,7 @@ namespace ISCJ
 
            ConnectionString.Value= Configuration.GetConnectionString("Primary");
 
-           
+           string test = Configuration["SendGridApiKey"];
         }
 
         public IConfiguration Configuration { get; }
@@ -70,13 +70,14 @@ namespace ISCJ
             
             services.AddTransient<StudentManager>();
             services.AddTransient<ProductManager>();
+            services.AddTransient<SignupManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseSwagger();
-
+           
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
@@ -95,6 +96,7 @@ namespace ISCJ
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
+            
             
             app.UseHttpsRedirection();
             app.UseStaticFiles();

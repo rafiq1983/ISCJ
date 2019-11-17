@@ -8,6 +8,7 @@
     [ModifiedDate]      DATETIME         NULL,
     [ModifiedUser]      VARCHAR (50)     NULL,
     [RowVersion]        ROWVERSION       NOT NULL,
+    [IsVerified] TINYINT NULL, 
     CONSTRAINT [PK_Tenants] PRIMARY KEY CLUSTERED ([TenantId] ASC)
 );
 

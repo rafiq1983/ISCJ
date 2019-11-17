@@ -23,7 +23,13 @@ namespace ISCJ
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                .ConfigureAppConfiguration((x, config) =>
+                    {
+                        config.AddJsonFile("secrets.json", optional: true, reloadOnChange: true);
+                    });
+
+
     }
   /*
 

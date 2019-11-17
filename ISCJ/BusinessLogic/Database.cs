@@ -164,7 +164,8 @@ namespace BusinessLogic
 
             modelBuilder.Entity<Tenant>(entity =>
             {
-                entity.Property(x => x.RowVersion).HasConversion(DataConverters.SqlTimeStampColumnConverter);
+                entity.Property(x => x.RowVersion).HasConversion(DataConverters.SqlTimeStampColumnConverter)
+                    .IsRowVersion();
             });
 
 
