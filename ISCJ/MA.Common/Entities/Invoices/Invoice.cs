@@ -7,7 +7,14 @@ using System.Text;
 
 namespace MA.Common.Entities.Invoices
 {
-  public class Invoice:BaseEntity
+    public class InvoiceType : BaseEntity
+    {
+        public Guid InvoiceTypeId { get; set; }
+        public string InvoiceTypeName { get; set; }
+        public Guid TenantId { get; set; }
+    }
+
+    public class Invoice:BaseEntity
   {
     public Guid InvoiceId { get; set; }
     public decimal InvoiceAmount { get; set; }

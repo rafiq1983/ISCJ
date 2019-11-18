@@ -85,7 +85,11 @@ namespace ISCJ.Pages.Financials
 
         public IEnumerable<SelectListItem> InvoiceTypes
         {
-            get { return ListService.GetInvoiceTypesList().Select(x => new SelectListItem(x.Value, x.Key)); }
+            get {
+                InvoiceManager invoiceMgr = new InvoiceManager();
+                return invoiceMgr.GetInvoiceTypes(GetCallContext()).Select(x => new SelectListItem(x.InvoiceTypeName, x.InvoiceTypeId.ToString()));
+
+            }
         }
 
 

@@ -5,6 +5,24 @@ using System.Text;
 
 namespace MA.Common.Models.api
 {
+    public class AddInvoiceTypeInput
+    {
+        public string InvoiceTypeName { get; set; }
+    }
+
+    public class AddInvoiceTypeOuptut
+    {
+        public bool Success;
+        public AddInvoiceType FailureReason { get; set; }
+        public Guid InvoiceTypeId { get; set; }
+    }
+
+    public enum AddInvoiceType
+    {
+        DuplicateInvoiceTypeName,
+        Other
+    }
+
     public class CreateInvoiceInput
     {
         public decimal Amount { get; set; }

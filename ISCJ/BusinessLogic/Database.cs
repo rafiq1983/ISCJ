@@ -36,6 +36,7 @@ namespace BusinessLogic
     public virtual DbSet<SubjectMapping> SubjectMappings { get; set; }
     public virtual DbSet<RegistrationApplication> RegistrationApplications { get; set; }
     public virtual DbSet<Invoice> Invoices { get; set; }
+    public virtual DbSet<InvoiceType> InvoiceTypes { get; set; }
     public virtual DbSet<CashPayment> CashPayments { get; set; }
    public virtual DbSet<CheckPayment> CheckPayments { get; set; }
      public virtual DbQuery<AllPayment> AllPaymentIds { get; set; }
@@ -124,6 +125,12 @@ namespace BusinessLogic
         entity.HasKey(e => e.InvoiceId);
           entity.Property(x => x.OrderType).HasConversion(new EnumToStringConverter<InvoiceOrderType>());
       })
+                .Entity<InvoiceType>(entity =>
+                {
+                    entity.ToTable("InvoiceType");
+                    entity.HasKey(e => e.InvoiceTypeId);
+                    
+                })
       .Entity<InvoiceItem>(entity =>
       {
         entity.ToTable("InvoiceItem");

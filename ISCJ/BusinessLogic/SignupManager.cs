@@ -85,7 +85,7 @@ namespace BusinessLogic
             string apiKey = _configuration["SendGridApiKey"];
 
             SendGridClient client = new SendGridClient(apiKey);
-            var from = new EmailAddress("i_syed2005@yahoo.com", "Iftikhar Ali");
+            var from = new EmailAddress("admin@icsjsundayschool.com", "Iftikhar Ali");
             var subject = "New Organization setup";
             var to = new EmailAddress(input.SignupEmail, "");
             var plainTextContent = input.OrganizationName;

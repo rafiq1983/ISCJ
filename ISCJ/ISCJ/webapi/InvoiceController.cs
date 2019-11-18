@@ -16,6 +16,14 @@ namespace ISCJ.webapi
     [Authorize()]
     public class InvoiceController : ControllerBase
     {
+        [HttpPost("/InvoiceType")]
+        public JsonResult AddInvoiceType([FromBody]string invoiceTypeName)
+        {
+            InvoiceManager mgr = new InvoiceManager();
+            var output = mgr.AddInvoiceType(GetCallContext(), invoiceTypeName);
+            return new JsonResult(output.InvoiceTypeId);
+
+        }
         [HttpPost]
         public JsonResult CreateInvoice(CreateInvoiceInput input)
         {

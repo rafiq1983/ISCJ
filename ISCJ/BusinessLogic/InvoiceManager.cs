@@ -81,9 +81,49 @@ namespace BusinessLogic
             }
         }
 
-       
-    
-    public CreateInvoiceOutput CreateInvoice(CallContext callContext, CreateInvoiceInput input)
+        public List<InvoiceType> GetInvoiceTypes(CallContext context)
+        {
+            using (Database db = new Database())
+            {
+                return db.InvoiceTypes.Where(x => x.TenantId == context.TenantId).ToList();
+
+            }
+        }
+
+
+        public AddInvoiceTypeOuptut AddInvoiceType(CallContext callContext, string invoiceTypeName)
+        {
+            using (Database db = new Database())
+            {
+               var invoiceType = db.InvoiceTypes.SingleOrDefault(x =>
+                    x.InvoiceTypeName == invoiceTypeName && x.TenantId == callContext.TenantId);
+
+               if (invoiceType == null)
+               {
+                   invoiceType = new InvoiceType()
+                   {
+                       InvoiceTypeId = Guid.NewGuid(),
+                       InvoiceTypeName = invoiceTypeName,
+                       TenantId = callContext.TenantId,
+                       CreateDate = DateTime.UtcNow,
+                       CreateUser = callContext.UserId
+
+                   };
+
+                   db.InvoiceTypes.Add(invoiceType);
+                   db.SaveChanges();
+               }
+
+               return new AddInvoiceTypeOuptut()
+               {
+                   Success = true,
+                   InvoiceTypeId = invoiceType.InvoiceTypeId
+               };
+
+            }
+        }
+
+        public CreateInvoiceOutput CreateInvoice(CallContext callContext, CreateInvoiceInput input)
         {
             using (Database db = new Database())
             {
