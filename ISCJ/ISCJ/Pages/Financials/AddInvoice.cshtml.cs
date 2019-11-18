@@ -47,7 +47,7 @@ namespace ISCJ.Pages.Financials
         private CreateInvoiceInput GetCreateInvoiceInput()
         {
             CreateInvoiceInput input = new CreateInvoiceInput();
-            input.OrderType = InvoiceType;
+            input.InvoiceTypeId = InvoiceType;
             input.Amount = InvoiceAmount;
             input.Description = InvoiceDescription;
             input.ReferenceId = ReferenceId;
@@ -79,9 +79,9 @@ namespace ISCJ.Pages.Financials
         [Required(ErrorMessage = "Invoice Due Date is required.")]
         [BindProperty]
         public DateTime InvoiceDueDate { get; set; }
-        [Required(ErrorMessage="Invoice Type is required.")]
+        [Required(ErrorMessage="Invoice Type is required.", AllowEmptyStrings=false)]
         [BindProperty]
-        public InvoiceOrderType InvoiceType { get; set; }
+        public string InvoiceType { get; set; }
 
         public IEnumerable<SelectListItem> InvoiceTypes
         {

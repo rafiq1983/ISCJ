@@ -56,7 +56,7 @@
                                 <select asp-for="@Model.InvoiceType" class="form-control m-b" asp-items="@Model.InvoiceTypes">
                                     <option value="">--Select--</option>
                                 </select>
-
+                                <span asp-validation-for="@Model.InvoiceType" class="text-danger"></span>
 
                             </div>
                             <div class="infont col-md-3 col-sm-4"><a href="#" onclick="Show_AddInvoiceTypePopup()"><i class="fa fa-plus-square-o"></i>Add Invoice Type</a></div>
@@ -218,16 +218,17 @@
 
             $("#btnAddInvoiceType").click(function() {
                 invoiceTypeName = $("#invoiceTypeName").val();
-              
+
+                //This is how you send data to single string variable in webapi.  If FromBody is set, the data must be sent as json string.
                 $.ajax({
                     type: "POST",
-                    url: "/api/InvoiceType",
+                    url: "/api/invoice/invoiceType",
                     contentType: "application/json; charset=utf-8",
-                   
-                    data: JSON.stringify({ invoiceTypeName: invoiceTypeName }),
-                    dataType: "json",
+
+                    data: "'" + invoiceTypeName + "'",
                     success: function(d) {
                         $('#addInvoiceTypeModal').modal('hide');
+                        RefreshInvoiceTypeDropdown();
                     },
                     error: function(response) {
                         alert("Error: " + JSON.parse(response.responseText));
@@ -375,6 +376,29 @@
             $("#addInvoiceTypeModal").modal();
         }
 
+        function RefreshInvoiceTypeDropdown() {
+
+            $.ajax({
+                type: "GET",
+                url: "/api/invoice/invoiceTypes",
+                
+                success: function (result) {
+                    
+                    var $dropdown = $("#InvoiceType"); //just putting $ in front of variable to denote this is a jquery variable.
+                    
+                    $dropdown.empty();
+                    $dropdown.append($("<option />").val("").text("--select--"));
+                    $.each(result, function () {
+                        
+                        $dropdown.append($("<option />").val(this.key).text(this.value));
+                    });
+                },
+                error: function(response) {
+                    alert("Error: " + JSON.parse(response.responseText));
+                }
+            });
+
+        }
 
     </script>
 }

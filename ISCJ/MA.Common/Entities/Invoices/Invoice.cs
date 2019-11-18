@@ -20,7 +20,7 @@ namespace MA.Common.Entities.Invoices
     public decimal InvoiceAmount { get; set; }
     public Guid TennantId { get; set; }
     public Guid FinancialAccountId { get; set; }
-
+    public Guid? InvoiceTypeId { get; set; }
     public DateTime DueDate { get; set; }
 
     public string Description { get; set; }

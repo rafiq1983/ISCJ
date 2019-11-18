@@ -28,7 +28,7 @@ namespace MA.Common.Models.api
         public decimal Amount { get; set; }
         public string  ReferenceId { get; set; }
         public string Description { get; set; }
-        public InvoiceOrderType OrderType { get; set; }
+        public string InvoiceTypeId { get; set; }
     }
 
     public class UpdateInvoiceInput
