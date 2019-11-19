@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using BusinessLogic;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -28,13 +29,30 @@ namespace ISCJ.Pages.Admin
             var isValid = false;
             if (ModelState.IsValid)
             {
-                if(loginData.Username.ToLower() =="icsjapp" && loginData.Password =="icsjappwelcome")
-                {
+                UserManager mgr = new UserManager();
 
+                var user = mgr.VerifyLogin(new MA.Common.VerifyLoginInput()
+                {
+                    UserName = loginData.Username,
+                    Password = loginData.Password
+                });
+
+                if (user == null) //fallback.
+                {
+                    if (loginData.Username.ToLower() == "icsjapp" && loginData.Password == "icsjappwelcome")
+                    {
+
+                        isValid = true;
+                    }
+                }
+                else
+                {
                     isValid = true;
                 }
-               
-                if (!isValid)
+            
+
+
+            if (!isValid)
                 {
                     ModelState.AddModelError("", "username or password is invalid");
                     return;

@@ -34,8 +34,8 @@ namespace MA.Common.Entities.Invoices
 
         public FinancialAccount FinancialAccount;
 
-        public string OrderId { get; set; }
-        public InvoiceOrderType OrderType { get; set; }
+        public string ReferenceId { get; set; }
+        public ReferenceType ReferenceType { get; set; }
 
   }
 
@@ -67,7 +67,7 @@ namespace MA.Common.Entities.Invoices
         public List<Invoice> Invoices { get; set; }
     }
 
-    public enum InvoiceOrderType
+    public enum ReferenceType
     {
         Other,RegistrationApplication, Enrollment, MembershipCreation,AdHocInvoiceAttachedToContact
     }

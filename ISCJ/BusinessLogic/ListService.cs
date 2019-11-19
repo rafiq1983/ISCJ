@@ -8,22 +8,7 @@ namespace BusinessLogic
 {
   public class ListService
   {
-      public static List<KeyValuePair<string, string>> GetInvoiceTypesList()
-      {
-          List<KeyValuePair<string, string>> items = new List<KeyValuePair<string, string>>();
-         // items.Add(new KeyValuePair<string, string>(InvoiceOrderType.RegistrationApplication.ToString(), "Registration Application"));
-
-         // items.Add(new KeyValuePair<string, string>(InvoiceOrderType.MembershipCreation.ToString(), "Membership"));
-
-          items.Add(new KeyValuePair<string, string>(InvoiceOrderType.AdHocInvoiceAttachedToContact.ToString(), "Invoice for a contact"));
-
-         // items.Add(new KeyValuePair<string, string>(InvoiceOrderType.Enrollment.ToString(), "Enrollment Charges"));
-
-         // items.Add(new KeyValuePair<string, string>(InvoiceOrderType.Other.ToString(), "Other"));
-
-          return items;
-      }
-
+      
     public static List<SchoolGrade> GetIslamicSchoolGradesList()
     {
       

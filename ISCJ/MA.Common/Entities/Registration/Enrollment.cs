@@ -65,7 +65,7 @@ namespace MA.Common.Entities.Registration
         [ForeignKey("MotherContactId")]
         public Contact MotherContactInfo { get; set; }
 
-       // [ForeignKey("OrderId")]
+       // [ForeignKey("ReferenceId")]
         //public List<Invoice> Invoices { get; set; }
 
     }

@@ -44,11 +44,11 @@ namespace ISCJ.Pages.Financials
                 RowData rowData = new RowData();
                 rowData.Invoice = v;
                 rowData.ResponsiblePartyName = "";
-                rowData.OrderType = v.OrderType.ToString();
-                if (v.OrderType == InvoiceOrderType.RegistrationApplication)
+                rowData.OrderType = v.ReferenceType.ToString();
+                if (v.ReferenceType == ReferenceType.RegistrationApplication)
                 {
                     var registrationApplication =
-                        registrationApplications.SingleOrDefault(x => x.ApplicationId.ToString() == v.OrderId);
+                        registrationApplications.SingleOrDefault(x => x.ApplicationId.ToString() == v.ReferenceId);
 
                     if (registrationApplication != null)
                     {
@@ -71,9 +71,9 @@ namespace ISCJ.Pages.Financials
                         rowData.ResponsiblePartyName = rowData.ResponsiblePartyName;
                     }
                 }
-                else if(v.OrderType == InvoiceOrderType.MembershipCreation || v.OrderType == InvoiceOrderType.Enrollment || v.OrderType == InvoiceOrderType.AdHocInvoiceAttachedToContact)
+                else if(v.ReferenceType == ReferenceType.MembershipCreation || v.ReferenceType == ReferenceType.Enrollment || v.ReferenceType == ReferenceType.AdHocInvoiceAttachedToContact)
                 {
-                    var contact = _contactManager.GetContact(Guid.Parse(v.OrderId));
+                    var contact = _contactManager.GetContact(Guid.Parse(v.ReferenceId));
                     rowData.ResponsiblePartyName = contact.FirstName + " " + contact.LastName;
                 }
             

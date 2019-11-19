@@ -38,15 +38,17 @@ namespace BusinessLogic
     public virtual DbSet<Invoice> Invoices { get; set; }
     public virtual DbSet<InvoiceType> InvoiceTypes { get; set; }
     public virtual DbSet<CashPayment> CashPayments { get; set; }
-   public virtual DbSet<CheckPayment> CheckPayments { get; set; }
-     public virtual DbQuery<AllPayment> AllPaymentIds { get; set; }
+    public virtual DbSet<CheckPayment> CheckPayments { get; set; }
+    public virtual DbQuery<AllPayment> AllPaymentIds { get; set; }
     public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<Tenant> Tenants { get; set; }
-        public virtual DbSet<MasjidMembership> MasjidMembers { get; set; }
+    public virtual DbSet<UserTenant> UserTenants { get; set; }
+    public virtual DbSet<Tenant> Tenants { get; set; }
+    public virtual DbSet<MasjidMembership> MasjidMembers { get; set; }
 
-        public virtual DbSet<BillableProduct> BillableProducts { get; set; }
+    public virtual DbSet<BillableProduct> BillableProducts { get; set; }
 
-        public virtual DbSet<ProgramDetail> Programs { get; set; }
+    public virtual DbSet<ProgramDetail> Programs { get; set; }
+
     public virtual DbSet<Contact> Contacts { get; set; }
 
         public DbSet<FinancialAccount> FinancialAccounts { get; set; }
@@ -111,7 +113,17 @@ namespace BusinessLogic
                 entity.HasKey(x => x.ProgramId);
             });
 
-            modelBuilder.Entity<Enrollment>(entity =>
+            modelBuilder.Entity<UserTenant>(entity =>
+            {
+                entity.ToTable("UserTenants");
+                entity.HasKey(x =>
+                new {
+                    x.UserId, x.TenantId
+                });
+                
+            });
+
+                modelBuilder.Entity<Enrollment>(entity =>
       {
         entity.ToTable("Enrollments");
         entity.HasKey(e => e.EnrollmentId);
@@ -123,7 +135,7 @@ namespace BusinessLogic
       {
         entity.ToTable("Invoice");
         entity.HasKey(e => e.InvoiceId);
-          entity.Property(x => x.OrderType).HasConversion(new EnumToStringConverter<InvoiceOrderType>());
+          entity.Property(x => x.ReferenceType).HasConversion(new EnumToStringConverter<ReferenceType>());
       })
                 .Entity<InvoiceType>(entity =>
                 {
@@ -182,6 +194,7 @@ namespace BusinessLogic
                 entity.Property(x => x.IsAccountLocked).HasConversion(DataConverters.IntToBoolConverter());
                 entity.Property(x => x.IsEncrypted).HasConversion(DataConverters.IntToBoolConverter());
                 entity.Property(x => x.RequirePasswordChangeAtLogin).HasConversion(DataConverters.IntToBoolConverter());
+                entity.Property(x => x.AuthenticationSource).HasConversion(new EnumToStringConverter<AuthenticationSource>());
             });
 
         }

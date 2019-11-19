@@ -58,7 +58,7 @@ namespace BusinessLogic
                 var registrationApplicationId = SaveRegistrationApplication(context, input);
                 AddMembershipIfNeeded(context, input);
                 PerformBilling(context, input.BillingInstructions, registrationApplicationId,
-                    InvoiceOrderType.RegistrationApplication);
+                    ReferenceType.RegistrationApplication);
                 scope.Complete();
                 return new CreateRegistrationApplicationOutput() { ApplicationId = registrationApplicationId};
             }
@@ -113,7 +113,7 @@ namespace BusinessLogic
                 enrollment.MotherId = existingApplication.MotherContactId;
                 
                 existingApplication.Enrollments.Add(enrollment);
-              PerformBilling(context, input.BillingInstructions, existingApplication.ApplicationId, InvoiceOrderType.RegistrationApplication );
+              PerformBilling(context, input.BillingInstructions, existingApplication.ApplicationId, ReferenceType.RegistrationApplication );
                 db.SaveChanges();
             }
 
@@ -154,7 +154,7 @@ namespace BusinessLogic
                     enrollment.MotherId = input.MotherId;
                     enrollment.RegistrationApplicationId = Guid.Empty;
                     db.Enrollments.Add(enrollment);
-                    PerformBilling(context, input.BillingInstructions, enrollment.EnrollmentId, InvoiceOrderType.Enrollment);
+                    PerformBilling(context, input.BillingInstructions, enrollment.EnrollmentId, ReferenceType.Enrollment);
                     db.SaveChanges();
                 }
 
@@ -212,7 +212,7 @@ namespace BusinessLogic
         }
 
     
-    private void PerformBilling(CallContext context, List<ProductSelected> billingInstructions, Guid registrationApplicationId, InvoiceOrderType invoiceOrderType)
+    private void PerformBilling(CallContext context, List<ProductSelected> billingInstructions, Guid registrationApplicationId, ReferenceType referenceType)
         {
             if (billingInstructions.Count == 0)
                 return;
@@ -227,8 +227,8 @@ namespace BusinessLogic
                 invoice.DueDate = DateTime.UtcNow;
                 invoice.GenerationDate = DateTime.UtcNow;
                 invoice.CreateUser = context.UserId;
-                invoice.OrderId = registrationApplicationId.ToString();
-                invoice.OrderType = invoiceOrderType;
+                invoice.ReferenceId = registrationApplicationId.ToString();
+                invoice.ReferenceType = referenceType;
                 invoice.TennantId = context.TenantId;
                 invoice.CreateDate = DateTime.UtcNow;
                 invoice.ModifiedDate = null;

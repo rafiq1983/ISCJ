@@ -14,7 +14,7 @@ namespace BusinessLogic
   public class InvoiceManager
   {
 
-        public void PerformBilling(CallContext context, Database db, List<ProductSelected> billingInstructions, string desc, string orderId, InvoiceOrderType invoiceOrderType)
+        public void PerformBilling(CallContext context, Database db, List<ProductSelected> billingInstructions, string desc, string orderId, ReferenceType referenceType)
         {
             if (billingInstructions.Count == 0)
                 return;
@@ -28,8 +28,8 @@ namespace BusinessLogic
                 invoice.DueDate = DateTime.UtcNow;
                 invoice.GenerationDate = DateTime.UtcNow;
                 invoice.CreateUser = context.UserId;
-                invoice.OrderId = orderId;
-                invoice.OrderType = invoiceOrderType;
+                invoice.ReferenceId = orderId;
+                invoice.ReferenceType = referenceType;
                 invoice.TennantId = context.TenantId;
                 invoice.CreateDate = DateTime.UtcNow;
                 invoice.ModifiedDate = null;
@@ -136,8 +136,8 @@ namespace BusinessLogic
                     GenerationDate = DateTime.Now,
                     InvoiceTypeId = Guid.Parse(input.InvoiceTypeId),
                     FinancialAccountId = Guid.Empty,
-                    OrderType = InvoiceOrderType.AdHocInvoiceAttachedToContact,
-                    OrderId = input.ReferenceId,
+                    ReferenceType = ReferenceType.AdHocInvoiceAttachedToContact,
+                    ReferenceId = input.ReferenceId,
                     IsPaid = false,
                     TennantId = callContext.TenantId,
                     CreateDate = DateTime.UtcNow,

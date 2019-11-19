@@ -58,7 +58,7 @@ namespace BusinessLogic
                 membership.CreateUser = context.UserId;
                 db.MasjidMembers.Add(membership);
                 InvoiceManager billingMgr = new InvoiceManager();
-                billingMgr.PerformBilling(context, db, input.BillingInstructions, "Invoice created for Membership registration", membership.ContactId.ToString(), InvoiceOrderType.MembershipCreation);
+                billingMgr.PerformBilling(context, db, input.BillingInstructions, "Invoice created for Membership registration", membership.ContactId.ToString(), ReferenceType.MembershipCreation);
                 db.SaveChanges();
                 return new CreateMasjidMembershipOutput()
                 {

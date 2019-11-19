@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MA.Common.Entities.Contacts;
 
 namespace MA.Common.Entities.User
 {
-    public class User
+    public class User:BaseEntity
     {
         public Guid UserId { get; set; }
         public string UserName { get; set; }
@@ -17,14 +18,14 @@ namespace MA.Common.Entities.User
         //column ContactGuid. So need to understand what is going on there.
         //Resolution:  That's just the nature of the EF.  When it sees contact entity which has a primary key, it tries to retrieve that column from this table.
         public Guid ContactId { get; set; }
-
+        public AuthenticationSource AuthenticationSource { get; set; }
         public Contacts.Contact Contact { get; set; }
 
         public string LastLoginIP{ get; set; }
         public DateTime? LastLoginDate { get; set; }
         public ICollection<UserLoginHistory> LoginHistory { get; set; }
-
         public ICollection<UserRoleLink> UserRoles { get; set; }
+        public List<UserTenant> UserTenants { get; set; }
     }
 
     public class UserLoginHistory
@@ -48,6 +49,21 @@ namespace MA.Common.Entities.User
     {
         public string RoleCd { get; set; }
         public string RoleDescription { get; set; }
+    }
+
+    public class UserTenant:BaseEntity
+    {
+        public Guid UserId { get; set; }
+        public Guid TenantId { get; set; }
+        public string RoleCd { get; set; }
+
+    }
+
+    public class UserNotification : BaseEntity
+    {
+        public Guid NotificationId { get; set; }
+        public string NotificationType { get; set; }
+        public string NotificationData { get; set; }
     }
 
 }
