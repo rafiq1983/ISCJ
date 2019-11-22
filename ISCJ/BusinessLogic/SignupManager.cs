@@ -8,6 +8,7 @@ using System.Security.Policy;
 using System.Text;
 using MA.Common;
 using MA.Common.Entities.Tenants;
+using MA.Common.Entities.User;
 using Microsoft.EntityFrameworkCore.Update.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -27,8 +28,31 @@ namespace BusinessLogic
             _configuration = config;
         }
 
+        public List<Tenant> GetUserTenants()
+        {
+            using (Database db = new Database())
+            {
+                return db.Tenants.ToList();
+            }
+
+        }
         public OrganizationSignupOutput Signup(OrganizationSignupInput input)
         {
+            UserManager mgr = new UserManager();
+            var user = mgr.VerifyLogin(new VerifyLoginInput()
+            {
+                UserName = input.SignupEmail,
+                Password = input.Password
+            });
+
+            if (user == null)
+            {
+                return new OrganizationSignupOutput()
+                {
+                    Success = false,
+                    FailureReason = SignupFailureReason.LoginFailed
+                };
+            }
 
             using (Database db = new Database())
             {
@@ -51,11 +75,23 @@ namespace BusinessLogic
                         tenant = new Tenant();
                         tenant.OrganizationName = input.OrganizationName;
                         tenant.TenantId = Guid.NewGuid();
+                        tenant.OwnerId = user.UserId;
                         tenant.RowVersion = null;
                         tenant.CreateDate = DateTime.UtcNow;
-                        tenant.CreateUser = "Iftikhar";
+                        tenant.CreateUser = user.UserName;
+                        tenant.OwnerId = user.UserId;
                         
-                        db.Tenants.Add(tenant);
+                        db.UserTenants.Add(new UserTenant()
+                        {
+                            UserId = user.UserId,
+                            CreateUser = user.UserName,
+                            CreateDate = DateTime.UtcNow,
+                            
+                            RoleCd = "ADMIN",
+                            Tenant = tenant
+
+                        });
+
                         db.SaveChanges();
                         SendTenantRegistrationEmail(input);
                         transaction.Commit();

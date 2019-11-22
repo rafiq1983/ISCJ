@@ -5,6 +5,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using BusinessLogic;
+using MA.Common.Entities.User;
+using MA.Core.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -25,13 +27,13 @@ namespace ISCJ.Pages.Admin
 
         public async Task OnPostAsync()
         {
-
+            User user;
             var isValid = false;
             if (ModelState.IsValid)
             {
                 UserManager mgr = new UserManager();
 
-                var user = mgr.VerifyLogin(new MA.Common.VerifyLoginInput()
+                user = mgr.VerifyLogin(new MA.Common.VerifyLoginInput()
                 {
                     UserName = loginData.Username,
                     Password = loginData.Password
@@ -59,11 +61,18 @@ namespace ISCJ.Pages.Admin
                        
                 }
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
-                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, loginData.Username));
-                identity.AddClaim(new Claim(ClaimTypes.Name, loginData.Username));
+                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()));
+                identity.AddClaim(new Claim(ClaimTypes.Email, loginData.Username));
+
+                if (user.UserTenants.Count == 1)
+                {
+                    identity.AddClaim(new Claim(AppClaimTypes.TenantId, loginData.Username));
+                    identity.AddClaim(new Claim(ClaimTypes.Email, loginData.Username));
+                }
+
                 var principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = loginData.RememberMe });
-               RedirectToPage("ContactManagement/Contacts");
+               RedirectToPage("main");
         
       }
             else
@@ -77,6 +86,7 @@ namespace ISCJ.Pages.Admin
 
     }
 
+   
     public class LoginData
     {
         [Required]
@@ -87,5 +97,6 @@ namespace ISCJ.Pages.Admin
 
         public bool RememberMe { get; set; }
     }
+
 
 }

@@ -7,6 +7,7 @@
     [ModifiedDate] DATETIME         NULL,
     [ModifiedUser] UNIQUEIDENTIFIER NULL,
     [RowVersion]   ROWVERSION       NOT NULL,
+    [TenantId] UNIQUEIDENTIFIER NOT NULL, 
     CONSTRAINT [PK_StudentCheckInHistory] PRIMARY KEY CLUSTERED ([StudentId] ASC, [ProgramId] ASC, [CheckInDate] ASC)
 );
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using BusinessLogic;
 using MA.Common;
@@ -28,10 +29,12 @@ namespace ISCJ.Pages.Signup
         {
             if (ModelState.IsValid)
             {
+             
                var output = _signupManager.Signup(new OrganizationSignupInput()
                 {
                     SignupEmail = Email,
-                    OrganizationName = OrganizationName
+                    OrganizationName = OrganizationName,
+                    Password = Password
                 });
 
                if (output.Success)
@@ -47,8 +50,12 @@ namespace ISCJ.Pages.Signup
 
         }
 
-        
-       
+
+        [BindProperty]
+        [Required]
+        public string Password { get; set; }
+
+
         [BindProperty]
         [Required]
         public string OrganizationName { get; set; }

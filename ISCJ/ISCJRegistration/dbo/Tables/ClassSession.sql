@@ -7,6 +7,7 @@
     [ModifiedUser]   VARCHAR (50)     NULL,
     [ModifiedDate]   DATETIME         NULL,
     [RowVersion]     ROWVERSION       NULL,
+    [TenantId] UNIQUEIDENTIFIER NOT NULL, 
     CONSTRAINT [PK_ClassSession] PRIMARY KEY CLUSTERED ([ClassSessionId] ASC)
 );
 

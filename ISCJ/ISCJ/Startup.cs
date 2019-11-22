@@ -53,6 +53,7 @@ namespace ISCJ
             {
                 options.Conventions.AuthorizeFolder("/");
                 options.Conventions.AllowAnonymousToPage("/Login");
+                options.Conventions.AllowAnonymousToFolder("/signup");
 
             });
 

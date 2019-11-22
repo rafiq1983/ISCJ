@@ -10,6 +10,7 @@
     [ModifiedUser] VARCHAR (50)     NULL,
     [ModifiedDate] DATETIME         NULL,
     [RowVersion]   ROWVERSION       NOT NULL,
+    [TenantId] UNIQUEIDENTIFIER NOT NULL, 
     CONSTRAINT [PK_InvoiceItem] PRIMARY KEY CLUSTERED ([ItemId] ASC)
 );
 

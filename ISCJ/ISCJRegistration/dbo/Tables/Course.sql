@@ -5,6 +5,7 @@
     [CreateUser]        VARCHAR (50)     NOT NULL,
     [ModifiedDate]      DATETIME         NULL,
     [ModifiedUser]      VARBINARY (50)   NULL,
-    [RowVersion]        ROWVERSION       NOT NULL
+    [RowVersion]        ROWVERSION       NOT NULL, 
+    [TenantId] UNIQUEIDENTIFIER NOT NULL
 );
 

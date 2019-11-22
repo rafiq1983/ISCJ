@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
+using System.Security.Claims;
 
 namespace MA.Core.Web
 {
@@ -13,7 +15,16 @@ namespace MA.Core.Web
 
         protected virtual MA.Core.CallContext GetCallContext()
         {
-            return new CallContext("Iftikhar", "", "", Guid.Parse("697400B2-8AA0-4F01-A282-E58530DBC2A8"));
+            var tenantId = HttpContext.User.Claims.Single(x => x.Type == AppClaimTypes.TenantId).Value;
+            var name = HttpContext.User.Claims.Single(x => x.Type ==ClaimTypes.Email).Value;
+            return new CallContext(name, "", tenantId, Guid.Parse(tenantId));
         }
+    }
+
+
+    public class AppClaimTypes
+    {
+        public const string TenantName = "TenantName";
+        public const string TenantId = "TenantId";
     }
 }

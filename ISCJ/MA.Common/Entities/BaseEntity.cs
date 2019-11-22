@@ -10,5 +10,6 @@ namespace MA.Common.Entities
         public string CreateUser { get; set; } 
         public DateTime? ModifiedDate { get; set; }
         public string ModifiedUser { get; set; }
+
     }
 }

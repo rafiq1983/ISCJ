@@ -30,7 +30,6 @@ namespace ISCJ.Pages.Signup
         {
             if (ModelState.IsValid)
             {
-               
                 if (Password != ConfirmPassword)
                 {
                     ModelState.AddModelError("Password", "Passwords do not match");
@@ -49,6 +48,10 @@ namespace ISCJ.Pages.Signup
                 if (output.Success == false)
                 {
                     ModelState.AddModelError("Email", output.ErrorMessage);
+                }
+                else
+                {
+                    RedirectToPage("login");
                 }
             }
 

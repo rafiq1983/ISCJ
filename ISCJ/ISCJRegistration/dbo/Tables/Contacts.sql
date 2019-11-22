@@ -22,6 +22,7 @@
     [CellPhone]     VARCHAR (100)    NULL,
     [HomePhone]     VARCHAR (100)    NULL,
     [Avatar]        VARBINARY (MAX)  NULL,
+    [TenantId] UNIQUEIDENTIFIER NULL, 
     CONSTRAINT [PK_Contacts] PRIMARY KEY CLUSTERED ([Guid] ASC)
 );
 

@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ISCJ.Pages.ContactManagement
 {
-  public class ContactViewEditModel : PageModel
+  public class ContactViewEditModel : BasePageModel
   {
     BusinessLogic.ContactManager mgr = new BusinessLogic.ContactManager();
     public ContactViewEditModel()
@@ -36,7 +36,7 @@ namespace ISCJ.Pages.ContactManagement
         BusinessLogic.ContactManager mgr = new BusinessLogic.ContactManager();
             if (ModelState.IsValid)
             {
-                mgr.AddUpdateContact(Contact);
+                mgr.AddUpdateContact(GetCallContext(), Contact);
 
                 Response.Redirect("Contacts");
 

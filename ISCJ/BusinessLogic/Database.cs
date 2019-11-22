@@ -185,6 +185,8 @@ namespace BusinessLogic
             {
                 entity.Property(x => x.RowVersion).HasConversion(DataConverters.SqlTimeStampColumnConverter)
                     .IsRowVersion();
+
+                entity.Property(x => x.IsVerified).HasConversion(DataConverters.IntToBoolConverter());
             });
 
 

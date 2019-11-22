@@ -15,9 +15,9 @@ namespace MA.Common.Entities.Contacts
       CreatedDate= DateTime.Now;
     }
 
-    
 
-        public Guid Guid { get; set; }
+    public Guid TenantId { get; set; }
+    public Guid Guid { get; set; }
     [Required]
     public string FirstName { get; set; }
         [Required]

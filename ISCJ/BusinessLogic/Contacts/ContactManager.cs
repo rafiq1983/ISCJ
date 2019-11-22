@@ -27,10 +27,11 @@ namespace BusinessLogic
 
       return Types;
     }
-        public string AddUpdateContact(Contact input)
+        public string AddUpdateContact(CallContext callContext, Contact input)
         {
          using (var _ContextContact = new ContactContext())
-      {
+         {
+             input.TenantId = callContext.TenantId;
         _ContextContact.Contacts.Add(input);
         _ContextContact.SaveChanges();
         return input.Guid.ToString();

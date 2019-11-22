@@ -13,16 +13,29 @@ Post-Deployment Script Template
 
 Print ('Post Deployment Script')
 
-INSERT INTO [dbo].[Rooms]
-           ([RoomName]
-           ,[TenantId]
-           ,[CreateDate]
-           ,[CreateUser]
+Delete from ContactTypes
+
+INSERT INTO [dbo].[ContactTypes]
+           ([Description]
+        
            )
      VALUES
-           ('Cube1',
-		   '00000000-0000-0000-0000-000000000000',           
-           '2019-09-22 02:39:13.507'
-           ,'Rafiq'
+           ('Student'
+           )
+
+		   INSERT INTO [dbo].[ContactTypes]
+           ([Description]
+        
+           )
+     VALUES
+           ('Parent'
+           )
+
+		   INSERT INTO [dbo].[ContactTypes]
+           ([Description]
+        
+           )
+     VALUES
+           ('Other'
            )
 GO

@@ -5,6 +5,7 @@
     [IPAddress]      VARCHAR (50)     NOT NULL,
     [IsActive]       TINYINT          NOT NULL,
     [CreateDate]     DATETIME         NOT NULL,
-    [LastActionDate] DATETIME         NULL
+    [LastActionDate] DATETIME         NULL, 
+    [TenantId] UNIQUEIDENTIFIER NOT NULL
 );
 

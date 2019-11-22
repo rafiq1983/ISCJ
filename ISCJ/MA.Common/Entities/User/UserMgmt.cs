@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using MA.Common.Entities.Contacts;
+using MA.Common.Entities.Tenants;
 
 namespace MA.Common.Entities.User
 {
@@ -56,7 +57,8 @@ namespace MA.Common.Entities.User
         public Guid UserId { get; set; }
         public Guid TenantId { get; set; }
         public string RoleCd { get; set; }
-
+        public Tenant Tenant { get; set; }
+        
     }
 
     public class UserNotification : BaseEntity

@@ -19,13 +19,14 @@ using Newtonsoft.Json;
 
 namespace ISCJ.Pages.StudentManagement
 {
-    public class RegisterStudent2Model : PageModel
+    public class RegisterStudent2Model : BasePageModel
     {
      ProgramManager mgr = new ProgramManager();
      private ProductManager productMgr = new ProductManager();
 
     public RegisterStudent2Model()
     {
+       
         Products = productMgr.GetAllProducts(GetCallContext());
         StudentRegistration = BuildForDisplay();
     }
@@ -57,10 +58,7 @@ namespace ISCJ.Pages.StudentManagement
 
             return output;
     }
-    private CallContext GetCallContext()
-    {
-        return new CallContext("Iftikhar", "234234", "askfj", Guid.Parse("697400B2-8AA0-4F01-A282-E58530DBC2A8"));
-        }
+   
 
 
     public void OnGet()

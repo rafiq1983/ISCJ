@@ -8,6 +8,7 @@
     [CreateUser]      UNIQUEIDENTIFIER NOT NULL,
     [ModifiedDate]    DATETIME         NULL,
     [ModifiedUser]    UNIQUEIDENTIFIER NULL,
-    [RowVersion]      ROWVERSION       NOT NULL
+    [RowVersion]      ROWVERSION       NOT NULL, 
+    [TenantId] UNIQUEIDENTIFIER NOT NULL
 );
 

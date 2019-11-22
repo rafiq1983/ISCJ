@@ -42,4 +42,39 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="ShortDescription" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="9aaadd41-55ab-480b-a0dc-e24bdbf2ea2a" ChangeDateTime="11/22/2019 13:53:39">
+    <Property Name="ElementName" Value="[dbo].[UserPersona].[TenantID]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[UserPersona]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TenantId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="2bcdbc17-b44b-4421-b121-3f251cfa6509" ChangeDateTime="11/22/2019 13:54:23">
+    <Property Name="ElementName" Value="[dbo].[UserTenants].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[UserTenants]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UserId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="7f1f6fca-2721-42ba-ab82-fdfb72d9ffe9" ChangeDateTime="11/22/2019 18:04:19">
+    <Property Name="ElementName" Value="[dbo].[Tenants].[TenantDescription]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Tenants]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="OrganizationName" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="7807b89a-ac5d-415a-b78c-7b365ad25eb7" ChangeDateTime="11/22/2019 18:46:55">
+    <Property Name="ElementName" Value="[dbo].[Tenants].[OwnerId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Tenants]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="OwnerUserId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="7acbed59-2c9a-4706-a457-1269c8a9fc40" ChangeDateTime="11/22/2019 19:13:35">
+    <Property Name="ElementName" Value="[dbo].[Tenants].[OwnerUserId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Tenants]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="OwernId" />
+  </Operation>
 </Operations>

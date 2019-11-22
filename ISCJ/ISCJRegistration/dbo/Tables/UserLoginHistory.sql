@@ -5,6 +5,7 @@
     [LoginDate]  DATETIME         NOT NULL,
     [DeviceType] VARCHAR (100)    NOT NULL,
     [CreateDate] DATETIME         NOT NULL,
-    [CreateUser] UNIQUEIDENTIFIER NOT NULL
+    [CreateUser] UNIQUEIDENTIFIER NOT NULL, 
+    [TenantId] UNIQUEIDENTIFIER NOT NULL
 );
 

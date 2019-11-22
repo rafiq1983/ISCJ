@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using MA.Common;
 using MA.Common.Entities.Contacts;
 using MA.Common.Entities.User;
 using MA.Core;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
+using Microsoft.Extensions.Options;
 
 namespace BusinessLogic
 {
@@ -17,9 +20,20 @@ namespace BusinessLogic
         {
             using (Database db = new Database())
             {
+                PasswordHasher hasher = new PasswordHasher();
+              
                 var user = db.Users.Include(x => x.Contact).Include(x=>x.UserTenants)
-                    .SingleOrDefault(x => x.Password == input.Password && x.UserName == input.UserName);
-                return user;
+                    .SingleOrDefault(x =>x.UserName == input.UserName);
+
+                if (user == null)
+                    return null;
+
+                 var results = hasher.Check(user.Password, input.Password);
+
+                 if (results.Item1 == true)
+                     return user;
+
+                 return null;
             }
         }
 
@@ -38,9 +52,11 @@ namespace BusinessLogic
                     };
                 }
 
+                PasswordHasher hasher = new PasswordHasher();
+
                 user = new User();
                 user.UserId = Guid.NewGuid();
-                user.Password = input.Password;
+                user.Password = hasher.Hash(input.Password);
                 user.UserName = input.Email;
                 user.IsEncrypted = false;
                 user.RequirePasswordChangeAtLogin = false;
@@ -61,8 +77,6 @@ namespace BusinessLogic
                     ZipCode = string.Empty,
                     IsParent = false,
                     State = string.Empty,
-                    
-
                 };
 
                 db.Users.Add(user);
@@ -91,8 +105,17 @@ namespace BusinessLogic
         {
             using (Database db = new Database())
             {
-                return db.Users.Include(x => x.Contact).SingleOrDefault(x => x.UserId == id);
+                return db.Users.Include(x => x.Contact).Include(x=>x.UserTenants).SingleOrDefault(x => x.UserId == id);
 
+            }
+        }
+
+        public List<UserTenant> GetUserTenants(Guid id)
+        {
+            using (Database db = new Database())
+            {
+                return db.UserTenants.Include(x => x.Tenant).Where(x => x.UserId == id).ToList();
+                
             }
         }
 
@@ -128,6 +151,71 @@ namespace BusinessLogic
                        Success = false
                    };
                }
+            }
+        }
+    }
+
+    public class HashingOptions
+    {
+        public int Iterations { get; set; }
+    }
+    public sealed class PasswordHasher
+    {
+        private const int SaltSize = 16; // 128 bit 
+        private const int KeySize = 32; // 256 bit
+
+        public PasswordHasher(IOptions<HashingOptions> options)
+        {
+            Options = options.Value;
+        }
+
+        public PasswordHasher()
+        {
+            Options = new HashingOptions() {Iterations = 1000};
+        }
+
+        private HashingOptions Options { get; }
+
+        public string Hash(string password)
+        {
+            using (var algorithm = new Rfc2898DeriveBytes(
+                password,
+                SaltSize,
+                Options.Iterations))
+            {
+                var key = Convert.ToBase64String(algorithm.GetBytes(KeySize));
+                var salt = Convert.ToBase64String(algorithm.Salt);
+
+                return $"{Options.Iterations}.{salt}.{key}";
+            }
+        }
+
+        public (bool Verified, bool NeedsUpgrade) Check(string hash, string password)
+        {
+            var parts = hash.Split('.');
+
+            if (parts.Length != 3)
+            {
+                throw new FormatException("Unexpected hash format. " +
+                                          "Should be formatted as `{iterations}.{salt}.{hash}`");
+            }
+
+            var iterations = Convert.ToInt32(parts[0]);
+            var salt = Convert.FromBase64String(parts[1]);
+            var key = Convert.FromBase64String(parts[2]);
+
+            var needsUpgrade = iterations != Options.Iterations;
+
+            using (var algorithm = new Rfc2898DeriveBytes(
+                password,
+                salt,
+                iterations))
+            {
+                var keyToCheck = algorithm.GetBytes(KeySize);
+
+                var verified = keyToCheck.SequenceEqual(key);
+
+                return (verified, needsUpgrade);
             }
         }
     }

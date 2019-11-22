@@ -16,6 +16,7 @@
     [CreateDate]         DATETIME         NOT NULL,
     [CreateUser]         VARCHAR (50)     NOT NULL,
     [ModifiedDate]       DATETIME         NULL,
-    [ModifiedUser]       DATETIME         NULL
+    [ModifiedUser]       DATETIME         NULL, 
+    [TenantId] UNIQUEIDENTIFIER NOT NULL
 );
 

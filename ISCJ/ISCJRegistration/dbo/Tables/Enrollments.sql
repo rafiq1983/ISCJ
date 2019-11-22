@@ -12,6 +12,7 @@
     [ModifiedDate]              DATETIME         NULL,
     [ModifiedUser]              VARCHAR (50)     NULL,
     [RowVersion]                ROWVERSION       NOT NULL,
+    [TenantId] UNIQUEIDENTIFIER NOT NULL, 
     CONSTRAINT [PK_Enrollments] PRIMARY KEY CLUSTERED ([EnrollmentId] ASC),
     CONSTRAINT [IX_Enrollments_1] UNIQUE NONCLUSTERED ([StudentContactId] ASC, [ProgramId] ASC)
 );
