@@ -75,6 +75,10 @@ namespace ISCJ.Pages.Admin
                     identity.AddClaim(new Claim(AppClaimTypes.TenantId, tenant.TenantId.ToString()));
                     identity.AddClaim(new Claim(AppClaimTypes.TenantName, tenant.Tenant.OrganizationName));
                 }
+                else if(user.UserTenants.Count>1)
+                {
+                    Redirect("selecttenant");
+                }
 
                 var principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = loginData.RememberMe });
