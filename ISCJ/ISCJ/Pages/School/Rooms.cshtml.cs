@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ISCJ.Pages.School
 {
-    public class RoomsListModel : PageModel
+    public class RoomsListModel : BasePageModel
     {
         public void OnGet()
         {

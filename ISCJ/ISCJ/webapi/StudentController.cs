@@ -7,6 +7,7 @@ using BusinessLogic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MA.Common.Models.api;
+using MA.Core.Web;
 using Microsoft.AspNetCore.Authorization;
 
 namespace ISCJ.webapi
@@ -14,7 +15,7 @@ namespace ISCJ.webapi
     [Route("api/[controller]")]
     [ApiController]
     [Authorize()]
-    public class StudentController : ControllerBase
+    public class StudentController : BaseController
     {
         private readonly StudentManager _studentManager;
 

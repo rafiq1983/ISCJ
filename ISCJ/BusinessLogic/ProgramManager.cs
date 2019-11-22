@@ -21,6 +21,7 @@ namespace BusinessLogic
                 programDetail.ProgramDescription = programDesc;
                 programDetail.CreateUser = context.UserId;
                 programDetail.CreateDate = DateTime.UtcNow;
+                programDetail.TenantId = context.TenantId;
                 db.Programs.Add(programDetail);
                 db.SaveChanges();
                 return programDetail.ProgramId;
@@ -29,12 +30,10 @@ namespace BusinessLogic
 
     public List<ProgramDetail> GetAllPrograms(CallContext callerContext)
     {
-        List<ProgramDetail> details = new List<ProgramDetail>();
-        details.Add(new ProgramDetail() {ProgramId = Guid.Empty, ProgramName = "2019"});
-        //return details;
+      
             using (var db = new Database())
             {
-                return db.Programs.ToList();
+                return db.Programs.Where(x => x.TenantId == callerContext.TenantId).ToList();
             }
     }
 
@@ -42,7 +41,7 @@ namespace BusinessLogic
     {
             using (var db = new Database())
             {
-                return db.Programs.SingleOrDefault(x => x.ProgramId == programId);
+                return db.Programs.SingleOrDefault(x => x.ProgramId == programId && x.TenantId==callerContext.TenantId);
             }
 
         }
@@ -51,7 +50,7 @@ namespace BusinessLogic
     {
         using (var db = new Database())
         {
-            return db.Programs.SingleOrDefault(x => x.ProgramName == programName);
+            return db.Programs.SingleOrDefault(x => x.ProgramName == programName && x.TenantId == callerContext.TenantId);
         }
 
     }

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ISCJ
 {
-    public class LogoutModel : PageModel
+    public class LogoutModel : BasePageModel
     {
         public async void OnGet()
         {

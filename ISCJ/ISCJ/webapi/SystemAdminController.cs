@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MA.Core.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MA.Core.Web.Filters;
@@ -13,7 +14,7 @@ namespace ISCJ.webapi
     [ApiController]
     [SuperAdminAccessFilter]
     
-    public class SystemAdminController : ControllerBase
+    public class SystemAdminController : BaseController
     {
        [HttpPost()]
         public string CreateNewTennant(string tennantDescription, [FromHeader(Name ="x-super-admin-proof")]string signedClaim)

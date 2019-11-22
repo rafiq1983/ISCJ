@@ -16,7 +16,7 @@ using Swashbuckle.AspNetCore.Swagger;
 
 namespace ISCJ.Pages.Financials
 {
-    public class InvoiceListModel : PageModel
+    public class InvoiceListModel : BasePageModel
     {
         readonly InvoiceManager _invoiceMgr = new InvoiceManager();
         private readonly ContactManager _contactManager = new ContactManager();

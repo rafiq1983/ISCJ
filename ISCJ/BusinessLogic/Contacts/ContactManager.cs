@@ -32,6 +32,8 @@ namespace BusinessLogic
          using (var _ContextContact = new ContactContext())
          {
              input.TenantId = callContext.TenantId;
+             input.CreatedDate = DateTime.UtcNow;
+             input.CreatedBy = callContext.UserId;
         _ContextContact.Contacts.Add(input);
         _ContextContact.SaveChanges();
         return input.Guid.ToString();
@@ -61,7 +63,7 @@ namespace BusinessLogic
             contact.ContactType = input.Contact.ContactType;
             contact.CreatedBy = callContext.UserId;
             contact.CreatedDate = DateTime.UtcNow;
-
+            contact.TenantId = callContext.TenantId;
             using (var _ContextContact = new ContactContext())
             {
                 _ContextContact.Contacts.Add(contact);
@@ -133,6 +135,20 @@ namespace BusinessLogic
                 return _ContextContact.Contacts.ToList();//.Where(x => x.Guid == Guid.Parse("6358BD29-A24B-4294-9D5C-00CD2B3606A7")).ToList();
 
             }
+        }
+
+        public List<Contact> SearchContactByPrefix(CallContext callContext, string prefix)
+        {
+
+
+            using (var _ContextContact = new ContactContext())
+            {
+                var contacts = _ContextContact.Contacts.Where(x => x.TenantId == callContext.TenantId);
+                contacts = contacts.Where(x =>
+                    (x.FirstName.ToLower() + " " + x.LastName.ToLower()).IndexOf(prefix.ToLower()) >= 0);
+                return contacts.ToList();
+            }
+
         }
         public List<Contact> GetContactsByContactType(string userId, int contactType)
         {

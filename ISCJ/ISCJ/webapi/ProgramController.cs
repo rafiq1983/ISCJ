@@ -8,6 +8,7 @@ using MA.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MA.Common.Entities.Registration;
+using MA.Core.Web;
 using Microsoft.AspNetCore.Authorization;
 
 namespace ISCJ.webapi
@@ -15,27 +16,27 @@ namespace ISCJ.webapi
     [Route("api/[controller]")]
     [ApiController]
     [Authorize()]
-    public class ProgramController : ControllerBase
+    public class ProgramController : BaseController
     {
         [HttpPost]
         public Guid AddProgram(ProgramDetail detail)
         {
             ProgramManager mgr = new ProgramManager();
-            return mgr.AddProgram(new CallContext("Iftikhar", "test", "", Guid.Empty), detail.ProgramName, detail.ProgramDescription);
+            return mgr.AddProgram(GetCallContext(), detail.ProgramName, detail.ProgramDescription);
         }
 
         [HttpGet("")]
         public List<ProgramDetail> GetAllPrograms()
         {
             ProgramManager mgr = new ProgramManager();
-            return mgr.GetAllPrograms(new CallContext("34234", "127.0.0.1", "32423434", Guid.Empty));
+            return mgr.GetAllPrograms(GetCallContext());
         }
 
         [HttpGet("{programId}")]
         public ActionResult GetProgramDetail(Guid programId)
         {
             ProgramManager mgr = new ProgramManager();
-            var output = mgr.GetProgram(new CallContext("34234", "127.0.0.1", "32423434", Guid.Parse("697400B2-8AA0-4F01-A282-E58530DBC2A8")), programId);
+            var output = mgr.GetProgram(GetCallContext(), programId);
             if (output == null)
                 return NotFound();
             else

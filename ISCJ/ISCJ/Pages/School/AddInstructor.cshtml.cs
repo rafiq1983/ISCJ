@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ISCJ.Pages.School
 {
-    public class AddInstructorModel : PageModel
+    public class AddInstructorModel : BasePageModel
     {
         public void OnGet()
         {

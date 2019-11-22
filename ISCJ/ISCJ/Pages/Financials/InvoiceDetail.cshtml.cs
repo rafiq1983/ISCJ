@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ISCJ.Pages.Financials
 {
-    public class InvoiceDetailModel : PageModel
+    public class InvoiceDetailModel : BasePageModel
     {
         public void OnGet()
         {

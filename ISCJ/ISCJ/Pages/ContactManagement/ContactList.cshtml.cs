@@ -11,7 +11,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace ISCJ.Pages.ContactManagement
 {
-    public class ContactListModel : PageModel
+    public class ContactListModel : BasePageModel
     {
     private List<Contact> _contacts;
 

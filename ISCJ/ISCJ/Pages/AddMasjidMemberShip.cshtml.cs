@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ISCJ.Pages
 {
-    public class AddMasjidMemberShipModel : PageModel
+    public class AddMasjidMemberShipModel : BasePageModel
     {
         private MasjidMembershipManager mgr = new MasjidMembershipManager();
         private ProductManager productMgr = new ProductManager();

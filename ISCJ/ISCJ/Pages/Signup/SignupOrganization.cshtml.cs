@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ISCJ.Pages.Signup
 {
-    public class SignupOrganizationModel : PageModel
+    public class SignupOrganizationModel : BasePageModel
     {
         private readonly SignupManager _signupManager;
 

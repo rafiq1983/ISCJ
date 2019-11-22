@@ -7,6 +7,7 @@ using MA.Common;
 using MA.Common.Entities.Registration;
 using MA.Common.Models.api;
 using MA.Core;
+using MA.Core.Web;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +16,7 @@ namespace ISCJ.webapi
     [Route("api/[controller]")]
     [ApiController]
     [Authorize()]
-    public class RegistrationController : ControllerBase
+    public class RegistrationController : BaseController
     {
        [HttpPost("registratonapplication")]
        public CreateRegistrationApplicationOutput CreateRegistration(CreateRegistrationApplicationInput input)

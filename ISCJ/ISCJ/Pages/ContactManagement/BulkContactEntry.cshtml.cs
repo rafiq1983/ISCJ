@@ -10,7 +10,7 @@ using System.Linq;
 namespace ISCJ.Pages.ContactManagement
 {
 
-  public class BulkContactEntryModel : PageModel
+  public class BulkContactEntryModel : BasePageModel
   {
     private List<SelectListItem> _GenderList = null;
     public BulkContactEntryModel()

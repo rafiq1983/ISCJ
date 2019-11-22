@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ISCJ.Pages.StudentManagement
 {
-    public class RegistrationsModel : PageModel
+    public class RegistrationsModel : BasePageModel
     {
     ProgramManager programMgr;
 

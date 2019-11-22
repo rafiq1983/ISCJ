@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ISCJ.Pages.Financials
 {
-    public class AddInvoiceModel : PageModel
+    public class AddInvoiceModel : BasePageModel
     {
         ProgramManager mgr = new ProgramManager();
         private ProductManager productMgr = new ProductManager();

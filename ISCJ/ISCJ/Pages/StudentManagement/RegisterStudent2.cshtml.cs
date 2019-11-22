@@ -26,9 +26,6 @@ namespace ISCJ.Pages.StudentManagement
 
     public RegisterStudent2Model()
     {
-       
-        Products = productMgr.GetAllProducts(GetCallContext());
-        StudentRegistration = BuildForDisplay();
     }
 
     private CreateRegistrationApplicationInput BuildForDisplay()
@@ -59,12 +56,10 @@ namespace ISCJ.Pages.StudentManagement
             return output;
     }
    
-
-
     public void OnGet()
     {
-        
-           
+        Products = productMgr.GetAllProducts(GetCallContext());
+        StudentRegistration = BuildForDisplay();
     }
 
     private void ValidateStudents()
@@ -133,8 +128,10 @@ namespace ISCJ.Pages.StudentManagement
     }
     public void OnPostSave()
     {
-     
-        for (int i = 1; i < StudentRegistration.StudentRegistrations.Count; i++)
+        Products = productMgr.GetAllProducts(GetCallContext());
+        StudentRegistration = BuildForDisplay();
+
+            for (int i = 1; i < StudentRegistration.StudentRegistrations.Count; i++)
         {
             if (StudentRegistration.StudentRegistrations[i].StudentId.HasValue == false) //don't do validation on Student 2, 3, 4 if no student is selected.
             {

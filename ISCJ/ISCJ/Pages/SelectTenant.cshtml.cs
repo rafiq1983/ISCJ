@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace ISCJ.Pages
 {
-    public class SelectTenantModel : PageModel
+    public class SelectTenantModel : BasePageModel
     {
         [BindProperty]
         public List<Tenant> Tenants { get; set; }

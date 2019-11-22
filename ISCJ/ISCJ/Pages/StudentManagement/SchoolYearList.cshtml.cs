@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ISCJ.Pages.StudentManagement
 {
-    public class SchoolYearListModel : PageModel
+    public class SchoolYearListModel : BasePageModel
     {
         public void OnGet()
         {

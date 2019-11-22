@@ -31,7 +31,7 @@
         </ul>
       </li>
         <li class="@Html.IsSelected(controller: "StudentManagement")">
-            <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">School</span> <span class="fa arrow"></span></a>
+            <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Setup</span> <span class="fa arrow"></span></a>
             <ul class="nav nav-second-level collapse">
                 <li class="@Html.IsSelected(action: "ProgramsList")"><a href="../programManagement/programlist">Programs</a></li>
                 <li class="@Html.IsSelected(action: "ProgramsList")"><a href="../programManagement/vieweditprogram">Add Program</a></li>
@@ -48,6 +48,15 @@
                 <li class="@Html.IsSelected(action: "SubjectAssignmentRules")"><a href="/School/SubjectAssignmentRules">Course Assignment Rules</a></li>
             </ul>
         </li>
+        <li class="@Html.IsSelected(controller: "")">
+            <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Registration</span> <span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level collapse">
+                <li class="@Html.IsSelected(action: "RegisterStudent2")"><a href="/StudentManagement/RegisterStudent2">New Registration Application</a></li>
+                <li class="@Html.IsSelected(action: "RegistrationApplications")"><a href="/StudentManagement/RegistrationApplications">View Registration Applications</a></li>
+                <li class="@Html.IsSelected(action: "Enrollments")"><a href="/StudentManagement/Enrollments">Enrollments</a></li>
+             </ul>
+        </li>
+
         <li class="@Html.IsSelected(controller: "Student")">
             <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Student</span> <span class="fa arrow"></span></a>
             <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Students", cssClass: "in")">

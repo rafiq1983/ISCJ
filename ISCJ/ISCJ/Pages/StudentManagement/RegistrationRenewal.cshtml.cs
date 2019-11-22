@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ISCJ.Pages.StudentManagement
 {
-    public class RegistrationRenewalModel : PageModel
+    public class RegistrationRenewalModel : BasePageModel
     {
         public void OnGet()
         {

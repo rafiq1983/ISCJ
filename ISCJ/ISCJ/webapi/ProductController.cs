@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BusinessLogic;
 using MA.Common.Models.api;
 using MA.Core;
+using MA.Core.Web;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +15,7 @@ namespace ISCJ.webapi
     [Route("api/[controller]")]
     [ApiController]
     [Authorize()]
-    public class ProductController : ControllerBase
+    public class ProductController : BaseController
     {
         private ProductManager _productManager;
 
@@ -69,10 +70,5 @@ namespace ISCJ.webapi
         }
 
 
-        private CallContext GetCallContext()
-        {
-            return new CallContext("34234", "127.0.0.1", "32423434", Guid.Parse("697400B2-8AA0-4F01-A282-E58530DBC2A8"));
-
-        }
     }
 }

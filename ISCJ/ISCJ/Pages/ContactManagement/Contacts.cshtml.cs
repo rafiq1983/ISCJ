@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ISCJ.Pages.ContactManagement
 {
-    public class ContactsModel : PageModel
+    public class ContactsModel : BasePageModel
     {
     private List<Contact> _contacts;
 

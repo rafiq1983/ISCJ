@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ISCJ.Pages.StudentManagement
 {
-    public class StudentDashboardModel : PageModel
+    public class StudentDashboardModel : BasePageModel
     {
         public void OnGet()
         {

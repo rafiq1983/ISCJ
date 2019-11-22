@@ -10,18 +10,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ISCJ.Pages.ProgramManagement
 {
-    public class ViewEditProgramModel : PageModel
+    public class ViewEditProgramModel : BasePageModel
     {
         public void OnGet()
         {
 
         }
-
-        private CallContext GetCallContext()
-        {
-         return   new MA.Core.CallContext("Iftikhar", "23434", "234234234", Guid.Empty);
-        }
-
+        
         public void OnPostSave()
         {
             ProgramManager mgr = new ProgramManager();

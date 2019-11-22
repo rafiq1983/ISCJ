@@ -14,7 +14,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ISCJ.Pages.Signup
 {
-    public class SignupUserModel : PageModel
+    public class SignupUserModel : BasePageModel
     {
         public void OnGet()
         {

@@ -9,7 +9,7 @@ namespace MA.Common.Entities.Registration
   {
     public Guid ProgramId { get; set; }
     public string ProgramName { get; set; }
-
+        public Guid TenantId { get; set; }
     public string ProgramDescription { get; set; }
   }
 }

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ISCJ.Pages
 {
-    public class PrivacyModel : PageModel
+    public class PrivacyModel : BasePageModel
     {
         public void OnGet()
         {

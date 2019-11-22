@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using MA.Common.Entities.Registration;
 namespace ISCJ.Pages.ProgramManagement
 {
-  public class ProgramListModel : PageModel
+  public class ProgramListModel : BasePageModel
   {
     ProgramManager mgr = new ProgramManager();
 

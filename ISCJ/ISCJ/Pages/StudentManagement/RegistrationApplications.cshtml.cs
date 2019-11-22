@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ISCJ.Pages.StudentManagement
 {
-    public class RegistrationApplicationsModel : PageModel
+    public class RegistrationApplicationsModel : BasePageModel
     {
     ProgramManager programMgr;
 
@@ -19,20 +19,18 @@ namespace ISCJ.Pages.StudentManagement
     {
       programMgr = new ProgramManager();
 
-            Programs = programMgr.GetAllPrograms(new MA.Core.CallContext("Iftikhar", "23234", "asfasf", Guid.Empty));
-    }
+     }
         public void OnGet()
         {
+            Programs = programMgr.GetAllPrograms(GetCallContext());
+
+
             RegistrationManager mgr = new RegistrationManager();
             Registrations = mgr.GetAllApplications(GetCallContext(), Programs[0].ProgramId);
             if(Programs.Any())
                 ProgramId = Programs[0].ProgramId;
         }
 
-        private CallContext GetCallContext()
-        {
-            return new MA.Core.CallContext("Iftikhar", "23234", "asfasf", Guid.Empty);
-        }
 
     public void OnPost()
     {

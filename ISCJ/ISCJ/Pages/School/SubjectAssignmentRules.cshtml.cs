@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ISCJ.Pages.School
 {
-    public class SubjectAssignmentRulesModel : PageModel
+    public class SubjectAssignmentRulesModel : BasePageModel
     {
         public void OnGet()
         {

@@ -60,8 +60,7 @@ namespace ISCJ.webapi
             if (string.IsNullOrEmpty(q) == false)
             {
                 ContactManager mgr = new ContactManager();
-                var lst = mgr.GetAllContacts();
-                lst = lst.Where(x => (x.FirstName.ToLower() + " " + x.LastName.ToLower()).IndexOf(q.ToLower()) >= 0).ToList();
+                var lst = mgr.SearchContactByPrefix(GetCallContext(), q);
                 return lst;
             }
             else
