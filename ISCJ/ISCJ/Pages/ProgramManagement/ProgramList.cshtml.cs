@@ -15,7 +15,7 @@ namespace ISCJ.Pages.ProgramManagement
 
     public void OnGet()
     {
-            ProgramDetails = mgr.GetAllPrograms(new MA.Core.CallContext("Iftikhar", "23434", "234234234", Guid.Empty));
+            ProgramDetails = mgr.GetAllPrograms(GetCallContext());
     }
 
 

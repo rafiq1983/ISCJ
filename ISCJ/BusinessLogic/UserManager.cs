@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using MA.Common;
 using MA.Common.Entities.Contacts;
@@ -101,12 +102,40 @@ namespace BusinessLogic
             }
         }
 
+    public User GetUsersByUserName(string name)
+    {
+        using (Database db = new Database())
+        {
+            return db.Users.Include(x => x.Contact).Include(x=>x.UserTenants).SingleOrDefault(x => x.UserName == name);
+
+        }
+    }
+
         public User GetUserById(Guid id)
         {
             using (Database db = new Database())
             {
                 return db.Users.Include(x => x.Contact).Include(x=>x.UserTenants).SingleOrDefault(x => x.UserId == id);
 
+            }
+        }
+
+
+        public List<User> GetTenantUsers(CallContext callContext)
+        {
+            using (Database db = new Database())
+            {
+                var userTenants = db.UserTenants.Where(x => x.TenantId == callContext.TenantId).Select(x => x.UserId);
+
+                var results = 
+                    db.Users.Include(x => x.Contact).Where(x => userTenants.Contains(x.UserId)).ToList();
+
+                foreach (var result in results)
+                {
+                    result.Password = "";
+                }
+
+                return results.ToList();
             }
         }
 

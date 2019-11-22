@@ -58,6 +58,7 @@ namespace MA.Common.Entities.User
         public Guid TenantId { get; set; }
         public string RoleCd { get; set; }
         public Tenant Tenant { get; set; }
+        public User User { get; set; }
         
     }
 

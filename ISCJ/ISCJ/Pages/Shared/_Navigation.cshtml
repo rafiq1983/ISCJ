@@ -2,95 +2,100 @@
 @using System.Security.Claims
 <nav class="navbar-default navbar-static-side" role="navigation">
   <div class="sidebar-collapse">
-    <ul class="nav metismenu" id="side-menu">
-      <li class="nav-header">
-        <div class="dropdown profile-element">
-          <img alt="image" class="rounded-circle" src="~/Images/male.png" />
-          <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-              <span class="block m-t-xs font-bold">@Context.User.Claims.Single(x => x.Type == ClaimTypes.Email).Value</span>
-            <span class="text-muted text-xs block">Admin <b class="caret"></b></span>
-          </a>
-          <ul class="dropdown-menu animated fadeInRight m-t-xs" style="position: absolute; top: 91px; left: 0px; will-change: top, left;">
-            <li><a class="dropdown-item" href="@Url.Action("Profile", "AppViews")">Profile</a></li>
-            <li><a class="dropdown-item" href="@Url.Action("Contacts", "AppViews")">Contacts</a></li>
-            <li><a class="dropdown-item" href="@Url.Action("Inbox", "Mailbox")">Mailbox</a></li>
-            <li class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="@Url.Action("Login", "Pages")">Logout</a></li>
-          </ul>
-        </div>
-        <div class="logo-element">
-            @Context.User.Claims.Single(x=>x.Type==ClaimTypes.Email).Value
-        </div>
-      </li>
-      <li class="@Html.IsSelected(controller: "ContactManagement")">
-        <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Contact Management</span> <span class="fa arrow"></span></a>
-        <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "ContactManagement", cssClass: "in")">
-            <li class="@Html.IsSelected(action: "Contacts")"><a href="/ContactManagement/Contacts">Contacts</a></li>
-            <li class="@Html.IsSelected(action: "ViewEditContact")"><a href="/ContactManagement/ContactViewEdit?mode=new">Add Contact</a></li>
-            <li class="@Html.IsSelected(action: "ViewEditContact")"><a href="/ContactManagement/Communications">Communication</a></li>
-        </ul>
-      </li>
-        <li class="@Html.IsSelected(controller: "StudentManagement")">
-            <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Setup</span> <span class="fa arrow"></span></a>
-            <ul class="nav nav-second-level collapse">
-                <li class="@Html.IsSelected(action: "ProgramsList")"><a href="../programManagement/programlist">Programs</a></li>
-                <li class="@Html.IsSelected(action: "ProgramsList")"><a href="../programManagement/vieweditprogram">Add Program</a></li>
-                <li class="@Html.IsSelected(action: "RegisterStudent2")"><a href="/StudentManagement/RegisterStudent2">New Registration Application</a></li>
-                <li class="@Html.IsSelected(action: "RegistrationApplications")"><a href="/StudentManagement/RegistrationApplications">View Registration Applications</a></li>
+      <ul class="nav metismenu" id="side-menu">
+          <li class="nav-header">
+              <div class="dropdown profile-element">
+                  <img alt="image" class="rounded-circle" src="~/Images/male.png" />
+                  <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                      <span class="block m-t-xs font-bold">@Context.User.Claims.Single(x => x.Type == ClaimTypes.Email).Value</span>
+                      <span class="text-muted text-xs block">Admin <b class="caret"></b></span>
+                  </a>
+                  <ul class="dropdown-menu animated fadeInRight m-t-xs" style="position: absolute; top: 91px; left: 0px; will-change: top, left;">
+                      <li><a class="dropdown-item" href="@Url.Action("Profile", "AppViews")">Profile</a></li>
+                      <li><a class="dropdown-item" href="@Url.Action("Contacts", "AppViews")">Contacts</a></li>
+                      <li><a class="dropdown-item" href="@Url.Action("Inbox", "Mailbox")">Mailbox</a></li>
+                      <li class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" href="@Url.Action("Login", "Pages")">Logout</a></li>
+                  </ul>
+              </div>
+              <div class="logo-element">
+                  @Context.User.Claims.Single(x => x.Type == ClaimTypes.Email).Value
+              </div>
+          </li>
 
-                <li class="@Html.IsSelected(action: "Enrollments")"><a href="/StudentManagement/Enrollments">Enrollments</a></li>
-                <li class="@Html.IsSelected(action: "AddInstructor")"><a href="/School/AddInstructor">Add Instructor</a></li>
-                <li class="@Html.IsSelected(action: "Instructors")"><a href="/School/Instructors">Instructors</a></li>
-                <li class="@Html.IsSelected(action: "Add Subject")"><a href="/School/AddSubject">Add Subject</a></li>
-                <li class="@Html.IsSelected(action: "Subjects")"><a href="/School/Subjects">Subjects</a></li>
-                <li class="@Html.IsSelected(action: "Add Room")"><a href="/School/AddRoom">Add Room</a></li>
-                <li class="@Html.IsSelected(action: "Rooms")"><a href="/School/Rooms">Rooms</a></li>
-                <li class="@Html.IsSelected(action: "SubjectAssignmentRules")"><a href="/School/SubjectAssignmentRules">Course Assignment Rules</a></li>
-            </ul>
-        </li>
-        <li class="@Html.IsSelected(controller: "")">
-            <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Registration</span> <span class="fa arrow"></span></a>
-            <ul class="nav nav-second-level collapse">
-                <li class="@Html.IsSelected(action: "RegisterStudent2")"><a href="/StudentManagement/RegisterStudent2">New Registration Application</a></li>
-                <li class="@Html.IsSelected(action: "RegistrationApplications")"><a href="/StudentManagement/RegistrationApplications">View Registration Applications</a></li>
-                <li class="@Html.IsSelected(action: "Enrollments")"><a href="/StudentManagement/Enrollments">Enrollments</a></li>
-             </ul>
-        </li>
+          <li class="@Html.IsSelected(controller: "StudentManagement")">
+              <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Setup</span> <span class="fa arrow"></span></a>
+              <ul class="nav nav-second-level collapse">
+                  <li class="@Html.IsSelected(action: "ProgramsList")"><a href="../programManagement/programlist">Programs</a></li>
+                  <li class="@Html.IsSelected(action: "ProgramsList")"><a href="../programManagement/vieweditprogram">Add Program</a></li>
+                  <li class="@Html.IsSelected(action: "RegisterStudent2")"><a href="/StudentManagement/RegisterStudent2">New Registration Application</a></li>
+                  <li class="@Html.IsSelected(action: "RegistrationApplications")"><a href="/StudentManagement/RegistrationApplications">View Registration Applications</a></li>
 
-        <li class="@Html.IsSelected(controller: "Student")">
-            <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Student</span> <span class="fa arrow"></span></a>
-            <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Students", cssClass: "in")">
-                <li class="@Html.IsSelected(action: "StudentDashboard")"><a href="/StudentManagement/StudentDashboard">Student Dashboard</a></li>
-             </ul>
-        </li>
+                  <li class="@Html.IsSelected(action: "Enrollments")"><a href="/StudentManagement/Enrollments">Enrollments</a></li>
+                  <li class="@Html.IsSelected(action: "AddInstructor")"><a href="/School/AddInstructor">Add Instructor</a></li>
+                  <li class="@Html.IsSelected(action: "Instructors")"><a href="/School/Instructors">Instructors</a></li>
+                  <li class="@Html.IsSelected(action: "Add Subject")"><a href="/School/AddSubject">Add Subject</a></li>
+                  <li class="@Html.IsSelected(action: "Subjects")"><a href="/School/Subjects">Subjects</a></li>
+                  <li class="@Html.IsSelected(action: "Add Room")"><a href="/School/AddRoom">Add Room</a></li>
+                  <li class="@Html.IsSelected(action: "Rooms")"><a href="/School/Rooms">Rooms</a></li>
+                  <li class="@Html.IsSelected(action: "Rooms")"><a href="AddUser">Add User</a></li>
 
-      <li class="@Html.IsSelected(controller: "Financials")">
-        <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Financials</span> <span class="fa arrow"></span></a>
-        <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Financials", cssClass: "in")">
-            <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/Financials/InvoiceList">Invoices</a></li>
-            <li class="@Html.IsSelected(action: "AddInvoice")"><a href="/Financials/AddInvoice">Add Invoice</a></li>
-        </ul>
-      </li>
-      <li class="@Html.IsSelected(controller: "Donors")">
-        <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Donors</span> <span class="fa arrow"></span></a>
-        <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Financials", cssClass: "in")">
-          <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/Financials/InvoiceList">Donations</a></li>
-          <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/Financials/InvoiceList">Add Donation</a></li>
-        </ul>
-      </li>
-      <li class="@Html.IsSelected(controller: "Members")">
-        <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Members</span> <span class="fa arrow"></span></a>
-        <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Financials", cssClass: "in")">
-            <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/AddMasjidMemberShip">Add a Member</a></li>
-            
-            <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/ViewMembers">Members</a></li>
-          <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/Financials/RenewMembership">Renew Membership</a></li>
-        </ul>
-      </li>
+                  <li class="@Html.IsSelected(action: "SubjectAssignmentRules")"><a href="/School/SubjectAssignmentRules">Course Assignment Rules</a></li>
+              </ul>
+          </li>
+
+          <li class="@Html.IsSelected(controller: "ContactManagement")">
+              <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Contact Management</span> <span class="fa arrow"></span></a>
+              <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "ContactManagement", cssClass: "in")">
+                  <li class="@Html.IsSelected(action: "Contacts")"><a href="/ContactManagement/Contacts">Contacts</a></li>
+                  <li class="@Html.IsSelected(action: "ViewEditContact")"><a href="/ContactManagement/ContactViewEdit?mode=new">Add Contact</a></li>
+                  <li class="@Html.IsSelected(action: "ViewEditContact")"><a href="/ContactManagement/Communications">Communication</a></li>
+              </ul>
+          </li>
+
+          <li class="@Html.IsSelected(controller: "")">
+              <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Registration</span> <span class="fa arrow"></span></a>
+              <ul class="nav nav-second-level collapse">
+                  <li class="@Html.IsSelected(action: "RegisterStudent2")"><a href="/StudentManagement/RegisterStudent2">New Registration Application</a></li>
+                  <li class="@Html.IsSelected(action: "RegistrationApplications")"><a href="/StudentManagement/RegistrationApplications">View Registration Applications</a></li>
+                  <li class="@Html.IsSelected(action: "Enrollments")"><a href="/StudentManagement/Enrollments">Enrollments</a></li>
+              </ul>
+          </li>
+
+          <li class="@Html.IsSelected(controller: "Student")">
+              <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Student</span> <span class="fa arrow"></span></a>
+              <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Students", cssClass: "in")">
+                  <li class="@Html.IsSelected(action: "StudentDashboard")"><a href="/StudentManagement/StudentDashboard">Student Dashboard</a></li>
+              </ul>
+          </li>
+
+          <li class="@Html.IsSelected(controller: "Financials")">
+              <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Financials</span> <span class="fa arrow"></span></a>
+              <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Financials", cssClass: "in")">
+                  <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/Financials/InvoiceList">Invoices</a></li>
+                  <li class="@Html.IsSelected(action: "AddInvoice")"><a href="/Financials/AddInvoice">Add Invoice</a></li>
+              </ul>
+          </li>
+          <li class="@Html.IsSelected(controller: "Donors")">
+              <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Donors</span> <span class="fa arrow"></span></a>
+              <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Financials", cssClass: "in")">
+                  <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/Financials/InvoiceList">Donations</a></li>
+                  <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/Financials/InvoiceList">Add Donation</a></li>
+              </ul>
+          </li>
+          <li class="@Html.IsSelected(controller: "Members")">
+              <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Members</span> <span class="fa arrow"></span></a>
+              <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Financials", cssClass: "in")">
+                  <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/AddMasjidMemberShip">Add a Member</a></li>
+
+                  <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/ViewMembers">Members</a></li>
+                  <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/Financials/RenewMembership">Renew Membership</a></li>
+              </ul>
+          </li>
 
 
 
 
-    </ul>
+      </ul>
   </div>
 </nav>

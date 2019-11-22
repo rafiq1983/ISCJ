@@ -9,6 +9,7 @@ using System.Text;
 using MA.Common;
 using MA.Common.Entities.Tenants;
 using MA.Common.Entities.User;
+using MA.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Update.Internal;
 using Microsoft.Extensions.Configuration;
@@ -34,6 +35,36 @@ namespace BusinessLogic
             using (Database db = new Database())
             {
                 return db.Tenants.ToList();
+            }
+
+        }
+
+        public bool AddUserToOrganization(CallContext callContext, string userEmail, string role)
+        {
+            using (Database db = new Database())
+            {
+                var user = db.Users.SingleOrDefault(x => x.UserName == userEmail);
+
+                if (user != null)
+                {
+                    UserTenant userTenant = new UserTenant()
+                    {
+                        CreateUser = callContext.UserId,
+                        CreateDate = DateTime.UtcNow,
+                        RoleCd = role,
+                        TenantId = callContext.TenantId,
+                        UserId = user.UserId
+
+                    };
+                    db.UserTenants.Add(userTenant);
+                    db.SaveChanges();
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
 
         }
