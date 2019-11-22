@@ -9,6 +9,7 @@ using System.Text;
 using MA.Common;
 using MA.Common.Entities.Tenants;
 using MA.Common.Entities.User;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Update.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -91,6 +92,11 @@ namespace BusinessLogic
                             Tenant = tenant
 
                         });
+
+                        user.Contact.TenantId = tenant.TenantId;
+                        db.Users.Add(user);
+                        db.Entry(user).State = EntityState.Modified;
+                        db.Entry(user.Contact).State = EntityState.Modified;
 
                         db.SaveChanges();
                         SendTenantRegistrationEmail(input);

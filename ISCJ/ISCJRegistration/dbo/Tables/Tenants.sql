@@ -8,7 +8,7 @@
     [ModifiedUser]      VARCHAR (50)     NULL,
     [RowVersion]        ROWVERSION       NOT NULL,
     [IsVerified] TINYINT NULL, 
-    [OwernId] UNIQUEIDENTIFIER NOT NULL, 
+    [OwnerId] UNIQUEIDENTIFIER NOT NULL, 
     CONSTRAINT [PK_Tenants] PRIMARY KEY CLUSTERED ([TenantId] ASC)
 );
 

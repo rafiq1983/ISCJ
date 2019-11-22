@@ -13,8 +13,8 @@ namespace ISCJ
     {
         protected virtual MA.Core.CallContext GetCallContext()
         {
-            var tenantId = HttpContext.User.Claims.Single(x => x.Type == AppClaimTypes.TenantId).Value;
-            var name = HttpContext.User.Claims.Single(x => x.Type == ClaimTypes.Email).Value;
+            var tenantId = HttpContext.User.Claims.First(x => x.Type == AppClaimTypes.TenantId).Value;
+            var name = HttpContext.User.Claims.First(x => x.Type == ClaimTypes.Email).Value;
             return new CallContext(name, "", tenantId, Guid.Parse(tenantId));
         }
     }

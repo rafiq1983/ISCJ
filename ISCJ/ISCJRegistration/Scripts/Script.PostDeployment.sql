@@ -13,8 +13,8 @@ Post-Deployment Script Template
 
 Print ('Post Deployment Script')
 
-Delete from ContactTypes
-
+IF NOT EXISTS (SELECT * FROM ContactTypes)
+BEGIN
 INSERT INTO [dbo].[ContactTypes]
            ([Description]
         
@@ -38,4 +38,5 @@ INSERT INTO [dbo].[ContactTypes]
      VALUES
            ('Other'
            )
+		END
 GO

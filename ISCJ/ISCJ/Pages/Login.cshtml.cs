@@ -16,8 +16,12 @@ namespace ISCJ.Pages.Admin
 {
     public class LoginModel : PageModel
     {
+        private readonly SignupManager _signupManager;
 
-       
+        public LoginModel(SignupManager mgr)
+        {
+            _signupManager = mgr;
+        }
     [BindProperty]
         public LoginData loginData { get; set; }
         public void OnGet()
@@ -66,8 +70,10 @@ namespace ISCJ.Pages.Admin
 
                 if (user.UserTenants.Count == 1)
                 {
-                    identity.AddClaim(new Claim(AppClaimTypes.TenantId, loginData.Username));
-                    identity.AddClaim(new Claim(ClaimTypes.Email, loginData.Username));
+                    //TOOD: For Some reason I'm not able to get Tenant part of User.UserTenats.Tenanct call.  Check later.
+                    var tenant = mgr.GetUserTenants(user.UserId).First();
+                    identity.AddClaim(new Claim(AppClaimTypes.TenantId, tenant.TenantId.ToString()));
+                    identity.AddClaim(new Claim(AppClaimTypes.TenantName, tenant.Tenant.OrganizationName));
                 }
 
                 var principal = new ClaimsPrincipal(identity);
