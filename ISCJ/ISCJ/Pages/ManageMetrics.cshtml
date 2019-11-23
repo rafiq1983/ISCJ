@@ -1,8 +1,103 @@
 ﻿@page
 @model ISCJ.Pages.ManageMetricsModel
 @{
-    ViewData["Title"] = "ManageMetrics";
+    ViewData["Title"] = "Contacts";
+    Layout = "~/Pages/Shared/_LayoutModern.cshtml";
 }
 
-<h2>ManageMetrics</h2>
+<form method="POST">
 
+    <div class="row wrapper border-bottom white-bg page-heading">
+
+        <div class="col-lg-9">
+            <h2>Manage Metrics</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    School
+                </li>
+                <li class="active breadcrumb-item">
+                    <strong>Manage Metrics</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div asp-validation-summary="All" style="color:red"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group  row">
+                    <label class="col-sm-2 col-form-label">Metric Name</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" asp-for="@Model.MetricName" class="form-control" />
+
+                        <span asp-validation-for="@Model.MetricName" class="text-danger"></span>
+
+                    </div>
+                </div>
+                <div class="form-group  row">
+                    <label class="col-sm-2 col-form-label">Metric Description</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" asp-for="@Model.MetricDesription" class="form-control" />
+
+                        <span asp-validation-for="@Model.MetricDesription" class="text-danger"></span>
+
+                    </div>
+                </div>
+
+                
+                <div class="form-group row" style="text-align: right">
+                    <div class="col-sm-12 col-sm-offset-2">
+                        <button class="btn btn-white btn-sm" type="submit" asp-page-handler="Cancel">Cancel</button>
+
+                        <button class="btn btn-white btn-sm" type="submit" asp-page-handler="Reset">Reset</button>
+
+                        <button class="btn btn-primary btn-sm" type="submit" asp-page-handler="Save">Save</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="wrapper border-bottom white-bg">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Metric Name</th>
+                    <th>Description </th>
+                   
+
+                </tr>
+            </thead>
+            <tbody>
+                @for (var i = 0; i < Model.SavedMetrics.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            <input type="hidden" asp-for="@Model.SavedMetrics[i].MetricId" />
+                            @Model.SavedMetrics[i].MetricName
+                        </td>
+                        <td>
+                            @Model.SavedMetrics[i].MetricDescription
+                        </td>
+                        
+
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+</form>

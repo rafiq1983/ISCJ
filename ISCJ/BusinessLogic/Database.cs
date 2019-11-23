@@ -45,6 +45,7 @@ namespace BusinessLogic
     public virtual DbSet<Tenant> Tenants { get; set; }
     public virtual DbSet<MasjidMembership> MasjidMembers { get; set; }
     public virtual DbSet<Metric> Metrics { get; set; }
+    public virtual DbSet<MetricValue> MetricValues { get; set; }
 
     public virtual DbSet<BillableProduct> BillableProducts { get; set; }
 
@@ -118,6 +119,13 @@ namespace BusinessLogic
             {
                 entity.HasKey(x => x.MetricId);
                 entity.ToTable("Metrics");
+                entity.Ignore(x => x.MetricValueDefinitionObject);
+            });
+
+            modelBuilder.Entity<MetricValue>(entity =>
+            {
+                entity.HasKey(x => x.MetricValueId);
+                entity.ToTable("MetricValues");
             });
 
             modelBuilder.Entity<UserTenant>(entity =>
