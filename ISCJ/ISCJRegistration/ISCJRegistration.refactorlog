@@ -84,4 +84,25 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="OwnerId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="12862a23-b6f3-4ce0-937b-99871cf2b794" ChangeDateTime="11/23/2019 15:17:06">
+    <Property Name="ElementName" Value="[dbo].[StudentMetrics].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[StudentMetrics]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="StudentId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="96ea6fc8-0322-4a11-b9dd-4ba0dbfdfd0e" ChangeDateTime="11/23/2019 15:20:17">
+    <Property Name="ElementName" Value="[dbo].[Metrics].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Metrics]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="MetricId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="15e9270a-447c-4bb5-b584-175951e8482c" ChangeDateTime="11/23/2019 15:22:33">
+    <Property Name="ElementName" Value="[dbo].[Metrics].[MetricValueType]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Metrics]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="MetricValueDefintion" />
+  </Operation>
 </Operations>

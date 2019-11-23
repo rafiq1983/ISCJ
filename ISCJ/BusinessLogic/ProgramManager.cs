@@ -55,6 +55,53 @@ namespace BusinessLogic
 
     }
 
+
+    public List<Metric> GetMetrics(CallContext context)
+    {
+        using (var db = new Database())
+        {
+            return db.Metrics.Where(x => x.TenantId == context.TenantId).ToList();
+        }
+    }
+
+    public AddMetricOutput AddMetric(CallContext context, AddMetricInput input)
+    {
+        using (var db = new Database())
+        {
+            var existingMetric =
+                db.Metrics.SingleOrDefault(x => x.TenantId == context.TenantId && x.MetricName == input.MetricName);
+
+            if (existingMetric != null)
+            {
+                return new AddMetricOutput()
+                {
+                    ErrorMessage = "Metric name already exists",
+                    Success = false
+
+                };
+            }
+
+            Metric m = new Metric();
+            m.TenantId = context.TenantId;
+            m.MetricId = Guid.NewGuid();
+            m.MetricDescription = input.MetricDescription;
+            m.MetricName = input.MetricName;
+            m.MetricValueDefinition = Newtonsoft.Json.JsonConvert.SerializeObject(input.MetricValueDefinition);
+            m.CreateUser = context.UserId;
+            m.CreateDate = DateTime.UtcNow;
+
+            db.Metrics.Add(m);
+
+            return new AddMetricOutput()
+            {
+                MetricId = m.MetricId,
+                Success = true
+            };
+
+        }
+        
+    }
+
   }
 
 }

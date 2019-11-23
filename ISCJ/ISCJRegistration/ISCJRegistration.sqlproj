@@ -112,6 +112,9 @@
     <Build Include="dbo\Tables\Unique_TenantId_InvoiceTypeCd.sql" />
     <Build Include="dbo\Tables\UserTenants.sql" />
     <Build Include="dbo\Tables\IX_BillableProducts.sql" />
+    <Build Include="dbo\Tables\StudentMetrics.sql" />
+    <Build Include="dbo\Tables\Metrics.sql" />
+    <Build Include="dbo\Tables\UniqueMetricTenantName.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
