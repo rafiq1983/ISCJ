@@ -8,6 +8,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Transactions;
 using FluentValidation.Results;
+using MA.Common.Entities.MasjidMembership;
 using MA.Common.Entities.Product;
 using MA.Common.Models.api;
 using MA.Core;
@@ -20,37 +21,45 @@ namespace BusinessLogic
       private void AddMembershipIfNeeded(CallContext context, CreateRegistrationApplicationInput input)
       {
           MasjidMembershipManager mgr = new MasjidMembershipManager();
-         var membership = mgr.GetMembershipByContactId(input.FatherId.GetValueOrDefault());
+          MasjidMembership membership;
 
-         if (membership == null)
-         {
-             mgr.CreateMasjidMembership(context, new CreateMasjidMembershipInput()
-             { 
-                  ContactId = input.FatherId,
-                  AddNewContact = false,
-                   BillingInstructions = new List<ProductSelected>(),
-                   EffectiveDate = DateTime.UtcNow,
-                   ExpirationDate = DateTime.UtcNow.AddYears(1)
+          if (input.AddFatherMembership)
+          {
+               membership = mgr.GetMembershipByContactId(input.FatherId.GetValueOrDefault());
 
-             });
-         }
+              if (membership == null)
+              {
+                  mgr.CreateMasjidMembership(context, new CreateMasjidMembershipInput()
+                  {
+                      ContactId = input.FatherId,
+                      AddNewContact = false,
+                      BillingInstructions = new List<ProductSelected>(),
+                      EffectiveDate = DateTime.UtcNow,
+                      ExpirationDate = DateTime.UtcNow.AddYears(1)
 
-         membership = mgr.GetMembershipByContactId(input.MotherId.GetValueOrDefault());
+                  });
+              }
+          }
 
-         if (membership == null)
-         {
-             mgr.CreateMasjidMembership(context, new CreateMasjidMembershipInput()
-             {
-                 ContactId = input.MotherId,
-                 AddNewContact = false,
-                 BillingInstructions = new List<ProductSelected>(),
-                 EffectiveDate = DateTime.UtcNow,
-                 ExpirationDate = DateTime.UtcNow.AddYears(1)
+          if (input.AddMotherToMembership)
+          {
+              membership = mgr.GetMembershipByContactId(input.MotherId.GetValueOrDefault());
 
-             });
-         }
+              if (membership == null)
+              {
+                  mgr.CreateMasjidMembership(context, new CreateMasjidMembershipInput()
+                  {
+                      ContactId = input.MotherId,
+                      AddNewContact = false,
+                      BillingInstructions = new List<ProductSelected>(),
+                      EffectiveDate = DateTime.UtcNow,
+                      ExpirationDate = DateTime.UtcNow.AddYears(1)
 
-        }
+                  });
+              }
+          }
+
+      }
     public CreateRegistrationApplicationOutput CreateRegistration(CallContext context, CreateRegistrationApplicationInput input)
     {
             using (TransactionScope scope = new TransactionScope())
@@ -179,6 +188,7 @@ namespace BusinessLogic
                     MotherContactId = input.MotherId.GetValueOrDefault(Guid.Empty),
                     ProgramId = input.ProgramId.GetValueOrDefault(Guid.Empty),
                     MembershipId = Guid.Empty,
+                    TenantId = context.TenantId,
                     CreateUser = context.UserId
                 };
                
@@ -199,7 +209,8 @@ namespace BusinessLogic
                         EnrollmentId = Guid.NewGuid(),
                         StudentContactId = reg.StudentId.Value,
                         CreateDate = DateTime.UtcNow,
-                        CreateUser = context.UserId
+                        CreateUser = context.UserId,
+                        TenantId = context.TenantId
                     });
                 }
                 
@@ -220,8 +231,10 @@ namespace BusinessLogic
             using (var db = new Database())
             {
                 var productIds = billingInstructions.Where(y => y.IsSelected).Select(z => z.ProductCode).ToArray();
+                ProductManager mgr = new ProductManager();
+                var billableProducts = mgr.GetAllProducts(context);
 
-                var products = db.BillableProducts.Where(x => productIds.Contains(x.ProductCode)).ToDictionary(y=>y.ProductCode);
+                var products = billableProducts.Where(x => productIds.Contains(x.ProductCode)).ToDictionary(y=>y.ProductCode);
 
                 Invoice invoice = new Invoice();
                 invoice.DueDate = DateTime.UtcNow;
@@ -232,7 +245,8 @@ namespace BusinessLogic
                 invoice.TennantId = context.TenantId;
                 invoice.CreateDate = DateTime.UtcNow;
                 invoice.ModifiedDate = null;
-
+                invoice.InvoiceTypeId = Guid.Empty;//TODO: Read from settings to attach correct InvoiceTypeID.
+                
                 invoice.InvoiceItems = new List<InvoiceItem>();
                 foreach (var item in billingInstructions.Where(x=>x.IsSelected))
                 {
@@ -245,7 +259,8 @@ namespace BusinessLogic
                             Description = products[item.ProductCode].Description,
                             Quantity = products[item.ProductCode].SelectedCount,
                             CreateUser = context.UserId,
-                            CreateDate = DateTime.UtcNow
+                            CreateDate = DateTime.UtcNow,
+                            TenantId = context.TenantId
                         });
                     }                    
                     else

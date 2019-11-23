@@ -16,6 +16,8 @@ namespace MA.Common.Models.api
     public class AddProductOutput
     {
         public Guid ProductId { get; set; }
+        public bool Success { get; set; }
+        public string FailureMessage { get; set; }
     }
 
     public class AddProductInput

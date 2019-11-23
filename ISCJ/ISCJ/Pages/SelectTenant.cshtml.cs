@@ -41,8 +41,7 @@ namespace ISCJ.Pages
             if (ModelState.IsValid)
             {
                 var tenant = Tenants[btnLoginToTenant];
-
-
+                //TODO:  The tenant is not switching.  See if latest information is written to the queue.
                 var principal= Request.HttpContext.User;
                 //using bad claim types here. TODO: Fix it.  Tenant info can be stored as separate cookie.
                 (principal.Identity as ClaimsIdentity).AddClaim(new Claim(AppClaimTypes.TenantId, tenant.TenantId.ToString()));
@@ -50,7 +49,7 @@ namespace ISCJ.Pages
 
                 var task = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = true });
                 task.Wait();
-                RedirectToPage("main");
+                Response.Redirect("main");
 
             }
 

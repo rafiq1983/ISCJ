@@ -129,7 +129,7 @@ namespace ISCJ.Pages.StudentManagement
     public void OnPostSave()
     {
         Products = productMgr.GetAllProducts(GetCallContext());
-        StudentRegistration = BuildForDisplay();
+       // StudentRegistration = BuildForDisplay();
 
             for (int i = 1; i < StudentRegistration.StudentRegistrations.Count; i++)
         {

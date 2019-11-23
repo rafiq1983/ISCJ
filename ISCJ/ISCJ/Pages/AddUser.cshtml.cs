@@ -33,14 +33,15 @@ namespace ISCJ.Pages
 
         public void OnPost()
         {
-            Users = GetUsers();
             if (ModelState.IsValid)
             {
                 bool output = _signupManager.AddUserToOrganization(GetCallContext(), Email, Role);
                 if(output==false)
                     ModelState.AddModelError("", "Failed");
             }
-            
+
+            Users = GetUsers();
+
         }
 
         private List<UserModel> GetUsers()

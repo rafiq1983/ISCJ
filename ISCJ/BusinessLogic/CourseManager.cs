@@ -21,6 +21,7 @@ namespace BusinessLogic
                     SubjectDescription = subjectDescription,
                     CreateUser = context.UserId,
                     CreateDate = DateTime.UtcNow,
+                    TenantId = context.TenantId,
                     SubjectId = Guid.NewGuid()
                 };
 
@@ -61,7 +62,9 @@ namespace BusinessLogic
                 mapping.SubjectId = subjectId;
                 mapping.IslamicSchoolGradeId = islamicSchoolGradeId;
                 mapping.CreateUser = context.UserId;
+                mapping.TenantId = context.TenantId;
                 db.SubjectMappings.Add(mapping);
+                
                 db.SaveChanges();
                 return true;
             }
@@ -153,7 +156,8 @@ namespace BusinessLogic
         {
             using (var db = new Database())
             {
-                return db.SubjectMappings.Where(x => x.TenantId == context.TenantId).Include(x=>x.Program).Include(y=>y.Subject).ToList();
+               var output = db.SubjectMappings.Where(x => x.TenantId == context.TenantId).Include(x=>x.Program).Include(y=>y.Subject).ToList();
+               return output;
             }
 
         }

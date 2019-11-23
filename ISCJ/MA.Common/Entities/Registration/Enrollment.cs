@@ -27,6 +27,8 @@ namespace MA.Common.Entities.Registration
 
     public string IslamicSchoolGradeId { get; set; }
 
+    public Guid TenantId { get; set; }
+
     public string PublicSchoolGradeId { get; set; }
 
     public Guid StudentContactId { get; set; }
@@ -48,6 +50,7 @@ namespace MA.Common.Entities.Registration
 
     public class RegistrationApplication:BaseEntity
     {
+        public Guid TenantId { get; set; }
         public Guid ApplicationId { get; set; }
         public DateTime ApplicationDate { get; set; }
         public Guid ProgramId { get; set; }

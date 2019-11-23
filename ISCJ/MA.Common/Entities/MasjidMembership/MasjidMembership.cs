@@ -13,6 +13,7 @@ namespace MA.Common.Entities.MasjidMembership
         public Contact Contact { get; set; }
         public Guid ContactId { get; set; }
 
+        public Guid TenantId { get; set; }
     }
 
 }

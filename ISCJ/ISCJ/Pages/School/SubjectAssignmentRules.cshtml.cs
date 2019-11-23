@@ -19,12 +19,18 @@ namespace ISCJ.Pages.School
 
         }
 
+        private List<SubjectMapping> _subjectMappings = null;
         public List<SubjectMapping> SubjectMappings
         {
             get
             {
-                CourseManager mgr = new CourseManager();
-                return mgr.GetAllSubjectMappings(GetCallContext());
+                if (_subjectMappings == null)
+                {
+                    CourseManager mgr = new CourseManager();
+                    _subjectMappings = mgr.GetAllSubjectMappings(GetCallContext());
+                }
+
+                return _subjectMappings;
 
             }
         }
@@ -44,8 +50,10 @@ namespace ISCJ.Pages.School
             get
             {
                 CourseManager mgr = new CourseManager();
-                return mgr.GetSubjects(GetCallContext())
-                    .Select(x => new SelectListItem(x.SubjectName, x.SubjectId.ToString())).ToList();
+                var subjects = mgr.GetSubjects(GetCallContext());
+
+                    var output = subjects.Select(x => new SelectListItem(x.SubjectName, x.SubjectId.ToString())).ToList();
+                    return output;
             }
         }
 
@@ -86,9 +94,6 @@ namespace ISCJ.Pages.School
         [BindProperty] public string IslamicSchoolGradeId { get; set; }
 
 
-        private CallContext GetCallContext()
-        {
-            return new MA.Core.CallContext("Iftikhar", "23434", "234234234", Guid.Empty);
-        }
+       
     }
 }

@@ -13,6 +13,8 @@ namespace MA.Common.Entities.Product
 
         public decimal Price { get; set; }
 
+        public Guid TenantId { get; set; }
+
         public string Description { get; set; }
 
         public DateTime EffectiveDate { get; set; }

@@ -15,6 +15,3 @@
 
 
 GO
-CREATE UNIQUE NONCLUSTERED INDEX [IX_BillableProduct]
-    ON [dbo].[BillableProduct]([ProductCode] ASC);
-

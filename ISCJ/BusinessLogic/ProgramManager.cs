@@ -46,7 +46,7 @@ namespace BusinessLogic
 
         }
 
-    public ProgramDetail GetProgramByname(CallContext callerContext, string programName)
+    public ProgramDetail GetProgramByName(CallContext callerContext, string programName)
     {
         using (var db = new Database())
         {

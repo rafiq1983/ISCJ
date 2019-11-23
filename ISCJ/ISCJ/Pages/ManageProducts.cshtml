@@ -1,14 +1,16 @@
 ﻿@page
-@model ISCJ.Pages.School.SubjectAssignmentRulesModel
+@model ISCJ.Pages.ManageProductsModel
 @{
     ViewData["Title"] = "Contacts";
     Layout = "~/Pages/Shared/_LayoutModern.cshtml";
 }
 
 <form method="POST">
+
     <div class="row wrapper border-bottom white-bg page-heading">
+       
         <div class="col-lg-9">
-            <h2>Student Registration</h2>
+            <h2>Manage Billing Products</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
@@ -17,56 +19,56 @@
                     School
                 </li>
                 <li class="active breadcrumb-item">
-                    <strong>Add/Edit Subject Mapping</strong>
+                    <strong>Add/Edit Billable Products</strong>
                 </li>
             </ol>
         </div>
     </div>
 
     <div class="wrapper wrapper-content animated fadeInRight">
-
+        <div class="row">
+            <div class="col-lg-12">
+                <div asp-validation-summary="All" style="color:red"></div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="form-group  row">
-                    <label class="col-sm-2 col-form-label">Program</label>
+                    <label class="col-sm-2 col-form-label">Product Name</label>
 
                     <div class="col-sm-10">
-                        <select asp-for="@Model.ProgramId" class="form-control"
-                                asp-items="@Model.Programs">
-                            <option value="">Please select one</option>
-                        </select>
-                        <span asp-validation-for="@Model.ProgramId" class="text-danger"></span>
+                        <input type="text" asp-for="@Model.ProductName" class="form-control"/>
+
+                        <span asp-validation-for="@Model.ProductName" class="text-danger"></span>
+
+                    </div>
+                </div>
+                <div class="form-group  row">
+                    <label class="col-sm-2 col-form-label">Product Code</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" asp-for="@Model.ProductCode" class="form-control"/>
+
+                        <span asp-validation-for="@Model.ProductCode" class="text-danger"></span>
 
                     </div>
                 </div>
 
                 <div class="form-group  row">
-                    <label class="col-sm-2 col-form-label">Islamic School Grade</label>
+                    <label class="col-sm-2 col-form-label">Price</label>
 
                     <div class="col-sm-10">
-                        <select asp-for="@Model.IslamicSchoolGradeId" class="form-control"
-                                asp-items="@Model.IslamicSchoolGradeList">
-                            <option value="">Please select one</option>
-                        </select>
-                        <span asp-validation-for="@Model.IslamicSchoolGradeId" class="text-danger"></span>
+                        <input type="text" asp-for="@Model.Price" class="form-control"/>
+
+                        <span asp-validation-for="@Model.Price" class="text-danger"></span>
 
                     </div>
+
+
                 </div>
 
-                <div class="form-group  row">
-                    <label class="col-sm-2 col-form-label">Subject</label>
 
-                    <div class="col-sm-10">
-                        <select asp-for="@Model.SubjectId" class="form-control"
-                                asp-items="@Model.Subjects">
-                            <option value="">Please select one</option>
-                        </select>
-                        <span asp-validation-for="@Model.SubjectId" class="text-danger"></span>
-
-                    </div>
-                </div>
-
-                <div class="form-group row" style="text-align:right">
+                <div class="form-group row" style="text-align: right">
                     <div class="col-sm-12 col-sm-offset-2">
                         <button class="btn btn-white btn-sm" type="submit" asp-page-handler="Cancel">Cancel</button>
 
@@ -83,30 +85,30 @@
     </div>
 
     <div class="wrapper border-bottom white-bg">
-        
-        Note: This section is buggy.  All mappings are not displayed.  Issue in deserialization of query.
         <table class="table">
             <thead>
             <tr>
-                <th>Program</th>
-                <th>Subject</th>
-                <th>IslamicSchoolGrade</th>
+                <th>Product Name</th>
+                <th>Product Code</th>
+                <th>Price</th>
+               
             </tr>
             </thead>
             <tbody>
-            @for (var i = 0; i < Model.SubjectMappings.Count; i++)
+            @for (var i = 0; i < Model.Products.Count; i++)
             {
                 <tr>
                     <td>
-                        <input type="hidden" asp-for="@Model.SubjectMappings[i].ProgramId"/>
-                        @Model.SubjectMappings[i].Program.ProgramName
+                        <input type="hidden" asp-for="@Model.Products[i].ProductId"/>
+                        @Model.Products[i].Description
                     </td>
                     <td>
-                        @Model.SubjectMappings[i].Subject.SubjectName
+                        @Model.Products[i].ProductCode
                     </td>
                     <td>
-                        @Model.SubjectMappings[i].IslamicSchoolGradeId
+                        @Model.Products[i].Price
                     </td>
+                  
                 </tr>
             }
             </tbody>

@@ -34,7 +34,7 @@
             <thead>
             <tr>
                 <th>Name</th>
-               
+                <th>Description</th>
             </tr>
             </thead>
             <tbody>
@@ -43,10 +43,13 @@
                 <tr>
                     <td>
                         <input type="hidden" asp-for="@Model.Rooms[i].RoomId" />
-                        @Model.Rooms[i].RoomName  @Model.Rooms[i].RoomName
+                        @Model.Rooms[i].RoomName 
                     </td>
                     <td>
-                        <button class="btn btn-white btn-sm" type="submit">Edit</button>
+                        @Model.Rooms[i].RoomName
+                    </td>
+                    <td>
+                        <button style="display:none" class="btn btn-white btn-sm" type="submit">Edit</button>
                         <!--TOOD CHANGE TO HYPER LINK-->
                     </td>
 

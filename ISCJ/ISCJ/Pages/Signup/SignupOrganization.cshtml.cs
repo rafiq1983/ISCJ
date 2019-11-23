@@ -43,7 +43,7 @@ namespace ISCJ.Pages.Signup
                }
                else
                {
-                    ModelState.AddModelError("", "Request failed: Error Code: " + output.FailureReason);
+                    ModelState.AddModelError("OrganizationName", "Request failed: Error Code: " + output.FailureReason);
                }
 
             }

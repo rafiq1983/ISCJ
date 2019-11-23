@@ -49,10 +49,6 @@ namespace ISCJ.Pages.School
             
         }
 
-        private CallContext GetCallContext()
-        {
-            return new MA.Core.CallContext("Iftikhar", "23434", "234234234", Guid.Empty);
-        }
 
         [BindProperty]
         [Required]

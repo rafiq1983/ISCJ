@@ -48,6 +48,7 @@ namespace ISCJ.Pages.Signup
                 if (output.Success == false)
                 {
                     ModelState.AddModelError("Email", output.ErrorMessage);
+                   
                 }
                 else
                 {

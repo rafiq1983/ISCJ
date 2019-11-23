@@ -11,10 +11,10 @@ namespace ISCJ
 {
     public class LogoutModel : BasePageModel
     {
-        public async void OnGet()
+        public   void  OnGet()
         {
-            await HttpContext.SignOutAsync();
-            RedirectToPage("login");
+             HttpContext.SignOutAsync().Wait();
+            Response.Redirect("/login");
         }
     }
 }

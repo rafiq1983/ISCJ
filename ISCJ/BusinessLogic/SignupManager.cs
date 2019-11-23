@@ -47,16 +47,34 @@ namespace BusinessLogic
 
                 if (user != null)
                 {
-                    UserTenant userTenant = new UserTenant()
+                    var userTenant = db.UserTenants.SingleOrDefault(x => x.TenantId == callContext.TenantId && x.UserId == user.UserId);
+                    if (userTenant == null)
                     {
-                        CreateUser = callContext.UserId,
-                        CreateDate = DateTime.UtcNow,
-                        RoleCd = role,
-                        TenantId = callContext.TenantId,
-                        UserId = user.UserId
+                        userTenant = new UserTenant()
+                        {
+                            CreateUser = callContext.UserId,
+                            CreateDate = DateTime.UtcNow,
+                            RoleCd = role,
+                            TenantId = callContext.TenantId,
+                            UserId = user.UserId
 
-                    };
-                    db.UserTenants.Add(userTenant);
+                        };
+                        db.UserTenants.Add(userTenant);
+                    }
+                    else
+                    {
+                        userTenant = new UserTenant()
+                        {
+                           ModifiedUser = callContext.UserId,
+                           ModifiedDate  = DateTime.UtcNow,
+                           RoleCd = role,
+                            UserId = user.UserId
+
+                        };
+                        db.UserTenants.Add(userTenant);
+                        db.Entry(userTenant).State = EntityState.Modified;
+                    }
+
                     db.SaveChanges();
 
                     return true;
@@ -118,17 +136,21 @@ namespace BusinessLogic
                             UserId = user.UserId,
                             CreateUser = user.UserName,
                             CreateDate = DateTime.UtcNow,
-                            
+                            TenantId = tenant.TenantId,
                             RoleCd = "ADMIN",
                             Tenant = tenant
 
                         });
 
+                        //TODO: Updating User's COntact id causes a dupicate key error in UserTenants for some reason.  Need to debug.
+                        /*
                         user.Contact.TenantId = tenant.TenantId;
+
                         db.Users.Add(user);
+
                         db.Entry(user).State = EntityState.Modified;
                         db.Entry(user.Contact).State = EntityState.Modified;
-
+                        */
                         db.SaveChanges();
                         SendTenantRegistrationEmail(input);
                         transaction.Commit();

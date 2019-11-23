@@ -17,18 +17,17 @@ namespace ISCJ.Pages.StudentManagement
     {
     ProgramManager programMgr;
 
-    private CallContext GetCallContext()
-    {
-        return new MA.Core.CallContext("Iftikhar", "23234", "asfasf", Guid.Empty);
-    }
+    
     public RegistrationsModel()
     {
       programMgr = new ProgramManager();
 
-            Programs = programMgr.GetAllPrograms(GetCallContext());
+          
     }
         public void OnGet()
         {
+            Programs = programMgr.GetAllPrograms(GetCallContext());
+
             RegistrationManager mgr = new RegistrationManager();
             Guid registrationAppId;
             bool validRegisAppId  = Guid.TryParse(Request.Query["regappid"], out registrationAppId);

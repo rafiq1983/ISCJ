@@ -40,13 +40,7 @@ namespace BusinessLogic
 
         }
 
-        public List<BillableProduct> GetBillingItems()
-        {
-            using (var db = new Database())
-            {
-                return db.BillableProducts.ToList();
-            }
-        }
+        
 
         public Product GetBillingItem(string productId)
         {
@@ -58,6 +52,18 @@ namespace BusinessLogic
         {
             using (var db = new Database())
             {
+                var existingProduct = db.BillableProducts.SingleOrDefault(x => x.TenantId == callContext.TenantId &&
+                                                                       x.ProductCode == input.ProductCode);
+
+                if (existingProduct != null)
+                {
+                    return new AddProductOutput()
+                    {
+                        FailureMessage = "Product Code already exists",
+                        Success = false
+                    };
+                }
+
                 BillableProduct product = new BillableProduct()
                 {
                     ProductId = Guid.NewGuid(),
@@ -68,7 +74,8 @@ namespace BusinessLogic
                     ExpirationDate = input.ExpirationDate,
                     IsActive = Convert.ToByte(input.IsActive),
                     Description = input.Description,
-                    ProductCode = input.ProductCode
+                    ProductCode = input.ProductCode,
+                    TenantId = callContext.TenantId
 
                 };
 
@@ -76,7 +83,8 @@ namespace BusinessLogic
                 db.SaveChanges();
                 return new AddProductOutput()
                 {
-                    ProductId = product.ProductId
+                    ProductId = product.ProductId,
+                    Success = true
                 };
             }
         }
@@ -97,7 +105,7 @@ namespace BusinessLogic
             //return output;
             using (var db = new Database())
             {
-                return db.BillableProducts.ToList();
+                return db.BillableProducts.Where(x => x.TenantId == callContext.TenantId).ToList();
             }
         }
 

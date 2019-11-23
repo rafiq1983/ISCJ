@@ -21,7 +21,7 @@ namespace ISCJ.Pages.ProgramManagement
         {
             ProgramManager mgr = new ProgramManager();
 
-            var program = mgr.GetProgramByname(GetCallContext(), ProgramName);
+            var program = mgr.GetProgramByName(GetCallContext(), ProgramName);
 
             if (program != null)
             {

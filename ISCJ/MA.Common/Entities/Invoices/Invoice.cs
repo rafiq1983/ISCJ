@@ -51,6 +51,8 @@ namespace MA.Common.Entities.Invoices
     
     public int Quantity { get; set; }
 
+    public Guid TenantId { get; set; }
+
   }
 
     public class FinancialAccount:BaseEntity

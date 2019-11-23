@@ -143,8 +143,8 @@ namespace BusinessLogic
         {
             using (Database db = new Database())
             {
-                return db.UserTenants.Include(x => x.Tenant).Where(x => x.UserId == id).ToList();
-                
+                var results = db.UserTenants.Include(x => x.Tenant).Where(x => x.UserId == id).ToList();
+                return results;
             }
         }
 

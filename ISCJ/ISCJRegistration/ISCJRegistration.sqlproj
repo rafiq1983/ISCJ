@@ -111,6 +111,7 @@
     <Build Include="dbo\Tables\InvoiceTypes.sql" />
     <Build Include="dbo\Tables\Unique_TenantId_InvoiceTypeCd.sql" />
     <Build Include="dbo\Tables\UserTenants.sql" />
+    <Build Include="dbo\Tables\IX_BillableProducts.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />

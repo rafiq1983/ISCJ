@@ -51,7 +51,7 @@ namespace BusinessLogic
                 }
 
                 membership.EffectiveDate = input.EffectiveDate;
-
+                membership.TenantId = context.TenantId;
                 membership.ExpirationDate = input.ExpirationDate;
                 membership.CreateDate = DateTime.Now;
                 membership.Contact = input.MemberContact;
