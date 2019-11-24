@@ -1,0 +1,11 @@
+﻿CREATE TABLE [dbo].[TeacherSubjectAssignment]
+(
+	[RecordId] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [TeacherId] UNIQUEIDENTIFIER NOT NULL, 
+    [SubjectId] UNIQUEIDENTIFIER NOT NULL, 
+    [ProgramId] UNIQUEIDENTIFIER NOT NULL, 
+    [CreateDate] UNIQUEIDENTIFIER NOT NULL, 
+    [CreateUser] VARCHAR(50) NOT NULL, 
+    [ModifiedDate] DATETIME NULL, 
+    [ModifiedUser] VARCHAR(50) NULL
+)

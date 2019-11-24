@@ -116,6 +116,10 @@
     <Build Include="dbo\Tables\Metrics.sql" />
     <Build Include="dbo\Tables\UniqueMetricTenantName.sql" />
     <Build Include="dbo\Tables\MetricValues.sql" />
+    <Build Include="dbo\Tables\StudentSubjects.sql" />
+    <Build Include="dbo\Tables\UniqueKey_SubjectProgram.sql" />
+    <Build Include="dbo\Tables\TeacherSubjectAssignment.sql" />
+    <Build Include="dbo\Tables\Unique_TeacherSubjectProgram.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />

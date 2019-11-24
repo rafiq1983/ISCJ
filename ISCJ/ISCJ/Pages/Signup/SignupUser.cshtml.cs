@@ -52,7 +52,7 @@ namespace ISCJ.Pages.Signup
                 }
                 else
                 {
-                    RedirectToPage("login");
+                    Response.Redirect("/login");
                 }
             }
 

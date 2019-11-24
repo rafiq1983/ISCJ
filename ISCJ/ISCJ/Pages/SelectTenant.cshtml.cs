@@ -43,6 +43,20 @@ namespace ISCJ.Pages
                 var tenant = Tenants[btnLoginToTenant];
                 //TODO:  The tenant is not switching.  See if latest information is written to the queue.
                 var principal= Request.HttpContext.User;
+
+                var claim = (principal.Identity as ClaimsIdentity).FindFirst(AppClaimTypes.TenantId);
+
+                if (claim != null)
+                {
+                    (principal.Identity as ClaimsIdentity).RemoveClaim(claim); //remove claims because queries downstream expects a single value.
+
+                }
+
+                claim = (principal.Identity as ClaimsIdentity).FindFirst(AppClaimTypes.TenantName);
+
+                if(claim!=null)
+                 (principal.Identity as ClaimsIdentity).RemoveClaim(claim);
+
                 //using bad claim types here. TODO: Fix it.  Tenant info can be stored as separate cookie.
                 (principal.Identity as ClaimsIdentity).AddClaim(new Claim(AppClaimTypes.TenantId, tenant.TenantId.ToString()));
                 (principal.Identity as ClaimsIdentity).AddClaim(new Claim(AppClaimTypes.TenantName, tenant.OrganizationName));

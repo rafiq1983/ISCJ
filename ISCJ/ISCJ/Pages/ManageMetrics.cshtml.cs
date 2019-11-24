@@ -8,9 +8,6 @@ using BusinessLogic;
 using MA.Common;
 using MA.Common.Entities.Registration;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Razor.Language;
-using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http2.HPack;
 
 namespace ISCJ.Pages
 {
@@ -26,16 +23,28 @@ namespace ISCJ.Pages
             if (ModelState.IsValid)
             {
                 ProgramManager mgr = new ProgramManager();
-                mgr.AddMetric(GetCallContext(), 
+               var output = mgr.AddMetric(GetCallContext(), 
                     GetAddMetricInput());
+
+                if(output.Success)
+                    ClearPage();
+                else
+                {
+                    ModelState.AddModelError("MetricName", output.ErrorMessage);
+                }
             }
         }
 
+        private void ClearPage()
+        {
+                ModelState.Clear();
+                MetricName = "";
+                MetricDesription = "";
+
+        }
         public void OnPostReset()
         {
-            ModelState.Clear();
-            MetricName = "";
-            MetricDesription = "";
+           ClearPage();
         }
 
         public void OnPostCancel()

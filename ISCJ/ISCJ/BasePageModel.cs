@@ -17,5 +17,14 @@ namespace ISCJ
             var name = HttpContext.User.Claims.First(x => x.Type == ClaimTypes.Email).Value;
             return new CallContext(name, "", tenantId, Guid.Parse(tenantId));
         }
+
+        public bool HasSelectedOrganization
+        {
+            get
+            {
+                var tenantIdClaim = HttpContext.User.Claims.SingleOrDefault(x => x.Type == AppClaimTypes.TenantId);
+                return tenantIdClaim != null;
+            }
+        }
     }
 }

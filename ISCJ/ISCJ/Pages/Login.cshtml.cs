@@ -43,15 +43,7 @@ namespace ISCJ.Pages.Admin
                     Password = loginData.Password
                 });
 
-                if (user == null) //fallback.
-                {
-                    if (loginData.Username.ToLower() == "icsjapp" && loginData.Password == "icsjappwelcome")
-                    {
-
-                        isValid = true;
-                    }
-                }
-                else
+               if(user!=null)
                 {
                     isValid = true;
                 }
@@ -65,9 +57,10 @@ namespace ISCJ.Pages.Admin
                        
                 }
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
+                
                 identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()));
                 identity.AddClaim(new Claim(ClaimTypes.Email, loginData.Username));
-
+                identity.AddClaim(new Claim(ClaimTypes.Name, loginData.Username));
                 if (user.UserTenants.Count == 1)
                 {
                     //TOOD: For Some reason I'm not able to get Tenant part of User.UserTenats.Tenanct call.  Check later.
@@ -77,12 +70,12 @@ namespace ISCJ.Pages.Admin
                 }
                 else if(user.UserTenants.Count>1)
                 {
-                    Redirect("selecttenant");
+                    Response.Redirect("/selecttenant");
                 }
 
                 var principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = loginData.RememberMe });
-               RedirectToPage("main");
+               Response.Redirect("/main");
         
       }
             else
