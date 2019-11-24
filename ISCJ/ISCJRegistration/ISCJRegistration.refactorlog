@@ -126,4 +126,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="Data" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="ef6314da-7607-4577-b019-0d6da833690e" ChangeDateTime="11/24/2019 13:32:02">
+    <Property Name="ElementName" Value="[dbo].[Metrics].[MetricValueDefintion]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Metrics]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="MetricValueDefinition" />
+  </Operation>
 </Operations>

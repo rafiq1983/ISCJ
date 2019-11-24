@@ -91,6 +91,7 @@ namespace BusinessLogic
             m.CreateDate = DateTime.UtcNow;
 
             db.Metrics.Add(m);
+            db.SaveChanges();
 
             return new AddMetricOutput()
             {

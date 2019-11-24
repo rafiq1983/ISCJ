@@ -64,11 +64,11 @@ namespace ISCJ.Pages
 
         [BindProperty] [Required] public string MetricDesription { get; set; }
 
-        [BindProperty][Required] public Enum MetricType { get; set; }
+        [BindProperty] public Enum MetricType { get; set; }
 
-        [BindProperty] [Required] public int MinValue { get; set; }
+        [BindProperty]  public int MinValue { get; set; }
 
-        [BindProperty] [Required] public int MaxValue { get; set; }
+        [BindProperty] public int MaxValue { get; set; }
 
         [BindProperty] public string[] StringRange { get; set; }
 
