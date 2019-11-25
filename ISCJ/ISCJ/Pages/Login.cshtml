@@ -43,7 +43,10 @@
 
         <form class="m-t" role="form" method="post">
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="Username" required="" asp-for="loginData.Username">
+              <input type="text" class="form-control" placeholder="Username" required="" asp-for="loginData.Username">
+              
+              <span asp-validation-for="@Model.loginData.Username" class="text-danger"></span>
+
           </div>
           <div class="form-group">
             <input type="password" class="form-control" placeholder="Password" required="" asp-for="loginData.Password">

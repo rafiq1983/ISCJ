@@ -8,6 +8,6 @@
     [ModifiedDate]         DATETIME         NULL,
     [ModifiedUser]         VARCHAR (50)     NULL,
     [RowVersion]           ROWVERSION       NOT NULL,
-    CONSTRAINT [PK_SubjectMapping] PRIMARY KEY CLUSTERED ([SubjectId] ASC, [TenantId] ASC)
+    CONSTRAINT [PK_SubjectMapping] PRIMARY KEY CLUSTERED ([SubjectId] ASC, [ProgramId] ASC)
 );
 

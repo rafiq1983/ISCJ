@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using BusinessLogic;
@@ -10,7 +12,10 @@ using MA.Core.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace ISCJ.Pages.Admin
 {
@@ -52,7 +57,7 @@ namespace ISCJ.Pages.Admin
 
             if (!isValid)
                 {
-                    ModelState.AddModelError("", "username or password is invalid");
+                    ModelState.AddModelError<LoginModel>((x)=>x.loginData.Username, "username or password is invalid");
                     return;
                        
                 }
@@ -78,18 +83,78 @@ namespace ISCJ.Pages.Admin
                Response.Redirect("/main");
         
       }
-            else
-            {
-                ModelState.AddModelError("", "username or password is blank");
-                return ;
-            }
+         
         }
+
+        //This method generates the model key from lamba expression.
+        public void AddModelError<TModel>(Expression<Func<TModel, object>> expression, string errorMessage)
+        {
+            ModelState.AddModelError(ExpressionHelper.GetExpressionText(expression), errorMessage);
+        }
+
 
 
 
     }
 
-   
+    //A custom method which takes property names as lambda expressions and generates the model key name.  
+    //however, this is not needed now as .net has this method built in.
+    public static class ModelStateDictionaryHelper
+    {
+        public static void AddModelErrorTesting<TViewModel>(
+            this ModelStateDictionary me,
+            Expression<Func<TViewModel, object>> lambdaExpression, string error)
+        {
+            me.AddModelError(GetPropertyName(lambdaExpression), error);
+        }
+
+        private static string GetPropertyName(Expression lambdaExpression)
+        {
+            IList<string> list = new List<string>();
+            var e = lambdaExpression;
+
+            while (true)
+            {
+                switch (e.NodeType)
+                {
+                    case ExpressionType.Lambda:
+                        e = ((LambdaExpression)e).Body;
+                        break;
+                    case ExpressionType.MemberAccess:
+                        var propertyInfo = ((MemberExpression)e).Member as PropertyInfo;
+                        var prop = propertyInfo != null
+                                          ? propertyInfo.Name
+                                          : null;
+                        list.Add(prop);
+
+                        var memberExpression = (MemberExpression)e;
+                        if (memberExpression.Expression.NodeType != ExpressionType.Parameter)
+                        {
+                            var parameter = GetParameterExpression(memberExpression.Expression);
+                            if (parameter != null)
+                            {
+                                e = Expression.Lambda(memberExpression.Expression, parameter);
+                                break;
+                            }
+                        }
+                        return string.Join(".", list.Reverse());
+                    default:
+                        return null;
+                }
+            }
+        }
+
+        private static ParameterExpression GetParameterExpression(Expression expression)
+        {
+            while (expression.NodeType == ExpressionType.MemberAccess)
+            {
+                expression = ((MemberExpression)expression).Expression;
+            }
+            return expression.NodeType == ExpressionType.Parameter ? (ParameterExpression)expression : null;
+        }
+    }
+
+
     public class LoginData
     {
         [Required]

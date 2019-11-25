@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogic;
@@ -12,25 +13,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ISCJ.Pages.School
 {
-    public class SubjectAssignmentRulesModel : BasePageModel
+    public class TeacherSubjectAssignment : BasePageModel
     {
         public void OnGet()
         {
 
         }
 
-        private List<SubjectMapping> _subjectMappings = null;
-        public List<SubjectMapping> SubjectMappings
+        private List<TeacherSubjectMapping> _teacherSubjectMappings = null;
+        public List<TeacherSubjectMapping> TeacherSubjectMappings
         {
             get
             {
                // if (_subjectMappings == null)
                 {
                     CourseManager mgr = new CourseManager();
-                    _subjectMappings = mgr.GetSubjectGradeMappings(GetCallContext());
+                    _teacherSubjectMappings = mgr.GetTeacherSubjectMappings(GetCallContext());
                 }
 
-                return _subjectMappings;
+                return _teacherSubjectMappings;
 
             }
         }
@@ -57,23 +58,50 @@ namespace ISCJ.Pages.School
             }
         }
 
-        public IEnumerable<SelectListItem> IslamicSchoolGradeList
+
+        public List<SelectListItem> Teachers
         {
             get
             {
-                return ListService.GetIslamicSchoolGradesList().Select(x => new SelectListItem(x.GradeName, x.GradeId));
+                CourseManager mgr = new CourseManager();
+                var teachers = mgr.GetTeachers(GetCallContext());
+
+                var output = teachers.Select(x => new SelectListItem(x.Contact.FirstName + " " + x.Contact.LastName, x.TeacherId.ToString())).ToList();
+                return output;
             }
         }
 
-        public void OnPost()
+
+        public void OnPostSave()
         {
             PerformValidation();
             if (ModelState.IsValid)
             {
                 CourseManager mgr = new CourseManager();
-                mgr.AddSubjectMapping(GetCallContext(), ProgramId.Value, SubjectId.Value, IslamicSchoolGradeId);
+                mgr.AddTeacherSubjectMapping(GetCallContext(), ProgramId.Value, SubjectId.Value, TeacherId.Value);
             }
         }
+
+        public void OnPosReset()
+        {
+            Reset();
+
+        }
+        public void Reset()
+        {
+            ModelState.Clear();
+            TeacherId = null;
+            ProgramId = null;
+            SubjectId = null;
+        }
+
+
+        public IActionResult OnPostCancel()
+        {
+            return RedirectToPage("/main");
+        }
+
+
 
         private void PerformValidation()
         {
@@ -85,6 +113,9 @@ namespace ISCJ.Pages.School
                 ModelState.AddModelError("SubjectId", $"This subject {SubjectId.Value} already has the mapping.");
 
         }
+
+        [Required]
+        [BindProperty] public Guid? TeacherId { get; set; }
 
         [Required]
         [BindProperty] public Guid? ProgramId { get; set; }

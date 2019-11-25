@@ -34,6 +34,22 @@ namespace MA.Common.Entities.School
         [ForeignKey("ProgramId")] public ProgramDetail Program { get; set; }
     }
 
+
+    public class TeacherSubjectMapping : BaseEntity
+    {
+        public Guid RecordId { get; set; }
+        public Guid SubjectId { get; set; }
+        public Guid ProgramId { get; set; }
+        public string TeacherId { get; set; }
+        public Guid TenantId { get; set; }
+
+        [ForeignKey("SubjectId")]
+        public Subject Subject { get; set; }
+
+        [ForeignKey("ProgramId")] public ProgramDetail Program { get; set; }
+    }
+
+
     public class Teacher : BaseEntity
     {
 
@@ -43,6 +59,9 @@ namespace MA.Common.Entities.School
 
         [ForeignKey("ContactId")]
         public Contact Contact { get; set; }
+
+        [ForeignKey("TeacherId")]
+        public TeacherSubjectMapping TeacherSubjects { get; set; }
 
     }
 }

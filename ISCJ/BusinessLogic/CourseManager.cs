@@ -41,7 +41,8 @@ namespace BusinessLogic
                     TeacherId = Guid.NewGuid(),
                     ContactId = contactId,
                     CreateUser = context.UserId,
-                    CreateDate = DateTime.UtcNow
+                    CreateDate = DateTime.UtcNow,
+                    TenantId = context.TenantId
                     
                 };
 
@@ -69,6 +70,25 @@ namespace BusinessLogic
                 return true;
             }
         }
+
+        public bool AddTeacherSubjectMapping(CallContext context, Guid programId, Guid subjectId, Guid teacherId)
+        {
+            using (var db = new Database())
+            {
+               TeacherSubjectMapping mapping = new TeacherSubjectMapping();
+                mapping.ProgramId = programId;
+                mapping.SubjectId = subjectId;
+                mapping.TenantId = teacherId;
+                mapping.CreateUser = context.UserId;
+                mapping.TenantId = context.TenantId;
+                db.TeacherSubjectMappings.Add(mapping);
+
+                db.SaveChanges();
+                return true;
+            }
+        }
+
+
 
         public List<Room> GetRooms(CallContext context)
         {
@@ -98,6 +118,7 @@ namespace BusinessLogic
             }
 
         }
+
         public List<Subject> GetSubjects(CallContext context)
         {
             using (var db = new Database())
@@ -106,6 +127,8 @@ namespace BusinessLogic
             }
 
         }
+
+       
         public List<Teacher> GetTeachers(CallContext context)
         {
             using (var db = new Database())
@@ -152,12 +175,22 @@ namespace BusinessLogic
 
         }
 
-        public List<SubjectMapping> GetAllSubjectMappings(CallContext context)
+        public List<SubjectMapping> GetSubjectGradeMappings(CallContext context)
         {
             using (var db = new Database())
             {
-               var output = db.SubjectMappings.Where(x => x.TenantId == context.TenantId).Include(x=>x.Program).Include(y=>y.Subject).ToList();
+               var output = db.SubjectMappings.Where(x => x.TenantId == context.TenantId).Include(x=>x.Program).Include(x=>x.Subject).ToList();
                return output;
+            }
+
+        }
+
+        public List<TeacherSubjectMapping> GetTeacherSubjectMappings(CallContext context)
+        {
+            using (var db = new Database())
+            {
+                var output = db.TeacherSubjectMappings.Where(x => x.TenantId == context.TenantId).Include(x => x.Program).Include(x => x.Subject).ToList();
+                return output;
             }
 
         }

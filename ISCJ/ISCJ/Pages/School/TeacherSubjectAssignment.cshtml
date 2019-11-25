@@ -1,5 +1,5 @@
 ﻿@page
-@model ISCJ.Pages.School.SubjectAssignmentRulesModel
+@model ISCJ.Pages.School.TeacherSubjectAssignment
 @{
     ViewData["Title"] = "Contacts";
     Layout = "~/Pages/Shared/_LayoutModern.cshtml";
@@ -17,7 +17,7 @@
                     School
                 </li>
                 <li class="active breadcrumb-item">
-                    <strong>Add/Edit Subject Mapping</strong>
+                    <strong>Teacher Subject Mapping</strong>
                 </li>
             </ol>
         </div>
@@ -28,6 +28,19 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="form-group  row">
+                    <label class="col-sm-2 col-form-label">Teacher</label>
+
+                    <div class="col-sm-10">
+                        <select asp-for="@Model.TeacherId" class="form-control"
+                                asp-items="@Model.Teachers">
+                            <option value="">Please select one</option>
+                        </select>
+                        <span asp-validation-for="@Model.TeacherId" class="text-danger"></span>
+
+                    </div>
+                </div>
+
+                <div class="form-group  row">
                     <label class="col-sm-2 col-form-label">Program</label>
 
                     <div class="col-sm-10">
@@ -36,19 +49,6 @@
                             <option value="">Please select one</option>
                         </select>
                         <span asp-validation-for="@Model.ProgramId" class="text-danger"></span>
-
-                    </div>
-                </div>
-
-                <div class="form-group  row">
-                    <label class="col-sm-2 col-form-label">Islamic School Grade</label>
-
-                    <div class="col-sm-10">
-                        <select asp-for="@Model.IslamicSchoolGradeId" class="form-control"
-                                asp-items="@Model.IslamicSchoolGradeList">
-                            <option value="">Please select one</option>
-                        </select>
-                        <span asp-validation-for="@Model.IslamicSchoolGradeId" class="text-danger"></span>
 
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                     </div>
                 </div>
 
-                <div class="form-group row" style="text-align:right">
+                <div class="form-group row" style="text-align: right">
                     <div class="col-sm-12 col-sm-offset-2">
                         <button class="btn btn-white btn-sm" type="submit" asp-page-handler="Cancel">Cancel</button>
 
@@ -87,25 +87,28 @@
         <table class="table">
             <thead>
             <tr>
+                <th>Teacher</th>
                 <th>Program</th>
                 <th>Subject</th>
-                <th>IslamicSchoolGrade</th>
+                
             </tr>
             </thead>
             <tbody>
-            @for (var i = 0; i < Model.SubjectMappings.Count; i++)
+            @for (var i = 0; i < Model.TeacherSubjectMappings.Count; i++)
             {
                 <tr>
                     <td>
-                        <input type="hidden" asp-for="@Model.SubjectMappings[i].ProgramId"/>
-                        @Model.SubjectMappings[i].Program.ProgramName
+                        <input type="hidden" asp-for="@Model.TeacherSubjectMappings[i].RecordId" />
+                        @Model.TeacherSubjectMappings[i].TeacherId
                     </td>
                     <td>
-                        @Model.SubjectMappings[i].Subject.SubjectName
+                        <input type="hidden" asp-for="@Model.TeacherSubjectMappings[i].ProgramId" />
+                        @Model.TeacherSubjectMappings[i].Program.ProgramName
                     </td>
                     <td>
-                        @Model.SubjectMappings[i].IslamicSchoolGradeId
+                        @Model.TeacherSubjectMappings[i].Subject.SubjectName
                     </td>
+
                 </tr>
             }
             </tbody>

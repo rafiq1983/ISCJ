@@ -103,7 +103,6 @@
     <Build Include="dbo\Tables\CheckPayment.sql" />
     <Build Include="dbo\Tables\RegistrationApplication.sql" />
     <Build Include="dbo\Tables\TestTable.sql" />
-    <Build Include="dbo\Tables\SubjectAutoAssignmentRules.sql" />
     <Build Include="dbo\Tables\SubjectGradeMapping.sql" />
     <Build Include="dbo\Tables\Subjects.sql" />
     <Build Include="dbo\Tables\ProgramGradeMapping.sql" />
