@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using BusinessLogic;
 using MA.Common.Entities.User;
+using MA.Core;
 using MA.Core.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -81,6 +82,7 @@ namespace ISCJ.Pages.Admin
                 var principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = loginData.RememberMe });
                Response.Redirect("/main");
+               mgr.AddUserLoginAudit(new CallContext(user.UserId.ToString(), "TBD", "TBD", Guid.Empty, "TBD"));
         
       }
          
@@ -99,7 +101,7 @@ namespace ISCJ.Pages.Admin
 
     //A custom method which takes property names as lambda expressions and generates the model key name.  
     //however, this is not needed now as .net has this method built in.
-    public static class ModelStateDictionaryHelper
+    public static class ModelStateDictionaryHelper2
     {
         public static void AddModelErrorTesting<TViewModel>(
             this ModelStateDictionary me,

@@ -10,6 +10,7 @@ using MA.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using   Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace ISCJ.Pages.School
 {
@@ -17,20 +18,24 @@ namespace ISCJ.Pages.School
     {
         public void OnGet()
         {
+            LoadTeacherSubjectMappings();
+            
 
         }
 
         private List<TeacherSubjectMapping> _teacherSubjectMappings = null;
+
+        private void LoadTeacherSubjectMappings()
+        {
+           
+                CourseManager mgr = new CourseManager();
+                _teacherSubjectMappings = mgr.GetTeacherSubjectMappings(GetCallContext());
+           
+        }
         public List<TeacherSubjectMapping> TeacherSubjectMappings
         {
             get
-            {
-               // if (_subjectMappings == null)
-                {
-                    CourseManager mgr = new CourseManager();
-                    _teacherSubjectMappings = mgr.GetTeacherSubjectMappings(GetCallContext());
-                }
-
+            { 
                 return _teacherSubjectMappings;
 
             }
@@ -79,7 +84,11 @@ namespace ISCJ.Pages.School
             {
                 CourseManager mgr = new CourseManager();
                 mgr.AddTeacherSubjectMapping(GetCallContext(), ProgramId.Value, SubjectId.Value, TeacherId.Value);
+
+
             }
+
+            LoadTeacherSubjectMappings();
         }
 
         public void OnPosReset()
@@ -108,9 +117,17 @@ namespace ISCJ.Pages.School
             if (!ModelState.IsValid)
                 return;
             CourseManager mgr = new CourseManager();
-            var subject = mgr.GetSubjectMappings(GetCallContext(), SubjectId.Value);
-            if(subject!=null)
-                ModelState.AddModelError("SubjectId", $"This subject {SubjectId.Value} already has the mapping.");
+
+            var subjects = mgr.GetTeacherSubjectMappings(GetCallContext());
+            if (subjects.Count(x => x.SubjectId == SubjectId && x.ProgramId == ProgramId && x.TeacherId == TeacherId) >
+                0)
+            {
+                ModelState.AddModelError<TeacherSubjectAssignment>(y=>y.ProgramId, $"The teacher is already assigned to this subject in this program.");
+                return;
+            }
+
+            if(subjects.Count(x=>x.SubjectId == SubjectId && x.ProgramId == ProgramId)>0)
+                ModelState.AddModelError<TeacherSubjectAssignment>(y => y.ProgramId, $"The Subject is already assigned to another teacher in this program.");
 
         }
 
@@ -121,8 +138,6 @@ namespace ISCJ.Pages.School
         [BindProperty] public Guid? ProgramId { get; set; }
         [Required]
         [BindProperty] public Guid? SubjectId { get; set; }
-        [Required]
-        [BindProperty] public string IslamicSchoolGradeId { get; set; }
 
 
        

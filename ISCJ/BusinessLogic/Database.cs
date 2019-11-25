@@ -47,7 +47,7 @@ namespace BusinessLogic
     public virtual DbSet<Metric> Metrics { get; set; }
     public virtual DbSet<MetricValue> MetricValues { get; set; }
     public virtual DbSet<TeacherSubjectMapping> TeacherSubjectMappings { get; set; }
-
+    public virtual DbSet<UserLoginHistory> UserLoginRecords { get; set; }
     public virtual DbSet<BillableProduct> BillableProducts { get; set; }
 
     public virtual DbSet<ProgramDetail> Programs { get; set; }
@@ -127,6 +127,7 @@ namespace BusinessLogic
             {
                 entity.HasKey(x => x.RecordId);
                 entity.ToTable("TeacherSubjectAssignment");
+                entity.HasOne(x => x.Teacher).WithMany().HasForeignKey(x => x.TeacherId);
             });
 
 
@@ -196,6 +197,7 @@ namespace BusinessLogic
 
             modelBuilder.Entity<UserLoginHistory>(entity =>
             {
+                entity.ToTable("UserLoginHistory");
                 entity.HasKey(e => e.SessionId);
             });
 

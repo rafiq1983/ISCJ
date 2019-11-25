@@ -32,10 +32,11 @@ namespace MA.Common.Entities.User
     public class UserLoginHistory
     {
         public Guid SessionId { get; set; }
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
         public string LoginIP { get; set; }
         public DateTime LoginDate { get; set; }
         public string DeviceType { get; set; }
+        public Guid? TenantId { get; set; }
     }
 
     public class UserRoleLink

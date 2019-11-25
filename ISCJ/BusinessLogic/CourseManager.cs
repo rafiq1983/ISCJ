@@ -78,9 +78,11 @@ namespace BusinessLogic
                TeacherSubjectMapping mapping = new TeacherSubjectMapping();
                 mapping.ProgramId = programId;
                 mapping.SubjectId = subjectId;
-                mapping.TenantId = teacherId;
-                mapping.CreateUser = context.UserId;
                 mapping.TenantId = context.TenantId;
+                mapping.CreateUser = context.UserId;
+                mapping.CreateDate = DateTime.UtcNow;
+                mapping.TenantId = context.TenantId;
+                mapping.TeacherId = teacherId;
                 db.TeacherSubjectMappings.Add(mapping);
 
                 db.SaveChanges();
@@ -189,7 +191,7 @@ namespace BusinessLogic
         {
             using (var db = new Database())
             {
-                var output = db.TeacherSubjectMappings.Where(x => x.TenantId == context.TenantId).Include(x => x.Program).Include(x => x.Subject).ToList();
+                var output = db.TeacherSubjectMappings.Where(x => x.TenantId == context.TenantId).Include(x => x.Program).Include(x => x.Subject).Include(x=>x.Teacher).ThenInclude(x=>x.Contact).ToList();
                 return output;
             }
 

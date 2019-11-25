@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using MA.Common;
 using MA.Common.Models.api;
+using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace ISCJ
@@ -75,7 +76,7 @@ namespace ISCJ
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             app.UseSwagger();
            
@@ -87,7 +88,8 @@ namespace ISCJ
                 c.RoutePrefix = "";
             });
 
-
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

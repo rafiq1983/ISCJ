@@ -40,13 +40,15 @@ namespace MA.Common.Entities.School
         public Guid RecordId { get; set; }
         public Guid SubjectId { get; set; }
         public Guid ProgramId { get; set; }
-        public string TeacherId { get; set; }
+        public Guid TeacherId { get; set; }
         public Guid TenantId { get; set; }
 
         [ForeignKey("SubjectId")]
         public Subject Subject { get; set; }
 
         [ForeignKey("ProgramId")] public ProgramDetail Program { get; set; }
+
+        public Teacher Teacher { get; set; }
     }
 
 

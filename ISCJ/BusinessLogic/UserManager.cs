@@ -38,6 +38,25 @@ namespace BusinessLogic
             }
         }
 
+        public void AddUserLoginAudit(CallContext callContext)
+        {
+            using (Database db = new Database())
+            {
+           
+                db.UserLoginRecords.Add(new UserLoginHistory()
+                {
+                    SessionId = Guid.NewGuid(),
+                     LoginDate = DateTime.UtcNow,
+                    LoginIP = callContext.CallerIp,
+                     DeviceType = callContext.DeviceType,
+                    TenantId = callContext.TenantId,
+                    UserId = callContext.UserId
+                });
+
+               // db.SaveChanges();TODO: Fails for some reason.
+            }
+        }
+
         public UserSignupOutput SignupUser(CallContext context, NewUserSignupInput input)
         {
             using (Database db = new Database())

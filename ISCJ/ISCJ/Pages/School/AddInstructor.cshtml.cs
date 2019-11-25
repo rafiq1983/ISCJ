@@ -32,6 +32,15 @@ namespace ISCJ.Pages.School
 
         }
 
+        public List<Teacher> Teachers
+        {
+            get
+            {
+                CourseManager courseManager = new CourseManager();
+                return courseManager.GetTeachers(GetCallContext());
+            }
+        }
+
         public void Reset()
         {
             TeacherContactId = null;
