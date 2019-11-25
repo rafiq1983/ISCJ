@@ -47,7 +47,7 @@ namespace BusinessLogic
     public virtual DbSet<Metric> Metrics { get; set; }
     public virtual DbSet<MetricValue> MetricValues { get; set; }
     public virtual DbSet<TeacherSubjectMapping> TeacherSubjectMappings { get; set; }
-    public virtual DbSet<UserLoginHistory> UserLoginRecords { get; set; }
+    public virtual DbSet<UserLoginHistory> UserLoginHistory { get; set; }
     public virtual DbSet<BillableProduct> BillableProducts { get; set; }
 
     public virtual DbSet<ProgramDetail> Programs { get; set; }
@@ -197,7 +197,6 @@ namespace BusinessLogic
 
             modelBuilder.Entity<UserLoginHistory>(entity =>
             {
-                entity.ToTable("UserLoginHistory");
                 entity.HasKey(e => e.SessionId);
             });
 

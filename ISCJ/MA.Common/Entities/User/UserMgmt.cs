@@ -24,7 +24,7 @@ namespace MA.Common.Entities.User
 
         public string LastLoginIP{ get; set; }
         public DateTime? LastLoginDate { get; set; }
-        public ICollection<UserLoginHistory> LoginHistory { get; set; }
+        //public ICollection<UserLoginHistory> LoginHistory { get; set; }
         public ICollection<UserRoleLink> UserRoles { get; set; }
         public List<UserTenant> UserTenants { get; set; }
     }

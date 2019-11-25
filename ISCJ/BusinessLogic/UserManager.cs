@@ -42,8 +42,7 @@ namespace BusinessLogic
         {
             using (Database db = new Database())
             {
-           
-                db.UserLoginRecords.Add(new UserLoginHistory()
+               db.UserLoginHistory.Add(new UserLoginHistory()
                 {
                     SessionId = Guid.NewGuid(),
                      LoginDate = DateTime.UtcNow,
@@ -53,7 +52,7 @@ namespace BusinessLogic
                     UserId = callContext.UserId
                 });
 
-               // db.SaveChanges();TODO: Fails for some reason.
+              db.SaveChanges();//TODO: Fails for some reason.
             }
         }
 
