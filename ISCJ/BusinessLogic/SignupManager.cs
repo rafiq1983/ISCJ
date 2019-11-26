@@ -75,6 +75,16 @@ namespace BusinessLogic
                         db.Entry(userTenant).State = EntityState.Modified;
                     }
 
+           
+                    UserManager userMgr = new UserManager();
+                    //TODO: Add these two calls in same transaction.  @Rafiq.
+                    userMgr.AddUserNotification(callContext, new AddUserNotificationInput()
+                    {
+                        UserId = user.UserId,
+                        NotificationData = "You have been added to " + db.Tenants.Single(x => x.TenantId == userTenant.TenantId).OrganizationName,
+                        NotificationType = "AddedToOrganization"
+                    });
+
                     db.SaveChanges();
 
                     return true;

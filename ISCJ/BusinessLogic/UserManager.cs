@@ -9,6 +9,7 @@ using MA.Common.Entities.Contacts;
 using MA.Common.Entities.User;
 using MA.Core;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
 using Microsoft.Extensions.Options;
@@ -55,6 +56,43 @@ namespace BusinessLogic
               db.SaveChanges();//TODO: Fails for some reason.
             }
         }
+
+        public List<UserNotification> GetUserNotifications(CallContext context)
+        {
+            using (Database db = new Database())
+            {
+                return db.UserNotifications.ToList();
+            }
+        }
+
+        public int GetUserNotificationsCount(CallContext context)
+        {
+            using (Database db = new Database())
+            {
+                return db.UserNotifications.Count();
+            }
+        }
+
+
+        public bool AddUserNotification(CallContext callContext, AddUserNotificationInput input)
+        {
+            using (Database db = new Database())
+            {
+                db.UserNotifications.Add(new UserNotification()
+                {
+                    NotificationId = Guid.NewGuid(),
+                    CreateDate = DateTime.UtcNow,
+                    CreateUser = callContext.UserId,
+                    UserId = input.UserId,
+                    NotificationType =  input.NotificationType,
+                    NotificationData = input.NotificationData
+                });
+
+                db.SaveChanges();
+                return true;
+            }
+        }
+
 
         public UserSignupOutput SignupUser(CallContext context, NewUserSignupInput input)
         {
@@ -182,6 +220,14 @@ namespace BusinessLogic
                         CreateDate = DateTime.UtcNow,
                         CreateUser = callContext.UserId
                         
+                   });
+
+                    //TODO: Add these two calls in same transaction.  @Rafiq.
+                   AddUserNotification(callContext, new AddUserNotificationInput()
+                   {
+                        UserId = user.UserId,
+                        NotificationData = "You have been added to " + db.Tenants.Single(x=>x.TenantId == input.TenantId).OrganizationName,
+                         NotificationType = "AddedToOrganization"
                    });
 
                    db.SaveChanges();

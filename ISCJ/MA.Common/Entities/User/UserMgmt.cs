@@ -66,6 +66,7 @@ namespace MA.Common.Entities.User
     public class UserNotification : BaseEntity
     {
         public Guid NotificationId { get; set; }
+        public Guid UserId { get; set;}
         public string NotificationType { get; set; }
         public string NotificationData { get; set; }
     }

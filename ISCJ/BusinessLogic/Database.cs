@@ -49,7 +49,7 @@ namespace BusinessLogic
     public virtual DbSet<TeacherSubjectMapping> TeacherSubjectMappings { get; set; }
     public virtual DbSet<UserLoginHistory> UserLoginHistory { get; set; }
     public virtual DbSet<BillableProduct> BillableProducts { get; set; }
-
+    public virtual DbSet<UserNotification> UserNotifications { get; set; }
     public virtual DbSet<ProgramDetail> Programs { get; set; }
 
     public virtual DbSet<Contact> Contacts { get; set; }
@@ -222,6 +222,13 @@ namespace BusinessLogic
                 entity.Property(x => x.RequirePasswordChangeAtLogin).HasConversion(DataConverters.IntToBoolConverter());
                 entity.Property(x => x.AuthenticationSource).HasConversion(new EnumToStringConverter<AuthenticationSource>());
             });
+
+            modelBuilder.Entity<UserNotification>(entity =>
+            {
+                entity.ToTable("UserNotification");
+                entity.HasKey(e => e.NotificationId);
+            });
+
 
         }
 
