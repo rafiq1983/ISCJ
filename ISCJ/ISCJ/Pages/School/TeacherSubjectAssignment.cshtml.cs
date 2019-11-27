@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogic;
+using MA.Common.Entities.Registration;
 using MA.Common.Entities.School;
 using MA.Core;
 using Microsoft.AspNetCore.Mvc;
@@ -16,9 +17,14 @@ namespace ISCJ.Pages.School
 {
     public class TeacherSubjectAssignment : BasePageModel
     {
+        private List<Teacher> _teachers;
+        private List<Subject> _subjects;
+        private List<ProgramDetail> _programs;
+
         public void OnGet()
         {
             LoadTeacherSubjectMappings();
+            LoadData();
             
 
         }
@@ -27,7 +33,7 @@ namespace ISCJ.Pages.School
 
         private void LoadTeacherSubjectMappings()
         {
-           
+                
                 CourseManager mgr = new CourseManager();
                 _teacherSubjectMappings = mgr.GetTeacherSubjectMappings(GetCallContext());
            
@@ -45,9 +51,7 @@ namespace ISCJ.Pages.School
         {
             get
             {
-                ProgramManager mgr = new ProgramManager();
-                return mgr.GetAllPrograms(GetCallContext())
-                    .Select(x => new SelectListItem(x.ProgramName, x.ProgramId.ToString())).ToList();
+                return _programs.Select(x => new SelectListItem(x.ProgramName, x.ProgramId.ToString())).ToList();
             }
         }
 
@@ -55,10 +59,8 @@ namespace ISCJ.Pages.School
         {
             get
             {
-                CourseManager mgr = new CourseManager();
-                var subjects = mgr.GetSubjects(GetCallContext());
-
-                    var output = subjects.Select(x => new SelectListItem(x.SubjectName, x.SubjectId.ToString())).ToList();
+               
+                    var output = _subjects.Select(x => new SelectListItem(x.SubjectName, x.SubjectId.ToString())).ToList();
                     return output;
             }
         }
@@ -68,14 +70,23 @@ namespace ISCJ.Pages.School
         {
             get
             {
-                CourseManager mgr = new CourseManager();
-                var teachers = mgr.GetTeachers(GetCallContext());
-
-                var output = teachers.Select(x => new SelectListItem(x.Contact.FirstName + " " + x.Contact.LastName, x.TeacherId.ToString())).ToList();
+               
+                var output = _teachers.Select(x => new SelectListItem(x.Contact.FirstName + " " + x.Contact.LastName, x.TeacherId.ToString())).ToList();
                 return output;
             }
         }
 
+        private void LoadData()
+        {
+            CourseManager mgr = new CourseManager();
+            _teachers = mgr.GetTeachers(GetCallContext());
+            _subjects = mgr.GetSubjects(GetCallContext());
+            
+            ProgramManager programManager = new ProgramManager();
+            _programs = programManager.GetAllPrograms(GetCallContext());
+
+
+        }
 
         public void OnPostSave()
         {
@@ -89,6 +100,7 @@ namespace ISCJ.Pages.School
             }
 
             LoadTeacherSubjectMappings();
+            LoadData();
         }
 
         public void OnPosReset()

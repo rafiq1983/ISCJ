@@ -14,9 +14,15 @@ namespace ISCJ.Pages.ProgramManagement
     {
         public void OnGet()
         {
-
+            LoadPrograms();
         }
-        
+
+        public List<ProgramDetail> ProgramDetails
+        {
+            get;
+            private set;
+        }
+
         public void OnPostSave()
         {
             ProgramManager mgr = new ProgramManager();
@@ -30,9 +36,10 @@ namespace ISCJ.Pages.ProgramManagement
             else
             {
                 mgr.AddProgram(GetCallContext(), ProgramName, ProgramDescription);
-                Response.Redirect("programList");
                
             }
+
+            LoadPrograms();
         }
 
         public void OnPostReset()
@@ -40,15 +47,22 @@ namespace ISCJ.Pages.ProgramManagement
             ProgramName = string.Empty;
             ProgramDescription = string.Empty;
             ModelState.Clear();
+            LoadPrograms();
 
         }
 
         public void OnPostCancel()
         {
-           Response.Redirect("ProgramList");
+           Response.Redirect("main");
+         
 
         }
 
+        private void LoadPrograms()
+        {
+            ProgramManager mgr = new ProgramManager();
+            ProgramDetails = mgr.GetAllPrograms(GetCallContext());
+        }
 
         [BindProperty] public string ProgramName { get; set; }
         [BindProperty] public string ProgramDescription { get; set; }

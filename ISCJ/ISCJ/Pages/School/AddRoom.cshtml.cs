@@ -41,11 +41,16 @@ namespace ISCJ.Pages.School
 
         }
 
-
-        private CallContext GetCallContext()
+        public List<Room> Rooms
         {
-            return new MA.Core.CallContext("Iftikhar", "23434", "234234234", Guid.Empty);
+            get
+            {
+                CourseManager courseManager = new CourseManager();
+                return courseManager.GetRooms(GetCallContext());
+            }
         }
+
+
 
         [BindProperty]
         [Required]

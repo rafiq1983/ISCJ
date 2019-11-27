@@ -15,7 +15,7 @@ namespace ISCJ.Pages.School
     {
         public void OnGet()
         {
-
+            LoadSubjects();
         }
 
         public void OnPost()
@@ -24,16 +24,16 @@ namespace ISCJ.Pages.School
 
         }
 
+
+        private void LoadSubjects()
+        {
+            CourseManager mgr = new CourseManager();
+
+            Subjects = mgr.GetSubjects(GetCallContext());
+        }
         
 
-        public List<Subject> Subjects
-        {
-            get
-            {
-                CourseManager courseManager = new CourseManager();
-                return courseManager.GetSubjects(GetCallContext());
-            }
-        }
+        public List<Subject> Subjects { get; private set; }
 
      
        

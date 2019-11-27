@@ -15,6 +15,7 @@ namespace ISCJ.Pages.School
     {
         public void OnGet()
         {
+            LoadSubjects();
 
         }
 
@@ -30,6 +31,8 @@ namespace ISCJ.Pages.School
                 ModelState.Clear();
 
             }
+
+            LoadSubjects();
 
         }
 
@@ -48,6 +51,17 @@ namespace ISCJ.Pages.School
           
             
         }
+
+        private void LoadSubjects()
+        {
+            CourseManager mgr = new CourseManager();
+
+            Subjects = mgr.GetSubjects(GetCallContext());
+        }
+
+
+        public List<Subject> Subjects { get; private set; }
+
 
 
         [BindProperty]

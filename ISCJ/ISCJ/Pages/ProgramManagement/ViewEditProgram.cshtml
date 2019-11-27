@@ -27,8 +27,6 @@
 
         <div class="row">
             <div class="col-lg-12">
-
-
                 <div class="ibox ">
                     <div class="ibox-title">
                         <h5>Add Program</h5>
@@ -71,9 +69,6 @@
         </div>
 
         <div class="row">
-
-        </div>
-        <div class="row">
             <div class="col-lg-12">
                 <div class="form-group row" style="text-align:right">
                     <div class="col-sm-12 col-sm-offset-2">
@@ -84,11 +79,37 @@
                         <button class="btn btn-primary btn-sm" type="submit" asp-page-handler="Save">Save</button>
 
                     </div>
-                    s
+                    
                 </div>
             </div>
         </div>
     </div>
     
+    <div class="ibox">
+        <div class="ibox-content">
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Program Name</th>
+                    <th>Description</th>
+               
+                </tr>
+                </thead>
+                <tbody>
+                @for (var i = 0; i < Model.ProgramDetails.Count; i++)
+                {
+                    <tr>
+                        <input type="hidden" asp-for="@Model.ProgramDetails[i].ProgramId" value="@Model.ProgramDetails[i].ProgramId"/>
+
+                        <td>@Model.ProgramDetails[i].ProgramName</td>
+                        <td>@Html.Raw(Model.ProgramDetails[i].ProgramDescription)</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
    
 </form>

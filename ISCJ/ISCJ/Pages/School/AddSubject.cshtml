@@ -57,7 +57,8 @@
                             <label class="col-sm-2 col-form-label">Description:</label>
 
                             <div class="col-sm-10">
-                                <textarea rows="10" style="resize: none;width:100%" asp-for="@Model.SubjectDescription">                            
+                                <textarea rows="5
+                                          " style="resize: none;width:100%" asp-for="@Model.SubjectDescription">                            
 </textarea>
 
                                 <span asp-validation-for="@Model.SubjectDescription" class="text-danger"></span>
@@ -75,9 +76,6 @@
         </div>
 
         <div class="row">
-
-        </div>
-        <div class="row">
             <div class="col-lg-12">
                 <div class="form-group row" style="text-align:right">
                     <div class="col-sm-12 col-sm-offset-2">
@@ -92,8 +90,40 @@
                 </div>
             </div>
         </div>
+        
+      
     </div>
+    
+    <div class="ibox">
+        <div class="ibox-content">
 
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Subject Name</th>
+                    <th>Subject Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                @for (var i = 0; i < Model.Subjects.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            <input type="hidden" asp-for="@Model.Subjects[i].SubjectId"/>
+                            @Model.Subjects[i].SubjectName
+                        </td>
+                        <td>
+                            @Model.Subjects[i].SubjectDescription
+                        </td>
+
+                    </tr>
+                }
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
   
 </form>
 

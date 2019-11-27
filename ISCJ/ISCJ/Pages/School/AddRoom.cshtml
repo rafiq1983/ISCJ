@@ -75,9 +75,7 @@
             </div>
         </div>
 
-        <div class="row">
-
-        </div>
+    
         <div class="row">
             <div class="col-lg-12">
                 <div class="form-group row" style="text-align:right">
@@ -89,12 +87,43 @@
                         <button class="btn btn-primary btn-sm" type="submit" asp-page-handler="Save">Save</button>
 
                     </div>
-                    s
+                    
                 </div>
             </div>
         </div>
     </div>
+    <div class="ibox">
+        <div class="ibox-content">
+                 <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Room Name</th>
+                        <th>Room Description</th>
+                
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @for (var i = 0; i < Model.Rooms.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                <input type="hidden" asp-for="@Model.Rooms[i].RoomId"/>
+                                @Model.Rooms[i].RoomName
+                            </td>
+                            <td>
+                                @Model.Rooms[i].RoomDescription
+                            </td>
+                  
+                        </tr>
+                    }
+                    </tbody>
 
+                </table>
+            
+
+        </div>
+    </div>
+  
 </form>
 
 
