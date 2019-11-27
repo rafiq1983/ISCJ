@@ -74,7 +74,7 @@ namespace ISCJ
         {
             if (notification.NotificationType == "AddedToOrganization")
             {
-                return "You have added to the organization";
+                return notification.NotificationData;
             }
             else
             {
