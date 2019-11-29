@@ -49,7 +49,7 @@ namespace BusinessLogic
                      LoginDate = DateTime.UtcNow,
                     LoginIP = callContext.CallerIp,
                      DeviceType = callContext.DeviceType,
-                    TenantId = callContext.TenantId.Value,
+                    TenantId = callContext.TenantId,
                     UserId = callContext.UserId
                 });
 

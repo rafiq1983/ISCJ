@@ -80,18 +80,27 @@ namespace ISCJ.Pages.Admin
 
                     mgr.AddUserLoginAudit(new CallContext(user.UserId, user.UserName, "TBD", tenant.TenantId.ToString(),
                         tenant.TenantId));
+
+
+                    var principal = new ClaimsPrincipal(identity);
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal,
+                        new AuthenticationProperties { IsPersistent = loginData.RememberMe });
+                    Response.Redirect("/main");
                 }
-                else if (user.UserTenants.Count > 1)
+                else if (user.UserTenants.Count == 0)
                 {
+                    var principal = new ClaimsPrincipal(identity);
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal,
+                        new AuthenticationProperties { IsPersistent = loginData.RememberMe });
+
+
                     Response.Redirect("/selecttenant");
 
                     mgr.AddUserLoginAudit(new CallContext(user.UserId, user.UserName, "TBD", "", null));
                 }
+               
 
-                var principal = new ClaimsPrincipal(identity);
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal,
-                    new AuthenticationProperties {IsPersistent = loginData.RememberMe});
-                Response.Redirect("/main");
+                
             }
         }
 

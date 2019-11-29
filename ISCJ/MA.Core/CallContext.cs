@@ -13,7 +13,7 @@ namespace MA.Core
             LoggedInAccountId = loggedInAccountId;
             TenantId = tenantId;
             DeviceType = deviceType;
-            UserLoginName = UserLoginName;
+            UserLoginName = loginName;
         }
         public Guid UserId { get; private set; }
         public string UserLoginName { get; set; }

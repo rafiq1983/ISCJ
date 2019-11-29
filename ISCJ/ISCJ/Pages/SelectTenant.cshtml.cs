@@ -31,7 +31,7 @@ namespace ISCJ.Pages
         {
             UserManager mgr = new UserManager();
             ClaimsPrincipal user = Request.HttpContext.User;
-            var userId = user.Claims.Single(x=>x.Type == ClaimTypes.NameIdentifier).Value;
+            var userId = user.Claims.Single(x=>x.Type == AppClaimTypes.UserId).Value;
             Tenants = mgr.GetUserTenants(Guid.Parse(userId)).Select(x => x.Tenant).ToList();
 
         }

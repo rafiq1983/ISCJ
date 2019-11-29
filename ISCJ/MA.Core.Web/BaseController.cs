@@ -18,7 +18,7 @@ namespace MA.Core.Web
             var tenantIdClaim = HttpContext.User.Claims.SingleOrDefault(x => x.Type == AppClaimTypes.TenantId);
             Guid? tenantId = null;
             var loginName = HttpContext.User.Claims.First(x => x.Type == AppClaimTypes.LoginName).Value;
-            var userId = Guid.Parse(HttpContext.User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value);
+            var userId = Guid.Parse(HttpContext.User.Claims.First(x => x.Type == AppClaimTypes.UserId).Value);
             if (!string.IsNullOrEmpty(tenantIdClaim.Value))
                 tenantId = Guid.Parse(tenantIdClaim.Value);
 

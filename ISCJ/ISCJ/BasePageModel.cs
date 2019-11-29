@@ -22,7 +22,7 @@ namespace ISCJ
             Guid? tenantId = null;
             var loginName = HttpContext.User.Claims.First(x => x.Type == AppClaimTypes.LoginName).Value;
             var userId = Guid.Parse(HttpContext.User.Claims.First(x => x.Type == AppClaimTypes.UserId).Value);
-            if (!string.IsNullOrEmpty(tenantIdClaim.Value))
+            if (tenantIdClaim!=null)
                 tenantId = Guid.Parse(tenantIdClaim.Value);
 
             return new CallContext(userId, loginName, "TBD", tenantId?.ToString(), tenantId);
@@ -68,7 +68,7 @@ namespace ISCJ
 
         private string GetHoursAgo(UserNotification notification)
         {
-            return (DateTime.Now - notification.CreateDate).Hours + " Ago";
+            return (DateTime.Now - notification.CreateDate).Hours + "h Ago";
         }
 
         private string GetReceivedDateTime(UserNotification notification)
