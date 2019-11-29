@@ -22,27 +22,24 @@ namespace ISCJ.webapi
        public CreateRegistrationApplicationOutput CreateRegistration(CreateRegistrationApplicationInput input)
         {
             RegistrationManager mgr = new RegistrationManager();
-            return mgr.CreateRegistration(GetCallerContext(), input);
+            return mgr.CreateRegistration(GetCallContext(), input);
         }
 
        [HttpPost("registratonapplication/registration")]
        public AddRegistrationOutput CreateRegistration(AddRegistrationInput input)
        {
            RegistrationManager mgr = new RegistrationManager();
-           return mgr.AddEnrollmentToRegistrationApplication(GetCallerContext(), input);
+           return mgr.AddEnrollmentToRegistrationApplication(GetCallContext(), input);
        }
 
        [HttpGet("registratonapplication")]
        public List<RegistrationApplication> GetAllRegistrations()
        {
            RegistrationManager mgr = new RegistrationManager();
-           return mgr.GetAllApplications(GetCallerContext(), Guid.Empty);
+           return mgr.GetAllApplications(GetCallContext(), Guid.Empty);
        }
 
 
-        private CallContext GetCallerContext()
-        {
-            return new CallContext("Iftikhar", "sdfsdf", "DSFSDF", Guid.Parse("697400B2-8AA0-4F01-A282-E58530DBC2A8"));
-        }
+     
     }
 }

@@ -9,6 +9,7 @@ using MA.Common.Entities.User;
 using MA.Core;
 using MA.Core.Web;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore.Update.Internal;
 
 namespace ISCJ
 {
@@ -17,9 +18,13 @@ namespace ISCJ
         protected virtual MA.Core.CallContext GetCallContext()
         {
             var tenantIdClaim = HttpContext.User.Claims.SingleOrDefault(x => x.Type == AppClaimTypes.TenantId);
-            string tenantId = tenantIdClaim != null ? tenantIdClaim.Value : string.Empty;
-            var name = HttpContext.User.Claims.First(x => x.Type == ClaimTypes.Email).Value;
-            return new CallContext(name, "", tenantId, Guid.Parse(tenantId));
+            Guid? tenantId = null;
+            var loginName = HttpContext.User.Claims.First(x => x.Type == ClaimTypes.Email).Value;
+            var userId = Guid.Parse(HttpContext.User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value);
+            if (!string.IsNullOrEmpty(tenantIdClaim.Value))
+                tenantId = Guid.Parse(tenantIdClaim.Value);
+
+            return new CallContext(userId, loginName, "TBD", tenantId?.ToString(), tenantId);
         }
 
         public bool HasSelectedOrganization

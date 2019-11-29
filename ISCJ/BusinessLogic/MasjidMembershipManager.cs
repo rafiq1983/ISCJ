@@ -51,11 +51,11 @@ namespace BusinessLogic
                 }
 
                 membership.EffectiveDate = input.EffectiveDate;
-                membership.TenantId = context.TenantId;
+                membership.TenantId = context.TenantId.Value;
                 membership.ExpirationDate = input.ExpirationDate;
                 membership.CreateDate = DateTime.Now;
                 membership.Contact = input.MemberContact;
-                membership.CreateUser = context.UserId;
+                membership.CreateUser = context.UserLoginName;
                 db.MasjidMembers.Add(membership);
                 InvoiceManager billingMgr = new InvoiceManager();
                 billingMgr.PerformBilling(context, db, input.BillingInstructions, "Invoice created for Membership registration", membership.ContactId.ToString(), ReferenceType.MembershipCreation);

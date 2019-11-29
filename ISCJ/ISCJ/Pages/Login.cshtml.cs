@@ -66,7 +66,8 @@ namespace ISCJ.Pages.Admin
                 
                 identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()));
                 identity.AddClaim(new Claim(ClaimTypes.Email, loginData.Username));
-                identity.AddClaim(new Claim(ClaimTypes.Name, loginData.Username));
+                identity.AddClaim(new Claim(ClaimTypes.Name,"GETNAME"));
+
                 if (user.UserTenants.Count == 1)
                 {
                     //TOOD: For Some reason I'm not able to get Tenant part of User.UserTenats.Tenanct call.  Check later.
@@ -82,7 +83,7 @@ namespace ISCJ.Pages.Admin
                 var principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = loginData.RememberMe });
                Response.Redirect("/main");
-               mgr.AddUserLoginAudit(new CallContext(user.UserId.ToString(), "TBD", "TBD", Guid.Empty, "TBD"));
+               mgr.AddUserLoginAudit(GetCallContext());
         
       }
          

@@ -103,10 +103,7 @@ namespace ISCJ.webapi
 
             }
 
-        private CallContext GetCallContext()
-        {
-            return new CallContext("Iftikhar", "DSFsfsd", "FDSDF", Guid.Parse("697400B2-8AA0-4F01-A282-E58530DBC2A8"));
-        }
+     
 
     }
 }

@@ -18,9 +18,9 @@ namespace BusinessLogic
                 account.FinancialAccountId = Guid.NewGuid();
                 account.FinancialAccountName = input.FinancialAccountName;
                 account.FinancialAccountType = input.FinancialAccountType;
-                account.TenantId = callContext.TenantId;
+                account.TenantId = callContext.TenantId.Value;
                 account.CreateDate = DateTime.UtcNow;
-                account.CreateUser = callContext.UserId;
+                account.CreateUser = callContext.UserLoginName;
                 
                 db.FinancialAccounts.Add(account);
                 db.SaveChanges();

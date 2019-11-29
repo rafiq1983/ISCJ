@@ -52,10 +52,10 @@ namespace BusinessLogic
                     {
                         userTenant = new UserTenant()
                         {
-                            CreateUser = callContext.UserId,
+                            CreateUser = callContext.UserLoginName,
                             CreateDate = DateTime.UtcNow,
                             RoleCd = role,
-                            TenantId = callContext.TenantId,
+                            TenantId = callContext.TenantId.Value,
                             UserId = user.UserId
 
                         };
@@ -65,7 +65,7 @@ namespace BusinessLogic
                     {
                         userTenant = new UserTenant()
                         {
-                           ModifiedUser = callContext.UserId,
+                           ModifiedUser = callContext.UserLoginName,
                            ModifiedDate  = DateTime.UtcNow,
                            RoleCd = role,
                             UserId = user.UserId

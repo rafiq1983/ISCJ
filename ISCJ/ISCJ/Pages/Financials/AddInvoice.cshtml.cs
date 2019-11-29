@@ -20,10 +20,7 @@ namespace ISCJ.Pages.Financials
         ProgramManager mgr = new ProgramManager();
         private ProductManager productMgr = new ProductManager();
 
-        private CallContext GetCallContext()
-        {
-            return new CallContext("Iftikhar", "234234", "askfj", Guid.Parse("697400B2-8AA0-4F01-A282-E58530DBC2A8"));
-        }
+       
         public AddInvoiceModel()
         {
 

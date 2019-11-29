@@ -27,10 +27,10 @@ namespace BusinessLogic
                 Invoice invoice = new Invoice();
                 invoice.DueDate = DateTime.UtcNow;
                 invoice.GenerationDate = DateTime.UtcNow;
-                invoice.CreateUser = context.UserId;
+                invoice.CreateUser = context.UserLoginName;
                 invoice.ReferenceId = orderId;
                 invoice.ReferenceType = referenceType;
-                invoice.TennantId = context.TenantId;
+                invoice.TennantId = context.TenantId.Value;
                 invoice.CreateDate = DateTime.UtcNow;
                 invoice.ModifiedDate = null;
 
@@ -45,7 +45,7 @@ namespace BusinessLogic
                             Amount = products[item.ProductCode].Price * item.ProductCount,
                             Description = products[item.ProductCode].Description,
                             Quantity = products[item.ProductCode].SelectedCount,
-                            CreateUser = context.UserId,
+                            CreateUser = context.UserLoginName,
                             CreateDate = DateTime.UtcNow
                         });
                     }
@@ -104,9 +104,9 @@ namespace BusinessLogic
                    {
                        InvoiceTypeId = Guid.NewGuid(),
                        InvoiceTypeName = invoiceTypeName,
-                       TenantId = callContext.TenantId,
+                       TenantId = callContext.TenantId.Value,
                        CreateDate = DateTime.UtcNow,
-                       CreateUser = callContext.UserId
+                       CreateUser = callContext.UserLoginName
 
                    };
 
@@ -139,9 +139,9 @@ namespace BusinessLogic
                     ReferenceType = ReferenceType.AdHocInvoiceAttachedToContact,
                     ReferenceId = input.ReferenceId,
                     IsPaid = false,
-                    TennantId = callContext.TenantId,
+                    TennantId = callContext.TenantId.Value,
                     CreateDate = DateTime.UtcNow,
-                    CreateUser = callContext.UserId
+                    CreateUser = callContext.UserLoginName
                 };
 
                 db.Invoices.Add(invoice);

@@ -31,9 +31,9 @@ namespace BusinessLogic
         {
          using (var _ContextContact = new ContactContext())
          {
-             input.TenantId = callContext.TenantId;
+             input.TenantId = callContext.TenantId.Value;
              input.CreatedDate = DateTime.UtcNow;
-             input.CreatedBy = callContext.UserId;
+             input.CreatedBy = callContext.UserLoginName;
         _ContextContact.Contacts.Add(input);
         _ContextContact.SaveChanges();
         return input.Guid.ToString();
@@ -57,13 +57,13 @@ namespace BusinessLogic
             if (inputContact.DOB.HasValue)
                 contact.DOB = inputContact.DOB.Value;
             contact.CellPhone = inputContact.CellPhone;
-            contact.CreatedBy = callContext.UserId;
+            contact.CreatedBy = callContext.UserLoginName;
             contact.CreatedDate = System.DateTime.UtcNow;
             contact.Guid = Guid.NewGuid();
             contact.ContactType = input.Contact.ContactType;
-            contact.CreatedBy = callContext.UserId;
+            contact.CreatedBy = callContext.UserLoginName;
             contact.CreatedDate = DateTime.UtcNow;
-            contact.TenantId = callContext.TenantId;
+            contact.TenantId = callContext.TenantId.Value;
             using (var _ContextContact = new ContactContext())
             {
                 _ContextContact.Contacts.Add(contact);

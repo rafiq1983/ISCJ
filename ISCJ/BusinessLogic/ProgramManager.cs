@@ -19,9 +19,9 @@ namespace BusinessLogic
                 programDetail.ProgramId = Guid.NewGuid();
                 programDetail.ProgramName = programName;
                 programDetail.ProgramDescription = programDesc;
-                programDetail.CreateUser = context.UserId;
+                programDetail.CreateUser = context.UserLoginName;
                 programDetail.CreateDate = DateTime.UtcNow;
-                programDetail.TenantId = context.TenantId;
+                programDetail.TenantId = context.TenantId.Value;
                 db.Programs.Add(programDetail);
                 db.SaveChanges();
                 return programDetail.ProgramId;
@@ -82,12 +82,12 @@ namespace BusinessLogic
             }
 
             Metric m = new Metric();
-            m.TenantId = context.TenantId;
+            m.TenantId = context.TenantId.Value;
             m.MetricId = Guid.NewGuid();
             m.MetricDescription = input.MetricDescription;
             m.MetricName = input.MetricName;
             m.MetricValueDefinition = Newtonsoft.Json.JsonConvert.SerializeObject(input.MetricValueDefinition);
-            m.CreateUser = context.UserId;
+            m.CreateUser = context.UserLoginName;
             m.CreateDate = DateTime.UtcNow;
 
             db.Metrics.Add(m);

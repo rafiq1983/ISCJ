@@ -115,7 +115,7 @@ namespace BusinessLogic
                 enrollment.StudentContactId = input.StudentId.GetValueOrDefault(Guid.Empty);
                 enrollment.IslamicSchoolGradeId = input.IslamicSchoolGrade;
                 enrollment.PublicSchoolGradeId = input.PublicSchoolGrade;
-                enrollment.CreateUser = context.UserId;
+                enrollment.CreateUser = context.UserLoginName;
                 enrollment.CreateDate = DateTime.UtcNow;
                 //TODO: FOR Rafiq: Why Father and Mother id not getting populated automatically from parent.  Are relationships missing?
                 enrollment.FatherId = existingApplication.FatherContactId;
@@ -157,7 +157,7 @@ namespace BusinessLogic
                     enrollment.StudentContactId = input.StudentId;
                     enrollment.IslamicSchoolGradeId = input.IslamicSchoolGrade;
                     enrollment.PublicSchoolGradeId = input.PublicSchoolGrade;
-                    enrollment.CreateUser = context.UserId;
+                    enrollment.CreateUser = context.UserLoginName;
                     enrollment.CreateDate = DateTime.UtcNow;
                     enrollment.FatherId = input.FatherId;
                     enrollment.MotherId = input.MotherId;
@@ -188,8 +188,8 @@ namespace BusinessLogic
                     MotherContactId = input.MotherId.GetValueOrDefault(Guid.Empty),
                     ProgramId = input.ProgramId.GetValueOrDefault(Guid.Empty),
                     MembershipId = Guid.Empty,
-                    TenantId = context.TenantId,
-                    CreateUser = context.UserId
+                    TenantId = context.TenantId.Value,
+                    CreateUser = context.UserLoginName
                 };
                
                 application.Enrollments = new List<Enrollment>();
@@ -209,8 +209,8 @@ namespace BusinessLogic
                         EnrollmentId = Guid.NewGuid(),
                         StudentContactId = reg.StudentId.Value,
                         CreateDate = DateTime.UtcNow,
-                        CreateUser = context.UserId,
-                        TenantId = context.TenantId
+                        CreateUser = context.UserLoginName,
+                        TenantId = context.TenantId.Value
                     });
                 }
                 
@@ -239,10 +239,10 @@ namespace BusinessLogic
                 Invoice invoice = new Invoice();
                 invoice.DueDate = DateTime.UtcNow;
                 invoice.GenerationDate = DateTime.UtcNow;
-                invoice.CreateUser = context.UserId;
+                invoice.CreateUser = context.UserLoginName;
                 invoice.ReferenceId = registrationApplicationId.ToString();
                 invoice.ReferenceType = referenceType;
-                invoice.TennantId = context.TenantId;
+                invoice.TennantId = context.TenantId.Value;
                 invoice.CreateDate = DateTime.UtcNow;
                 invoice.ModifiedDate = null;
                 invoice.InvoiceTypeId = Guid.Empty;//TODO: Read from settings to attach correct InvoiceTypeID.
@@ -258,9 +258,9 @@ namespace BusinessLogic
                             Amount = products[item.ProductCode].Price * item.ProductCount,
                             Description = products[item.ProductCode].Description,
                             Quantity = products[item.ProductCode].SelectedCount,
-                            CreateUser = context.UserId,
+                            CreateUser = context.UserLoginName,
                             CreateDate = DateTime.UtcNow,
-                            TenantId = context.TenantId
+                            TenantId = context.TenantId.Value
                         });
                     }                    
                     else

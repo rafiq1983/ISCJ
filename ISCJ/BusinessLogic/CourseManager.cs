@@ -19,9 +19,9 @@ namespace BusinessLogic
                 {
                     SubjectName = subjectName,
                     SubjectDescription = subjectDescription,
-                    CreateUser = context.UserId,
+                    CreateUser = context.UserLoginName,
                     CreateDate = DateTime.UtcNow,
-                    TenantId = context.TenantId,
+                    TenantId = context.TenantId.Value,
                     SubjectId = Guid.NewGuid()
                 };
 
@@ -40,9 +40,9 @@ namespace BusinessLogic
                 {
                     TeacherId = Guid.NewGuid(),
                     ContactId = contactId,
-                    CreateUser = context.UserId,
+                    CreateUser = context.UserLoginName,
                     CreateDate = DateTime.UtcNow,
-                    TenantId = context.TenantId
+                    TenantId = context.TenantId.Value
                     
                 };
 
@@ -62,8 +62,8 @@ namespace BusinessLogic
                 mapping.ProgramId = programId;
                 mapping.SubjectId = subjectId;
                 mapping.IslamicSchoolGradeId = islamicSchoolGradeId;
-                mapping.CreateUser = context.UserId;
-                mapping.TenantId = context.TenantId;
+                mapping.CreateUser = context.UserLoginName;
+                mapping.TenantId = context.TenantId.Value;
                 db.SubjectMappings.Add(mapping);
                 
                 db.SaveChanges();
@@ -78,10 +78,10 @@ namespace BusinessLogic
                TeacherSubjectMapping mapping = new TeacherSubjectMapping();
                 mapping.ProgramId = programId;
                 mapping.SubjectId = subjectId;
-                mapping.TenantId = context.TenantId;
-                mapping.CreateUser = context.UserId;
+                mapping.TenantId = context.TenantId.Value;
+                mapping.CreateUser = context.UserLoginName;
                 mapping.CreateDate = DateTime.UtcNow;
-                mapping.TenantId = context.TenantId;
+                mapping.TenantId = context.TenantId.Value;
                 mapping.TeacherId = teacherId;
                 db.TeacherSubjectMappings.Add(mapping);
 
@@ -106,11 +106,11 @@ namespace BusinessLogic
             using (var db = new Database())
             {
                 Room room = new Room();
-                room.TenantId = context.TenantId;
+                room.TenantId = context.TenantId.Value;
                 room.RoomName = roomName;
                 room.RoomDescription = string.IsNullOrEmpty(roomDescription) ? string.Empty : roomDescription;
                 room.CreateDate = DateTime.UtcNow;
-                room.CreateUser = context.UserId;
+                room.CreateUser = context.UserLoginName;
 
                 db.Rooms.Add(room);
                 

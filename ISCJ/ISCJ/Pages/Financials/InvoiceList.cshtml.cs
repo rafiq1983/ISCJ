@@ -92,11 +92,7 @@ namespace ISCJ.Pages.Financials
         [BindProperty]
         public List<Invoice> Invoices { get; set; } = new List<Invoice>();
 
-        private CallContext GetCallContext()
-        {
-            return new CallContext("Iftikhar", "asfasfdds", "asdfasfsd",
-                Guid.Parse("697400B2-8AA0-4F01-A282-E58530DBC2A8"));
-        }
+       
 
         public void OnPost(int btnUpdateInvoice)
         {

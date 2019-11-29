@@ -21,10 +21,7 @@ namespace ISCJ.Pages.Signup
 
         }
 
-        private CallContext GetCallContext()
-        {
-            return new CallContext("","000.000.000.000", "", Guid.Empty);
-        }
+       
 
         public void OnPostSave()
         {

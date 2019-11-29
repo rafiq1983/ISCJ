@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BusinessLogic;
 using MA.Common.Models.api;
 using MA.Core;
+using MA.Core.Web;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +15,7 @@ namespace ISCJ.webapi
     [Route("api/[controller]")]
     [ApiController]
     [Authorize()]
-    public class PaymentsController : Controller
+    public class PaymentsController : BaseController
     {
         [HttpPost()]
         public JsonResult CreatePayment([FromBody]CreatePaymentInput input)
@@ -44,9 +45,6 @@ namespace ISCJ.webapi
             return new JsonResult(mgr.GetCheckPayments(GetCallContext()));
         }
 
-        private CallContext GetCallContext()
-        {
-            return new CallContext("Iftikhar", "sdfasfds", "SDFSDF", Guid.Parse("697400B2-8AA0-4F01-A282-E58530DBC2A8"));
-        }
+       
     }
 }

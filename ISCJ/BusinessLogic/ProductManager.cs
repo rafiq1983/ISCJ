@@ -69,13 +69,13 @@ namespace BusinessLogic
                     ProductId = Guid.NewGuid(),
                     Price = input.Price,
                     CreateDate = DateTime.UtcNow,
-                    CreateUser = callContext.UserId,
+                    CreateUser = callContext.UserLoginName,
                     EffectiveDate = input.EffectiveDate,
                     ExpirationDate = input.ExpirationDate,
                     IsActive = Convert.ToByte(input.IsActive),
                     Description = input.Description,
                     ProductCode = input.ProductCode,
-                    TenantId = callContext.TenantId
+                    TenantId = callContext.TenantId.Value
 
                 };
 

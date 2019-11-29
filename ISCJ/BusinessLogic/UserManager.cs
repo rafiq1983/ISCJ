@@ -49,7 +49,7 @@ namespace BusinessLogic
                      LoginDate = DateTime.UtcNow,
                     LoginIP = callContext.CallerIp,
                      DeviceType = callContext.DeviceType,
-                    TenantId = callContext.TenantId,
+                    TenantId = callContext.TenantId.Value,
                     UserId = callContext.UserId
                 });
 
@@ -61,7 +61,8 @@ namespace BusinessLogic
         {
             using (Database db = new Database())
             {
-                return db.UserNotifications.ToList();
+              
+                return db.UserNotifications.Where(x => x.UserId == context.UserId).ToList();
             }
         }
 
@@ -82,7 +83,7 @@ namespace BusinessLogic
                 {
                     NotificationId = Guid.NewGuid(),
                     CreateDate = DateTime.UtcNow,
-                    CreateUser = callContext.UserId,
+                    CreateUser = callContext.UserLoginName,
                     UserId = input.UserId,
                     NotificationType =  input.NotificationType,
                     NotificationData = input.NotificationData
@@ -218,7 +219,7 @@ namespace BusinessLogic
                         TenantId = input.TenantId,
                         RoleCd = input.RoleCd,
                         CreateDate = DateTime.UtcNow,
-                        CreateUser = callContext.UserId
+                        CreateUser = callContext.UserLoginName
                         
                    });
 
