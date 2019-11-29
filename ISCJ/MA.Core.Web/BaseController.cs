@@ -17,7 +17,7 @@ namespace MA.Core.Web
         {
             var tenantIdClaim = HttpContext.User.Claims.SingleOrDefault(x => x.Type == AppClaimTypes.TenantId);
             Guid? tenantId = null;
-            var loginName = HttpContext.User.Claims.First(x => x.Type == ClaimTypes.Email).Value;
+            var loginName = HttpContext.User.Claims.First(x => x.Type == AppClaimTypes.LoginName).Value;
             var userId = Guid.Parse(HttpContext.User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value);
             if (!string.IsNullOrEmpty(tenantIdClaim.Value))
                 tenantId = Guid.Parse(tenantIdClaim.Value);
@@ -31,5 +31,7 @@ namespace MA.Core.Web
     {
         public const string TenantName = "TenantName";
         public const string TenantId = "TenantId";
+        public const string UserId = "UserId";
+        public const string LoginName = "LoginName";
     }
 }

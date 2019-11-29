@@ -70,7 +70,7 @@ namespace BusinessLogic
         {
             using (Database db = new Database())
             {
-                return db.UserNotifications.Count();
+                return db.UserNotifications.Count(x => x.UserId == context.UserId);
             }
         }
 

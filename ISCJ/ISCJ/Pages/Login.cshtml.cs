@@ -49,24 +49,27 @@ namespace ISCJ.Pages.Admin
                     Password = loginData.Password
                 });
 
-               if(user!=null)
+                if (user != null)
                 {
                     isValid = true;
                 }
-            
 
 
-            if (!isValid)
+
+                if (!isValid)
                 {
-                    ModelState.AddModelError<LoginModel>((x)=>x.loginData.Username, "username or password is invalid");
+                    ModelState.AddModelError<LoginModel>((x) => x.loginData.Username,
+                        "username or password is invalid");
                     return;
-                       
+
                 }
-                var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
-                
-                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()));
-                identity.AddClaim(new Claim(ClaimTypes.Email, loginData.Username));
-                identity.AddClaim(new Claim(ClaimTypes.Name,"GETNAME"));
+
+                var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name,
+                    ClaimTypes.Role);
+
+                identity.AddClaim(new Claim(AppClaimTypes.UserId, user.UserId.ToString()));
+                identity.AddClaim(new Claim(AppClaimTypes.LoginName, loginData.Username));
+                identity.AddClaim(new Claim(ClaimTypes.Name, "TBD"));
 
                 if (user.UserTenants.Count == 1)
                 {
@@ -74,23 +77,26 @@ namespace ISCJ.Pages.Admin
                     var tenant = mgr.GetUserTenants(user.UserId).First();
                     identity.AddClaim(new Claim(AppClaimTypes.TenantId, tenant.TenantId.ToString()));
                     identity.AddClaim(new Claim(AppClaimTypes.TenantName, tenant.Tenant.OrganizationName));
+
+                    mgr.AddUserLoginAudit(new CallContext(user.UserId, user.UserName, "TBD", tenant.TenantId.ToString(),
+                        tenant.TenantId));
                 }
-                else if(user.UserTenants.Count>1)
+                else if (user.UserTenants.Count > 1)
                 {
                     Response.Redirect("/selecttenant");
+
+                    mgr.AddUserLoginAudit(new CallContext(user.UserId, user.UserName, "TBD", "", null));
                 }
 
                 var principal = new ClaimsPrincipal(identity);
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = loginData.RememberMe });
-               Response.Redirect("/main");
-               mgr.AddUserLoginAudit(GetCallContext());
-        
-      }
-         
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal,
+                    new AuthenticationProperties {IsPersistent = loginData.RememberMe});
+                Response.Redirect("/main");
+            }
         }
 
         //This method generates the model key from lamba expression.
-        public void AddModelError<TModel>(Expression<Func<TModel, object>> expression, string errorMessage)
+        void AddModelError<TModel>(Expression<Func<TModel, object>> expression, string errorMessage)
         {
             ModelState.AddModelError(ExpressionHelper.GetExpressionText(expression), errorMessage);
         }
