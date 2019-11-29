@@ -8,16 +8,17 @@ namespace MA.Common.Models.api
     public class AddInvoiceTypeInput
     {
         public string InvoiceTypeName { get; set; }
+        public string InvoiceTypeDesc { get; set; }
     }
 
     public class AddInvoiceTypeOuptut
     {
         public bool Success;
-        public AddInvoiceType FailureReason { get; set; }
+        public AddInvoiceTypeFailureReason FailureReason { get; set; }
         public Guid InvoiceTypeId { get; set; }
     }
 
-    public enum AddInvoiceType
+    public enum AddInvoiceTypeFailureReason
     {
         DuplicateInvoiceTypeName,
         Other

@@ -25,10 +25,11 @@ namespace ISCJ.Pages
 
         public AddMasjidMemberShipModel()
         {
-            Products = productMgr.GetAllProducts(GetCallContext());
         }
         public void OnGet()
         {
+
+            Products = productMgr.GetAllProducts(GetCallContext());
 
         }
 
@@ -44,7 +45,12 @@ namespace ISCJ.Pages
                     ExpirationDate = ExpirationDate
                 });
 
-                Response.Redirect("Invoices");
+                Response.Redirect("Financials/InvoiceList");
+            }
+            else
+            {
+
+                Products = productMgr.GetAllProducts(GetCallContext());
             }
         }
 

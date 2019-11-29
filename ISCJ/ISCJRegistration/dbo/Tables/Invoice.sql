@@ -13,8 +13,8 @@
     [ModifiedUser]       VARCHAR (50)     NULL,
     [ModifiedDate]       DATETIME         NULL,
     [RowVersion]         ROWVERSION       NOT NULL,
-    [InvoiceTypeId] UNIQUEIDENTIFIER NOT NULL, 
-    [ReferenceId] UNIQUEIDENTIFIER NOT NULL, 
+    [InvoiceTypeId] UNIQUEIDENTIFIER NULL, 
+    [ReferenceId] VARCHAR(50) NOT NULL, 
     [ReferenceType] VARCHAR(50) NOT NULL, 
     CONSTRAINT [PK_Invoice] PRIMARY KEY CLUSTERED ([InvoiceId] ASC)
 );

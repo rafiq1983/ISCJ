@@ -24,11 +24,11 @@ namespace ISCJ.Pages.Financials
         public AddInvoiceModel()
         {
 
-            Products = productMgr.GetAllProducts(GetCallContext());
         }
         public void OnGet()
         {
 
+            Products = productMgr.GetAllProducts(GetCallContext());
         }
 
         public void OnPost()
@@ -38,7 +38,10 @@ namespace ISCJ.Pages.Financials
                 InvoiceManager invoiceMgr = new InvoiceManager();
                 invoiceMgr.CreateInvoice(GetCallContext(), GetCreateInvoiceInput());
                 Response.Redirect("InvoiceList");
+                return;
             }
+            
+            Products = productMgr.GetAllProducts(GetCallContext());
         }
 
         private CreateInvoiceInput GetCreateInvoiceInput()

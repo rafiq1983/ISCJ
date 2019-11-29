@@ -12,6 +12,7 @@ namespace MA.Common.Entities.Invoices
         public Guid InvoiceTypeId { get; set; }
         public string InvoiceTypeName { get; set; }
         public Guid TenantId { get; set; }
+        public string ShortDescription { get; set; }
     }
 
     public class Invoice:BaseEntity

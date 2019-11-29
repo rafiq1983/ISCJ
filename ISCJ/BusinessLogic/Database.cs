@@ -163,7 +163,7 @@ namespace BusinessLogic
       })
                 .Entity<InvoiceType>(entity =>
                 {
-                    entity.ToTable("InvoiceType");
+                    entity.ToTable("InvoiceTypes");
                     entity.HasKey(e => e.InvoiceTypeId);
                     
                 })

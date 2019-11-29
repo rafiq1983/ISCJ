@@ -21,7 +21,7 @@ namespace ISCJ.Pages
         public void OnGet()
         {
             UserManager mgr = new UserManager();
-            User u = mgr.GetUsersByUserName(GetCallContext().UserLoginName);
+            User u = mgr.GetUsersByLoginName(GetCallContext().UserLoginName);
            var userTenant = u.UserTenants.Single(x => x.TenantId == GetCallContext().TenantId);
 
            if(userTenant.RoleCd!="ADMIN")

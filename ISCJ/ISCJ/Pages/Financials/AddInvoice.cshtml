@@ -151,7 +151,7 @@
                             <h4 class="modal-title">Add Invoice Type</h4>
                         </div>
                         <div class="modal-body">
-                           
+
                             <div class="form-group row" id="dvInvoiceTypeAddErrors" style="display:none;">
                                 <div class="col-sm-10">
                                     <h5>Error(s)</h5>
@@ -164,7 +164,7 @@
                                 <div class="hr-line-dashed"></div>
                             </div>
 
-                           
+
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Name:</label>
 
@@ -175,7 +175,18 @@
 
                                 </div>
                             </div>
-                           
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Short Description:</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" placeholder="Invoice Type Name" class="form-control" id="invoiceTypeShortDesc" />
+
+                                    <span asp-validation-for="@Model.InvoiceAmount" class="text-danger"></span>
+
+                                </div>
+                            </div>
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-white" data-dismiss="modal">Cancel</button>
@@ -217,97 +228,99 @@
 
             $("#btnAddInvoiceType").click(function() {
                 invoiceTypeName = $("#invoiceTypeName").val();
+                invoiceTypeShortDesc = $("#invoiceTypeShortDesc").val();
 
                 //This is how you send data to single string variable in webapi.  If FromBody is set, the data must be sent as json string.
                 $.ajax({
-                    type: "POST",
-                    url: "/api/invoice/invoiceType",
-                    contentType: "application/json; charset=utf-8",
+                        type: "POST",
+                        url: "/api/invoice/invoiceType",
+                        contentType: "application/json; charset=utf-8",
 
-                    data: "'" + invoiceTypeName + "'",
-                    success: function(d) {
-                        $('#addInvoiceTypeModal').modal('hide');
-                        RefreshInvoiceTypeDropdown();
-                    },
-                    error: function(response) {
-                        alert("Error: " + JSON.parse(response.responseText));
-                    }
-                });
-                
+                        data: JSON.stringify({ "invoiceTypeName": invoiceTypeName, "invoiceTypeShortDescription": invoiceTypeShortDesc }),
+                     
+                    success:function(d) {
+                    $('#addInvoiceTypeModal').modal('hide');
+                    RefreshInvoiceTypeDropdown();
+                },
+                error: function(response) {
+                    alert("Error: " + JSON.parse(response.responseText));
+                }
             });
 
-            $(".modal1").click(function() {
-                $("#olErrors").empty();
-                $("#dvErrorsRow").css("display", "none");
-                $('.modal-body').find('input').each(function() {
-                    $(this).val("");
+        });
 
-                });
-
-                $('.modal-body').find('select').each(function() {
-                    $(this).val("1");
-
-                });
+        $(".modal1").click(function() {
+            $("#olErrors").empty();
+            $("#dvErrorsRow").css("display", "none");
+            $('.modal-body').find('input').each(function() {
+                $(this).val("");
 
             });
-            $("#btnSave").click(function() {
-                var personAddress = {
-                    AddressLine1: $("#txtstreet").val(),
-                    AddressLine2: "",
-                    City: $("#txtcity").val(),
-                    StateCode: $("#txtstate").val(),
-                    ZipCode: $("#txtzip").val(),
-                    CountryCode: ""
-                }
-                var contact = {
-                    FirstName: $("#txtfirstname").val(),
-                    LastName: $("#txtlastname").val(),
-                    Address: personAddress,
-                    HomePhone: $("#txthomephone").val(),
-                    CellPhone: $("#txtcellphone").val(),
-                    MiddleName: $("#txtmiddlename").val(),
-                    Email: $("#txtemail").val(),
-                    ContactType: $("#slContactTypes").val(),
-                    Gender: $("#slgender").val()
-                }
 
-                var AddContactInputObj = {
-                    Contact: contact
-                }
-                var p = JSON.stringify(AddContactInputObj);
-                var pagePath = window.location.origin;
-                pagePath += "/api/Contact";
-                $.ajax({
-                    type: "POST",
-                    url: pagePath,
-                    contentType: "application/json; charset=utf-8",
-                    data: p,
-                    dataType: "json",
-                    success: function(d) {
-                        $("#olErrors").empty();
-                        $('#exampleModal').find('input:text').val('');
-                        $('#exampleModal').modal('hide');
-                    },
-                    error: function(response) {
-                        $("#olErrors").empty();
-                        $("#dvErrorsRow").css("display", "block");
-                        if (response.status === 400) {
-                            $("#olErrors").empty();
-                            var errorobj = JSON.parse(response.responseText);
-                            $.each(errorobj,
-                                function(i, val) {
-                                    $("#olErrors").append($("<li>").text(val.errorMessage));
-                                });
-                        } else {
-                            alert("Error");
-                        }
-                    }
-                });
-
+            $('.modal-body').find('select').each(function() {
+                $(this).val("1");
 
             });
 
         });
+        $("#btnSave").click(function() {
+            var personAddress = {
+                AddressLine1: $("#txtstreet").val(),
+                AddressLine2: "",
+                City: $("#txtcity").val(),
+                StateCode: $("#txtstate").val(),
+                ZipCode: $("#txtzip").val(),
+                CountryCode: ""
+            }
+            var contact = {
+                FirstName: $("#txtfirstname").val(),
+                LastName: $("#txtlastname").val(),
+                Address: personAddress,
+                HomePhone: $("#txthomephone").val(),
+                CellPhone: $("#txtcellphone").val(),
+                MiddleName: $("#txtmiddlename").val(),
+                Email: $("#txtemail").val(),
+                ContactType: $("#slContactTypes").val(),
+                Gender: $("#slgender").val()
+            }
+
+            var AddContactInputObj = {
+                Contact: contact
+            }
+            var p = JSON.stringify(AddContactInputObj);
+            var pagePath = window.location.origin;
+            pagePath += "/api/Contact";
+            $.ajax({
+                type: "POST",
+                url: pagePath,
+                contentType: "application/json; charset=utf-8",
+                data: p,
+                dataType: "json",
+                success: function(d) {
+                    $("#olErrors").empty();
+                    $('#exampleModal').find('input:text').val('');
+                    $('#exampleModal').modal('hide');
+                },
+                error: function(response) {
+                    $("#olErrors").empty();
+                    $("#dvErrorsRow").css("display", "block");
+                    if (response.status === 400) {
+                        $("#olErrors").empty();
+                        var errorobj = JSON.parse(response.responseText);
+                        $.each(errorobj,
+                            function(i, val) {
+                                $("#olErrors").append($("<li>").text(val.errorMessage));
+                            });
+                    } else {
+                        alert("Error");
+                    }
+                }
+            });
+
+
+        });
+
+    });
 
         function SetupContactAutoComplete() {
 

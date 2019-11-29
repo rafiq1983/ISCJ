@@ -159,7 +159,7 @@ namespace BusinessLogic
             }
         }
 
-    public User GetUsersByUserName(string name)
+    public User GetUsersByLoginName(string name)
     {
         using (Database db = new Database())
         {

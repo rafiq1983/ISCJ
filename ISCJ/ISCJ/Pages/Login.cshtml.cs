@@ -66,10 +66,10 @@ namespace ISCJ.Pages.Admin
 
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name,
                     ClaimTypes.Role);
-
+                
                 identity.AddClaim(new Claim(AppClaimTypes.UserId, user.UserId.ToString()));
                 identity.AddClaim(new Claim(AppClaimTypes.LoginName, loginData.Username));
-                identity.AddClaim(new Claim(ClaimTypes.Name, "TBD"));
+                identity.AddClaim(new Claim(ClaimTypes.Name, user.Contact.FirstName + " " + user.Contact.LastName));
 
                 if (user.UserTenants.Count == 1)
                 {

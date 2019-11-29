@@ -27,10 +27,11 @@ namespace ISCJ.webapi
         }
 
         [HttpPost("invoiceType")]
-        public JsonResult AddInvoiceType([FromBody]string invoiceTypeName)
+        public JsonResult AddInvoiceType([FromBody]AddInvoiceType model)
         {
             InvoiceManager mgr = new InvoiceManager();
-            var output = mgr.AddInvoiceType(GetCallContext(), invoiceTypeName);
+            var output = mgr.AddInvoiceType(GetCallContext(), model.InvoiceTypeName, model.InvoiceTypeShortDescription);
+            
             return new JsonResult(output.InvoiceTypeId);
 
         }

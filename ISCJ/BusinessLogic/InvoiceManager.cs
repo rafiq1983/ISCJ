@@ -33,6 +33,8 @@ namespace BusinessLogic
                 invoice.TennantId = context.TenantId.Value;
                 invoice.CreateDate = DateTime.UtcNow;
                 invoice.ModifiedDate = null;
+                invoice.InvoiceTypeId = db.InvoiceTypes.SingleOrDefault(x => x.InvoiceTypeName == "Membership-fees")
+                    ?.InvoiceTypeId;
 
                 invoice.InvoiceItems = new List<InvoiceItem>();
                 foreach (var item in billingInstructions.Where(x => x.IsSelected))
@@ -91,7 +93,7 @@ namespace BusinessLogic
         }
 
 
-        public AddInvoiceTypeOuptut AddInvoiceType(CallContext callContext, string invoiceTypeName)
+        public AddInvoiceTypeOuptut AddInvoiceType(CallContext callContext, string invoiceTypeName, string shortDesc)
         {
             using (Database db = new Database())
             {
@@ -105,6 +107,7 @@ namespace BusinessLogic
                        InvoiceTypeId = Guid.NewGuid(),
                        InvoiceTypeName = invoiceTypeName,
                        TenantId = callContext.TenantId.Value,
+                       ShortDescription = shortDesc,
                        CreateDate = DateTime.UtcNow,
                        CreateUser = callContext.UserLoginName
 

@@ -2,7 +2,7 @@
 (
 	[InvoiceTypeId] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
     [TenantId] UNIQUEIDENTIFIER NOT NULL, 
-    [InvoiceTypeCd] VARCHAR(20) NOT NULL, 
+    [InvoiceTypeName] VARCHAR(20) NOT NULL, 
     [ShortDescription] VARCHAR(50) NOT NULL, 
     [CreateDate] DATETIME NOT NULL, 
     [CreateUser] VARCHAR(50) NOT NULL, 
