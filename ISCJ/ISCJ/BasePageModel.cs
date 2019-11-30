@@ -28,6 +28,11 @@ namespace ISCJ
             return new CallContext(userId, loginName, "TBD", tenantId?.ToString(), tenantId);
         }
 
+        protected virtual MA.Core.CallContext GetAnonymousCallContext()
+        {
+            return new CallContext(Guid.Empty, "", "TBD", "", null, "TBD");
+        }
+
         public bool HasSelectedOrganization
         {
             get

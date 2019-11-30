@@ -39,7 +39,7 @@ namespace ISCJ.Pages.Signup
 
                if (output.Success)
                {
-                    ModelState.Clear();
+                    Response.Redirect("/main");
                }
                else
                {

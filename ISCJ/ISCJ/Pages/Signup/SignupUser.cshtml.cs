@@ -33,7 +33,7 @@ namespace ISCJ.Pages.Signup
                 }
 
                 UserManager mgr = new UserManager();
-                var output = mgr.SignupUser(GetCallContext(), new NewUserSignupInput()
+                var output = mgr.SignupUser(GetAnonymousCallContext(), new NewUserSignupInput()
                 {
                      FirstName = FirstName,
                      LastName = LastName,
