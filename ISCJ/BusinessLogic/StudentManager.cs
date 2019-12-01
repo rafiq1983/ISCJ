@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MA.Common.Entities.Student;
 using MA.Common.Models.api;
+using MA.Core;
 
 namespace BusinessLogic
 {
@@ -33,6 +35,43 @@ namespace BusinessLogic
         };
 
         return output;
+    }
+
+    public void AddStudent(CallContext context, Student student)
+    {
+        using (Database db = new Database())
+        {
+            db.Students.Add(student);
+            db.SaveChanges();
+        }
+    }
+
+    public void AddStudentSubject(CallContext context, Guid studentId, Guid enrollmentId, Guid subjectId, Guid progaramId)
+    {
+        using (Database db = new Database())
+        {
+                db.StudentSubjects.Add(new StudentSubject()
+                {
+                    SubjectId = subjectId,
+                    RecordId = Guid.NewGuid(),
+                    ProgramId = progaramId, 
+                    CreateUser = context.UserLoginName,
+                    CreateDate = DateTime.UtcNow,
+                    EnrollmentId = enrollmentId,
+                    TenantId = context.TenantId.Value,
+                    StudentId = studentId
+                });
+
+            db.SaveChanges();
+        }
+    }
+
+        public Student GetStudentByContactId(CallContext context, Guid contactId)
+    {
+        using (Database db = new Database())
+        {
+            return db.Students.SingleOrDefault(x => x.ContactId == contactId);
+        }
     }
 
     }

@@ -43,6 +43,8 @@ namespace MA.Common
 
     public string StudentName { get; set; }
 
+    public Guid EnrollmentId { get; set; }
+
   }
 
 

@@ -16,6 +16,7 @@ using MA.Common.Entities.Tenants;
 using MA.Common.Models.api;
 using MA.Common.Entities.Payments;
 using MA.Common.Entities.School;
+using MA.Common.Entities.Student;
 
 namespace BusinessLogic
 {
@@ -51,12 +52,25 @@ namespace BusinessLogic
     public virtual DbSet<BillableProduct> BillableProducts { get; set; }
     public virtual DbSet<UserNotification> UserNotifications { get; set; }
     public virtual DbSet<ProgramDetail> Programs { get; set; }
-
+    public virtual DbSet<Student> Students { get; set; }
+    public virtual DbSet<StudentSubject> StudentSubjects { get; set; }
     public virtual DbSet<Contact> Contacts { get; set; }
 
         public DbSet<FinancialAccount> FinancialAccounts { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Student>(entity =>
+        {
+            entity.HasKey(x => x.StudentId);
+            entity.ToTable("Student");
+        });
+
+        modelBuilder.Entity<StudentSubject>(entity =>
+        {
+            entity.HasKey(x => x.RecordId);
+        });
+
+
             modelBuilder.Entity<CashPayment>(entity =>
             {
                 entity.HasKey(x => x.PaymentId);

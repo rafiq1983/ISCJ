@@ -18,6 +18,14 @@ namespace MA.Common.Models.api
         public string ClassGrade { get; set; }
     }
 
+    public class AddStudentInput
+    {
+        public Guid FatherId { get; set; }
+        public Guid MotherId { get; set; }
+        public Guid? EmergencyContactId { get; set; }
+        public Guid ContactId { get; set; }
+    }
+
     public class StudentDetail
     {
         public StudentBasicInfo BasicInfo { get; set; }

@@ -10,6 +10,8 @@ using System.Transactions;
 using FluentValidation.Results;
 using MA.Common.Entities.MasjidMembership;
 using MA.Common.Entities.Product;
+using MA.Common.Entities.School;
+using MA.Common.Entities.Student;
 using MA.Common.Models.api;
 using MA.Core;
 
@@ -64,14 +66,61 @@ namespace BusinessLogic
     {
             using (TransactionScope scope = new TransactionScope())
             {
-                var registrationApplicationId = SaveRegistrationApplication(context, input);
+                var registrationApplication = SaveRegistrationApplication(context, input);
                 AddMembershipIfNeeded(context, input);
-                PerformBilling(context, input.BillingInstructions, registrationApplicationId,
+                PerformBilling(context, input.BillingInstructions, registrationApplication.ApplicationId,
                     ReferenceType.RegistrationApplication);
+
+                
+                AddStudentSubjects(context, input, registrationApplication);
+
+               
                 scope.Complete();
-                return new CreateRegistrationApplicationOutput() { ApplicationId = registrationApplicationId};
+                return new CreateRegistrationApplicationOutput() { ApplicationId = registrationApplication.ApplicationId};
             }
     }
+
+    private void AddStudentSubjects(CallContext context, CreateRegistrationApplicationInput input, RegistrationApplication app)
+    {
+        StudentManager mgr = new StudentManager();
+            
+        foreach (var reg in input.StudentRegistrations)
+        {
+            if (reg.StudentId.HasValue == false)
+                continue;
+            var student = mgr.GetStudentByContactId(context, reg.StudentId.Value);
+
+            if (student == null)
+            {
+                mgr.AddStudent(context, new Student()
+                {
+                    StudentId = reg.StudentId.Value,
+                    ContactId = reg.StudentId.Value,
+                    FatherContactId = input.FatherId.Value,
+                    MotherContactId = input.MotherId.Value,
+                    CreateDate = DateTime.UtcNow,
+                    CreateUser = context.UserLoginName,
+                    TenantId = context.TenantId.Value
+
+                });
+            }
+
+            //Add subjects.
+            CourseManager courseManager = new CourseManager();
+
+            List<SubjectMapping> subjectMappings = 
+                courseManager.GetSubjectByProgramAndIslamicGradeId(context, input.ProgramId.Value, reg.IslamicSchoolGrade);
+
+            foreach (var subject in subjectMappings)
+            {
+                var enrollmentId = app.Enrollments.SingleOrDefault(x => x.StudentContactId == reg.StudentId).EnrollmentId;
+
+                mgr.AddStudentSubject(context, reg.StudentId.Value, enrollmentId, subject.SubjectId, input.ProgramId.Value);
+            }
+        }
+
+    }
+
 
     public List<RegistrationApplication> GetAllApplications(CallContext context, Guid programId)
     {
@@ -176,7 +225,7 @@ namespace BusinessLogic
             }
         }
 
-        private Guid SaveRegistrationApplication(CallContext context, CreateRegistrationApplicationInput input)
+        private RegistrationApplication SaveRegistrationApplication(CallContext context, CreateRegistrationApplicationInput input)
                 {
             using (var db = new Database())
             {   
@@ -217,7 +266,7 @@ namespace BusinessLogic
                 db.RegistrationApplications.Add(application);
                                 
                 db.SaveChanges();
-                return application.ApplicationId;
+                return application;
             }
 
         }

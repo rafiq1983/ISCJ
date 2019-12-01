@@ -168,6 +168,18 @@ namespace BusinessLogic
 
         }
 
+        public List<SubjectMapping> GetSubjectByProgramAndIslamicGradeId(CallContext context, Guid programId,
+            string islamicGradeId)
+        {
+            using (var db = new Database())
+            {
+                return db.SubjectMappings.Where(x =>
+                        x.TenantId == context.TenantId && x.IslamicSchoolGradeId == islamicGradeId &&
+                        x.ProgramId == programId)
+                    .ToList();
+            }
+        }
+
         public SubjectMapping GetSubjectMappings(CallContext context, Guid subjectId)
         {
             using (var db = new Database())
