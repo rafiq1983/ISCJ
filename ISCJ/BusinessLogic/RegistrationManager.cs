@@ -71,8 +71,8 @@ namespace BusinessLogic
                 PerformBilling(context, input.BillingInstructions, registrationApplication.ApplicationId,
                     ReferenceType.RegistrationApplication);
 
-                
-                AddStudentSubjects(context, input, registrationApplication);
+                if(input.AutoAssignSubjects)
+                    AddStudentSubjects(context, input, registrationApplication);
 
                
                 scope.Complete();
