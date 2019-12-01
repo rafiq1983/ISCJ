@@ -17,6 +17,43 @@
 <form method="post" name="frmRegister2">
     <div class="wrapper wrapper-content">
         <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group  row">
+                    <label class="col-sm-2 col-form-label">Program</label>
+
+                    <div class="col-sm-10">
+                        <select asp-for="@Model.ProgramId" class="form-control"
+                                asp-items="@Model.Programs">
+                            <option value="">Please select one</option>
+                        </select>
+                        <span asp-validation-for="@Model.ProgramId" class="text-danger"></span>
+
+                    </div>
+                    
+                    <label class="col-sm-2 col-form-label">Student</label>
+
+                    <div class="col-sm-10">
+                        <select asp-for="@Model.StudentId" class="form-control"
+                                asp-items="@Model.Students">
+                            <option value="">Please select one</option>
+                        </select>
+                        <span asp-validation-for="@Model.StudentId" class="text-danger"></span>
+
+                    </div>
+
+                </div>
+
+      
+                <div class="form-group row" style="text-align:right">
+                    <div class="col-sm-12 col-sm-offset-2">
+                       <button class="btn btn-primary btn-sm" type="submit" asp-page-handler="Load">Load</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
             <div class="col-lg-3">
                 <div class="ibox ">
                     <div class="ibox-title">
@@ -234,6 +271,7 @@
                                 <table class="table table-hover no-margins">
                                     <thead>
                                         <tr>
+                                            <th>Subject Id</th>
                                             <th>Status</th>
                                             <th>Date</th>
                                             <th>User</th>
@@ -241,48 +279,18 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td><small>Pending...</small></td>
-                                            <td><i class="fa fa-clock-o"></i> 11:20pm</td>
-                                            <td>Samantha</td>
-                                            <td class="text-navy"> <i class="fa fa-level-up"></i> 24% </td>
-                                        </tr>
-                                        <tr>
-                                            <td><span class="label label-warning">Canceled</span> </td>
-                                            <td><i class="fa fa-clock-o"></i> 10:40am</td>
-                                            <td>Monica</td>
-                                            <td class="text-navy"> <i class="fa fa-level-up"></i> 66% </td>
-                                        </tr>
-                                        <tr>
-                                            <td><small>Pending...</small> </td>
-                                            <td><i class="fa fa-clock-o"></i> 01:30pm</td>
-                                            <td>John</td>
-                                            <td class="text-navy"> <i class="fa fa-level-up"></i> 54% </td>
-                                        </tr>
-                                        <tr>
-                                            <td><small>Pending...</small> </td>
-                                            <td><i class="fa fa-clock-o"></i> 02:20pm</td>
-                                            <td>Agnes</td>
-                                            <td class="text-navy"> <i class="fa fa-level-up"></i> 12% </td>
-                                        </tr>
-                                        <tr>
-                                            <td><small>Pending...</small> </td>
-                                            <td><i class="fa fa-clock-o"></i> 09:40pm</td>
-                                            <td>Janet</td>
-                                            <td class="text-navy"> <i class="fa fa-level-up"></i> 22% </td>
-                                        </tr>
-                                        <tr>
-                                            <td><span class="label label-primary">Completed</span> </td>
-                                            <td><i class="fa fa-clock-o"></i> 04:10am</td>
-                                            <td>Amelia</td>
-                                            <td class="text-navy"> <i class="fa fa-level-up"></i> 66% </td>
-                                        </tr>
-                                        <tr>
-                                            <td><small>Pending...</small> </td>
-                                            <td><i class="fa fa-clock-o"></i> 12:08am</td>
-                                            <td>Damian</td>
-                                            <td class="text-navy"> <i class="fa fa-level-up"></i> 23% </td>
-                                        </tr>
+                                        @foreach (var studnetSubject in Model.StudentSubjects)
+                                        {
+                                            <tr>
+                                                <td>@studnetSubject.SubjectId</td>
+                                                <td><small>Pending...</small></td>
+                                                <td><i class="fa fa-clock-o"></i> 11:20pm</td>
+                                                <td>Samantha</td>
+                                                <td class="text-navy"> <i class="fa fa-level-up"></i> 24% </td>
+                                            </tr>
+                                        }
+
+
                                     </tbody>
                                 </table>
                             </div>

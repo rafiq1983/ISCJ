@@ -17,8 +17,9 @@ namespace MA.Common.Entities.School
 
         public Guid TenantId { get; set; }
 
-        
+        //public TeacherSubjectMapping TeacherSubjectMapping;
     }
+
 
     public class SubjectMapping : BaseEntity
     {
@@ -32,6 +33,8 @@ namespace MA.Common.Entities.School
         public Subject Subject { get; set; }
 
         [ForeignKey("ProgramId")] public ProgramDetail Program { get; set; }
+        
+       
     }
 
 

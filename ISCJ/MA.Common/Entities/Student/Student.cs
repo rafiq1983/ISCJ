@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using MA.Common.Entities.Registration;
 
 namespace MA.Common.Entities.Student
 {
@@ -12,6 +14,8 @@ namespace MA.Common.Entities.Student
         public Guid MotherContactId { get; set; }
         public Guid EmergencyContactId { get; set; }
         public Guid TenantId { get; set; }
+        [ForeignKey("StudentContactId")]
+        public List<Enrollment> Enrollments { get; set; }
     }
 
     public class StudentSubject : BaseEntity

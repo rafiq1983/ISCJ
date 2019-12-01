@@ -81,8 +81,13 @@ namespace BusinessLogic
 
             modelBuilder.Entity<SubjectMapping>(entity =>
             {
-                entity.HasKey(x => x.SubjectId);
-                entity.HasKey(x => x.ProgramId);
+                //Define composite keys like this, otherwise EF will return same record twice when deserializing 
+                //data from DB.
+                entity.HasKey(x =>
+                    new {
+                        x.ProgramId,
+                        x.SubjectId
+                    });
                 entity.ToTable("SubjectMapping");
                 });
 

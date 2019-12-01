@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MA.Common.Entities.Registration;
 using MA.Common.Entities.Student;
 using MA.Common.Models.api;
 using MA.Core;
+using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic
 {
@@ -16,12 +18,32 @@ namespace BusinessLogic
 
     }
 
-    public GetStudentListOutput GetStudentList(Guid programId)
+    public List<Student> GetStudentList(CallContext context, Guid? programId)
     {
         var output = new GetStudentListOutput();
-        output.Students = new List<StudentBasicInfo>();
-        output.Students.Add(new StudentBasicInfo(){ClassGrade = "1", DOB = DateTime.MaxValue, FirstName = "Test First", LastName = "Test Last"});
-        return output;
+
+        using (Database db = new Database())
+        {
+           var querable = db.Students.Where(x => x.TenantId == context.TenantId);
+
+           if (programId != null && programId.Value !=Guid.Empty)
+           {
+               //TODO: Have to join with enrollments where programid = input program id.
+              // querable = querable.Join(db.Enrollments).Where((Enrollment x) => x.ProgramId == programId.Value);
+           }
+
+           return querable.ToList();
+        }
+    }
+
+    public List<StudentSubject> GetStudentSubjects(CallContext context, Guid studentId)
+    {
+        using (Database db = new Database())
+        {
+            return db.StudentSubjects.Where(x => x.StudentId == studentId && x.TenantId == context.TenantId).ToList();
+
+
+        }
     }
 
     public GetStudentDetail GetStudentDetail(Guid studentId)

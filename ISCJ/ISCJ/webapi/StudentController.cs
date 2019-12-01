@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using BusinessLogic;
+using MA.Common.Entities.Student;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MA.Common.Models.api;
@@ -31,20 +32,20 @@ namespace ISCJ.webapi
         /// <returns></returns>
         [Route("{programId}")]
         [HttpGet()]
-        public ActionResult<List<StudentBasicInfo>> GetStudentsListByProgamId(Guid programId)
+        public ActionResult<List<Student>> GetStudentsListByProgamId(Guid programId)
         {
-            var output = _studentManager.GetStudentList(programId);
-            return Ok(output.Students);
+            var output = _studentManager.GetStudentList(GetCallContext(), programId);
+            return Ok(output);
         }
 
        
-        [HttpGet()]
+      /*  [HttpGet()]
         public ActionResult<List<StudentBasicInfo>> GetStudentsList([FromQuery]string filterParams)
         {
             var output = _studentManager.GetStudentList(Guid.Empty);
             return Ok(output.Students);
         }
-
+        */
         [Route("detail/{studentId}")]
         [HttpGet()]
         [ProducesResponseType(typeof(StudentDetail), 200)]

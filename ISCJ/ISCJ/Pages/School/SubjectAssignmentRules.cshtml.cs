@@ -14,22 +14,27 @@ namespace ISCJ.Pages.School
 {
     public class SubjectAssignmentRulesModel : BasePageModel
     {
+
+        private List<SubjectMapping> _subjectMappings = null;
+
         public void OnGet()
         {
 
+            LoadSubjectMappings();
+
         }
 
-        private List<SubjectMapping> _subjectMappings = null;
+        private void LoadSubjectMappings()
+        {
+            CourseManager mgr = new CourseManager();
+            _subjectMappings = mgr.GetSubjectGradeMappings(GetCallContext());
+        }
+
         public List<SubjectMapping> SubjectMappings
         {
             get
             {
-               // if (_subjectMappings == null)
-                {
-                    CourseManager mgr = new CourseManager();
-                    _subjectMappings = mgr.GetSubjectGradeMappings(GetCallContext());
-                }
-
+              
                 return _subjectMappings;
 
             }
@@ -73,6 +78,10 @@ namespace ISCJ.Pages.School
                 CourseManager mgr = new CourseManager();
                 mgr.AddSubjectMapping(GetCallContext(), ProgramId.Value, SubjectId.Value, IslamicSchoolGradeId);
             }
+
+            LoadSubjectMappings();
+            
+
         }
 
         private void PerformValidation()
