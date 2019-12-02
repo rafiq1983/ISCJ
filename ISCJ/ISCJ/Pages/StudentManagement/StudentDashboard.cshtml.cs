@@ -39,7 +39,7 @@ namespace ISCJ.Pages.StudentManagement
         {
             StudentManager mgr = new StudentManager();
             Students = mgr.GetStudentList(GetCallContext(), ProgramId)
-                .Select(x => new SelectListItem(x.StudentId.ToString(), x.StudentId.ToString())).ToList();
+                .Select(x => new SelectListItem(GetContactName(x.StudentContact), x.StudentId.ToString())).ToList();
         }
 
         private void LoadPrograms()

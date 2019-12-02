@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using MA.Common.Entities.Contacts;
 using MA.Common.Entities.Registration;
 
 namespace MA.Common.Entities.Student
@@ -16,6 +17,8 @@ namespace MA.Common.Entities.Student
         public Guid TenantId { get; set; }
         [ForeignKey("StudentContactId")]
         public List<Enrollment> Enrollments { get; set; }
+
+        public Contact StudentContact { get; set; }
     }
 
     public class StudentSubject : BaseEntity
@@ -26,5 +29,6 @@ namespace MA.Common.Entities.Student
         public Guid SubjectId { get; set; }
         public Guid ProgramId { get; set; }
         public Guid TenantId { get; set; }
+         
     }
 }

@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using BusinessLogic;
 using MA.Common;
+using MA.Common.Entities.Contacts;
 using MA.Common.Entities.User;
 using MA.Core;
 using MA.Core.Web;
@@ -15,6 +16,10 @@ namespace ISCJ
 {
     public class BasePageModel:PageModel
     {
+        public string GetContactName(Contact c)
+        {
+            return c.FirstName + " " + c.LastName;
+        }
         protected virtual MA.Core.CallContext GetCallContext()
         {
             

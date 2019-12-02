@@ -24,7 +24,7 @@ namespace BusinessLogic
 
         using (Database db = new Database())
         {
-           var querable = db.Students.Where(x => x.TenantId == context.TenantId);
+           var querable = db.Students.Include(x=>x.StudentContact).Where(x => x.TenantId == context.TenantId);
 
            if (programId != null && programId.Value !=Guid.Empty)
            {
