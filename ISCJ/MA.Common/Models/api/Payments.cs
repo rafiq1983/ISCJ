@@ -13,18 +13,27 @@ namespace MA.Common.Models.api
         public PaymentMethod PaymentMethod { get; set; }
         public DateTime PaymentDate { get; set; }
         public CheckPaymentDetail CheckPaymentDetail { get; set; }
-        
+        public CreditCardPaymentDetail CardPaymentDetail { get; set; }
+        public string PaymentNote { get; set; }
+        public Guid PaymentMadeByContactId { get; set; }
+
     }
 
     public class CheckPaymentDetail
     {
         public string CheckNumber { get; set; }
-        public DateTime CheckDate { get; set; }
-
+        public DateTime CheckCashDate { get; set; }
         public string NameOnCheck { get; set; }
         public string CheckBankName { get; set; }
-
         public string CheckAccountNumber { get; set; }
+    }
+
+    public class CreditCardPaymentDetail
+    {
+        public string ConfirmationNumber { get; set; }
+        public string Last4Digit { get; set; }
+        public CardType CardType{ get; set; }
+        
     }
 
     public class CreatePaymentOutput

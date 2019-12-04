@@ -31,6 +31,11 @@ namespace MA.Common.Entities.Payments
         Cash, CreditCard, Check
     }
 
+    public enum CardType
+    {
+        Visa, MasterCard, Discovery
+    }
+
     public class CheckPayment:Payment
     {
         public string CheckNumber { get; set; }

@@ -29,7 +29,7 @@ namespace BusinessLogic
                     //pmt.PaymentMethod = input.PaymentMethod;
                     pmt.CheckAccountNumber = input.CheckPaymentDetail.CheckAccountNumber;
                     pmt.CheckBankName = input.CheckPaymentDetail.CheckBankName;
-                    pmt.CheckDate = input.CheckPaymentDetail.CheckDate;
+                    pmt.CheckDate = input.CheckPaymentDetail.CheckCashDate;
                     pmt.CheckNumber = input.CheckPaymentDetail.CheckNumber;
                     pmt.NameOnCheck = input.CheckPaymentDetail.NameOnCheck;
                     pmt.CreateDate = DateTime.UtcNow;
