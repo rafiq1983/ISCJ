@@ -3,6 +3,7 @@ using MA.Common.Models.api;
 using MA.Core;
 using System;
 using System.Collections.Generic;
+using System.IO.Pipes;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
@@ -22,40 +23,61 @@ namespace BusinessLogic
                 {
                     var pmt = new CheckPayment();
                     pmt.FinancialAccountId = input.FinancialAccountId;
-                    pmt.PayerId = Guid.Empty;
+                    pmt.PayorId = input.PaymentMadeByContactId;
                     pmt.PaymentAmount = input.PaymentAmount;
                     pmt.PaymentDate = input.PaymentDate;
                     pmt.PaymentId = Guid.NewGuid();
-                    //pmt.PaymentMethod = input.PaymentMethod;
                     pmt.CheckAccountNumber = input.CheckPaymentDetail.CheckAccountNumber;
                     pmt.CheckBankName = input.CheckPaymentDetail.CheckBankName;
-                    pmt.CheckDate = input.CheckPaymentDetail.CheckDate;
+                    pmt.CheckDate = input.CheckPaymentDetail.CheckCashDate;
                     pmt.CheckNumber = input.CheckPaymentDetail.CheckNumber;
                     pmt.NameOnCheck = input.CheckPaymentDetail.NameOnCheck;
+                    pmt.PaymentNote = input.PaymentNote;
                     pmt.CreateDate = DateTime.UtcNow;
                     pmt.CreateUser = context.UserLoginName;
+                    pmt.TenantId = context.TenantId.Value;
+                    pmt.CheckCashableDate = input.CheckPaymentDetail.CheckCashDate;
                     db.CheckPayments.Add(pmt);
+
                     db.SaveChanges();
                     return new CreatePaymentOutput() { PaymentId = pmt.PaymentId };
                 }
-                else if(input.PaymentMethod == PaymentMethod.Cash)
+                else if(input.PaymentMethod == PaymentMethod.CreditCard)
+                {
+                    var pmt = new CreditCardPayment();
+                    pmt.FinancialAccountId = input.FinancialAccountId;
+                    pmt.PayorId = input.PaymentMadeByContactId;
+                    pmt.PaymentAmount = input.PaymentAmount;
+                    pmt.PaymentDate = input.PaymentDate;
+                    pmt.PaymentId = Guid.NewGuid();
+                    pmt.CardType = input.CardPaymentDetail.CardType;
+                    pmt.GatewayName = input.CardPaymentDetail.GatewayName;
+                    pmt.ConfirmationNumber = input.CardPaymentDetail.ConfirmationNumber;
+                    pmt.AuthorizationCode = input.CardPaymentDetail.AuthorizationCode;
+                    pmt.Last4Digits = input.CardPaymentDetail.Last4Digit;
+                    pmt.PaymentNote = input.PaymentNote;
+                    pmt.CreateDate = DateTime.UtcNow;
+                    pmt.CreateUser = context.UserLoginName;
+                    pmt.TenantId = context.TenantId.Value;
+                    db.CreditCardPayments.Add(pmt);
+                    db.SaveChanges();
+                    return new CreatePaymentOutput() { PaymentId = pmt.PaymentId };
+                }
+                else 
                 {
                     var pmt = new CashPayment();
                     pmt.FinancialAccountId = input.FinancialAccountId;
-                    pmt.PayerId = Guid.Empty;
+                    pmt.PayorId = input.PaymentMadeByContactId;
                     pmt.PaymentAmount = input.PaymentAmount;
                     pmt.PaymentDate = input.PaymentDate;
                     pmt.PaymentId = Guid.NewGuid();
-                    //pmt.PaymentMethod = input.PaymentMethod;
                     pmt.CreateDate = DateTime.UtcNow;
                     pmt.CreateUser = context.UserLoginName;
+                    pmt.TenantId = context.TenantId.Value;
+                    pmt.PaymentNote = input.PaymentNote;
                     db.CashPayments.Add(pmt);
                     db.SaveChanges();
                     return new CreatePaymentOutput() { PaymentId = pmt.PaymentId };
-                }
-                else
-                {
-                    return new CreatePaymentOutput() { Success = false };
                 }
             }
         }

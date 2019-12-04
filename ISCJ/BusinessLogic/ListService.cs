@@ -8,8 +8,43 @@ namespace BusinessLogic
 {
   public class ListService
   {
-      
-    public static List<SchoolGrade> GetIslamicSchoolGradesList()
+
+      public static List<KeyValuePair<string, string>> GetPaymentMethods()
+      {
+         List<KeyValuePair<string, string>> methods = new List<KeyValuePair<string, string>>()
+          {
+              new KeyValuePair<string, string>("Cash", "Cash"), new KeyValuePair<string, string>("Check", "Check"),
+              new KeyValuePair<string, string>("CreditCard", "Credit Card")
+
+          };
+
+         return methods;
+      }
+
+      public static List<KeyValuePair<string, string>> GetCardBrands()
+      {
+          List<KeyValuePair<string, string>> methods = new List<KeyValuePair<string, string>>()
+          {
+              new KeyValuePair<string, string>("Visa", "Visa"), new KeyValuePair<string, string>("MasterCard", "MasterCard"),
+              new KeyValuePair<string, string>("Discovery", "Discovery")
+
+          };
+
+          return methods;
+      }
+
+      public static List<KeyValuePair<string, string>> GetCardTypes()
+      {
+          List<KeyValuePair<string, string>> methods = new List<KeyValuePair<string, string>>()
+          {
+              new KeyValuePair<string, string>("Credit", "Credit"), new KeyValuePair<string, string>("Debit", "Debit")
+          };
+
+          return methods;
+      }
+
+
+        public static List<SchoolGrade> GetIslamicSchoolGradesList()
     {
       
       if (CacheService.GetData(CacheService.IslamicSchoolGradeListKey) == null)

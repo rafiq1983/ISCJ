@@ -20,6 +20,7 @@ namespace ISCJ
         {
             return c.FirstName + " " + c.LastName;
         }
+
         protected virtual MA.Core.CallContext GetCallContext()
         {
             
@@ -30,12 +31,12 @@ namespace ISCJ
             if (tenantIdClaim!=null)
                 tenantId = Guid.Parse(tenantIdClaim.Value);
 
-            return new CallContext(userId, loginName, "TBD", tenantId?.ToString(), tenantId);
+            return new CallContext(userId, loginName,Request.HttpContext.Connection.RemoteIpAddress.ToString(), tenantId?.ToString(), tenantId);
         }
 
         protected virtual MA.Core.CallContext GetAnonymousCallContext()
         {
-            return new CallContext(Guid.Empty, "", "TBD", "", null, "TBD");
+            return new CallContext(Guid.Empty, "", Request.HttpContext.Connection.RemoteIpAddress.ToString(), "", null, "TBD");
         }
 
         public bool HasSelectedOrganization

@@ -7,7 +7,7 @@
     [CheckBankName]      VARCHAR (50)     NOT NULL,
     [RowVersion]         ROWVERSION       NOT NULL,
     [CheckImage]         VARBINARY (MAX)  NULL,
-    [PayerId]            UNIQUEIDENTIFIER NULL,
+    [PayorId]            UNIQUEIDENTIFIER NULL,
     [PaymentDate]        DATETIME         NOT NULL,
     [PaymentAmount]      DECIMAL (18)     NOT NULL,
     [FinancialAccountId] UNIQUEIDENTIFIER NOT NULL,
@@ -17,6 +17,8 @@
     [CreateUser]         VARCHAR (50)     NOT NULL,
     [ModifiedDate]       DATETIME         NULL,
     [ModifiedUser]       DATETIME         NULL, 
-    [TenantId] UNIQUEIDENTIFIER NOT NULL
+    [TenantId] UNIQUEIDENTIFIER NOT NULL, 
+    [CheckCashableDate] DATETIME NOT NULL,
+	[PaymentNote] VARCHAR(500) NOT NULL
 );
 

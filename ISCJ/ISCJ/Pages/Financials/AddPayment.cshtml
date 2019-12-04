@@ -1,0 +1,394 @@
+﻿@page
+@model ISCJ.Pages.Financials.AddPaymentModel
+
+
+@{
+    ViewData["Title"] = "Contacts";
+    Layout = "~/Pages/Shared/_LayoutModern.cshtml";
+
+}
+
+<style>
+
+    #olErrors li {
+        color: red;
+    }
+</style>
+<div asp-validation-summary="All"></div>
+<form method="post" name="frmMembershipCreate">
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-9">
+            <h2>Add Invoice</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    Financials
+                </li>
+                <li class="active breadcrumb-item">
+                    <strong>Add Payment</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+
+        <div class="row">
+            <div class="col-lg-12">
+
+
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <h5>Add Payment</h5>
+
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <div class="form-group  row">
+                            <label class="col-sm-2 col-form-label">Payment Made By</label>
+                            <div class="col-sm-10">
+                                <input type="text" placeholder="Type contact name here" autocomplete="off"
+                                       data-url="@Url.Content("~/api/Contact/Search")" data-target-id="ContactId"
+                                       class="autocomplete form-control" asp-for="@Model.Name" />
+
+                                <input type="hidden" asp-for="@Model.ContactId" />
+                                <span asp-validation-for="@Model.ContactId" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group  row">
+                            <label class="col-sm-2 col-form-label">Amount</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" placeholder="Invoice Amount" class="form-control" asp-for="@Model.PaymentAmount" />
+
+                                <span asp-validation-for="@Model.PaymentAmount" class="text-danger"></span>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group  row">
+                            <label class="col-sm-2 col-form-label">Payment Note</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" placeholder="Payment Note" class="form-control" asp-for="@Model.PaymentNote" maxlength="300" />
+                                <span asp-validation-for="@Model.PaymentNote" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group  row">
+                            <label class="col-sm-2 col-form-label">Payment Date</label>
+
+                            <div class="col-sm-10">
+                                <input type="date" placeholder="Payment Date" class="form-control" asp-for="@Model.PaymentDate" />
+
+                                <span asp-validation-for="@Model.PaymentDate" class="text-danger"></span>
+
+                            </div>
+                        </div>
+                        <div class="form-group  row">
+
+                            <label class="col-sm-2 col-form-label">Payment Method</label>
+                            <div class="col-sm-10">
+                                <select asp-for="@Model.PaymentMethod" class="form-control m-b" asp-items="@Model.PaymentMethods">
+                                    <option value="">--Select--</option>
+                                </select>
+                                <span asp-validation-for="@Model.PaymentMethod" class="text-danger"></span>
+
+                            </div>
+                        </div>
+
+                        <div id="checkDetailsSection">
+
+                            <div class="form-group  row">
+
+                                <label class="col-sm-2 col-form-label">Name on Check</label>
+                                <div class="col-sm-10">
+                                    <input type="text" placeholder="Name On Check" class="form-control" asp-for="@Model.NameOnCheck" />
+                                    <span asp-validation-for="@Model.NameOnCheck" class="text-danger"></span>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group  row">
+
+                                <label class="col-sm-2 col-form-label">Bank Name</label>
+                                <div class="col-sm-10">
+                                    <input type="text" placeholder="Bank Name" class="form-control" asp-for="@Model.CheckBankName" />
+                                    <span asp-validation-for="@Model.CheckBankName" class="text-danger"></span>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group  row">
+
+                                <label class="col-sm-2 col-form-label">Check Number</label>
+                                <div class="col-sm-10">
+                                    <input type="text" placeholder="Check Number" class="form-control" asp-for="@Model.CheckNumber" />
+                                    <span asp-validation-for="@Model.CheckNumber" class="text-danger"></span>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group  row">
+
+                                <label class="col-sm-2 col-form-label">Check Account Number</label>
+                                <div class="col-sm-10">
+                                    <input type="text" placeholder="Account Number" class="form-control" asp-for="@Model.CheckAccountNumber" />
+                                    <span asp-validation-for="@Model.CheckAccountNumber" class="text-danger"></span>
+
+                                </div>
+                            </div>
+                            <div class="form-group  row">
+
+                                <label class="col-sm-2 col-form-label">Check Cashable Date</label>
+                                <div class="col-sm-10">
+                                    <input type="text" placeholder="Check Cashable Date" class="form-control" asp-for="@Model.CheckCashableDate" />
+                                    <span asp-validation-for="@Model.CheckCashableDate" class="text-danger"></span>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div id="cardDetailsSection">
+                            <div class="form-group  row">
+
+                                <label class="col-sm-2 col-form-label">Confirmation Number</label>
+                                <div class="col-sm-10">
+                                    <input type="text" placeholder="Confirmation Number" class="form-control" asp-for="@Model.GatewayConfirmationNumber" />
+                                    <span asp-validation-for="@Model.GatewayConfirmationNumber" class="text-danger"></span>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group  row">
+
+                                <label class="col-sm-2 col-form-label">Gateway Name</label>
+                                <div class="col-sm-10">
+                                    <input type="text" placeholder="Gateway name" class="form-control" asp-for="@Model.GatewayName" />
+                                    <span asp-validation-for="@Model.GatewayName" class="text-danger"></span>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group  row">
+
+                                <label class="col-sm-2 col-form-label">Authorization Code</label>
+                                <div class="col-sm-10">
+                                    <input type="text" placeholder="Authorization Code" class="form-control" asp-for="@Model.AuthorizationCode" />
+                                    <span asp-validation-for="@Model.AuthorizationCode" class="text-danger"></span>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group  row">
+
+                                <label class="col-sm-2 col-form-label">Card Type</label>
+                                <div class="col-sm-10">
+                                    <select asp-for="@Model.CardType" class="form-control m-b" asp-items="@Model.CardTypes">
+                                        <option value="Unknown">--select--</option>
+                                    </select>
+                                    <span asp-validation-for="@Model.CardType" class="text-danger"></span>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group  row">
+
+                                <label class="col-sm-2 col-form-label">Card Brand</label>
+                                <div class="col-sm-10">
+                                    <select asp-for="@Model.CardBrand" class="form-control m-b" asp-items="@Model.CardBrands">
+                                        <option value="Unknown">--select--</option>
+                                    </select>
+                                    <span asp-validation-for="@Model.CardBrand" class="text-danger"></span>
+
+                                </div>
+                            </div>
+
+                            <div class="hr-line-dashed"></div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group row" style="text-align:right">
+                    <div class="col-sm-12 col-sm-offset-2">
+                        <button class="btn btn-white btn-sm" type="submit" asp-page-handler="Cancel">Cancel</button>
+
+                        <button class="btn btn-white btn-sm" type="submit" asp-page-handler="Reset">Reset</button>
+
+                        <button class="btn btn-primary btn-sm" type="submit" asp-page-handler="Save">Save</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts
+{
+    <script src="https://cdn.rawgit.com/xcash/bootstrap-autocomplete/v2.0.0/dist/latest/bootstrap-autocomplete.min.js"></script>
+
+    <script language="javascript">
+        function SetPaymentSectionVisibility() {
+            var paymentMethodVal = $("#PaymentMethod").val();
+            if (paymentMethodVal == "Cash") {
+                $("#checkDetailsSection").addClass("d-none");
+                $("#cardDetailsSection").addClass("d-none");
+            }
+            else if (paymentMethodVal == "Check") {
+                $("#checkDetailsSection").removeClass("d-none");
+                $("#cardDetailsSection").addClass("d-none");
+            }
+            else if (paymentMethodVal == "CreditCard") {
+                $("#checkDetailsSection").addClass("d-none");
+                $("#cardDetailsSection").removeClass("d-none");
+            }
+
+        }
+        $("document").ready(function() {
+            SetupContactAutoComplete();
+            SetPaymentSectionVisibility();
+
+            $("#PaymentMethod").change(function () {
+               
+                SetPaymentSectionVisibility();
+            });
+
+
+            $("#btnSave").click(function() {
+                var personAddress = {
+                    AddressLine1: $("#txtstreet").val(),
+                    AddressLine2: "",
+                    City: $("#txtcity").val(),
+                    StateCode: $("#txtstate").val(),
+                    ZipCode: $("#txtzip").val(),
+                    CountryCode: ""
+                }
+                var contact = {
+                    FirstName: $("#txtfirstname").val(),
+                    LastName: $("#txtlastname").val(),
+                    Address: personAddress,
+                    HomePhone: $("#txthomephone").val(),
+                    CellPhone: $("#txtcellphone").val(),
+                    MiddleName: $("#txtmiddlename").val(),
+                    Email: $("#txtemail").val(),
+                    ContactType: $("#slContactTypes").val(),
+                    Gender: $("#slgender").val()
+                }
+
+                var AddContactInputObj = {
+                    Contact: contact
+                }
+                var p = JSON.stringify(AddContactInputObj);
+                var pagePath = window.location.origin;
+                pagePath += "/api/Contact";
+                $.ajax({
+                    type: "POST",
+                    url: pagePath,
+                    contentType: "application/json; charset=utf-8",
+                    data: p,
+                    dataType: "json",
+                    success: function(d) {
+                        $("#olErrors").empty();
+                        $('#exampleModal').find('input:text').val('');
+                        $('#exampleModal').modal('hide');
+                    },
+                    error: function(response) {
+                        $("#olErrors").empty();
+                        $("#dvErrorsRow").css("display", "block");
+                        if (response.status === 400) {
+                            $("#olErrors").empty();
+                            var errorobj = JSON.parse(response.responseText);
+                            $.each(errorobj,
+                                function(i, val) {
+                                    $("#olErrors").append($("<li>").text(val.errorMessage));
+                                });
+                        } else {
+                            alert("Error");
+                        }
+                    }
+                });
+
+
+            });
+
+        });
+
+        function SetupContactAutoComplete() {
+
+            $(".autocomplete").autoComplete({
+                minLength: 1,
+                formatResult: function(item) {
+                    console.log("Format result called with item " + item);
+                    return {
+                        id: item.guid,
+                        text: item.firstName + " " + item.lastName
+                    }
+                },
+
+                events: {
+                    searchPost: function(resultsFromServer) {
+                        console.log("Search Post Called. " + resultsFromServer[0].guid);
+                        return resultsFromServer;
+                    }
+                }
+
+            });
+
+            $(".autocomplete").on('autocomplete.select',
+                function(evt, item) {
+                    $("#" + evt.currentTarget.attributes["data-target-id"].value).val(item.guid);
+                    console.log(evt.currentTarget.attributes["data-target-id"].value);
+                    console.log("added item " + item.guid);
+                    evt.preventDefault();
+                });
+
+            $(".autocomplete").change(function(evt) {
+                console.log("Textbox change");
+                console.log($("#" + evt.currentTarget.attributes["data-target-id"].value));
+                console.log($("#" + evt.currentTarget.attributes["data-target-id"].value).val());
+
+                $("#" + evt.currentTarget.attributes["data-target-id"].value).val("");
+
+            });
+        }
+
+        $("#btnAddNewEnrollment").click(function(evt) {
+
+            evt.preventDefault();
+            _enrollments = [];
+            var i = 0;
+            $(".enrollment:checkbox:checked").each(function() {
+                var enr = $(this).data("enrollment")
+                var obj = JSON.parse(decodeURIComponent(enr));
+                _enrollments[i] = obj;
+                i = i + 1;
+            });
+
+            if (i > 0) {
+                $("#AutoEnrollmentJson").val(JSON.stringify(_enrollments));
+                $("#btnPostSelectedEnrollments").click();
+                $("#addInvoiceTypeModal").modal("hide");
+            } else {
+                $("#dvInvoiceTypeAddErrors").css("display", "block");
+
+            }
+        });
+
+
+    </script>
+}
+
+

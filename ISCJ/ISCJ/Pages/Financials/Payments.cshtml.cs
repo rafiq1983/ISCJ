@@ -16,7 +16,7 @@ using Swashbuckle.AspNetCore.Swagger;
 
 namespace ISCJ.Pages.Financials
 {
-    public class InvoiceListModel : BasePageModel
+    public class Payments : BasePageModel
     {
         readonly InvoiceManager _invoiceMgr = new InvoiceManager();
         private readonly ContactManager _contactManager = new ContactManager();
@@ -115,5 +115,19 @@ namespace ISCJ.Pages.Financials
 
     }
 
- 
+    public class DataModel
+    {
+        public List<RowData> RowData;
+        public decimal TotalInvoiceAmount { get; set; }
+        public decimal TotalRemainingAmount { get; set; }
+    }
+
+    public class RowData
+    {
+        public Invoice Invoice { get; set; }
+        public MA.Common.Entities.Contacts.Contact FatherContact { get; set; }
+        public MA.Common.Entities.Contacts.Contact MotherContact { get; set; }
+        public string ResponsiblePartyName { get; set; }
+        public string OrderType { get; set; }
+    }
 }

@@ -40,6 +40,7 @@ namespace BusinessLogic
     public virtual DbSet<InvoiceType> InvoiceTypes { get; set; }
     public virtual DbSet<CashPayment> CashPayments { get; set; }
     public virtual DbSet<CheckPayment> CheckPayments { get; set; }
+    public virtual DbSet<CreditCardPayment> CreditCardPayments { get; set; }
     public virtual DbQuery<AllPayment> AllPaymentIds { get; set; }
     public virtual DbSet<User> Users { get; set; }
     public virtual DbSet<UserTenant> UserTenants { get; set; }
@@ -77,6 +78,14 @@ namespace BusinessLogic
                 entity.ToTable("CashPayment");
                 //entity.Property(x => x.PaymentMethod).HasConversion(new EnumToStringConverter<PaymentMethod>());
                // entity.HasDiscriminator(x => x.PaymentMethod).HasValue<CheckPayment>(PaymentMethod.Check).HasValue<Payment>(PaymentMethod.Cash);
+            });
+
+            modelBuilder.Entity<CreditCardPayment>(entity =>
+            {
+                entity.ToTable("CreditCardPayment");
+                entity.HasKey(x => x.PaymentId);
+                entity.Property(x => x.CardBrand).HasConversion(new EnumToStringConverter<CardBrand>());
+                entity.Property(x => x.CardType).HasConversion(new EnumToStringConverter<CardType>());
             });
 
             modelBuilder.Entity<SubjectMapping>(entity =>
