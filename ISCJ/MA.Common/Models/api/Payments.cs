@@ -32,8 +32,10 @@ namespace MA.Common.Models.api
     {
         public string ConfirmationNumber { get; set; }
         public string Last4Digit { get; set; }
-        public CardType CardType{ get; set; }
-        
+        public CardType CardType { get; set; }
+        public string AuthorizationCode { get; set; }
+        public string GatewayName { get; set; }
+        public CardBrand CardBrand { get; set; }
     }
 
     public class CreatePaymentOutput

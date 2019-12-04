@@ -3,6 +3,7 @@ using MA.Common.Models.api;
 using MA.Core;
 using System;
 using System.Collections.Generic;
+using System.IO.Pipes;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
@@ -22,11 +23,10 @@ namespace BusinessLogic
                 {
                     var pmt = new CheckPayment();
                     pmt.FinancialAccountId = input.FinancialAccountId;
-                    pmt.PayerId = Guid.Empty;
+                    pmt.PayerId = input.PaymentMadeByContactId;
                     pmt.PaymentAmount = input.PaymentAmount;
                     pmt.PaymentDate = input.PaymentDate;
                     pmt.PaymentId = Guid.NewGuid();
-                    //pmt.PaymentMethod = input.PaymentMethod;
                     pmt.CheckAccountNumber = input.CheckPaymentDetail.CheckAccountNumber;
                     pmt.CheckBankName = input.CheckPaymentDetail.CheckBankName;
                     pmt.CheckDate = input.CheckPaymentDetail.CheckCashDate;
@@ -34,28 +34,44 @@ namespace BusinessLogic
                     pmt.NameOnCheck = input.CheckPaymentDetail.NameOnCheck;
                     pmt.CreateDate = DateTime.UtcNow;
                     pmt.CreateUser = context.UserLoginName;
+                    pmt.TenantId = context.TenantId.Value;
                     db.CheckPayments.Add(pmt);
+
                     db.SaveChanges();
                     return new CreatePaymentOutput() { PaymentId = pmt.PaymentId };
                 }
-                else if(input.PaymentMethod == PaymentMethod.Cash)
+                else if(input.PaymentMethod == PaymentMethod.CreditCard)
                 {
-                    var pmt = new CashPayment();
+                    var pmt = new CreditCardPayment();
                     pmt.FinancialAccountId = input.FinancialAccountId;
-                    pmt.PayerId = Guid.Empty;
+                    pmt.PayerId = input.PaymentMadeByContactId;
                     pmt.PaymentAmount = input.PaymentAmount;
                     pmt.PaymentDate = input.PaymentDate;
                     pmt.PaymentId = Guid.NewGuid();
-                    //pmt.PaymentMethod = input.PaymentMethod;
+                    pmt.CardType = input.CardPaymentDetail.CardType;
+                    pmt.GatewayName = input.CardPaymentDetail.GatewayName;
+                    pmt.AuthorizationCode = input.CardPaymentDetail.AuthorizationCode;
                     pmt.CreateDate = DateTime.UtcNow;
                     pmt.CreateUser = context.UserLoginName;
-                    db.CashPayments.Add(pmt);
+                    pmt.TenantId = context.TenantId.Value;
+                    db.CreditCardPayments.Add(pmt);
                     db.SaveChanges();
                     return new CreatePaymentOutput() { PaymentId = pmt.PaymentId };
                 }
-                else
+                else 
                 {
-                    return new CreatePaymentOutput() { Success = false };
+                    var pmt = new CashPayment();
+                    pmt.FinancialAccountId = input.FinancialAccountId;
+                    pmt.PayerId = input.PaymentMadeByContactId;
+                    pmt.PaymentAmount = input.PaymentAmount;
+                    pmt.PaymentDate = input.PaymentDate;
+                    pmt.PaymentId = Guid.NewGuid();
+                    pmt.CreateDate = DateTime.UtcNow;
+                    pmt.CreateUser = context.UserLoginName;
+                    pmt.TenantId = context.TenantId.Value;
+                    db.CashPayments.Add(pmt);
+                    db.SaveChanges();
+                    return new CreatePaymentOutput() { PaymentId = pmt.PaymentId };
                 }
             }
         }

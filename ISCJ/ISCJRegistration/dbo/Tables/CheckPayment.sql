@@ -17,6 +17,8 @@
     [CreateUser]         VARCHAR (50)     NOT NULL,
     [ModifiedDate]       DATETIME         NULL,
     [ModifiedUser]       DATETIME         NULL, 
-    [TenantId] UNIQUEIDENTIFIER NOT NULL
+    [TenantId] UNIQUEIDENTIFIER NOT NULL, 
+    [CheckCashableDate] DATETIME NOT NULL,
+	[PaymentNote] VARCHAR(500) NOT NULL
 );
 

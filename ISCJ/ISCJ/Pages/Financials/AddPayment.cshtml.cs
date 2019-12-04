@@ -13,24 +13,30 @@ using MA.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace ISCJ.Pages.Financials
 {
     public class AddPaymentModel : BasePageModel
     {
-       
         public AddPaymentModel()
         {
 
         }
         public void OnGet()
         {
-
+            InitData();
+            
         }
 
-       
+        private void InitData()
+        {
+            PaymentDate = DateTime.Now;
+            PaymentMethod = PaymentMethod.Cash;
+            CardBrand = CardBrand.Unknown;
+        }
 
-        public void OnPost()
+        public void OnPostSave()
         {
             if (ModelState.IsValid)
             {
@@ -53,7 +59,6 @@ namespace ISCJ.Pages.Financials
             Response.Redirect("Paymentlist");
 
         }
-
 
         private void Reset()
         {
@@ -81,7 +86,8 @@ namespace ISCJ.Pages.Financials
                     CheckBankName = CheckBankName,
                     CheckCashDate = CheckCashableDate,
                     CheckNumber = CheckNumber,
-                    NameOnCheck = NameOnCheck
+                    NameOnCheck = NameOnCheck,
+                    
                 };
             }
             else if (input.PaymentMethod == PaymentMethod.CreditCard)
@@ -90,11 +96,17 @@ namespace ISCJ.Pages.Financials
                 {
                     CardType = CardType,
                     ConfirmationNumber = GatewayConfirmationNumber,
-                    Last4Digit = Last4Digits
+                    Last4Digit = Last4Digits,
+                    AuthorizationCode = AuthorizationCode,
+                    CardBrand = CardBrand
                 };
             }
             return input;
         }
+
+        [BindProperty]
+        public string AuthorizationCode { get; set; }
+
 
         [BindProperty]
         public string Name { get; set; }
@@ -136,7 +148,8 @@ namespace ISCJ.Pages.Financials
          [BindProperty]
         public string CheckNumber { get; set; }
 
-        
+        [BindProperty]
+        public CardBrand CardBrand { get; set; }
 
         [BindProperty]
         public CardType CardType { get; set; }
@@ -155,18 +168,26 @@ namespace ISCJ.Pages.Financials
         public IEnumerable<SelectListItem> PaymentMethods
         {
             get {
-                List<KeyValuePair<string,string>> methods = new List<KeyValuePair<string,string>>()
-                {
-                    new KeyValuePair<string, string>("Cash", "Cash"), new KeyValuePair<string, string>("Check", "Check"),
-                    new KeyValuePair<string, string>("CreditCard", "Credit Card")
-                    
-                };
-               
-                return methods.Select(x => new SelectListItem(x.Value, x.Key));
-
+                return ListService.GetPaymentMethods().Select(x => new SelectListItem(x.Value, x.Key));
             }
         }
 
+        public IEnumerable<SelectListItem> CardTypes
+        {
+            get
+            {
+                return ListService.GetCardTypes().Select(x => new SelectListItem(x.Value, x.Key));
+            }
+        }
+
+        public IEnumerable<SelectListItem> CardBrands
+        {
+            get
+            {
+                return ListService.GetCardBrands().Select(x => new SelectListItem(x.Value, x.Key));
+            }
+            
+        }
 
     }
 }
