@@ -297,70 +297,83 @@
                       <div class="form-group  row">
                           <label class="col-sm-2 col-form-label">Father</label>
 
-                          <div class="col-sm-10">
+                          <div class="col-sm-6">
                               <input type="text" placeholder="Type Father name here" autocomplete="off"
                                      data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_FatherId" data-member-check-id="isFatherMember"
                                      class="autocomplete form-control" value="@Model.StudentRegistration.FatherName" asp-for="@Model.StudentRegistration.FatherName" />
                               <input type="hidden" asp-for="@Model.StudentRegistration.FatherName" /><!--todo-->
                               <input type="hidden" asp-for="@Model.StudentRegistration.FatherId" />
                               <span asp-validation-for="@Model.StudentRegistration.FatherId" class="text-danger"></span>
-
                           </div>
-                      </div>
-                      <div class="form-group row">
-                          <label class="col-sm-2 col-form-label">Is a Member</label>
-
-                          <div class="col-sm-10">
-                              <span class="badge" id="isFatherMember"></span>
-
+                          <div class="col-sm-3">
+                              <a href="#" class="FatherEnrollmentFound" style="display:none;" id="lnkFatherEnrollmentsFound">Enrollment(s) Found</a>
+                              
                           </div>
                       </div>
 
-                      <div class="form-group  row">
-                          <label class="col-sm-2 col-form-label">Create Membership</label>
+                         
 
-                          <div class="col-sm-10">
-                              <input type="checkbox" asp-for="@Model.StudentRegistration.AddFatherMembership" />
-                            
+
+                          <div class="form-group row">
+                              <label class="col-sm-2 col-form-label">Is a Member</label>
+
+                              <div class="col-sm-10">
+                                  <span class="badge" id="isFatherMember"></span>
+
+                              </div>
                           </div>
 
-                      </div>
-                      <div class="form-group  row">
-                          <label class="col-sm-2 col-form-label">Mother</label>
+                          <div class="form-group  row">
+                              <label class="col-sm-2 col-form-label">Create Membership</label>
 
-                          <div class="col-sm-10">
-                              <input type="text" placeholder="Type Mother name here" autocomplete="off"
-                                     data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_MotherId" data-member-check-id="isMotherMember"
-                                     class="autocomplete form-control" value="@Model.StudentRegistration.MotherName" asp-for="@Model.StudentRegistration.MotherName" />
-                              <input type="hidden" asp-for="@Model.StudentRegistration.MotherId" />
+                              <div class="col-sm-10">
+                                  <input type="checkbox" asp-for="@Model.StudentRegistration.AddFatherMembership" />
 
-                              <span asp-validation-for="@Model.StudentRegistration.MotherId" class="text-danger"></span>
+                              </div>
+
+                          </div>
+                          <div class="form-group  row">
+                              <label class="col-sm-2 col-form-label">Mother</label>
+
+                              <div class="col-sm-6">
+                                  <input type="text" placeholder="Type Mother name here" autocomplete="off"
+                                         data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_MotherId" data-member-check-id="isMotherMember"
+                                         class="autocomplete form-control" value="@Model.StudentRegistration.MotherName" asp-for="@Model.StudentRegistration.MotherName" />
+                                  <input type="hidden" asp-for="@Model.StudentRegistration.MotherId" />
+
+                                  <span asp-validation-for="@Model.StudentRegistration.MotherId" class="text-danger"></span>
+                              </div>
+                              <div class="col-sm-2">
+                                  <a href="#" class="MotherEnrollmentFound" style="display:none;" id="lnkFatherEnrollmentsFound">Enrollment(s) Found</a>
+
+                              </div>
+
+
+                          </div>
+
+                         
+
+                          <div class="form-group row">
+                              <label class="col-sm-2 col-form-label">Is a Member</label>
+
+                              <div class="col-sm-10">
+                                  <span class="badge" id="isMotherMember"></span>
+
+                              </div>
+                          </div>
+                          <div class="form-group  row">
+                              <label class="col-sm-2 col-form-label">Create Membership</label>
+
+                              <div class="col-sm-10">
+                                  <input type="checkbox" asp-for="@Model.StudentRegistration.AddMotherToMembership" />
+
+                              </div>
+
                           </div>
 
 
+                          <div class="hr-line-dashed"></div>
                       </div>
-
-                      <div class="form-group row">
-                          <label class="col-sm-2 col-form-label">Is a Member</label>
-
-                          <div class="col-sm-10">
-                              <span class="badge" id="isMotherMember"></span>
-
-                          </div>
-                      </div>
-                      <div class="form-group  row">
-                          <label class="col-sm-2 col-form-label">Create Membership</label>
-
-                          <div class="col-sm-10">
-                              <input type="checkbox" asp-for="@Model.StudentRegistration.AddMotherToMembership" />
-                            
-                          </div>
-
-                      </div>
-
-
-                      <div class="hr-line-dashed"></div>
-                  </div>
               </div>
 
               @for (int j = 0; j < Model.StudentRegistration.StudentRegistrations.Count; j++)
@@ -620,7 +633,8 @@
         function SetIsMemberFlag(memberCheckId, id) {
             if (memberCheckId == null || memberCheckId == "")
                 return;
-
+            $(".FatherEnrollmentFound").hide();
+            $(".MotherEnrollmentFound").hide();
 
             $.ajax({
                 type: "GET",
@@ -650,7 +664,13 @@
                     console.log(d);
                     if (d.length > 0) {
                         _enrollments = d;
-                         DisplayEnrollmentsFound();
+                        $(".FatherEnrollmentFound").show();
+                        $(".MotherEnrollmentFound").show();
+                        $(".MotherEnrollmentFound,.FatherEnrollmentFound").on("click", function ()
+                        {
+                            DisplayEnrollmentsFound();
+                        })
+                         
                     }
                 },
                 error: function(response) {
