@@ -189,4 +189,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="TenantId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="45711959-c1a7-43cd-bcb6-808c214dd109" ChangeDateTime="12/04/2019 22:14:52">
+    <Property Name="ElementName" Value="[dbo].[CheckPayment].[PayerId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CheckPayment]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PayorId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="69822040-786d-4dc4-bf58-0a29c30a5054" ChangeDateTime="12/04/2019 22:15:17">
+    <Property Name="ElementName" Value="[dbo].[CashPayment].[PayerId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CashPayment]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PayorId" />
+  </Operation>
 </Operations>

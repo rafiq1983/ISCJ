@@ -78,6 +78,7 @@ namespace ISCJ.Pages.Financials
             input.PaymentNote = PaymentNote;
             input.PaymentMadeByContactId = ContactId.Value;
             input.PaymentMethod = PaymentMethod;
+            
             if (input.PaymentMethod == PaymentMethod.Check)
             {
                 input.CheckPaymentDetail = new CheckPaymentDetail()
@@ -96,9 +97,11 @@ namespace ISCJ.Pages.Financials
                 {
                     CardType = CardType,
                     ConfirmationNumber = GatewayConfirmationNumber,
-                    Last4Digit = Last4Digits,
+                    Last4Digit = string.Empty,
+                    GatewayName = GatewayName,
                     AuthorizationCode = AuthorizationCode,
-                    CardBrand = CardBrand
+                    CardBrand = CardBrand,
+                    
                 };
             }
             return input;
@@ -160,6 +163,9 @@ namespace ISCJ.Pages.Financials
 
         [BindProperty]
         public string GatewayConfirmationNumber { get; set; }
+
+        [BindProperty]
+        public string GatewayName { get; set; }
 
         [BindProperty]
         public string CardProcessorName { get; set; }

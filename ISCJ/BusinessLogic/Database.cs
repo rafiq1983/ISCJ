@@ -82,6 +82,7 @@ namespace BusinessLogic
 
             modelBuilder.Entity<CreditCardPayment>(entity =>
             {
+                entity.ToTable("CreditCardPayment");
                 entity.HasKey(x => x.PaymentId);
                 entity.Property(x => x.CardBrand).HasConversion(new EnumToStringConverter<CardBrand>());
                 entity.Property(x => x.CardType).HasConversion(new EnumToStringConverter<CardType>());

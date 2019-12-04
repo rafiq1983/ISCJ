@@ -7,7 +7,7 @@
     [CheckBankName]      VARCHAR (50)     NOT NULL,
     [RowVersion]         ROWVERSION       NOT NULL,
     [CheckImage]         VARBINARY (MAX)  NULL,
-    [PayerId]            UNIQUEIDENTIFIER NULL,
+    [PayorId]            UNIQUEIDENTIFIER NULL,
     [PaymentDate]        DATETIME         NOT NULL,
     [PaymentAmount]      DECIMAL (18)     NOT NULL,
     [FinancialAccountId] UNIQUEIDENTIFIER NOT NULL,

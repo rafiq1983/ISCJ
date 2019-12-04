@@ -78,7 +78,7 @@ namespace ISCJ.Pages.Admin
                     identity.AddClaim(new Claim(AppClaimTypes.TenantId, tenant.TenantId.ToString()));
                     identity.AddClaim(new Claim(AppClaimTypes.TenantName, tenant.Tenant.OrganizationName));
 
-                    mgr.AddUserLoginAudit(new CallContext(user.UserId, user.UserName, "TBD", tenant.TenantId.ToString(),
+                    mgr.AddUserLoginAudit(new CallContext(user.UserId, user.UserName, Request.HttpContext.Connection.RemoteIpAddress.ToString(), tenant.TenantId.ToString(),
                         tenant.TenantId));
 
 

@@ -23,7 +23,7 @@ namespace BusinessLogic
                 {
                     var pmt = new CheckPayment();
                     pmt.FinancialAccountId = input.FinancialAccountId;
-                    pmt.PayerId = input.PaymentMadeByContactId;
+                    pmt.PayorId = input.PaymentMadeByContactId;
                     pmt.PaymentAmount = input.PaymentAmount;
                     pmt.PaymentDate = input.PaymentDate;
                     pmt.PaymentId = Guid.NewGuid();
@@ -32,6 +32,7 @@ namespace BusinessLogic
                     pmt.CheckDate = input.CheckPaymentDetail.CheckCashDate;
                     pmt.CheckNumber = input.CheckPaymentDetail.CheckNumber;
                     pmt.NameOnCheck = input.CheckPaymentDetail.NameOnCheck;
+                    pmt.PaymentNote = input.PaymentNote;
                     pmt.CreateDate = DateTime.UtcNow;
                     pmt.CreateUser = context.UserLoginName;
                     pmt.TenantId = context.TenantId.Value;
@@ -44,13 +45,16 @@ namespace BusinessLogic
                 {
                     var pmt = new CreditCardPayment();
                     pmt.FinancialAccountId = input.FinancialAccountId;
-                    pmt.PayerId = input.PaymentMadeByContactId;
+                    pmt.PayorId = input.PaymentMadeByContactId;
                     pmt.PaymentAmount = input.PaymentAmount;
                     pmt.PaymentDate = input.PaymentDate;
                     pmt.PaymentId = Guid.NewGuid();
                     pmt.CardType = input.CardPaymentDetail.CardType;
                     pmt.GatewayName = input.CardPaymentDetail.GatewayName;
+                    pmt.ConfirmationNumber = input.CardPaymentDetail.ConfirmationNumber;
                     pmt.AuthorizationCode = input.CardPaymentDetail.AuthorizationCode;
+                    pmt.Last4Digits = input.CardPaymentDetail.Last4Digit;
+                    pmt.PaymentNote = input.PaymentNote;
                     pmt.CreateDate = DateTime.UtcNow;
                     pmt.CreateUser = context.UserLoginName;
                     pmt.TenantId = context.TenantId.Value;
@@ -62,13 +66,14 @@ namespace BusinessLogic
                 {
                     var pmt = new CashPayment();
                     pmt.FinancialAccountId = input.FinancialAccountId;
-                    pmt.PayerId = input.PaymentMadeByContactId;
+                    pmt.PayorId = input.PaymentMadeByContactId;
                     pmt.PaymentAmount = input.PaymentAmount;
                     pmt.PaymentDate = input.PaymentDate;
                     pmt.PaymentId = Guid.NewGuid();
                     pmt.CreateDate = DateTime.UtcNow;
                     pmt.CreateUser = context.UserLoginName;
                     pmt.TenantId = context.TenantId.Value;
+                    pmt.PaymentNote = input.PaymentNote;
                     db.CashPayments.Add(pmt);
                     db.SaveChanges();
                     return new CreatePaymentOutput() { PaymentId = pmt.PaymentId };

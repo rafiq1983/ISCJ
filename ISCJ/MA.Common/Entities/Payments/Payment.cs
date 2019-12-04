@@ -6,12 +6,13 @@ namespace MA.Common.Entities.Payments
 {
     public abstract class Payment : BaseEntity
     {
-        public Guid PayerId { get; set; }
+        public Guid PayorId { get; set; }
         public Guid PaymentId { get; set; }
         public DateTime PaymentDate { get; set; }
         public decimal PaymentAmount { get; set; }
         public Guid FinancialAccountId { get; set; }
         public Guid TenantId { get; set; }
+        public string PaymentNote { get; set; }
 
     }
   public class CreditCardPayment:Payment
