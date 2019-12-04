@@ -42,7 +42,7 @@ namespace ISCJ.Pages.Financials
             {
                 PaymentsManager mgr = new PaymentsManager();
                 mgr.CreatePayment(GetCallContext(), GetAddPaymentInput());
-                Response.Redirect("Paymentlist");
+              Reset();
                 
             }
             

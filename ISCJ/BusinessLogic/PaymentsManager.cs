@@ -36,6 +36,7 @@ namespace BusinessLogic
                     pmt.CreateDate = DateTime.UtcNow;
                     pmt.CreateUser = context.UserLoginName;
                     pmt.TenantId = context.TenantId.Value;
+                    pmt.CheckCashableDate = input.CheckPaymentDetail.CheckCashDate;
                     db.CheckPayments.Add(pmt);
 
                     db.SaveChanges();

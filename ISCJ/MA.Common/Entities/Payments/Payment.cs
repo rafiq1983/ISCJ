@@ -14,6 +14,7 @@ namespace MA.Common.Entities.Payments
         public Guid TenantId { get; set; }
         public string PaymentNote { get; set; }
 
+
     }
   public class CreditCardPayment:Payment
     {
@@ -61,6 +62,7 @@ namespace MA.Common.Entities.Payments
         public string CheckBankName { get; set; }
         public string CheckAccountNumber { get; set; }
         public DateTime CheckDate { get; set; }
+        public DateTime CheckCashableDate { get; set; }
 
     }
 
