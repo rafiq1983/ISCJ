@@ -69,7 +69,7 @@ namespace BusinessLogic
                 var registrationApplication = SaveRegistrationApplication(context, input);
                 AddMembershipIfNeeded(context, input);
                 PerformBilling(context, input.BillingInstructions, registrationApplication.ApplicationId,
-                    ReferenceType.RegistrationApplication);
+                    ReferenceType.RegistrationApplication, input.FatherId.Value);
 
                 if(input.AutoAssignSubjects)
                     AddStudentSubjects(context, input, registrationApplication);
@@ -171,7 +171,7 @@ namespace BusinessLogic
                 enrollment.MotherId = existingApplication.MotherContactId;
                 
                 existingApplication.Enrollments.Add(enrollment);
-              PerformBilling(context, input.BillingInstructions, existingApplication.ApplicationId, ReferenceType.RegistrationApplication );
+              PerformBilling(context, input.BillingInstructions, existingApplication.ApplicationId, ReferenceType.RegistrationApplication, existingApplication.FatherContactId);
                 db.SaveChanges();
             }
 
@@ -212,7 +212,7 @@ namespace BusinessLogic
                     enrollment.MotherId = input.MotherId;
                     enrollment.RegistrationApplicationId = Guid.Empty;
                     db.Enrollments.Add(enrollment);
-                    PerformBilling(context, input.BillingInstructions, enrollment.EnrollmentId, ReferenceType.Enrollment);
+                    PerformBilling(context, input.BillingInstructions, enrollment.EnrollmentId, ReferenceType.Enrollment, enrollment.FatherId);
                     db.SaveChanges();
                 }
 
@@ -272,7 +272,7 @@ namespace BusinessLogic
         }
 
     
-    private void PerformBilling(CallContext context, List<ProductSelected> billingInstructions, Guid registrationApplicationId, ReferenceType referenceType)
+    private void PerformBilling(CallContext context, List<ProductSelected> billingInstructions, Guid registrationApplicationId, ReferenceType referenceType, Guid responsiblePartyId)
         {
             if (billingInstructions.Count == 0)
                 return;
@@ -295,7 +295,7 @@ namespace BusinessLogic
                 invoice.CreateDate = DateTime.UtcNow;
                 invoice.ModifiedDate = null;
                 invoice.InvoiceTypeId = Guid.Empty;//TODO: Read from settings to attach correct InvoiceTypeID.
-                
+                invoice.ResponsiblePartyId = responsiblePartyId;
                 invoice.InvoiceItems = new List<InvoiceItem>();
                 foreach (var item in billingInstructions.Where(x=>x.IsSelected))
                 {

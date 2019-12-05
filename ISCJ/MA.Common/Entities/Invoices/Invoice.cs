@@ -23,7 +23,7 @@ namespace MA.Common.Entities.Invoices
     public Guid FinancialAccountId { get; set; }
     public Guid? InvoiceTypeId { get; set; }
     public DateTime DueDate { get; set; }
-
+    public Guid? ResponsiblePartyId { get; set; }
     public string Description { get; set; }
 
     public DateTime GenerationDate { get; set; }

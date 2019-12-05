@@ -78,7 +78,8 @@ namespace ISCJ.Pages.Financials
             input.PaymentNote = PaymentNote;
             input.PaymentMadeByContactId = ContactId.Value;
             input.PaymentMethod = PaymentMethod;
-            
+            input.InvoiceId = InvoiceId;
+
             if (input.PaymentMethod == PaymentMethod.Check)
             {
                 input.CheckPaymentDetail = new CheckPaymentDetail()
@@ -106,6 +107,9 @@ namespace ISCJ.Pages.Financials
             }
             return input;
         }
+
+        [BindProperty]
+        public Guid? InvoiceId { get; set; }
 
         [BindProperty]
         public string AuthorizationCode { get; set; }

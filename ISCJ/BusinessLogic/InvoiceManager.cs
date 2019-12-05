@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace BusinessLogic
 {
@@ -14,7 +15,7 @@ namespace BusinessLogic
   public class InvoiceManager
   {
 
-        public void PerformBilling(CallContext context, Database db, List<ProductSelected> billingInstructions, string desc, string orderId, ReferenceType referenceType)
+        public void PerformBilling(CallContext context, Database db, List<ProductSelected> billingInstructions, string desc, string orderId, ReferenceType referenceType, Guid? responsiblePartyId = null)
         {
             if (billingInstructions.Count == 0)
                 return;
@@ -32,6 +33,7 @@ namespace BusinessLogic
                 invoice.ReferenceType = referenceType;
                 invoice.TennantId = context.TenantId.Value;
                 invoice.CreateDate = DateTime.UtcNow;
+                invoice.ResponsiblePartyId = responsiblePartyId;
                 invoice.ModifiedDate = null;
                 invoice.InvoiceTypeId = db.InvoiceTypes.SingleOrDefault(x => x.InvoiceTypeName == "Membership-fees")
                     ?.InvoiceTypeId;
@@ -74,6 +76,17 @@ namespace BusinessLogic
 
       }
     }
+
+        public List<Invoice> GetInvoices(CallContext context, Guid responsiblePartyId)
+        {
+            using (Database db = new Database())
+            {
+                var invoices = db.Invoices.Where(x => x.TennantId == context.TenantId && x.ResponsiblePartyId == responsiblePartyId).ToList();
+
+                return invoices;
+
+            }
+        }
 
         public Invoice GetInvoiceById(Guid invoiceId)
         {
@@ -141,6 +154,7 @@ namespace BusinessLogic
                     FinancialAccountId = Guid.Empty,
                     ReferenceType = ReferenceType.AdHocInvoiceAttachedToContact,
                     ReferenceId = input.ReferenceId,
+                    ResponsiblePartyId = Guid.Parse(input.ReferenceId),   //isa: will refacortor later.
                     IsPaid = false,
                     TennantId = callContext.TenantId.Value,
                     CreateDate = DateTime.UtcNow,
@@ -165,6 +179,30 @@ namespace BusinessLogic
                 invoice.IsPaid = input.IsPaid;
                 invoice.TotalPaid = invoice.TotalPaid + input.PaidAmount;
               
+                db.SaveChanges();
+                return new UpdateInvoiceOutput() { Success = true };
+            }
+        }
+
+        public UpdateInvoiceOutput AddInvoicePayment (CallContext context, Guid invoiceId, decimal paymentAmount)
+        {
+            using (Database db = new Database())
+            {
+                var invoice = db.Invoices.SingleOrDefault(x => x.InvoiceId == invoiceId);
+                if (invoice == null)
+                    throw new Exception("Invalid Invoice id " + invoiceId);
+
+                invoice.TotalPaid += paymentAmount;
+                invoice.ModifiedDate = DateTime.UtcNow;
+                invoice.ModifiedUser = context.UserLoginName;
+
+                if (invoice.TotalPaid > invoice.InvoiceAmount)
+                {
+                    invoice.IsPaid = true;
+                }
+
+                db.Invoices.Update(invoice);
+                
                 db.SaveChanges();
                 return new UpdateInvoiceOutput() { Success = true };
             }

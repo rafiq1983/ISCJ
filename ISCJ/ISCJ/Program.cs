@@ -26,7 +26,7 @@ namespace ISCJ
                 .UseStartup<Startup>()
                 .ConfigureAppConfiguration((x, config) =>
                     {
-                        config.AddJsonFile("secrets.json", optional: true, reloadOnChange: true);
+                        config.AddJsonFile("secrets.json", optional: false, reloadOnChange: true);
                     });
 
 

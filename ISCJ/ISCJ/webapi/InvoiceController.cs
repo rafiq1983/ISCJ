@@ -59,6 +59,14 @@ namespace ISCJ.webapi
             return new JsonResult(output);
         }
 
+        [HttpGet("responsibleparty/{contactId}")]
+        public JsonResult GetInvoiceByContactId(Guid contactId)
+        {
+            InvoiceManager mgr = new InvoiceManager();
+            var output = mgr.GetInvoices(GetCallContext(), contactId);
+            return new JsonResult(output);
+        }
+
 
         [HttpPost("/financialaccount")]
         public JsonResult CreateFinancialAccount([FromBody]CreateFinancialAccountInput input)

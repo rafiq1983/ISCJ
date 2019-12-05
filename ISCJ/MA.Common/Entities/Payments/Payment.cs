@@ -13,6 +13,7 @@ namespace MA.Common.Entities.Payments
         public Guid FinancialAccountId { get; set; }
         public Guid TenantId { get; set; }
         public string PaymentNote { get; set; }
+        public Guid? InvoiceId { get; set; }
 
 
     }

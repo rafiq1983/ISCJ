@@ -16,6 +16,7 @@
     [InvoiceTypeId] UNIQUEIDENTIFIER NULL, 
     [ReferenceId] VARCHAR(50) NOT NULL, 
     [ReferenceType] VARCHAR(50) NOT NULL, 
+    [ResponsiblePartyId] UNIQUEIDENTIFIER NULL, 
     CONSTRAINT [PK_Invoice] PRIMARY KEY CLUSTERED ([InvoiceId] ASC)
 );
 

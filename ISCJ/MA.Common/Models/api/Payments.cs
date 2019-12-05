@@ -8,7 +8,7 @@ namespace MA.Common.Models.api
   public class CreatePaymentInput
     {
         public Guid FinancialAccountId { get; set; }
-        public Guid InvoiceId { get; set; }
+        public Guid? InvoiceId { get; set; }
         public decimal PaymentAmount { get; set; }
         public PaymentMethod PaymentMethod { get; set; }
         public DateTime PaymentDate { get; set; }
@@ -16,7 +16,6 @@ namespace MA.Common.Models.api
         public CreditCardPaymentDetail CardPaymentDetail { get; set; }
         public string PaymentNote { get; set; }
         public Guid PaymentMadeByContactId { get; set; }
-
     }
 
     public class CheckPaymentDetail
