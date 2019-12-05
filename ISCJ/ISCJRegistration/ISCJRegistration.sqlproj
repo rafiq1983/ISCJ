@@ -76,7 +76,7 @@
     <Build Include="dbo\Tables\Class.sql" />
     <Build Include="dbo\Tables\UserActiveSessions.sql" />
     <Build Include="dbo\Tables\CreditCardPayment.sql" />
-    <Build Include="dbo\Tables\ClassSchedule.sql" />
+    <Build Include="dbo\Tables\Schedule.sql" />
     <Build Include="dbo\Tables\ClassSession.sql" />
     <Build Include="dbo\Tables\MasjidMembership.sql" />
     <Build Include="dbo\Tables\Notes.sql" />
@@ -120,6 +120,7 @@
     <Build Include="dbo\Tables\Unique_TeacherSubjectProgram.sql" />
     <Build Include="dbo\Tables\ForeignKey_TeacherSubjectAssignment_ValidTeacherId.sql" />
     <Build Include="dbo\Tables\UserNotification.sql" />
+    <Build Include="dbo\Tables\CodeDecode.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
