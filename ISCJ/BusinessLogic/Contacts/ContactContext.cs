@@ -5,13 +5,21 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
 using MA.Common.Entities.Contacts;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 
 namespace BusinessLogic
 {
     public class ContactContext : DbContext
     {
-       public ContactContext(DbContextOptions<ContactContext> options) : base(options) {
-       
+        //static LoggerFactory object
+        public static readonly ILoggerFactory loggerFactory = new LoggerFactory(new[] {
+            new ConsoleLoggerProvider((_, __) => true, true)
+        });
+
+        public ContactContext(DbContextOptions<ContactContext> options) : base(options) {
+
+           
         }
 
     public ContactContext()
@@ -36,8 +44,11 @@ namespace BusinessLogic
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-           if (!optionsBuilder.IsConfigured)
-           {
+            if (!optionsBuilder.IsConfigured)
+            { 
+                optionsBuilder.UseLoggerFactory(loggerFactory) //tie-up DbContext with LoggerFactory object
+                .EnableSensitiveDataLogging();
+
                 optionsBuilder.UseSqlServer(ConnectionString.Value);
            }
         }

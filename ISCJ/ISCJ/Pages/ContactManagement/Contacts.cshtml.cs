@@ -17,7 +17,7 @@ namespace ISCJ.Pages.ContactManagement
     {
 
       ContactManager mgr = new ContactManager();
-      _contacts = mgr.GetContacts(1, 1, 1000);
+      _contacts = mgr.GetContacts(GetCallContext(), 1, 1, 1000);
 
     }
 

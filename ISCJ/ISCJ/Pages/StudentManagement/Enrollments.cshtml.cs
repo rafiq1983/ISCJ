@@ -54,7 +54,8 @@ namespace ISCJ.Pages.StudentManagement
     {
       RegistrationManager mgr = new RegistrationManager();
       Enrollments = mgr.GetEnrollments(ProgramId);
-    }
+      Programs = programMgr.GetAllPrograms(GetCallContext());
+        }
 
        
 

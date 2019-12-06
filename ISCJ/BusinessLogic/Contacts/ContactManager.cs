@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using MA.Common;
 using MA.Common.Entities.Contacts;
 using MA.Common.Models.api;
 using MA.Core;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic
 {
@@ -27,17 +29,65 @@ namespace BusinessLogic
 
       return Types;
     }
-        public string AddUpdateContact(CallContext callContext, Contact input)
+        public Guid AddUpdateContact(CallContext callContext, SaveContactInput input)
         {
          using (var _ContextContact = new ContactContext())
          {
-             input.TenantId = callContext.TenantId.Value;
-             input.CreatedDate = DateTime.UtcNow;
-             input.CreatedBy = callContext.UserLoginName;
-        _ContextContact.Contacts.Add(input);
-        _ContextContact.SaveChanges();
-        return input.Guid.ToString();
-      }
+                if (input.Guid == Guid.Empty) //new record.
+                {
+                    Contact contact = new Contact()
+                    {
+                        Apt = input.Apt,
+                        CellPhone = input.CellPhone,
+                        City = input.City,
+                        CompanyName = input.CompanyName,
+                        ContactType = input.ContactType,
+
+                        DOB = input.DOB,
+                        Email = input.Email,
+                        TenantId = callContext.TenantId.Value,
+                        StreetAddress = input.StreetAddress,
+                        Gender = input.Gender,
+                        State = input.State,
+                        ZipCode = input.ZipCode,
+                        FirstName = input.FirstName,
+                        LastName = input.LastName,
+                        MiddleName = input.MiddleName,
+                        Guid = Guid.NewGuid(),
+                        CreatedBy = callContext.UserLoginName,
+                        CreatedDate = DateTime.UtcNow
+                    };
+
+                 _ContextContact.Contacts.Add(contact);
+             }
+                else
+                {
+                    //Updating all fields of contact.
+                    //THE below will do a read and update.  Use attach method if want to modify only a subset of fields.
+                    /*_ContextContact.Entry
+                        (_ContextContact.Contacts
+                            .FirstOrDefaultAsync(x => x.Guid == input.Guid && x.TenantId == callContext.TenantId)
+                            .Result)
+                        .CurrentValues.SetValues(input)); //will do property matching. Since I don't have modified date/user I don't want to use this.
+                    */
+
+                    var updatedContact = _ContextContact.Contacts.SingleOrDefault(x => x.TenantId == callContext.TenantId && x.Guid == input.Guid);
+                    if (updatedContact != null)
+                    {
+                        updatedContact.ModifiedDate = DateTime.UtcNow;
+                        updatedContact.ModifiedBy = callContext.UserLoginName;
+                    }
+
+                    //If SUbset of fields 
+                    /*context.Attach(person);
+context.Entry(person).Property("Name").IsModified = true;
+context.SaveChanges();*/
+                }
+
+                _ContextContact.SaveChanges();
+
+             return input.Guid;
+         }
 
         }
 
@@ -64,6 +114,7 @@ namespace BusinessLogic
             contact.CreatedBy = callContext.UserLoginName;
             contact.CreatedDate = DateTime.UtcNow;
             contact.TenantId = callContext.TenantId.Value;
+            contact.Gender = input.Contact.Gender;
             using (var _ContextContact = new ContactContext())
             {
                 _ContextContact.Contacts.Add(contact);
@@ -117,12 +168,12 @@ namespace BusinessLogic
       }
 
     }
-    public List<Contact> GetContacts(int userId, int pageNumber, int pageSize)
+    public List<Contact> GetContacts(CallContext context, int userId, int pageNumber, int pageSize)
     {
      
       using (var _ContextContact = new ContactContext())
       {
-        return _ContextContact.Contacts.ToList();
+          return _ContextContact.Contacts.Where(x => x.TenantId == context.TenantId).ToList();
 
       }
     }

@@ -7,6 +7,7 @@ using MA.Common.Entities.Contacts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using BusinessLogic;
+using MA.Common.Models.api;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ISCJ.Pages.ContactManagement
@@ -24,7 +25,27 @@ namespace ISCJ.Pages.ContactManagement
            
             if (string.IsNullOrEmpty(editContactId) == false)
       {                
-                Contact = mgr.GetContact(Guid.Parse(editContactId));
+                var contact = mgr.GetContact(Guid.Parse(editContactId));
+
+                Contact = new SaveContactInput()
+                {
+                    Apt = contact.Apt,
+                    CellPhone = contact.CellPhone,
+                    City = contact.City,
+                    CompanyName = contact.CompanyName,
+                    ContactType = contact.ContactType,
+                    DOB = contact.DOB,
+                    Email = contact.Email,
+                    FirstName = contact.FirstName,
+                    LastName = contact.LastName, Guid = contact.Guid, Gender = contact.Gender,
+                    IsParent = contact.IsParent,
+                    HomePhone = contact.HomePhone,
+                    MiddleName = contact.MiddleName,
+                    Organization = contact.Organization,
+                    State = contact.State,
+                    StreetAddress = contact.StreetAddress,
+                    ZipCode = contact.ZipCode
+                };
       }
     }
     
@@ -36,8 +57,12 @@ namespace ISCJ.Pages.ContactManagement
         BusinessLogic.ContactManager mgr = new BusinessLogic.ContactManager();
             if (ModelState.IsValid)
             {
-                mgr.AddUpdateContact(GetCallContext(), Contact);
+                string editContactId = Request.Query["contactId"];
+                if (string.IsNullOrEmpty(editContactId) == false)
+                    Contact.Guid = Guid.Parse(editContactId);
 
+                mgr.AddUpdateContact(GetCallContext(), Contact);
+             
                 Response.Redirect("Contacts");
 
             }
@@ -48,8 +73,9 @@ namespace ISCJ.Pages.ContactManagement
 
         
     [BindProperty]
-    public Contact Contact { get; set; }
+    public SaveContactInput Contact { get; set; }
     public List<ContactType> ContactTypes { get { return ContactManager.GetContacTypes(); } }
+
     }
      
   }
