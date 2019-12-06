@@ -63,7 +63,7 @@
             <th>Responsible Party</th>
             <th>Total Paid</th>
             <th>Remaining</th>
-            <th>Pay Amount</th>
+            <th class="d-none">Pay Amount</th>
             <th>Is Paid</th>
         </tr>
         </thead>
@@ -80,7 +80,7 @@
                 <td><span>@Model.PageData.RowData[i].ResponsiblePartyName</span></td>
                 <td>$@Model.PageData.RowData[i].Invoice.TotalPaid</td>
                 <td>$@(Model.PageData.RowData[i].Invoice.InvoiceAmount - Model.PageData.RowData[i].Invoice.TotalPaid) </td>
-                <td>$<input type="text" value="@Model.PageData.RowData[i].Invoice.TotalPaid" asp-for="@Model.Invoices[i].TotalPaid"/>
+                <td class="d-none">$<input type="text" value="@Model.PageData.RowData[i].Invoice.TotalPaid" asp-for="@Model.Invoices[i].TotalPaid"/>
                     <span asp-validation-for="@Model.Invoices[i].TotalPaid" class="text-danger"></span>
                 </td>
 

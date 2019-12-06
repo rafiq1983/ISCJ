@@ -58,5 +58,9 @@ namespace ISCJ.Pages.StudentManagement
         public Guid StudentId { get; set; }
         [Required]
         [BindProperty] public Guid ProgramId { get; set; }
+
+        [Required]
+        [BindProperty]
+        public Guid SubjectId { get; set; }
     }
 }

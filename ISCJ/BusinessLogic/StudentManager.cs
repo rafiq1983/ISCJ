@@ -40,8 +40,8 @@ namespace BusinessLogic
     {
         using (Database db = new Database())
         {
-            return db.StudentSubjects.Where(x => x.StudentId == studentId && x.TenantId == context.TenantId).ToList();
-
+            var output = db.StudentSubjects.Where(x => x.StudentId == studentId && x.TenantId == context.TenantId).Include(x=>x.Subject).ToList();
+            return output;
 
         }
     }

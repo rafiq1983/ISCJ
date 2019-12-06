@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using MA.Common.Entities.Contacts;
 using MA.Common.Entities.Registration;
+using MA.Common.Entities.School;
 
 namespace MA.Common.Entities.Student
 {
@@ -29,6 +30,8 @@ namespace MA.Common.Entities.Student
         public Guid SubjectId { get; set; }
         public Guid ProgramId { get; set; }
         public Guid TenantId { get; set; }
-         
+
+        public Subject Subject { get; set; }
+
     }
 }
