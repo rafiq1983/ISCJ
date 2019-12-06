@@ -89,7 +89,7 @@ namespace ISCJ.Pages.School
             if (!ModelState.IsValid)
                 return;
             CourseManager mgr = new CourseManager();
-            var subject = mgr.GetSubjectMappings(GetCallContext(), SubjectId.Value);
+            var subject = mgr.GetSubjectMappings(GetCallContext(), SubjectId.Value, ProgramId.Value);
             if(subject!=null)
                 ModelState.AddModelError("SubjectId", $"This subject {subject.Subject.SubjectName} already has the mapping.");
 

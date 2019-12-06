@@ -180,11 +180,11 @@ namespace BusinessLogic
             }
         }
 
-        public SubjectMapping GetSubjectMappings(CallContext context, Guid subjectId)
+        public SubjectMapping GetSubjectMappings(CallContext context, Guid subjectId, Guid programId)
         {
             using (var db = new Database())
             {
-                return db.SubjectMappings.Include(x => x.Program).Include(x => x.Subject).SingleOrDefault(x => x.TenantId == context.TenantId && x.SubjectId == subjectId);
+                return db.SubjectMappings.Include(x => x.Program).Include(x => x.Subject).SingleOrDefault(x => x.TenantId == context.TenantId && x.ProgramId == programId && x.SubjectId == subjectId);
             }
 
         }

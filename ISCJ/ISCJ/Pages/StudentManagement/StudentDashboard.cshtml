@@ -79,7 +79,7 @@
                                         <th>Subject Name</th>
                                         <th>Grade</th>
                                        
-                                        <th>Attendance Rate</th>
+                                        <th class="d-none">Attendance Rate</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -89,7 +89,7 @@
                                             <td><input type="hidden" asp-for="@Model.SubjectId"/>@studnetSubject.Subject.SubjectName</td>
                                         <td><input type="text" /></td>
                                           
-                                            <td class="text-navy"> <i class="fa fa-level-up"></i> 24% </td>
+                                            <td class="text-navy d-none"> <i class="fa fa-level-up"></i> 24% </td>
                                         </tr>
                                     }
 
@@ -154,6 +154,18 @@
                                 </li>
                             </ul>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group row" style="text-align:right">
+                    <div class="col-sm-12 col-sm-offset-2">
+                        <button class="btn btn-white btn-sm" type="submit" asp-page-handler="AddSubject">Add Subject</button>
+
                     </div>
                 </div>
             </div>
