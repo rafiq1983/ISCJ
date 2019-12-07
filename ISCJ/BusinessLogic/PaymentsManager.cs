@@ -3,6 +3,8 @@ using MA.Common.Models.api;
 using MA.Core;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.IO.Pipes;
 using System.Linq;
 using System.Security.Policy;
@@ -134,7 +136,10 @@ namespace BusinessLogic
             {
                 return db.AllPaymentIds
                     .FromSql(
-                        "SELECT PaymentId, PaymentAmount, 'Cash' as PaymentMethod, InvoiceId, PayorId, PaymentDate from CashPayment union SELECT PaymentId, PaymentAmount,  InvoiceId, PayorId, 'Check' as PaymentMethod from CheckPayment union SELECT PaymentId, PaymentAmount,  InvoiceId,  PayorId, 'CreditCard' as PaymentMethod from CreditCardPayment;")
+                        @"SELECT PaymentId, PaymentAmount, 'Cash' as PaymentMethod, InvoiceId, PayorId, PaymentDate from CashPayment where TenantId=@tenantId
+                    union SELECT PaymentId, PaymentAmount, 'Check' as PaymentMethod,  InvoiceId, PayorId, PaymentDate from CheckPayment  where TenantId = @tenantId
+                    union SELECT PaymentId, PaymentAmount,  'CreditCard' as PaymentMethod, InvoiceId,  PayorId, PaymentDate from CreditCardPayment where tenantId=@tenantId",
+                        new SqlParameter(){ParameterName="@tenantId", Value=context.TenantId})
                     .ToList();
             }
         }
