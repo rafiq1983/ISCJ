@@ -159,7 +159,7 @@ context.SaveChanges();*/
         }
 
 
-        public Contact GetContact(Guid contactId)
+        public Contact GetContact(CallContext context, Guid contactId)
         {
       using (var _ContextContact = new ContactContext())
       {
@@ -178,12 +178,12 @@ context.SaveChanges();*/
       }
     }
 
-        public List<Contact> GetAllContacts()
+        public List<Contact> GetAllContacts(CallContext context)
         {
 
             using (var _ContextContact = new ContactContext())
             {
-                return _ContextContact.Contacts.ToList();//.Where(x => x.Guid == Guid.Parse("6358BD29-A24B-4294-9D5C-00CD2B3606A7")).ToList();
+                return _ContextContact.Contacts.Where(x => x.TenantId == context.TenantId).ToList();
 
             }
         }

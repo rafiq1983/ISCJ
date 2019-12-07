@@ -18,6 +18,8 @@ namespace ISCJ
     {
         public string GetContactName(Contact c)
         {
+            if (c == null)
+                return "null";
             return c.FirstName + " " + c.LastName;
         }
 

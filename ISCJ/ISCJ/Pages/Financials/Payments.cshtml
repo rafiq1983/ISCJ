@@ -1,5 +1,5 @@
 ﻿@page
-@model Payments
+@model PaymentsModel
 @{
 }
 @{
@@ -18,7 +18,7 @@
 <form method="POST" name="InvoiceDisplay">
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-9">
-            <h2>Invoices</h2>
+            <h2>Payments</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
@@ -27,7 +27,7 @@
                     Financials
                 </li>
                 <li class="active breadcrumb-item">
-                    <strong>Invoices</strong>
+                    <strong>Payments</strong>
                 </li>
             </ol>
         </div>
@@ -35,61 +35,30 @@
     
     <div class="ibox-content">
        
-        <div class="widget style1 yellow-bg">
-            <div class="row">
-                <div class="col-4">
-                    <i class="fa fa-money fa-5x"></i>
-                </div>
-                <div class="col-4 text-right">
-                    <span> Total Invoice Amounts </span>
-                    <h2 class="font-bold">$@Model.PageData.TotalInvoiceAmount</h2>
-                </div>
-                <div class="col-4 text-right">
-                    <span> Total Remaining Amount </span>
-                    <h2 class="font-bold">$@Model.PageData.TotalRemainingAmount</h2>
-                </div>
-            </div>
-        </div>
-        
-   
+    
         <table class="table">
         <thead>
-        <tr>
-
-            <th>Generation Date</th>
-            <th>Order Type</th>
-            <th>Due Date</th>
-            <th>Invoice Amount</th>
-            <th>Responsible Party</th>
-            <th>Total Paid</th>
-            <th>Remaining</th>
-            <th>Pay Amount</th>
-            <th>Is Paid</th>
-        </tr>
+            <tr>
+                <th>Made By</th>
+                <th>Payment Date</th>
+                <th>Payment Method</th>
+                <th>Payment Amount</th>
+                <th></th>
+            </tr>
         </thead>
         <tbody>
         @for (var i = 0; i < Model.PageData.RowData.Count; i++)
         {
             <tr>
-                <input type="hidden" asp-for="@Model.Invoices[i].InvoiceId" value="@Model.PageData.RowData[i].Invoice.InvoiceId"/>
+                <input type="hidden" asp-for="@Model.PageData.RowData[i].PaymentId" value="@Model.PageData.RowData[i].PaymentId"/>
 
-                <td>@Model.PageData.RowData[i].Invoice.GenerationDate</td>
-                <td>@Model.PageData.RowData[i].OrderType</td>
-                <td>@Model.PageData.RowData[i].Invoice.DueDate</td>
-                <td>$@Model.PageData.RowData[i].Invoice.InvoiceAmount</td>
-                <td><span>@Model.PageData.RowData[i].ResponsiblePartyName</span></td>
-                <td>$@Model.PageData.RowData[i].Invoice.TotalPaid</td>
-                <td>$@(Model.PageData.RowData[i].Invoice.InvoiceAmount - Model.PageData.RowData[i].Invoice.TotalPaid) </td>
-                <td>$<input type="text" value="@Model.PageData.RowData[i].Invoice.TotalPaid" asp-for="@Model.Invoices[i].TotalPaid"/>
-                    <span asp-validation-for="@Model.Invoices[i].TotalPaid" class="text-danger"></span>
-                </td>
-
-                <td><input type="checkbox" checked="@Model.PageData.RowData[i].Invoice.IsPaid" asp-for="@Model.Invoices[i].IsPaid"/></td>
-                <td>
-                    <button class="btn btn-white btn-sm" type="submit" name="btnUpdateInvoice" value="@i"
-                            asp-page-handler="UpateInvoice">
-                        Update
-                    </button>
+                <td>@Model.PageData.RowData[i].PaymentMadeBy</td>
+                <td>@Model.PageData.RowData[i].PaymentDate</td>
+                <td>@Model.PageData.RowData[i].PaymentMethod</td>
+                <td>$@Model.PageData.RowData[i].PaymentAmount</td>
+               
+                 <td>
+                    <a href="#">View Details</a>
                 </td>
 
             </tr>

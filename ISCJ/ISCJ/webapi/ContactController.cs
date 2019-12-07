@@ -72,7 +72,7 @@ namespace ISCJ.webapi
         public JsonResult GetAllContacts()
     {
             ContactManager mgr = new ContactManager();
-            var lst = mgr.GetAllContacts();
+            var lst = mgr.GetAllContacts(GetCallContext());
             return new JsonResult(lst);
         }
 

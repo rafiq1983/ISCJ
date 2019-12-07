@@ -12,11 +12,13 @@
     [PaymentDate] DATETIME NOT NULL, 
     [PaymentAmount] DECIMAL NOT NULL, 
 	[TenantId] UNIQUEIDENTIFIER NULL,
+	 [InvoiceId] UNIQUEIDENTIFIER NULL, 
     [CreateDate]          DATETIME         NOT NULL,
     [CreateUser]          VARCHAR (50)     NOT NULL,
     [ModifiedDate]        DATETIME         NULL,
     [ModifiedUser]        VARCHAR (50)     NULL,
     [RowVersion]          ROWVERSION       NOT NULL, 
+ 
 
 );
 

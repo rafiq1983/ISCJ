@@ -25,7 +25,7 @@ namespace ISCJ.Pages.ContactManagement
            
             if (string.IsNullOrEmpty(editContactId) == false)
       {                
-                var contact = mgr.GetContact(Guid.Parse(editContactId));
+                var contact = mgr.GetContact(GetCallContext(), Guid.Parse(editContactId));
 
                 Contact = new SaveContactInput()
                 {

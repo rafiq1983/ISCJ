@@ -37,6 +37,9 @@ namespace MA.Common.Entities.Payments
       public Guid PaymentId { get; set; }
       public decimal PaymentAmount { get; set; }
       public PaymentMethod PaymentMethod { get; set; }
+      public Guid InvoiceId { get; set; }
+      public Guid PayorId { get; set; }
+      public DateTime PaymentDate { get; set; }
   }
 
     public enum PaymentMethod

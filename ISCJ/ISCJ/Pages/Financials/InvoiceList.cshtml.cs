@@ -33,7 +33,7 @@ namespace ISCJ.Pages.Financials
         {
             Invoices = _invoiceMgr.GetInvoices(GetCallContext());
 
-            var contacts = _contactManager.GetAllContacts();
+            var contacts = _contactManager.GetAllContacts(GetCallContext());
 
             var registrationApplications = _registrationManager.GetAllApplications(GetCallContext(), Guid.Empty);
 
@@ -52,8 +52,8 @@ namespace ISCJ.Pages.Financials
 
                     if (registrationApplication != null)
                     {
-                        rowData.FatherContact = _contactManager.GetContact(registrationApplication.FatherContactId);
-                        rowData.MotherContact = _contactManager.GetContact(registrationApplication.MotherContactId);
+                        rowData.FatherContact = _contactManager.GetContact(GetCallContext(), registrationApplication.FatherContactId);
+                        rowData.MotherContact = _contactManager.GetContact(GetCallContext(), registrationApplication.MotherContactId);
 
                         if (rowData.FatherContact != null)
                         {
@@ -73,7 +73,7 @@ namespace ISCJ.Pages.Financials
                 }
                 else if(v.ReferenceType == ReferenceType.MembershipCreation || v.ReferenceType == ReferenceType.Enrollment || v.ReferenceType == ReferenceType.AdHocInvoiceAttachedToContact)
                 {
-                    var contact = _contactManager.GetContact(Guid.Parse(v.ReferenceId));
+                    var contact = _contactManager.GetContact(GetCallContext(), Guid.Parse(v.ReferenceId));
                     rowData.ResponsiblePartyName = contact.FirstName + " " + contact.LastName;
                 }
             
@@ -113,6 +113,21 @@ namespace ISCJ.Pages.Financials
             
         }
 
+        public class DataModel
+        {
+            public List<RowData> RowData;
+            public decimal TotalInvoiceAmount { get; set; }
+            public decimal TotalRemainingAmount { get; set; }
+        }
+
+        public class RowData
+        {
+            public Invoice Invoice { get; set; }
+            public MA.Common.Entities.Contacts.Contact FatherContact { get; set; }
+            public MA.Common.Entities.Contacts.Contact MotherContact { get; set; }
+            public string ResponsiblePartyName { get; set; }
+            public string OrderType { get; set; }
+        }
     }
 
  
