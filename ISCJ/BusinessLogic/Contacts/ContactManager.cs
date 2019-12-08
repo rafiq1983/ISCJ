@@ -33,34 +33,47 @@ namespace BusinessLogic
         {
          using (var _ContextContact = new ContactContext())
          {
-                if (input.Guid == Guid.Empty) //new record.
-                {
-                    Contact contact = new Contact()
-                    {
-                        Apt = input.Apt,
-                        CellPhone = input.CellPhone,
-                        City = input.City,
-                        CompanyName = input.CompanyName,
-                        ContactType = input.ContactType,
-
-                        DOB = input.DOB,
-                        Email = input.Email,
-                        TenantId = callContext.TenantId.Value,
-                        StreetAddress = input.StreetAddress,
-                        Gender = input.Gender,
-                        State = input.State,
-                        ZipCode = input.ZipCode,
-                        FirstName = input.FirstName,
-                        LastName = input.LastName,
-                        MiddleName = input.MiddleName,
-                        Guid = Guid.NewGuid(),
-                        CreatedBy = callContext.UserLoginName,
-                        CreatedDate = DateTime.UtcNow
-                    };
-
+             Contact contact = null;
+             if (input.Guid == Guid.Empty) //new record.
+             {
+                 contact = new Contact();
+                 contact.Guid = Guid.NewGuid();
+                 contact.CreatedDate = DateTime.UtcNow;
+                 contact.CreatedBy = callContext.UserLoginName;
+                 contact.TenantId = callContext.TenantId.Value;
                  _ContextContact.Contacts.Add(contact);
-             }
+                }
                 else
+             {
+                 contact = _ContextContact.Contacts.Single(x =>
+                     x.TenantId == callContext.TenantId && x.Guid == input.Guid);
+
+                
+                     contact.ModifiedDate = DateTime.UtcNow;
+                     contact.ModifiedBy = callContext.UserLoginName;
+                     _ContextContact.Contacts.Update(contact);
+                 
+             }
+
+
+             contact.Apt = input.Apt;
+             contact.CellPhone = input.CellPhone;
+             contact.City = input.City;
+             contact.CompanyName = input.CompanyName;
+             contact.ContactType = input.ContactType;
+
+             contact.DOB = input.DOB;
+             contact.Email = input.Email;
+             contact.StreetAddress = input.StreetAddress;
+             contact.Gender = input.Gender;
+             contact.State = input.State;
+             contact.ZipCode = input.ZipCode;
+             contact.FirstName = input.FirstName;
+             contact.LastName = input.LastName;
+             contact.MiddleName = input.MiddleName;
+
+             _ContextContact.SaveChanges();
+         
                 {
                     //Updating all fields of contact.
                     //THE below will do a read and update.  Use attach method if want to modify only a subset of fields.
@@ -71,20 +84,14 @@ namespace BusinessLogic
                         .CurrentValues.SetValues(input)); //will do property matching. Since I don't have modified date/user I don't want to use this.
                     */
 
-                    var updatedContact = _ContextContact.Contacts.SingleOrDefault(x => x.TenantId == callContext.TenantId && x.Guid == input.Guid);
-                    if (updatedContact != null)
-                    {
-                        updatedContact.ModifiedDate = DateTime.UtcNow;
-                        updatedContact.ModifiedBy = callContext.UserLoginName;
-                    }
+                    
 
                     //If SUbset of fields 
                     /*context.Attach(person);
 context.Entry(person).Property("Name").IsModified = true;
 context.SaveChanges();*/
                 }
-
-                _ContextContact.SaveChanges();
+                
 
              return input.Guid;
          }
