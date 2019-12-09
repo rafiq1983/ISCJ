@@ -68,8 +68,11 @@ namespace BusinessLogic
             {
                 var registrationApplication = SaveRegistrationApplication(context, input);
                 AddMembershipIfNeeded(context, input);
+
+                var invoiceTypeId = AddRegistrationApplicationInvoiceTypeId(context);
+
                 PerformBilling(context, input.BillingInstructions, registrationApplication.ApplicationId,
-                    ReferenceType.RegistrationApplication, input.FatherId.Value);
+                    ReferenceType.RegistrationApplication, invoiceTypeId, input.FatherId.Value);
 
                 if(input.AutoAssignSubjects)
                     AddStudentSubjects(context, input, registrationApplication);
@@ -78,6 +81,35 @@ namespace BusinessLogic
                 scope.Complete();
                 return new CreateRegistrationApplicationOutput() { ApplicationId = registrationApplication.ApplicationId};
             }
+    }
+
+    private Guid AddRegistrationApplicationInvoiceTypeId(CallContext context)
+    {
+        using (var db = new Database())
+        {
+            var invoiceTypeID = db.InvoiceTypes.SingleOrDefault(x => x.InvoiceTypeName == "Registration-Charges")
+                ?.InvoiceTypeId;
+
+            if (invoiceTypeID == null)
+            {
+                invoiceTypeID = Guid.NewGuid();
+                db.InvoiceTypes.Add(new InvoiceType()
+                {
+                    InvoiceTypeId = invoiceTypeID.Value,
+                    CreateDate = DateTime.UtcNow,
+                    CreateUser = context.UserLoginName,
+                    InvoiceTypeName = "Registration-Charges",
+                    ShortDescription = "Registration Application Fees",
+                    TenantId = context.TenantId.Value
+
+                });
+
+                db.SaveChanges();
+
+            }
+
+            return invoiceTypeID.Value;
+        }
     }
 
     private void AddStudentSubjects(CallContext context, CreateRegistrationApplicationInput input, RegistrationApplication app)
@@ -171,7 +203,7 @@ namespace BusinessLogic
                 enrollment.MotherId = existingApplication.MotherContactId;
                 
                 existingApplication.Enrollments.Add(enrollment);
-              PerformBilling(context, input.BillingInstructions, existingApplication.ApplicationId, ReferenceType.RegistrationApplication, existingApplication.FatherContactId);
+              PerformBilling(context, input.BillingInstructions, existingApplication.ApplicationId, ReferenceType.RegistrationApplication, Guid.Empty, existingApplication.FatherContactId);
                 db.SaveChanges();
             }
 
@@ -212,7 +244,8 @@ namespace BusinessLogic
                     enrollment.MotherId = input.MotherId;
                     enrollment.RegistrationApplicationId = Guid.Empty;
                     db.Enrollments.Add(enrollment);
-                    PerformBilling(context, input.BillingInstructions, enrollment.EnrollmentId, ReferenceType.Enrollment, enrollment.FatherId);
+                    var invoiceTypeId = Guid.Empty;//GetEnrollmentFeeCharges();
+                    PerformBilling(context, input.BillingInstructions, enrollment.EnrollmentId, ReferenceType.Enrollment, invoiceTypeId, enrollment.FatherId);
                     db.SaveChanges();
                 }
 
@@ -272,9 +305,9 @@ namespace BusinessLogic
         }
 
     
-    private void PerformBilling(CallContext context, List<ProductSelected> billingInstructions, Guid registrationApplicationId, ReferenceType referenceType, Guid responsiblePartyId)
+    private void PerformBilling(CallContext context, List<ProductSelected> billingInstructions, Guid registrationApplicationId, ReferenceType referenceType, Guid invoiceTypeId, Guid responsiblePartyId)
         {
-            if (billingInstructions.Count == 0)
+            if (billingInstructions==null && billingInstructions.Count == 0)
                 return;
 
             using (var db = new Database())
@@ -294,8 +327,9 @@ namespace BusinessLogic
                 invoice.TennantId = context.TenantId.Value;
                 invoice.CreateDate = DateTime.UtcNow;
                 invoice.ModifiedDate = null;
-                invoice.InvoiceTypeId = Guid.Empty;//TODO: Read from settings to attach correct InvoiceTypeID.
+                invoice.InvoiceTypeId = invoiceTypeId;
                 invoice.ResponsiblePartyId = responsiblePartyId;
+
                 invoice.InvoiceItems = new List<InvoiceItem>();
                 foreach (var item in billingInstructions.Where(x=>x.IsSelected))
                 {

@@ -89,15 +89,24 @@
           </li>
 
 
-          <li class="@Html.IsSelected(controller: "Financials")" style="@(Model.HasSelectedOrganization? "display:block" : "display:none")">
+          <li class="@Html.IsPageSelected(pageUrl: "/Financials")" style="@(Model.HasSelectedOrganization? "display:block" : "display:none")">
               <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Financials</span> <span class="fa arrow"></span></a>
               <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Financials", cssClass: "in")">
-                  <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/Financials/InvoiceList">Invoices</a></li>
-                  <li class="@Html.IsSelected(action: "AddInvoice")"><a href="/Financials/AddInvoice">Add Invoice</a></li>
-                  <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/Financials/Payments">Payments</a></li>
-                  <li class="@Html.IsSelected(action: "AddPayment")"><a href="/Financials/AddPayment">Add Payment</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl: "/Financials/InvoiceList")"><a href="/Financials/InvoiceList">Invoices</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl: "/Financials/AddInvoice")"><a href="/Financials/AddInvoice">Add Invoice</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl: "/Financials/Payments")"><a href="/Financials/Payments">Payments</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl:"/Financials/AddPayment")"><a href="/Financials/AddPayment">Add Payment</a></li>
               </ul>
           </li>
+          <li class="@Html.IsSelected(controller: "Financials")" style="@(Model.HasSelectedOrganization? "display:block" : "display:none")">
+              <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Reporting</span> <span class="fa arrow"></span></a>
+              <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Financials", cssClass: "in")">
+                  <li class="@Html.IsSelected(action: "outstandingblance", controller:"Reports")"><a href="/Reports/outsandingbalance">Outstand Invoices</a></li>
+
+                  <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/Reports/ExpiredMemberships">Expired Memberships</a></li>
+              </ul>
+          </li>
+
           <li class="@Html.IsSelected(controller: "Donors")" style="@(Model.HasSelectedOrganization? "display:block" : "display:none")">
               <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Donors</span> <span class="fa arrow"></span></a>
               <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Financials", cssClass: "in")">

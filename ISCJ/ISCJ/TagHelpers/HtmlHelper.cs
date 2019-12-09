@@ -9,6 +9,25 @@ namespace ISCJ.TagHelpers
 {
   public static class HtmlHelpers
   {
+        public static string IsPageSelected(this IHtmlHelper html, string pageUrl, string cssClass = null)
+        {
+            if (String.IsNullOrEmpty(cssClass))
+                cssClass = "active";
+
+            string url = (string)html.ViewContext.RouteData.Values["page"];
+
+           
+
+            if (url.Contains(pageUrl))
+            {
+                return cssClass;
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
 
     public static string IsSelected(this IHtmlHelper html, string controller = null, string action = null, string cssClass = null)
     {

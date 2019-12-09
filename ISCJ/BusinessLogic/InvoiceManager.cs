@@ -15,7 +15,8 @@ namespace BusinessLogic
   public class InvoiceManager
   {
 
-        public void PerformBilling(CallContext context, Database db, List<ProductSelected> billingInstructions, string desc, string orderId, ReferenceType referenceType, Guid? responsiblePartyId = null)
+        public void PerformBilling(CallContext context, Database db, List<ProductSelected> billingInstructions, string desc, string orderId, 
+            ReferenceType referenceType, Guid invoiceTypeId, Guid? responsiblePartyId = null)
         {
             if (billingInstructions.Count == 0)
                 return;
@@ -35,8 +36,7 @@ namespace BusinessLogic
                 invoice.CreateDate = DateTime.UtcNow;
                 invoice.ResponsiblePartyId = responsiblePartyId;
                 invoice.ModifiedDate = null;
-                invoice.InvoiceTypeId = db.InvoiceTypes.SingleOrDefault(x => x.InvoiceTypeName == "Membership-fees")
-                    ?.InvoiceTypeId;
+                invoice.InvoiceTypeId = invoiceTypeId;
 
                 invoice.InvoiceItems = new List<InvoiceItem>();
                 foreach (var item in billingInstructions.Where(x => x.IsSelected))

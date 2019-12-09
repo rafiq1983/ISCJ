@@ -57,8 +57,28 @@ namespace BusinessLogic
                 membership.Contact = input.MemberContact;
                 membership.CreateUser = context.UserLoginName;
                 db.MasjidMembers.Add(membership);
+
+                var invoiceTypeID = db.InvoiceTypes.SingleOrDefault(x => x.InvoiceTypeName == "Membership-fees")
+                    ?.InvoiceTypeId;
+
+                if (invoiceTypeID == null)
+                {
+                    invoiceTypeID = Guid.NewGuid();
+                    db.InvoiceTypes.Add(new InvoiceType()
+                    {
+                         InvoiceTypeId = invoiceTypeID.Value,
+                         CreateDate = DateTime.UtcNow,
+                         CreateUser = context.UserLoginName,
+                         InvoiceTypeName = "Membership-fees",
+                         ShortDescription="Membership Fees",
+                         TenantId = context.TenantId.Value
+
+                    });
+                   
+                }
+
                 InvoiceManager billingMgr = new InvoiceManager();
-                billingMgr.PerformBilling(context, db, input.BillingInstructions, "Invoice created for Membership registration", membership.ContactId.ToString(), ReferenceType.MembershipCreation, membership.ContactId);
+                billingMgr.PerformBilling(context, db, input.BillingInstructions, "Invoice created for Membership registration", membership.ContactId.ToString(), ReferenceType.MembershipCreation, invoiceTypeID.Value, membership.ContactId);
                 db.SaveChanges();
                 return new CreateMasjidMembershipOutput()
                 {
