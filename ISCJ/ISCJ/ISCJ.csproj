@@ -35,6 +35,7 @@
     <Folder Include="Filters\" />
     <Folder Include="Pages\Admin\" />
     <Folder Include="Pages\NewFolder\" />
+    <Folder Include="Pages\ProgramManagement\" />
   </ItemGroup>
 
   <ItemGroup>

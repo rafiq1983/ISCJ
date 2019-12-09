@@ -7,6 +7,7 @@
     ViewData["Title"] = "Contacts";
     Layout = "~/Pages/Shared/_LayoutModern.cshtml";
 }
+
 <form method="POST" name="ProgramsList">
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-9">
@@ -24,32 +25,32 @@
             </ol>
         </div>
     </div>
-    
+
     <div class="ibox">
-    <div class="ibox-content">
+        <div class="ibox-content">
 
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Program Name</th>
-                <th>Description</th>
-               
-            </tr>
-            </thead>
-            <tbody>
-            @for (var i = 0; i < Model.ProgramDetails.Count; i++)
-            {
+            <table class="table">
+                <thead>
                 <tr>
-                    <input type="hidden" asp-for="@Model.ProgramDetails[i].ProgramId" value="@Model.ProgramDetails[i].ProgramId"/>
+                    <th>Program Name</th>
+                    <th>Description</th>
 
-                    <td>@Model.ProgramDetails[i].ProgramName</td>
-                    <td>@Html.Raw(Model.ProgramDetails[i].ProgramDescription)</td>
                 </tr>
-            }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                @for (var i = 0; i < Model.ProgramDetails.Count; i++)
+                {
+                    <tr>
+                        <input type="hidden" asp-for="@Model.ProgramDetails[i].ProgramId" value="@Model.ProgramDetails[i].ProgramId" />
 
+                        <td>@Model.ProgramDetails[i].ProgramName</td>
+                        <td>@Html.Raw(Model.ProgramDetails[i].ProgramDescription)</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+
+        </div>
     </div>
-    </div>
- 
+
 </form>

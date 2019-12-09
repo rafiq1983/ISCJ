@@ -24,103 +24,103 @@
               </div>
           </li>
 
-          <li class="@Html.IsSelected(controller: "StudentManagement")">
+          <li class="@Html.IsPageSelected(pageUrl: "/Me/")">
               <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Me</span> <span class="fa arrow"></span></a>
               <ul class="nav nav-second-level collapse">
-                  <li class="@Html.IsSelected(action: "MyProfile")"><a href="/UserProfile">Profile</a></li>
-                  <li class="@Html.IsSelected(action: "SelectOrganization")"><a href="/SelectTenant">My Organizations</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl: "/Me/UserProfile")"><a href="/Me/UserProfile">Profile</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl: "/Me/SelectTenant")"><a href="/Me/SelectTenant">My Organizations</a></li>
 
-                  <li class="@Html.IsSelected(action: "SelectOrganization")"><a href="/signup/signuporganization">Create New Organization</a></li>
-                  <li class="@Html.IsSelected(action: "SelectOrganization")"><a href="/UserMessages">My Messages</a></li>
-                  <li class="@Html.IsSelected(action: "SelectOrganization")"><a href="/UserAlerts">My Alerts</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl: "/signup/signuporganization")"><a href="/signup/signuporganization">Create New Organization</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl: "/me/usermessages")"><a href="/Me/usermessages">My Messages</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl: "/me/useralerts")"><a href="/me/useralerts">My Alerts</a></li>
               </ul>
           </li>
 
 
-          <li class="@Html.IsSelected(controller: "StudentManagement")" style="@(Model.HasSelectedOrganization? "display:block" : "display:none")">
+          <li class="@Html.IsPageSelected(pageUrl: "/setup/")" style="@(Model.HasSelectedOrganization? "display:block" : "display:none")">
               <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Setup</span> <span class="fa arrow"></span></a>
               <ul class="nav nav-second-level collapse">
-                  <li class="@Html.IsSelected(action: "ProgramsList")"><a href="../programManagement/vieweditprogram">Manage Programs</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl: "/setup/vieweditprogram")"><a href="/setup/vieweditprogram">Manage Programs</a></li>
 
-                  <li class="@Html.IsSelected(action: "AddInstructor")"><a href="/School/AddInstructor">Manage Instructors</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl: "/setup/AddInstructor")"><a href="/setup/AddInstructor">Manage Instructors</a></li>
 
-                  <li class="@Html.IsSelected(action: "Add Subject")"><a href="/School/AddSubject">Manage Subjects</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl: "/setup/AddSubject")"><a href="/setup/AddSubject">Manage Subjects</a></li>
 
-                  <li class="@Html.IsSelected(action: "Add Room")"><a href="/School/AddRoom">Manage Rooms</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl: "/setup/AddRoom")"><a href="/setup/AddRoom">Manage Rooms</a></li>
 
-                  <li class="@Html.IsSelected(action: "Rooms")"><a href="/ManageProducts">Manage Products</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl: "setup/ManageProducts")"><a href="/setup/ManageProducts">Manage Products</a></li>
 
-                  <li class="@Html.IsSelected(action: "SubjectAssignmentRules") d-none"><a href="/ManageMetrics">Manage Metrics</a></li>
-                  <li class="@Html.IsSelected(action: "Rooms")"><a href="/AddUser">Add User</a></li>
-                  <li class="@Html.IsSelected(action: "TeacherSubjectAssignment")"><a href="/School/TeacherSubjectAssignment">Teacher Subject Assignment</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl: "/setup/ManageMetrics") d-none"><a href="/setup/ManageMetrics">Manage Metrics</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl: "/setup/AddUser")"><a href="/setup/AddUser">Add User</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl: "/setup/TeacherSubjectAssignment")"><a href="/setup/TeacherSubjectAssignment">Teacher Subject Assignment</a></li>
 
-                  <li class="@Html.IsSelected(action: "SubjectAssignmentRules")"><a href="/School/SubjectAssignmentRules">Course Assignment Rules</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl: "/setupSubjectAssignmentRules")"><a href="/setup/SubjectAssignmentRules">Course Assignment Rules</a></li>
 
-                  <li class="@Html.IsSelected(action: "Rooms")"><a href="/ManageClasses">Create Classes</a></li>
-                  <li class="@Html.IsSelected(action: "Rooms")"><a href="/ViewClasses">View Classes</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl: "/setup//ManageClasses")"><a href="/setup/ManageClasses">Create Classes</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl: "/setup/ViewClasses")"><a href="/setup/ViewClasses">View Classes</a></li>
               </ul>
           </li>
 
-          <li class="@Html.IsSelected(controller: "ContactManagement")" style="@(Model.HasSelectedOrganization? "display:block" : "display:none")">
+          <li class="@Html.IsPageSelected(pageUrl: "/ContactManagement/")" style="@(Model.HasSelectedOrganization? "display:block" : "display:none")">
               <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Contact Management</span> <span class="fa arrow"></span></a>
-              <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "ContactManagement", cssClass: "in")">
-                  <li class="@Html.IsSelected(action: "Contacts")"><a href="/ContactManagement/Contacts">Contacts</a></li>
-                  <li class="@Html.IsSelected(action: "ViewEditContact")"><a href="/ContactManagement/ContactViewEdit?mode=new">Add Contact</a></li>
-                  <li class="@Html.IsSelected(action: "ViewEditContact")"><a href="/ContactManagement/Communications">Communication</a></li>
+              <ul class="nav nav-second-level collapse @Html.IsPageSelected(pageUrl: "ContactManagement", cssClass: "in")">
+                  <li class="@Html.IsPageSelected(pageUrl: "/Contacts")"><a href="/ContactManagement/Contacts">Contacts</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl: "/ContactViewEdit")"><a href="/ContactManagement/ContactViewEdit?mode=new">Add Contact</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl: "/Communications")"><a href="/ContactManagement/Communications">Communication</a></li>
               </ul>
           </li>
 
-          <li class="@Html.IsSelected(controller: "")" style="@(Model.HasSelectedOrganization? "display:block" : "display:none")">
+          <li class="@Html.IsPageSelected(pageUrl: "/StudentManagement/")" style="@(Model.HasSelectedOrganization? "display:block" : "display:none")">
               <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Registration</span> <span class="fa arrow"></span></a>
               <ul class="nav nav-second-level collapse">
-                  <li class="@Html.IsSelected(action: "RegisterStudent2")"><a href="/StudentManagement/RegisterStudent2">New Registration Application</a></li>
-                  <li class="@Html.IsSelected(action: "RegistrationApplications")"><a href="/StudentManagement/RegistrationApplications">View Registration Applications</a></li>
-                  <li class="@Html.IsSelected(action: "Enrollments")"><a href="/StudentManagement/Enrollments">Enrollments</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl: "RegisterStudent2")"><a href="/StudentManagement/RegisterStudent2">New Registration Application</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl: "RegistrationApplications")"><a href="/StudentManagement/RegistrationApplications">View Registration Applications</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl: "Enrollments")"><a href="/StudentManagement/Enrollments">Enrollments</a></li>
               </ul>
           </li>
 
-          <li class="@Html.IsSelected(controller: "Student")" style="@(Model.HasSelectedOrganization? "display:block" : "display:none")">
+          <li class="@Html.IsPageSelected(pageUrl: "/StudentManagement/")" style="@(Model.HasSelectedOrganization? "display:block" : "display:none")">
               <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Student</span> <span class="fa arrow"></span></a>
-              <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Students", cssClass: "in")">
-                  <li class="@Html.IsSelected(action: "StudentDashboard")"><a href="/StudentManagement/StudentDashboard">Student Dashboard</a></li>
+              <ul class="nav nav-second-level collapse @Html.IsPageSelected(pageUrl: "/StudentManagement/", cssClass: "in")">
+                  <li class="@Html.IsPageSelected(pageUrl: "/StudentManagement/StudentDashboard")"><a href="/StudentManagement/StudentDashboard">Student Dashboard</a></li>
                   
-                  <li class="@Html.IsSelected(action: "Rooms")"><a href="#">Attendance</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl: "/StudentManagement/Attendance")"><a href="#">Attendance</a></li>
               </ul>
           </li>
 
 
           <li class="@Html.IsPageSelected(pageUrl: "/Financials")" style="@(Model.HasSelectedOrganization? "display:block" : "display:none")">
               <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Financials</span> <span class="fa arrow"></span></a>
-              <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Financials", cssClass: "in")">
+              <ul class="nav nav-second-level collapse @Html.IsPageSelected(pageUrl: "Financials", cssClass: "in")">
                   <li class="@Html.IsPageSelected(pageUrl: "/Financials/InvoiceList")"><a href="/Financials/InvoiceList">Invoices</a></li>
                   <li class="@Html.IsPageSelected(pageUrl: "/Financials/AddInvoice")"><a href="/Financials/AddInvoice">Add Invoice</a></li>
                   <li class="@Html.IsPageSelected(pageUrl: "/Financials/Payments")"><a href="/Financials/Payments">Payments</a></li>
                   <li class="@Html.IsPageSelected(pageUrl:"/Financials/AddPayment")"><a href="/Financials/AddPayment">Add Payment</a></li>
               </ul>
           </li>
-          <li class="@Html.IsSelected(controller: "Financials")" style="@(Model.HasSelectedOrganization? "display:block" : "display:none")">
+          <li class="@Html.IsPageSelected(pageUrl: "/Reports/")" style="@(Model.HasSelectedOrganization? "display:block" : "display:none")">
               <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Reporting</span> <span class="fa arrow"></span></a>
-              <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Financials", cssClass: "in")">
-                  <li class="@Html.IsSelected(action: "outstandingblance", controller:"Reports")"><a href="/Reports/outsandingbalance">Outstand Invoices</a></li>
+              <ul class="nav nav-second-level collapse @Html.IsPageSelected(pageUrl: "/Reports/", cssClass: "in")">
+                  <li class="@Html.IsPageSelected(pageUrl: "/outstandingblance")"><a href="/Reports/outsandingbalance">Outstand Invoices</a></li>
 
-                  <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/Reports/ExpiredMemberships">Expired Memberships</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl: "/ExpiredMemberships")"><a href="/Reports/ExpiredMemberships">Expired Memberships</a></li>
               </ul>
           </li>
 
-          <li class="@Html.IsSelected(controller: "Donors")" style="@(Model.HasSelectedOrganization? "display:block" : "display:none")">
+          <li class="@Html.IsPageSelected(pageUrl: "Donors")" style="@(Model.HasSelectedOrganization? "display:block" : "display:none")">
               <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Donors</span> <span class="fa arrow"></span></a>
-              <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Financials", cssClass: "in")">
-                  <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/Financials/InvoiceList">Donations</a></li>
-                  <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/Financials/InvoiceList">Add Donation</a></li>
+              <ul class="nav nav-second-level collapse @Html.IsPageSelected(pageUrl: "/Donors/", cssClass: "in")">
+                  <li class="@Html.IsPageSelected(pageUrl: "/Donors/List")"><a href="/Donors/List">Donations</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl: "/Donoros/Addd")"><a href="/Donors/Add">Add Donation</a></li>
               </ul>
           </li>
-          <li class="@Html.IsSelected(controller: "Members")" style="@(Model.HasSelectedOrganization? "display:block" : "display:none")">
+          <li class="@Html.IsPageSelected(pageUrl: "/Masjid")" style="@(Model.HasSelectedOrganization? "display:block" : "display:none")">
               <a href="@Url.Action("Dashboard_1", "Dashboards")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Members</span> <span class="fa arrow"></span></a>
-              <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Financials", cssClass: "in")">
-                  <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/AddMasjidMemberShip">Add a Member</a></li>
+              <ul class="nav nav-second-level collapse @Html.IsPageSelected(pageUrl: "/Masjid", cssClass: "in")">
+                  <li class="@Html.IsPageSelected(pageUrl: "/Masjid/AddMasjidMembership")"><a href="/Masjid/AddMasjidMemberShip">Add a Member</a></li>
 
-                  <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/ViewMembers">Members</a></li>
-                  <li class="@Html.IsSelected(action: "InvoiceList")"><a href="/Financials/RenewMembership">Renew Membership</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl: "/Masjid/ViewMembers")"><a href="/Masjid/ViewMembers">Members</a></li>
+                  <li class="@Html.IsPageSelected(pageUrl: "/Masjid/RenewMembership")"><a href="/Masjid/RenewMembership">Renew Membership</a></li>
               </ul>
           </li>
 
