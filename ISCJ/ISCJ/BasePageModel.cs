@@ -4,18 +4,90 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using BusinessLogic;
+using ISCJ.TagHelpers;
 using MA.Common;
 using MA.Common.Entities.Contacts;
 using MA.Common.Entities.User;
 using MA.Core;
 using MA.Core.Web;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore.Update.Internal;
 
 namespace ISCJ
 {
     public class BasePageModel:PageModel
     {
+        private NavigationBar _leftNavBar = null;
+
+        public NavigationBar LeftNavigationBar
+        {
+            get
+            {
+                if (_leftNavBar == null)
+                {
+                    LoadLeftNavBar();
+                }
+
+                return _leftNavBar;
+            }
+        }
+
+        public void LoadLeftNavBar()
+        {
+            _leftNavBar = new NavigationBar();
+            _leftNavBar.Sections = new List<Section>();
+
+            CallContext context = GetCallContext();
+
+
+            Section meSection = null;
+            List<SectionItem> sectionItems = new List<SectionItem>();
+            sectionItems.Add(GetSectionItem("Profile", "/Me/UserProfile"));
+            sectionItems.Add(GetSectionItem("My Organizations", "/Me/SelectTenant"));
+            sectionItems.Add(GetSectionItem("Create New Organization", "/signup/signuporganization"));
+            sectionItems.Add(GetSectionItem("My Messages", "/Me/usermessages"));
+            sectionItems.Add(GetSectionItem("My Alerts", "/me/useralerts"));
+
+            meSection = new Section("Me", sectionItems);
+
+            _leftNavBar.Sections.Add(meSection);
+
+            if (context.TenantId.HasValue == true)
+            {
+                _leftNavBar.Sections.Add(new Section("setup",new List<SectionItem>()));
+
+               
+                _leftNavBar.Sections.Add(new Section("Contact Management", new List<SectionItem>()));
+
+                _leftNavBar.Sections.Add(new Section("Registration", new List<SectionItem>()));
+
+                _leftNavBar.Sections.Add(new Section("Student", new List<SectionItem>()));
+
+                _leftNavBar.Sections.Add(new Section("Financials", new List<SectionItem>()));
+
+                _leftNavBar.Sections.Add(new Section("Reporting", new List<SectionItem>()));
+
+                _leftNavBar.Sections.Add(new Section("Donors", new List<SectionItem>()));
+
+                _leftNavBar.Sections.Add(new Section("Members", new List<SectionItem>()));
+
+
+
+
+            }
+
+
+        }
+
+        private SectionItem GetSectionItem(string caption, string navUrl)
+        {
+            return new SectionItem(caption, HtmlHelpers.IsPageActive(RouteData.Values["page"].ToString(), navUrl), navUrl);
+          
+        }
+
+       
+
         public string GetContactName(Contact c)
         {
             if (c == null)

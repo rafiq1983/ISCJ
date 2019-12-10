@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Cache;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -28,8 +31,20 @@ namespace ISCJ.TagHelpers
             }
         }
 
+        public static bool IsPageActive(string requestUrl, string pageUrl, string cssClass = null)
+        {
+            if (requestUrl.ToLower().Contains(pageUrl.ToLower()))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
-    public static string IsSelected(this IHtmlHelper html, string controller = null, string action = null, string cssClass = null)
+
+        public static string IsSelected(this IHtmlHelper html, string controller = null, string action = null, string cssClass = null)
     {
       if (String.IsNullOrEmpty(cssClass))
         cssClass = "active";
