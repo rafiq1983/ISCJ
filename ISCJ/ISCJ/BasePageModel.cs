@@ -55,30 +55,125 @@ namespace ISCJ
 
             if (context.TenantId.HasValue == true)
             {
-                _leftNavBar.Sections.Add(new Section("setup",new List<SectionItem>()));
+                
+                _leftNavBar.Sections.Add(GetSetupSection());
+                _leftNavBar.Sections.Add(GetContactSection());
+                _leftNavBar.Sections.Add(GetRegistrationSection());
 
-               
-                _leftNavBar.Sections.Add(new Section("Contact Management", new List<SectionItem>()));
+                _leftNavBar.Sections.Add(GetStudentSection());
+                _leftNavBar.Sections.Add(GetFinancialsSection());
 
-                _leftNavBar.Sections.Add(new Section("Registration", new List<SectionItem>()));
+                _leftNavBar.Sections.Add(GetReportingSection());
 
-                _leftNavBar.Sections.Add(new Section("Student", new List<SectionItem>()));
+                _leftNavBar.Sections.Add(GetDonorsSection());
 
-                _leftNavBar.Sections.Add(new Section("Financials", new List<SectionItem>()));
-
-                _leftNavBar.Sections.Add(new Section("Reporting", new List<SectionItem>()));
-
-                _leftNavBar.Sections.Add(new Section("Donors", new List<SectionItem>()));
-
-                _leftNavBar.Sections.Add(new Section("Members", new List<SectionItem>()));
-
-
-
-
+                _leftNavBar.Sections.Add(GetMembersSection());
+                
             }
 
 
         }
+
+        private Section GetSetupSection()
+        {
+            List<SectionItem> sectionItems = new List<SectionItem>();
+            sectionItems.Add(GetSectionItem("Manage Programs", "/setup/vieweditprogram"));
+            sectionItems.Add(GetSectionItem("Manage Instructors", "/setup/AddInstructor"));
+            sectionItems.Add(GetSectionItem("Manage Subjects", "/setup/AddSubject"));
+            sectionItems.Add(GetSectionItem("Manage Rooms", "/setup/AddRoom"));
+            sectionItems.Add(GetSectionItem("Manage Products", "/setup/ManageProducts"));
+            sectionItems.Add(GetSectionItem("Add User", "/setup/AddUser"));
+            sectionItems.Add(GetSectionItem("Teacher Subject Assignment", "/setup/TeacherSubjectAssignment"));
+            sectionItems.Add(GetSectionItem("Course Assignment Rules", "/setup/SubjectAssignmentRules"));
+            sectionItems.Add(GetSectionItem("Create Classes", "/setup/manageclasses"));
+            sectionItems.Add(GetSectionItem("View Classes", "/setup/ViewClasses"));
+
+
+            Section section = new Section("Setup", sectionItems);
+
+            return section;
+        }
+
+        private Section GetContactSection()
+        {
+            List<SectionItem> sectionItems = new List<SectionItem>();
+            sectionItems.Add(GetSectionItem("Contacts", "/ContactManagement/Contacts"));
+            sectionItems.Add(GetSectionItem("Add Contacts", "/ContactManagement/ContactViewEdit"));
+            sectionItems.Add(GetSectionItem("Communication", "/ContactManagement/Communications"));
+         
+
+            Section section = new Section("Contact Management", sectionItems);
+
+            return section;
+        }
+
+        private Section GetStudentSection()
+        {
+            List<SectionItem> sectionItems = new List<SectionItem>();
+            sectionItems.Add(GetSectionItem("Dashboard", "/StudentManagement/StudentDashboard"));
+            sectionItems.Add(GetSectionItem("Attendance", "/StudentManagement/Attendance"));
+
+            Section section = new Section("Student", sectionItems);
+
+            return section;
+        }
+
+        private Section GetFinancialsSection()
+        {
+            List<SectionItem> sectionItems = new List<SectionItem>();
+            sectionItems.Add(GetSectionItem("Invoices", "/Financials/InvoiceList"));
+            sectionItems.Add(GetSectionItem("Add Invoices", "/Financials/AddInvoice"));
+
+            sectionItems.Add(GetSectionItem("Payments", "/Financials/Payments"));
+
+            sectionItems.Add(GetSectionItem("Add Payments", "/Financials/AddPayment"));
+
+            Section section = new Section("Financials", sectionItems);
+
+            return section;
+        }
+
+
+        private Section GetRegistrationSection()
+        {
+            List<SectionItem> sectionItems = new List<SectionItem>();
+            sectionItems.Add(GetSectionItem("New Registration Application", "/StudentManagement/RegisterStudent2"));
+            sectionItems.Add(GetSectionItem("View Registration Applications", "/StudentManagement/RegistrationApplications"));
+            sectionItems.Add(GetSectionItem("Enrollments", "/StudentManagement/Enrollments"));
+            
+            Section section = new Section("Registration", sectionItems);
+
+            return section;
+        }
+
+        private Section GetReportingSection()
+        {
+            List<SectionItem> sectionItems = new List<SectionItem>();
+             Section section = new Section("Reporting", sectionItems);
+
+            return section;
+        }
+
+        private Section GetDonorsSection()
+        {
+            List<SectionItem> sectionItems = new List<SectionItem>();
+            Section section = new Section("Donors", sectionItems);
+
+            return section;
+        }
+
+        private Section GetMembersSection()
+        {
+            List<SectionItem> sectionItems = new List<SectionItem>();
+            sectionItems.Add(GetSectionItem("Add a member", "/Masjid/AddMasjidMemberShip"));
+            sectionItems.Add(GetSectionItem("Members", "/Masjid/ViewMembers"));
+            sectionItems.Add(GetSectionItem("Renew Membership", "/Masjid/RenewMembership"));
+
+            Section section = new Section("Members", sectionItems);
+
+            return section;
+        }
+
 
         private SectionItem GetSectionItem(string caption, string navUrl)
         {
