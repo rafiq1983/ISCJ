@@ -87,6 +87,7 @@ namespace ISCJ
             sectionItems.Add(GetSectionItem("Course Assignment Rules", "/setup/SubjectAssignmentRules"));
             sectionItems.Add(GetSectionItem("Create Classes", "/setup/manageclasses"));
             sectionItems.Add(GetSectionItem("View Classes", "/setup/ViewClasses"));
+            sectionItems.Add(GetSectionItem("Manage Metrics", "/setup/managemetrics"));
 
 
             Section section = new Section("Setup", sectionItems);

@@ -14,6 +14,14 @@ namespace MA.Common.Entities.Registration
     public string ProgramDescription { get; set; }
   }
 
+  public class MetricAssociation : BaseEntity
+  {
+      public Guid MetricId { get; set; }
+      public Guid TenantId { get; set; }
+      public Guid EntityId { get; set; }
+      public string EntityType { get; set; }
+    }
+
   public class Metric : BaseEntity
   {
       public Guid MetricId { get; set; }
@@ -23,7 +31,7 @@ namespace MA.Common.Entities.Registration
       public string MetricValueDefinition { get; set; }
       public MetricValueTypeDefinition MetricValueDefinitionObject { get; set; }
       public IEnumerable<MetricValue> MetricValues { get; set; }
-
+    
   }
 
   public class MetricValue : BaseEntity

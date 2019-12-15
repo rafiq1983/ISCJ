@@ -33,6 +33,7 @@
   <ItemGroup>
     <Folder Include="js\" />
     <Folder Include="Filters\" />
+    <Folder Include="ParentPortal\" />
     <Folder Include="Pages\Admin\" />
     <Folder Include="Pages\NewFolder\" />
     <Folder Include="Pages\ProgramManagement\" />

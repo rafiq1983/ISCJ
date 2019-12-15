@@ -1,9 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MA.Common.Entities.Registration;
 
 namespace MA.Common
 {
+    public class AttachMetricInput
+    {
+        public Guid EntityId { get; set; }
+        public string EntityType { get; set; }
+        public Guid MetricId { get; set; }
+
+    }
+
+    public class SetMetricsToEntityInput
+    {
+        public Guid EntityId { get; set; }
+        public string EntityType { get; set; }
+
+        public List<Guid> MetricIds { get; set; }
+    }
+
+
+    public class AttachMetricOutput
+    {
+        public bool Success { get; set; }
+        public string ErrorMessage { get; set; }
+    }
+
     public class AddMetricInput
     {
         public string MetricName { get; set; }
@@ -41,5 +65,11 @@ namespace MA.Common
     public class MetricStringValueDefinition : MetricValueTypeDefinition
     {
         public string[] AllowedStrings { get; set; }
+    }
+
+    public class SelectedMetric
+    {
+        public bool IsSelected { get; set; }
+        public Guid MetricId { get; set; }
     }
 }

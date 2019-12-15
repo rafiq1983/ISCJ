@@ -121,6 +121,7 @@
     <Build Include="dbo\Tables\ForeignKey_TeacherSubjectAssignment_ValidTeacherId.sql" />
     <Build Include="dbo\Tables\UserNotification.sql" />
     <Build Include="dbo\Tables\CodeDecode.sql" />
+    <Build Include="dbo\Tables\MetricAssociations.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />

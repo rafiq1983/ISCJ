@@ -1,5 +1,6 @@
 ﻿@page
 @model ISCJ.Pages.School.AddInstructorModel
+
 @{
     ViewData["Title"] = "Instructors";
 }
@@ -57,38 +58,38 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox-content">
-   
+
                     <table class="table">
                         <thead>
-                        <tr>
+                            <tr>
 
-                            <th>Name</th>
-                            <th></th>
-                        </tr>
+                                <th>Name</th>
+                                <th></th>
+                            </tr>
                         </thead>
                         <tbody>
-                        @for (var i = 0; i < Model.Teachers.Count; i++)
-                        {
-                            <tr>
-                                <td>
-                                    <input type="hidden" asp-for="@Model.Teachers[i].TeacherId"/>
-                                    @Model.Teachers[i].Contact.FirstName @Model.Teachers[i].Contact.LastName
-                                </td>
-                                <td>
-                                    <button style="display:none" class="btn btn-white btn-sm" type="submit" asp-page-handler="ViewEditTeacher">View/Edit</button>
-                                    <!--TOOD CHANGE TO HYPER LINK-->
-                                </td>
+                            @for (var i = 0; i < Model.Teachers.Count; i++)
+                            {
+                                <tr>
+                                    <td>
+                                        <input type="hidden" asp-for="@Model.Teachers[i].TeacherId" />
+                                        @Model.Teachers[i].Contact.FirstName @Model.Teachers[i].Contact.LastName
+                                    </td>
+                                    <td>
+                                        <button style="display:none" class="btn btn-white btn-sm" type="submit" asp-page-handler="ViewEditTeacher">View/Edit</button>
+                                        <!--TOOD CHANGE TO HYPER LINK-->
+                                    </td>
 
-                            </tr>
-                        }
+                                </tr>
+                            }
                         </tbody>
 
                     </table>
-         
+
                 </div>
             </div>
         </div>
@@ -101,7 +102,7 @@
     <script src="https://cdn.rawgit.com/xcash/bootstrap-autocomplete/v2.0.0/dist/latest/bootstrap-autocomplete.min.js"></script>
 
     <script language="javascript">
-        $("document").ready(function() {
+        $("document").ready(function () {
             SetupContactAutoComplete();
 
 
@@ -111,7 +112,7 @@
 
             $(".autocomplete").autoComplete({
                 minLength: 1,
-                formatResult: function(item) {
+                formatResult: function (item) {
                     console.log("Format result called with item " + item);
                     return {
                         id: item.guid,
@@ -120,7 +121,7 @@
                 },
 
                 events: {
-                    searchPost: function(resultsFromServer) {
+                    searchPost: function (resultsFromServer) {
                         console.log("Search Post Called. " + resultsFromServer[0].guid);
                         return resultsFromServer;
                     }
@@ -129,7 +130,7 @@
             });
 
             $(".autocomplete").on('autocomplete.select',
-                function(evt, item) {
+                function (evt, item) {
                     $("#" + evt.currentTarget.attributes["data-target-id"].value).val(item.guid);
                     SetIsMemberFlag(evt.currentTarget.attributes["data-member-check-id"].value, item.guid);
                     console.log(evt.currentTarget.attributes["data-target-id"].value);
@@ -137,7 +138,7 @@
                     evt.preventDefault();
                 });
 
-            $(".autocomplete").change(function(evt) {
+            $(".autocomplete").change(function (evt) {
                 console.log("Textbox change");
                 console.log($("#" + evt.currentTarget.attributes["data-target-id"].value));
                 console.log($("#" + evt.currentTarget.attributes["data-target-id"].value).val());
@@ -161,9 +162,9 @@
                 success: function (d) {
 
                     console.log(d);
-                    $("#"+ memberCheckId).text(d != null);
+                    $("#" + memberCheckId).text(d != null);
                 },
-                error: function(response) {
+                error: function (response) {
                     console.Log("Error getting member status " + response);
                 }
             });
@@ -180,10 +181,10 @@
                     console.log(d);
                     if (d.length > 0) {
                         _enrollments = d;
-                         DisplayEnrollmentsFound();
+                        DisplayEnrollmentsFound();
                     }
                 },
-                error: function(response) {
+                error: function (response) {
                     console.Log("Error getting member status " + response);
                 }
             });

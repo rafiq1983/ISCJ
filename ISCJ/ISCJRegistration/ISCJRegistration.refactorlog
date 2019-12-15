@@ -203,4 +203,25 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="PayorId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="7c0a80b3-7d07-4689-8736-4148c741805b" ChangeDateTime="12/13/2019 03:01:31">
+    <Property Name="ElementName" Value="[dbo].[MetricAssociations].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[MetricAssociations]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="MetricId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d73eafe5-bf8f-4c97-91d9-76a3e6011fbe" ChangeDateTime="12/14/2019 22:48:07">
+    <Property Name="ElementName" Value="[dbo].[MetricAssociations].[AssociationId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[MetricAssociations]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="EntityId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="4e2cf51d-06ee-44a5-8697-ea50400d7b44" ChangeDateTime="12/14/2019 22:48:12">
+    <Property Name="ElementName" Value="[dbo].[MetricAssociations].[AssociatiorType]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[MetricAssociations]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="EntityType" />
+  </Operation>
 </Operations>

@@ -102,6 +102,7 @@
                 <tr>
                     <th>Subject Name</th>
                     <th>Subject Description</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -114,6 +115,11 @@
                         </td>
                         <td>
                             @Model.Subjects[i].SubjectDescription
+                        </td>
+                        <td>
+                            <a href="@Url.Page("/setup/AssignMetric", new {entitytype = "subject", entityid= Model.Subjects[i].SubjectId})">Assign Metric</a>
+
+
                         </td>
 
                     </tr>

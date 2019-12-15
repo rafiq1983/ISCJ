@@ -16,6 +16,7 @@
 <div asp-validation-summary="All"></div>
 <form method="post" name="frmRegister2">
     <div class="wrapper wrapper-content">
+        <div class="row"><h1 style="color:red">UNDER CONSTRUCTION</h1></div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="form-group  row">
@@ -29,7 +30,7 @@
                         <span asp-validation-for="@Model.ProgramId" class="text-danger"></span>
 
                     </div>
-                    
+
                     <label class="col-sm-2 col-form-label">Student</label>
 
                     <div class="col-sm-10">
@@ -43,67 +44,103 @@
 
                 </div>
 
-      
-                <div class="form-group row" style="text-align:right">
+
+                <div class="form-group row" style="text-align: right">
                     <div class="col-sm-12 col-sm-offset-2">
-                       <button class="btn btn-primary btn-sm" type="submit" asp-page-handler="Load">Load</button>
+                        <button class="btn btn-primary btn-sm" type="submit" asp-page-handler="Load">Load</button>
                     </div>
 
                 </div>
 
             </div>
         </div>
-    
+
 
         <div class="row">
-        
-            <div class="col-lg-10" >
 
-                
-                        <div class="ibox ">
-                            <div class="ibox-title">
-                                <h5>Subjects</h5>
-                                <div class="ibox-tools">
-                                    <a class="collapse-link">
-                                        <i class="fa fa-chevron-up"></i>
-                                    </a>
-                                    <a class="close-link">
-                                        <i class="fa fa-times"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="ibox-content table-responsive">
-                                <table class="table table-hover no-margins">
-                                    <thead>
-                                    <tr>
-                                        <th>Subject Name</th>
-                                        <th>Grade</th>
-                                       
-                                        <th class="d-none">Attendance Rate</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach (var studnetSubject in Model.StudentSubjects)
-                                    {
-                                        <tr>
-                                            <td><input type="hidden" asp-for="@Model.SubjectId"/>@studnetSubject.Subject.SubjectName</td>
-                                        <td><input type="text" /></td>
-                                          
-                                            <td class="text-navy d-none"> <i class="fa fa-level-up"></i> 24% </td>
-                                        </tr>
-                                    }
+            <div class="col-lg-10">
 
 
-                                    </tbody>
-                                </table>
-                            </div>
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <h5>Subjects</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
                         </div>
-              
+                    </div>
+                    <div class="ibox-content table-responsive">
+                        <table class="table table-hover no-margins">
+                            <thead>
+                            <tr>
+                                <th>Subject Name</th>
+                                <th>Semester 1 Grade</th>
+                                <th>Semester 2 Grade</th>
+                                <th>Semester 3 Grade</th>
+                                <th>Semester 4 Grade</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var studnetSubject in Model.StudentSubjects)
+                            {
+                                <tr>
+                                    <td><input type="hidden" asp-for="@Model.SubjectId"/>@studnetSubject.Subject.SubjectName</td>
+                                    <td>
+                                        <select id="semester1Grade">
+                                            <option value="">--select--</option>
+                                            <option value="A">A</option>
+                                            <option value="B">B</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select id="semester1Grade">
+                                            <option value="">--select--</option>
+                                            <option value="A">A</option>
+                                            <option value="B">B</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select id="semester1Grade">
+                                            <option value="">--select--</option>
+                                            <option value="A">A</option>
+                                            <option value="B">B</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select id="semester1Grade">
+                                            <option value="">--select--</option>
+                                            <option value="A">A</option>
+                                            <option value="B">B</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                        </select>
+                                    </td>
+
+                                </tr>
+                            }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
             </div>
 
 
         </div>
-        
+
         <div class="row">
             <div class="col-lg-8">
                 <div class="col-lg-6">
@@ -158,11 +195,11 @@
                 </div>
             </div>
         </div>
-        
-        
+
+
         <div class="row">
             <div class="col-lg-12">
-                <div class="form-group row" style="text-align:right">
+                <div class="form-group row" style="text-align: right">
                     <div class="col-sm-12 col-sm-offset-2">
                         <button class="btn btn-white btn-sm" type="submit" asp-page-handler="AddSubject">Add Subject</button>
 
@@ -219,10 +256,10 @@
     <script src="js/demo/sparkline-demo.js"></script>
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('.chart').easyPieChart({
                 barColor: '#f8ac59',
-//                scaleColor: false,
+                //                scaleColor: false,
                 scaleLength: 5,
                 lineWidth: 4,
                 size: 80
@@ -230,7 +267,7 @@
 
             $('.chart2').easyPieChart({
                 barColor: '#1c84c6',
-//                scaleColor: false,
+                //                scaleColor: false,
                 scaleLength: 5,
                 lineWidth: 4,
                 size: 80
@@ -268,7 +305,7 @@
                         show: true,
                         align: "center",
                         barWidth: 24 * 60 * 60 * 600,
-                        lineWidth:0
+                        lineWidth: 0
                     }
 
                 }, {
@@ -277,9 +314,9 @@
                     yaxis: 2,
                     color: "#1C84C6",
                     lines: {
-                        lineWidth:1,
-                            show: true,
-                            fill: true,
+                        lineWidth: 1,
+                        show: true,
+                        fill: true,
                         fillColor: {
                             colors: [{
                                 opacity: 0.2
