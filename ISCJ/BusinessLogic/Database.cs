@@ -57,6 +57,8 @@ namespace BusinessLogic
     public virtual DbSet<Student> Students { get; set; }
     public virtual DbSet<StudentSubject> StudentSubjects { get; set; }
     public virtual DbSet<Contact> Contacts { get; set; }
+    public virtual DbSet<ContactTenant> ContactTenants { get; set; }
+
 
         public DbSet<FinancialAccount> FinancialAccounts { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -247,6 +249,8 @@ namespace BusinessLogic
 
                 entity.Property(x => x.IsVerified).HasConversion(DataConverters.IntToBoolConverter());
             });
+
+            modelBuilder.Entity<ContactTenant>(entity => { entity.HasKey(e => new { e.TenantId, e.ContactId }); });
 
 
             modelBuilder.Entity<User>(entity =>

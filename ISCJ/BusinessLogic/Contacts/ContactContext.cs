@@ -29,6 +29,8 @@ namespace BusinessLogic
 
         public virtual DbSet<ContactType> ContactTypes { get; set; }
 
+        public virtual DbSet<ContactTenant> ContactTenants { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
       modelBuilder.Entity<Contact>(entity =>
@@ -38,9 +40,11 @@ namespace BusinessLogic
 
       }).Entity<ContactType>(entity => { entity.ToTable("ContactTypes");  entity.HasKey(e => e.ID); });
 
+      modelBuilder.Entity<ContactTenant>(entity => { entity.HasKey(e => new {e.TenantId, e.ContactId}); });
+
         }
 
-     
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

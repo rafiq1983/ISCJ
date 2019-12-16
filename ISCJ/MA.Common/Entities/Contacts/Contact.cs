@@ -51,4 +51,12 @@ namespace MA.Common.Entities.Contacts
     public string HomePhone { get; set; }
 
   }
+
+  public class ContactTenant:BaseEntity
+  {
+      public Guid ContactId { get; set; }
+      public Guid TenantId { get; set; }
+      public string AssociationName { get; set; }
+
+  }
 }

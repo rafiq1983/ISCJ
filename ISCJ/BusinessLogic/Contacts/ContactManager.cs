@@ -42,7 +42,16 @@ namespace BusinessLogic
                  contact.CreatedBy = callContext.UserLoginName;
                  contact.TenantId = callContext.TenantId.Value;
                  _ContextContact.Contacts.Add(contact);
-                }
+                 _ContextContact.ContactTenants.Add(new ContactTenant()
+                 {
+                     TenantId = callContext.TenantId.Value,
+                     ContactId = contact.Guid,
+                     AssociationName = "TenantContact",
+                     CreateUser = callContext.UserLoginName,
+                     CreateDate = DateTime.UtcNow
+
+                 });
+             }
                 else
              {
                  contact = _ContextContact.Contacts.Single(x =>
