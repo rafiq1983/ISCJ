@@ -42,7 +42,7 @@ namespace ISCJ.Pages
                 Subject = x
             }).ToList();
 
-           var studentSubjects = studentMgr.GetStudentSubjects(GetCallContext(), EntityId);
+           var studentSubjects = studentMgr.GetStudentSubjects(GetCallContext(), EntityId, ProgramId);
 
            studentSubjects.ForEach(x=>SelectedSubjects.Single(y=>y.Subject.SubjectId == x.SubjectId).IsSelected = true);
         }

@@ -36,13 +36,15 @@ namespace BusinessLogic
         }
     }
 
-    public List<StudentSubject> GetStudentSubjects(CallContext context, Guid studentId)
+    public List<StudentSubject> GetStudentSubjects(CallContext context, Guid studentId, Guid programId)
     {
         using (Database db = new Database())
         {
-            var output = db.StudentSubjects.Where(x => x.StudentId == studentId && x.TenantId == context.TenantId).Include(x=>x.Subject).ToList();
-            return output;
-
+            
+                var output = db.StudentSubjects.Where(x => x.StudentId == studentId && x.TenantId == context.TenantId && x.ProgramId == programId)
+                    .Include(x => x.Subject).ToList();
+                return output;
+            
         }
     }
 
@@ -68,25 +70,54 @@ namespace BusinessLogic
         }
     }
 
-    public void AddStudentSubject(CallContext context, Guid studentId, Guid enrollmentId, Guid subjectId, Guid progaramId)
+    public Guid AddStudentSubject(CallContext context, Guid studentId, Guid enrollmentId, Guid subjectId, Guid progaramId)
     {
         using (Database db = new Database())
         {
-                db.StudentSubjects.Add(new StudentSubject()
-                {
-                    SubjectId = subjectId,
-                    RecordId = Guid.NewGuid(),
-                    ProgramId = progaramId, 
-                    CreateUser = context.UserLoginName,
-                    CreateDate = DateTime.UtcNow,
-                    EnrollmentId = enrollmentId,
-                    TenantId = context.TenantId.Value,
-                    StudentId = studentId
-                });
+            var studentSubject = new StudentSubject()
+            {
+                SubjectId = subjectId,
+                RecordId = Guid.NewGuid(),
+                ProgramId = progaramId,
+                CreateUser = context.UserLoginName,
+                CreateDate = DateTime.UtcNow,
+                EnrollmentId = enrollmentId,
+                TenantId = context.TenantId.Value,
+                StudentId = studentId
+            };
+
+                db.StudentSubjects.Add(studentSubject);
+
+            db.SaveChanges();
+
+            return studentSubject.RecordId;
+        }
+    }
+
+    public void AddMetricsToStudentSubject(CallContext context, Guid studentSubjectId, List<Guid> metricIds)
+    {
+        using (Database db = new Database())
+        {
+            foreach (Guid metricId in metricIds)
+            {
+                MetricValue mv = new MetricValue();
+                mv.MetricValueId = Guid.NewGuid();
+                mv.MetricId = metricId;
+                mv.Data = string.Empty;
+                mv.MetricPointerId = studentSubjectId;
+                mv.MetricPointerType = "StudentSubject";
+                mv.CreateUser = context.UserLoginName;
+                mv.CreateDate = DateTime.UtcNow;
+                mv.TenantId = context.TenantId.Value;
+
+
+                db.MetricValues.Add(mv);
+            }
 
             db.SaveChanges();
         }
-    }
+
+        }
 
         public Student GetStudentByContactId(CallContext context, Guid contactId)
     {
