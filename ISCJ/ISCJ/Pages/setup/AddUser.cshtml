@@ -1,0 +1,139 @@
+﻿@page
+@model ISCJ.Pages.AddUserModel
+
+
+@{
+    ViewData["Title"] = "Contacts";
+    Layout = "~/Pages/Shared/_LayoutModern.cshtml";
+
+}
+
+<style>
+
+    #olErrors li {
+        color: red;
+    }
+</style>
+<div asp-validation-summary="All"></div>
+<form method="post" name="frmMembershipCreate">
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-9">
+            <h2>Add User</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    User Management
+                </li>
+                <li class="active breadcrumb-item">
+                    <strong>Add User</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+
+        <div class="row">
+            <div class="col-lg-12">
+
+
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <h5>User</h5>
+
+                    </div>
+                    
+                    
+
+
+                    <div class="ibox-content">
+                        <div class="form-group  row">
+                            
+                           
+                            <label class="col-sm-2 col-form-label">User</label>
+                            <div class="col-sm-10">
+                                <input type="text" placeholder="Email" autocomplete="off" class="form-control m-b"
+                                       asp-for="@Model.Email" />
+
+                                 
+                                <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group  row">
+                            <label class="col-sm-2 col-form-label">Role</label>
+                            <div class="col-sm-10">
+                                <select asp-for="@Model.Role" class="form-control m-b">
+                                    <option value="ADMIN">Admin</option>
+                                    <option value="USER">User</option>
+                                   
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="hr-line-dashed"></div>
+                    </div>
+                </div>
+              
+            </div>
+
+        </div>
+
+        <div class="row">
+
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group row" style="text-align:right">
+                    <div class="col-sm-12 col-sm-offset-2">
+                        <button class="btn btn-white btn-sm" type="submit" asp-page-handler="Cancel">Cancel</button>
+
+                        <button class="btn btn-white btn-sm" type="submit" asp-page-handler="Reset">Reset</button>
+
+                        <button class="btn btn-primary btn-sm" type="submit" asp-page-handler="Save">Save</button>
+
+                    </div>
+                    s
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="ibox-content">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+            @for (var i = 0; i < Model.Users.Count; i++)
+            {
+                <tr>
+                   
+                    <td>@Model.Users[i].FirstName</td>
+                    <td>@Model.Users[i].LastName</td>
+                    <td>@Model.Users[i].Email</td>
+                    <td>$@Model.Users[i].Role</td>
+                   
+
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</form>
+
+@section Scripts
+    {
+    <script src="https://cdn.rawgit.com/xcash/bootstrap-autocomplete/v2.0.0/dist/latest/bootstrap-autocomplete.min.js"></script>
+
+   
+}
+
+

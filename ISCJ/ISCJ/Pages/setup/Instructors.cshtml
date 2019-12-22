@@ -1,0 +1,70 @@
+﻿@page
+@model ISCJ.Pages.School.InstructorsListModel
+@{
+    ViewData["Title"] = "Instructors";
+}
+
+
+@{
+    ViewData["Title"] = "Contacts";
+    Layout = "~/Pages/Shared/_LayoutModern.cshtml";
+}
+
+<form method="POST">
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-9">
+            <h2>Student Registration</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    School
+                </li>
+                <li class="active breadcrumb-item">
+                    <strong>Add/Edit Instructor</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+   
+    <div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox-content">
+   
+                <table class="table">
+                    <thead>
+                    <tr>
+
+                        <th>Name</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @for (var i = 0; i < Model.Teachers.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                <input type="hidden" asp-for="@Model.Teachers[i].TeacherId"/>
+                                @Model.Teachers[i].Contact.FirstName @Model.Teachers[i].Contact.LastName
+                            </td>
+                            <td>
+                                <button style="display:none" class="btn btn-white btn-sm" type="submit" asp-page-handler="ViewEditTeacher">View/Edit</button>
+                                <!--TOOD CHANGE TO HYPER LINK-->
+                            </td>
+
+                        </tr>
+                    }
+                    </tbody>
+
+                </table>
+         
+            </div>
+        </div>
+    </div>
+    </div>
+</form>
+
+

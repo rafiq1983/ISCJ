@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>ISCJRegistration</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{5875f391-7b2b-488a-8c19-04d0afedeeac}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.SqlAzureV12DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>ISCJRegistration</RootNamespace>
+    <AssemblyName>ISCJRegistration</AssemblyName>
+    <ModelCollation>1033,CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="Scripts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\Student.sql" />
+    <Build Include="dbo\Tables\StudentAttendance.sql" />
+    <Build Include="dbo\Tables\StudentAssignment.sql" />
+    <Build Include="dbo\Tables\Assignment.sql" />
+    <Build Include="dbo\Tables\Persona.sql" />
+    <Build Include="dbo\Tables\Teachers.sql" />
+    <Build Include="dbo\Tables\UserPersona.sql" />
+    <Build Include="dbo\Tables\Rooms.sql" />
+    <Build Include="dbo\Tables\UserLoginHistory.sql" />
+    <Build Include="dbo\Tables\Class.sql" />
+    <Build Include="dbo\Tables\UserActiveSessions.sql" />
+    <Build Include="dbo\Tables\CreditCardPayment.sql" />
+    <Build Include="dbo\Tables\Schedule.sql" />
+    <Build Include="dbo\Tables\ClassSession.sql" />
+    <Build Include="dbo\Tables\MasjidMembership.sql" />
+    <Build Include="dbo\Tables\Notes.sql" />
+    <Build Include="dbo\Tables\BillableProduct.sql" />
+    <Build Include="dbo\Tables\ClassSessionAttendance.sql" />
+    <Build Include="dbo\Tables\NotePointer.sql" />
+    <Build Include="dbo\Tables\ClassStudent.sql" />
+    <Build Include="dbo\Tables\Users.sql" />
+    <Build Include="dbo\Tables\Course.sql" />
+    <Build Include="dbo\Tables\PaymentProcessingSetting.sql" />
+    <Build Include="dbo\Tables\CardConnectSetting.sql" />
+    <Build Include="dbo\Tables\UserRole.sql" />
+    <Build Include="dbo\Tables\AppRole.sql" />
+    <Build Include="dbo\Tables\Tenants.sql" />
+    <Build Include="dbo\Tables\Programs.sql" />
+    <Build Include="dbo\Tables\Enrollments.sql" />
+    <Build Include="dbo\Tables\ContactPhone.sql" />
+    <Build Include="dbo\Tables\Contacts.sql" />
+    <Build Include="dbo\Tables\ContactTypes.sql" />
+    <Build Include="dbo\Tables\FinancialAccount.sql" />
+    <Build Include="dbo\Tables\InvoiceItem.sql" />
+    <Build Include="dbo\Tables\Invoice.sql" />
+    <Build Include="dbo\Tables\CashPayment.sql" />
+    <Build Include="dbo\Tables\CheckPayment.sql" />
+    <Build Include="dbo\Tables\RegistrationApplication.sql" />
+    <Build Include="dbo\Tables\TestTable.sql" />
+    <Build Include="dbo\Tables\SubjectGradeMapping.sql" />
+    <Build Include="dbo\Tables\Subjects.sql" />
+    <Build Include="dbo\Tables\ProgramGradeMapping.sql" />
+    <Build Include="dbo\Tables\SubjectMapping.sql" />
+    <Build Include="dbo\Tables\InvoiceTypes.sql" />
+    <Build Include="dbo\Tables\Unique_TenantId_InvoiceTypeCd.sql" />
+    <Build Include="dbo\Tables\UserTenants.sql" />
+    <Build Include="dbo\Tables\IX_BillableProducts.sql" />
+    <Build Include="dbo\Tables\StudentMetrics.sql" />
+    <Build Include="dbo\Tables\Metrics.sql" />
+    <Build Include="dbo\Tables\UniqueMetricTenantName.sql" />
+    <Build Include="dbo\Tables\MetricValues.sql" />
+    <Build Include="dbo\Tables\StudentSubjects.sql" />
+    <Build Include="dbo\Tables\TeacherSubjectAssignment.sql" />
+    <Build Include="dbo\Tables\Unique_TeacherSubjectProgram.sql" />
+    <Build Include="dbo\Tables\ForeignKey_TeacherSubjectAssignment_ValidTeacherId.sql" />
+    <Build Include="dbo\Tables\UserNotification.sql" />
+    <Build Include="dbo\Tables\CodeDecode.sql" />
+    <Build Include="dbo\Tables\MetricAssociations.sql" />
+    <Build Include="dbo\Tables\ContactTenants.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PreDeploy Include="Scripts\Script.PreDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="ISCJRegistration.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ISCJRegistration.publish.xml" />
+  </ItemGroup>
+</Project>

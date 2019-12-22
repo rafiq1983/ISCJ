@@ -1,62 +1,96 @@
 ﻿@page
 @model ISCJ.Pages.ContactManagement.ContactListModel
+
 @{
-    ViewData["Title"] = "ContactList";
+  ViewData["Title"] = "ContactList";
 }
+<form method="post">
+  <div class="form-group">
+    <h2>Contact List</h2>
+    <label>Search</label>:<input type="text" autocomplete="off" placeholder="Search Contact" class="form-control" />
+  </div>
+  <table class="table-bordered" border="0">
+    <thead>
+      <tr>
+        <th>
+          First Name
+        </th>
+        <th>
+          Last Name
+        </th>
 
-<h2>ContactList</h2>
+        <th>
+          Email
+        </th>
+        <th>
+          Contact Type
+        </th>
+        <th>
+          Home Phone
+        </th>
+        <th>
+          Cell Phone
+        </th>
 
-<table class="table-striped">
-  <thead>
-    <tr>
-      <th>
-        First Name
-      </th>
-      <th>
-        Last Name
-      </th>
+        <th>
+          Street
+        </th>
+        <th>
+          City
+        </th>
+        <th>
+          State
+        </th>
 
-      <th>
-        Phone 1
-      </th>
-      <th>
-        Phone 2
-      </th>
-      <th>
-        Email
-      </th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Test</td>
-      <td>Test</td>
-      <td>Test</td>
-      <td>Test</td>
-      <td>Test</td>
-      <td><input type="button" class="btn-sm btn-success" value="Details" /></td>
-    </tr>
-    <tr>
-      <td>Test</td>
-      <td>Test</td>
-      <td>Test</td>
-      <td>Test</td>
-      <td>Test</td>
-      <td><input type="button" class="btn-sm btn-success" value="Details" /></td>
-    </tr>
+        <th>
+          Zip
+        </th>
+        <th>
 
-    <tr>
-      <td>Test</td>
-      <td>Test</td>
-      <td>Test</td>
-      <td>Test</td>
-      <td>Test</td>
-      <td><input type="button" class="btn-sm btn-success" value="Details" /></td>
-    </tr>
-  </tbody>
-  
-</table>
-<div>
-  <input type="button" class="btn-sm btn-success" value="Add New" />
-</div>
+        </th>
+
+      </tr>
+    </thead>
+    <tbody>
+      @for (var i = 0; i < Model.Contacts.Count; i++)
+      {
+      <tr>
+        <td>@Model.Contacts[i].FirstName</td>
+        <td>@Model.Contacts[i].LastName</td>
+        <td><Email mail-to="@Model.Contacts[i].Email"></Email>
+       
+        <td>
+          <Code code-type="contacttype" code="@Model.Contacts[i].ContactType"></Code>
+
+        </td>
+        <td>@Model.Contacts[i].HomePhone</td>
+        <td>@Model.Contacts[i].CellPhone</td>
+        <td>@Model.Contacts[i].StreetAddress</td>
+        <td>@Model.Contacts[i].City</td>
+        <td>@Model.Contacts[i].State</td>
+        <td>@Model.Contacts[i].ZipCode</td>
+
+        <td><input type="submit" class="btn-sm btn-success" value="Details" id="btnDetails" name="btnAction"
+                   onClick="return SetContactId('@Model.Contacts[i].Guid');" />
+        </td>
+      </tr>
+      }
+    </tbody>
+
+  </table>
+  <div>
+    <input type="submit" id="btnAddNew" name="btnAction" class="btn-sm btn-success" value="Add New" />
+    <a href="BulkContactEntry" class="btn-sm btn-success">Bulk Entry</a>
+  </div>
+  <input type="hidden" id="contactId" name="contactId" value="a" />
+
+</form>
+
+<script language="javascript">
+  function SetContactId(contactId) {
+
+    $("#contactId").val(contactId);
+
+    return true;
+  }
+</script>

@@ -1,0 +1,65 @@
+﻿@page
+@model ISCJ.Pages.School.RoomsListModel
+@{
+    ViewData["Title"] = "Rooms";
+}
+
+
+@{
+    ViewData["Title"] = "Rooms";
+    Layout = "~/Pages/Shared/_LayoutModern.cshtml";
+}
+
+<form method="POST">
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-9">
+            <h2>Student Registration</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    School
+                </li>
+                <li class="active breadcrumb-item">
+                    <strong>Add/Edit Rooms</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="ibox-content">
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            @for (var i = 0; i < Model.Rooms.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <input type="hidden" asp-for="@Model.Rooms[i].RoomId" />
+                        @Model.Rooms[i].RoomName 
+                    </td>
+                    <td>
+                        @Model.Rooms[i].RoomDescription
+                    </td>
+                    <td>
+                        <button style="display:none" class="btn btn-white btn-sm" type="submit">Edit</button>
+                        <!--TOOD CHANGE TO HYPER LINK-->
+                    </td>
+
+                </tr>
+            }
+            </tbody>
+        </table>
+
+    </div>
+  
+</form>
+
+

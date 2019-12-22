@@ -1,0 +1,515 @@
+﻿@page
+@model RegisterStudent2Model
+
+@{
+  ViewData["Title"] = "Contacts";
+  Layout = "~/Pages/Shared/_LayoutModern.cshtml";
+
+}
+
+<style>
+
+    #olErrors li {     
+        color:red;
+    }
+
+</style>
+<div asp-validation-summary="All"></div>
+<form method="post" name="frmRegister2">
+  <div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-9">
+      <h2>Student Registration</h2>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+          Student Management
+        </li>
+        <li class="active breadcrumb-item">
+          <strong>Student Registration</strong>
+        </li>                             
+      </ol>
+    </div>   
+  </div>
+
+  <div class="wrapper wrapper-content animated fadeInRight">
+      <div class="row">
+          <div class="col-lg-12">
+              <input type="button" class="btn btn-primary" id="btnAddNewContact" value="Add New Contact" data-toggle="modal" data-target="#addNewContactModal" />
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-lg-12">
+              <div class="ibox">
+                  <div class="ibox-title">
+                      <h5>Program</h5>
+                  </div>
+                  <div class="ibox-content">
+                      <div class="form-group  row">
+                          <label class="col-sm-2 col-form-label">Program</label>
+
+                          <div class="col-sm-10">
+
+                              <select asp-for="@Model.StudentRegistration.ProgramId" class="form-control m-b" asp-items="@Model.Programs">
+                                  <option value="">--Select--</option>
+                              </select>
+
+
+                              <span asp-validation-for="@Model.StudentRegistration.ProgramId" class="text-danger"></span>
+
+                          </div>
+
+                      </div>
+                      <div class="hr-line-dashed"></div>
+                      <div class="form-group  row">
+                          <label class="col-sm-2 col-form-label">Auto Assign Subjects</label>
+
+                          <div class="col-sm-10">
+                              <input type="checkbox" asp-for="@Model.StudentRegistration.AutoAssignSubjects" />
+                            
+                          </div>
+
+                      </div>
+                      <div class="hr-line-dashed"></div>
+                  </div>
+              </div>
+
+              <div class="ibox ">
+                  <div class="ibox-title">
+                      <h5>Fees</h5>
+                  </div>
+                  <div class="ibox-content">
+                      @{ var i = 0; }
+                      <table width="100%">
+                          @foreach (var product in Model.Products)
+                          {
+                              <tr>
+                                  <td><input type="checkbox" asp-for="@Model.StudentRegistration.BillingInstructions[i].IsSelected" /></td>
+                                  <td><label class="col-sm-10 col-form-label">@Model.Products[i].Description</label></td>
+                                  <td><label class="col-sm-8 col-form-label">$ @Model.Products[i].Price</label></td>
+                                  <input type="hidden" value="@Model.Products[i].ProductCode" asp-for="@Model.StudentRegistration.BillingInstructions[i].ProductCode" />
+                                  <td>
+                                      <div class="col-sm-10">
+                                          <select asp-for="@Model.StudentRegistration.BillingInstructions[i].ProductCount">
+                                              <option value="1">1</option>
+                                              <option value="2">2</option>
+                                              <option value="3">3</option>
+                                              <option value="4">4</option>
+                                          </select>
+
+                                      </div>
+                                  </td>
+                              </tr>
+                              i = i + 1;
+                          }
+                      </table>
+                  </div>
+              </div>
+              <div class="ibox ">
+                  <div class="ibox-title">
+                      <h5>Guardians/Parent</h5>
+
+                  </div>
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="addNewContactModal" tabindex="-1" role="dialog" aria-labelledby="addNewContactModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <h5 class="modal-title" id="addNewContactModalLabel">Add Contact</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                  </button>
+                              </div>
+                              <div class="modal-body">
+                                  <div class="form-group row" id="dvErrorsRow" style="display:none;">
+                                      <div class="col-sm-10">
+                                          <h5>Error(s)</h5>
+                                          <div>
+                                              <ul class="olErrors" id="olErrors"></ul>
+                                          </div>
+                                      </div>
+                                      <div class="hr-line-dashed"></div>
+                                  </div>
+
+                                  <div class="form-group  row">
+                                      <label class="col-sm-2 col-form-label">First Name</label>
+
+                                      <div class="col-sm-10">
+                                          <input type="text" class="form-control" id="txtfirstname" name="txtfirstname" placeholder="First Name">
+                                          @*<span asp-validation-for="Contact.FirstName" class="text-danger"></span>*@
+
+                                      </div>
+                                  </div>
+
+                                  <div class="hr-line-dashed"></div>
+                                  <div class="form-group  row">
+                                      <label class="col-sm-2 col-form-label">Last Name</label>
+
+                                      <div class="col-sm-10">
+                                          <input type="text" class="form-control" id="txtlastname" name="txtlastname" placeholder="Last Name">
+                                          @*<span asp-validation-for="Contact.LastName" class="text-danger"></span>*@
+
+                                      </div>
+                                  </div>
+                                  <div class="hr-line-dashed"></div>
+                                  <div class="form-group  row">
+                                      <label class="col-sm-2 col-form-label">Middle Initial</label>
+
+                                      <div class="col-sm-10">
+                                          <input type="text" class="form-control" id="txtmiddlename" placeholder="Middle Initial">
+                                          @*<span asp-validation-for="Contact.MiddleName" class="text-danger"></span>*@
+
+                                      </div>
+                                  </div>
+                                  <div class="hr-line-dashed"></div>
+                                  <div class="form-group  row">
+                                      <label class="col-sm-2 col-form-label">Contact Type</label>
+
+                                      <div class="col-sm-10">
+                                          <select id="slContactTypes" class="form-control m-b"
+                                                  asp-items="@(new SelectList(Model.ContactTypes,"ID","Description"))"></select>
+
+                                      </div>
+                                  </div>
+                                  <div class="hr-line-dashed"></div>
+                                  <div class="form-group  row">
+                                      <label class="col-sm-2 col-form-label">Gender</label>
+
+                                      <div class="col-sm-10">
+                                          <select class="form-control m-b" id="slgender">
+                                              <option value="0">--Select--</option>
+                                              <option value="1">Male</option>
+                                              <option value="2">Female</option>
+                                          </select>
+
+                                      </div>
+                                  </div>
+
+                                  <div class="hr-line-dashed"></div>
+                                  <div class="form-group  row">
+                                      <label class="col-sm-2 col-form-label">Street</label>
+
+                                      <div class="col-sm-10">
+                                          <input type="text" class="form-control" id="txtstreet" placeholder="Street Address">
+
+                                          @*<span asp-validation-for="Contact.StreetAddress" class="text-danger"></span>*@
+
+                                      </div>
+                                  </div>
+
+                                  <div class="hr-line-dashed"></div>
+                                  <div class="form-group  row">
+                                      <label class="col-sm-2 col-form-label">Apt</label>
+
+                                      <div class="col-sm-10">
+                                          <input type="text" class="form-control" id="txtapt" placeholder="">
+
+                                          @*<span asp-validation-for="Contact.Apt" class="text-danger"></span>*@
+
+                                      </div>
+                                  </div>
+
+                                  <div class="hr-line-dashed"></div>
+                                  <div class="form-group  row">
+                                      <label class="col-sm-2 col-form-label">City</label>
+
+                                      <div class="col-sm-10">
+                                          <input type="text" class="form-control" id="txtcity" placeholder="City">
+
+                                          @*<span asp-validation-for="Contact.City" class="text-danger"></span>*@
+
+                                      </div>
+                                  </div>
+
+                                  <div class="hr-line-dashed"></div>
+                                  <div class="form-group  row">
+                                      <label class="col-sm-2 col-form-label">State</label>
+
+                                      <div class="col-sm-10">
+                                          <input type="text" class="form-control" id="txtstate" placeholder="State">
+
+                                          @*<span asp-validation-for="Contact.State" class="text-danger"></span>*@
+
+                                      </div>
+                                  </div>
+                                  <div class="hr-line-dashed"></div>
+                                  <div class="form-group  row">
+                                      <label class="col-sm-2 col-form-label">Zip</label>
+
+                                      <div class="col-sm-10">
+                                          <input type="text" class="form-control" id="txtzip" placeholder="Zip">
+
+                                          @*<span asp-validation-for="Contact.ZipCode" class="text-danger"></span>*@
+
+                                      </div>
+                                  </div>
+
+                                  <div class="hr-line-dashed"></div>
+                                  <div class="form-group  row">
+                                      <label class="col-sm-2 col-form-label">Home Phone</label>
+
+                                      <div class="col-sm-10">
+                                          <input type="text" class="form-control" id="txthomephone" placeholder="Home Phone">
+
+                                          @*<span asp-validation-for="Contact.HomePhone" class="text-danger"></span>*@
+
+                                      </div>
+                                  </div>
+
+                                  <div class="hr-line-dashed"></div>
+                                  <div class="form-group  row">
+                                      <label class="col-sm-2 col-form-label">Cell Phone</label>
+
+                                      <div class="col-sm-10">
+                                          <input type="text" class="form-control" id="txtcellphone" placeholder="Cell Phone">
+
+                                          @*<span asp-validation-for="Contact.CellPhone" class="text-danger"></span>*@
+
+                                      </div>
+                                  </div>
+
+                                  <div class="hr-line-dashed"></div>
+                                  <div class="form-group  row">
+                                      <label class="col-sm-2 col-form-label">Email</label>
+
+                                      <div class="col-sm-10">
+                                          <input type="text" class="form-control" id="txtemail" placeholder="Email">
+
+                                          @*<span asp-validation-for="Contact.Email" class="text-danger"></span>*@
+
+                                      </div>
+                                  </div>
+
+                              </div>
+
+                              <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  <button type="button" id="btnSave" name="btnSave" class="btn btn-primary">Save changes</button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+
+                  <div class="ibox-content">
+                      <div class="form-group  row">
+                          <label class="col-sm-2 col-form-label">Father</label>
+
+                          <div class="col-sm-6">
+                              <input type="text" placeholder="Type Father name here" autocomplete="off"
+                                     data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_FatherId" data-member-check-id="isFatherMember"
+                                     class="autocomplete form-control" value="@Model.StudentRegistration.FatherName" asp-for="@Model.StudentRegistration.FatherName" />
+                              <input type="hidden" asp-for="@Model.StudentRegistration.FatherName" /><!--todo-->
+                              <input type="hidden" asp-for="@Model.StudentRegistration.FatherId" />
+                              <span asp-validation-for="@Model.StudentRegistration.FatherId" class="text-danger"></span>
+                          </div>
+                          <div class="col-sm-3">
+                              <a href="#" class="FatherEnrollmentFound" style="display:none;" id="lnkFatherEnrollmentsFound">Enrollment(s) Found</a>
+                              
+                          </div>
+                      </div>
+
+                         
+
+
+                          <div class="form-group row">
+                              <label class="col-sm-2 col-form-label">Is a Member</label>
+
+                              <div class="col-sm-10">
+                                  <span class="badge" id="isFatherMember"></span>
+
+                              </div>
+                          </div>
+
+                          <div class="form-group  row">
+                              <label class="col-sm-2 col-form-label">Create Membership</label>
+
+                              <div class="col-sm-10">
+                                  <input type="checkbox" asp-for="@Model.StudentRegistration.AddFatherMembership" />
+
+                              </div>
+
+                          </div>
+                          <div class="form-group  row">
+                              <label class="col-sm-2 col-form-label">Mother</label>
+
+                              <div class="col-sm-6">
+                                  <input type="text" placeholder="Type Mother name here" autocomplete="off"
+                                         data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_MotherId" data-member-check-id="isMotherMember"
+                                         class="autocomplete form-control" value="@Model.StudentRegistration.MotherName" asp-for="@Model.StudentRegistration.MotherName" />
+                                  <input type="hidden" asp-for="@Model.StudentRegistration.MotherId" />
+
+                                  <span asp-validation-for="@Model.StudentRegistration.MotherId" class="text-danger"></span>
+                              </div>
+                              <div class="col-sm-2">
+                                  <a href="#" class="MotherEnrollmentFound" style="display:none;" id="lnkFatherEnrollmentsFound">Enrollment(s) Found</a>
+
+                              </div>
+
+
+
+                          </div>
+
+                         
+
+                          <div class="form-group row">
+                              <label class="col-sm-2 col-form-label">Is a Member</label>
+
+                              <div class="col-sm-10">
+                                  <span class="badge" id="isMotherMember"></span>
+
+                              </div>
+                          </div>
+                          <div class="form-group  row">
+                              <label class="col-sm-2 col-form-label">Create Membership</label>
+
+                              <div class="col-sm-10">
+                                  <input type="checkbox" asp-for="@Model.StudentRegistration.AddMotherToMembership" />
+
+                              </div>
+
+                          </div>
+
+
+                          <div class="hr-line-dashed"></div>
+                      </div>
+              </div>
+
+              @for (int j = 0; j < Model.StudentRegistration.StudentRegistrations.Count; j++)
+              {
+                  <div class="ibox ">
+                      <div class="ibox-title">
+                          <h5>Student @(j + 1)</h5>
+                          @if (!(Model.StudentRegistration.StudentRegistrations.Count == 1 && j == 0))
+                          {
+                              <button class="btn btn-white btn-sm" type="submit" name="btnStudentRemove" value="@j" asp-page-handler="Remove">Remove</button>
+                          }
+
+                      </div>
+                      <div class="ibox-content">
+                          <div class="form-group  row">
+                              <label class="col-sm-2 col-form-label">Student</label>
+
+                              <div class="col-sm-10">
+                                  <input type="text" placeholder="Student name here" autocomplete="off"
+                                         data-url="@Url.Content("~/api/Contact/Search")" data-target-id="StudentRegistration_StudentRegistrations_@(j)__StudentId"
+                                         class="autocomplete form-control" asp-for="@Model.StudentRegistration.StudentRegistrations[j].StudentName" />
+                                  <input type="hidden" asp-for="@Model.StudentRegistration.StudentRegistrations[j].StudentId" />
+
+                                  <span asp-validation-for="@Model.StudentRegistration.StudentRegistrations[j].StudentId" class="text-danger"></span>
+                              </div>
+                          </div>
+
+                          <div class="form-group  row">
+                              <label class="col-sm-2 col-form-label">Public School Grade</label>
+
+                              <div class="col-sm-10">
+                                  <select asp-for="@Model.StudentRegistration.StudentRegistrations[j].PublicSchoolGrade" class="form-control"
+                                          asp-items="@Model.PublicSchoolGradeList">
+                                      <option value="">Please select one</option>
+                                  </select>
+                                  <span asp-validation-for="@Model.StudentRegistration.StudentRegistrations[j].PublicSchoolGrade" class="text-danger"></span>
+                              </div>
+
+                          </div>
+
+                          <div class="form-group  row">
+                              <label class="col-sm-2 col-form-label">Islamic School Grade</label>
+
+                              <div class="col-sm-10">
+                                  <select asp-for="@Model.StudentRegistration.StudentRegistrations[j].IslamicSchoolGrade" class="form-control"
+                                          asp-items="@Model.IslamicSchoolGradeList">
+                                      <option value="">Please select one</option>
+                                  </select>
+                                  <span asp-validation-for="@Model.StudentRegistration.StudentRegistrations[j].IslamicSchoolGrade" class="text-danger"></span>
+
+                              </div>
+                          </div>
+                          <div class="hr-line-dashed"></div>
+                      </div>
+                  </div>
+              }
+
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-lg-12">
+              <div class="form-group row" style="text-align:right">
+                  <div class="col-sm-12 col-sm-offset-2">
+                      <button class="btn btn-white btn-sm" type="submit" asp-page-handler="Cancel">Cancel</button>
+
+                      <button class="btn btn-white btn-sm" type="submit" asp-page-handler="Reset">Reset</button>
+
+                      <button class="btn btn-primary btn-sm" type="submit" asp-page-handler="Save">Save</button>
+
+
+                      <button class="btn btn-primary btn-sm" type="submit" style="display:none" asp-page-handler="PopulateEnrollments" id="btnPostSelectedEnrollments">Save</button>
+
+                      
+
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="modal inmodal" id="enrollmentsFoundModal" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content animated bounceInRight">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                      <h4 class="modal-title">Enrollments Found</h4>
+                   </div>
+                  <div class="modal-body">
+                      <p>
+                          <strong>Click Button to load enrollments found for this parent.</strong>
+                      </p>
+                      <div class="form-group row" id="dvenrollmentErrors" style="display:none;">
+                          <div class="col-sm-10">
+                              <h5>Error(s)</h5>
+                              <div>
+                                  <ul class="olErrors" id="olErrors">
+                                      <li>Please select enrollment(s)</li>
+                                  </ul>
+                              </div>
+                          </div>
+                          <div class="hr-line-dashed"></div>
+                      </div>
+
+                      <div id="dvEnrollments">
+
+                          <table id="tblEnrollments" class="table table-hover">
+                              <thead>
+                                  <tr>
+                                      <th scope="col">Student Name</th>
+                                      <th scope="col">Public School Grade</th>
+                                      <th scope="col">Islamc School Grade</th>
+                                  </tr>
+                              </thead>
+                              <tbody></tbody>
+                          </table>
+
+                      </div>
+
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-white" data-dismiss="modal">Cancel</button>
+                      <button type="button" class="btn btn-primary" id="btnPopulateEnrollment">Populate Enrollments</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+    
+<input type="hidden" asp-for="@Model.AutoEnrollmentJson" />
+</form>
+
+@section Scripts
+{
+    <script src="https://cdn.rawgit.com/xcash/bootstrap-autocomplete/v2.0.0/dist/latest/bootstrap-autocomplete.min.js"></script>
+
+    <script src="/js/RegisrationApplicationPage.js"></script>
+}
+
+
