@@ -90,8 +90,13 @@ namespace BusinessLogic
             {
                 if (entityType.ToLower() == "subject")
                 {
-                   var subject = db.Subjects.Where(x=>x.TenantId == context.TenantId && x.SubjectId == entityId).SingleOrDefault();
-                   return subject==null?"Unknown Entity":subject.SubjectName;
+                   var subject = db.Subjects.Where(x=>x.TenantId == context.TenantId && x.SubjectId == entityId).Single();
+                   return subject.SubjectName;
+                }
+                else if (entityType.ToLower() == "program")
+                {
+                    var program = db.Programs.Single(x => x.TenantId == context.TenantId && x.ProgramId == entityId);
+                    return program.ProgramName;
                 }
                 else
                 {
