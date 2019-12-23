@@ -32,6 +32,34 @@ namespace BusinessLogic
             }
         }
 
+        public bool UpdateSubject(CallContext context, Guid subjectId, string subjectName, string subjectDescription)
+        {
+            using (var db = new Database())
+            {
+                Subject existingSubject = db.Subjects.Where(x => x.TenantId == context.TenantId &&
+                                                             x.SubjectName == subjectName &&
+                                                             x.SubjectId != subjectId).SingleOrDefault();
+
+                if (existingSubject != null)
+                {
+                    return false;//already exists.
+                }
+
+                existingSubject = db.Subjects.Where(x => x.TenantId == context.TenantId &&
+                                                         x.SubjectId == subjectId).SingleOrDefault();
+
+                if (existingSubject != null)
+                {
+                    existingSubject.SubjectName = subjectName;
+                    existingSubject.SubjectDescription = subjectDescription;
+                    db.SaveChanges();
+                }
+
+                return true;
+            }
+
+        }
+
         public Guid AddTeacher(CallContext context, Guid contactId)
         {
             using (var db = new Database())
@@ -130,7 +158,17 @@ namespace BusinessLogic
 
         }
 
-       
+        public Subject GetSubjectById(CallContext context, Guid subjectId)
+        {
+            using (var db = new Database())
+            {
+                return db.Subjects.Where(x => x.TenantId == context.TenantId && x.SubjectId == subjectId)
+                    .SingleOrDefault();
+            }
+
+        }
+
+
         public List<Teacher> GetTeachers(CallContext context)
         {
             using (var db = new Database())

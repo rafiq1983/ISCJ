@@ -115,7 +115,7 @@ namespace BusinessLogic
     private void AddStudentSubjects(CallContext context, CreateRegistrationApplicationInput input, RegistrationApplication app)
     {
         StudentManager mgr = new StudentManager();
-            
+        ProgramManager programManager = new ProgramManager();
         foreach (var reg in input.StudentRegistrations)
         {
             if (reg.StudentId.HasValue == false)
@@ -147,7 +147,9 @@ namespace BusinessLogic
             {
                 var enrollmentId = app.Enrollments.SingleOrDefault(x => x.StudentContactId == reg.StudentId).EnrollmentId;
 
-                mgr.AddStudentSubject(context, reg.StudentId.Value, enrollmentId, subject.SubjectId, input.ProgramId.Value);
+               var studentSubjectId = mgr.AddStudentSubject(context, reg.StudentId.Value, enrollmentId, subject.SubjectId, input.ProgramId.Value);
+
+                mgr.AddMetricsToStudentSubject(context, studentSubjectId, programManager.GetAssociatedMetrics(context, subject.SubjectId).Select(x=>x.MetricId).ToList());
             }
         }
 

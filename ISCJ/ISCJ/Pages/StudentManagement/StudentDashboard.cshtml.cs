@@ -32,7 +32,7 @@ namespace ISCJ.Pages.StudentManagement
         private void LoadStudentSubjects()
         {
             StudentManager mgr = new StudentManager();
-           StudentSubjects = mgr.GetStudentSubjects(GetCallContext(), StudentId);
+           StudentSubjects = mgr.GetStudentSubjects(GetCallContext(), StudentId, ProgramId);
         }
 
         private void LoadStudents()

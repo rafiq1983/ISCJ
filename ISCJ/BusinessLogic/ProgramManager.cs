@@ -68,6 +68,14 @@ namespace BusinessLogic
             }
         }
 
+        public List<MetricAssociation> GetAssociatedMetrics(CallContext context, Guid entityId)
+        {
+            using (var db = new Database())
+            {
+                return db.MetricAssociations.Where(x => x.TenantId == context.TenantId && x.EntityId == entityId).ToList();
+            }
+        }
+
         public List<MetricAssociation> GetEntityMetricsAssociations(CallContext context, Guid entityId)
         {
             using (var db = new Database())
