@@ -43,10 +43,11 @@
                     <div class="ibox-content">
 
                         <div class="form-group  row">
+                            <input type="hidden" asp-for="@Model.EditSubjectId"/>
                             <label class="col-sm-2 col-form-label">Subject Name:</label>
 
                             <div class="col-sm-10">
-                                <input type="text" placeholder="Subject Name" class="form-control" asp-for="@Model.SubjectName" />
+                                <input type="text" placeholder="Subject Name" class="form-control" asp-for="@Model.SubjectName" value="@Model.SubjectName"/>
 
                                 <span asp-validation-for="@Model.SubjectName" class="text-danger"></span>
 
@@ -57,9 +58,7 @@
                             <label class="col-sm-2 col-form-label">Description:</label>
 
                             <div class="col-sm-10">
-                                <textarea rows="5
-                                          " style="resize: none;width:100%" asp-for="@Model.SubjectDescription">                            
-</textarea>
+                                <textarea rows="5" style="resize: none; width: 100%" asp-for="@Model.SubjectDescription">@Model.SubjectDescription</textarea>
 
                                 <span asp-validation-for="@Model.SubjectDescription" class="text-danger"></span>
 
@@ -86,7 +85,7 @@
                         <button class="btn btn-primary btn-sm" type="submit" asp-page-handler="Save">Save</button>
 
                     </div>
-                    s
+                   
                 </div>
             </div>
         </div>
@@ -110,7 +109,6 @@
                 {
                     <tr>
                         <td>
-                            <input type="hidden" asp-for="@Model.Subjects[i].SubjectId"/>
                             @Model.Subjects[i].SubjectName
                         </td>
                         <td>
@@ -118,6 +116,10 @@
                         </td>
                         <td>
                             <a href="@Url.Page("/setup/AssignMetric", new {entitytype = "subject", entityid= Model.Subjects[i].SubjectId})">Assign Metric</a>
+                        </td>
+                        <td>
+                          
+                            <button name="btnUpdateSubject" class="btn btn-white btn-sm" type="submit" asp-page-handler="Update" value="@Model.Subjects[i].SubjectId">Update</button>
                         </td>
 
                     </tr>

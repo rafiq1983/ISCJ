@@ -25,12 +25,40 @@ namespace ISCJ.Pages.School
             PerformValidation();
             if (ModelState.IsValid)
             {
-                courseManager.AddSubject(GetCallContext(), SubjectName, SubjectDescription);
+                if (EditSubjectId == Guid.Empty)
+                {
+
+                    courseManager.AddSubject(GetCallContext(), SubjectName, SubjectDescription);
+                    
+                }
+                else
+                {
+                    courseManager.UpdateSubject(GetCallContext(), EditSubjectId, SubjectName, SubjectDescription);
+                  
+                }
+
                 SubjectName = string.Empty;
                 SubjectDescription = string.Empty;
-                ModelState.Clear();
 
+                ModelState.Clear(); //this is necessary so controls can rebind to the Model Values instead of ModelState.
             }
+
+            LoadSubjects();
+
+        }
+
+        [BindProperty]
+        public Guid EditSubjectId { get; set; }
+
+        public void OnPostUpdate([FromForm]Guid btnUpdateSubject)
+        {
+            CourseManager courseManager = new CourseManager();
+            
+                var subject = courseManager.GetSubjectById(GetCallContext(), btnUpdateSubject);
+                SubjectName = subject.SubjectName;
+                SubjectDescription = subject.SubjectDescription;
+                EditSubjectId = subject.SubjectId;
+                ModelState.Clear();//this is necessary so controls can rebind to the Model instead of ModelState.
 
             LoadSubjects();
 
@@ -44,12 +72,10 @@ namespace ISCJ.Pages.School
 
             var subject = courseManager.GetSubjectByName(GetCallContext(), SubjectName);
 
-            if (subject != null)
+            if (subject != null && subject.SubjectId!=EditSubjectId)
             {
                 ModelState.AddModelError("SubjectName", "Subject name already exists");
             }
-          
-            
         }
 
         private void LoadSubjects()
@@ -71,6 +97,7 @@ namespace ISCJ.Pages.School
 
         [BindProperty]
         [MaxLength(500)]
+        [Required()]
         public string SubjectDescription { get; set; }
     }
 }
