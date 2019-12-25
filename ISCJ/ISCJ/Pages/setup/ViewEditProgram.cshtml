@@ -100,10 +100,13 @@
                 @for (var i = 0; i < Model.ProgramDetails.Count; i++)
                 {
                     <tr>
-                        <input type="hidden" asp-for="@Model.ProgramDetails[i].ProgramId" value="@Model.ProgramDetails[i].ProgramId"/>
+                        <input type="hidden" asp-for="@Model.ProgramDetails[i].ProgramId" value="@Model.ProgramDetails[i].ProgramId" />
 
                         <td>@Model.ProgramDetails[i].ProgramName</td>
                         <td>@Html.Raw(Model.ProgramDetails[i].ProgramDescription)</td>
+                        <td>
+                            <a href="@Url.Page("/setup/AssignMetric", new {entitytype = "Program", entityid= Model.ProgramDetails[i].ProgramId})">Assign Metric</a>
+                        </td>
                     </tr>
                 }
                 </tbody>

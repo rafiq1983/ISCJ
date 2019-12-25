@@ -9,6 +9,7 @@ namespace MA.Common
         public string OrganizationName { get; set; }
         public string SignupEmail { get; set; }
         public string Password { get; set; }
+        public string DisplayTimeZone { get; set; } = "Eastern Standard Time";
     }
 
    public class OrganizationSignupOutput

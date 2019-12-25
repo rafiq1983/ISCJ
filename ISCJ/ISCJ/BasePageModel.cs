@@ -13,12 +13,21 @@ using MA.Core.Web;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore.Update.Internal;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace ISCJ
 {
     public class BasePageModel:PageModel
     {
+        private static TimeZoneInfo DisplayTimeZone;
         private NavigationBar _leftNavBar = null;
+        private object _syncRoot = new Object();
+      
+        public BasePageModel()
+        {
+            
+        }
 
         public NavigationBar LeftNavigationBar
         {
@@ -189,6 +198,41 @@ namespace ISCJ
             if (c == null)
                 return "null";
             return c.FirstName + " " + c.LastName;
+        }
+
+        public string ShowDateTimeInEST(DateTime dt, string format="MM/dd/yyyy")
+        {
+            if (dt.Kind == DateTimeKind.Unspecified)
+            {
+                dt = DateTime.SpecifyKind(dt, DateTimeKind.Utc);
+            }
+
+            EnsureDisplayTimezone();
+            return TimeZoneInfo.ConvertTime(dt, DisplayTimeZone).ToString(format);
+
+        }
+
+        private void EnsureDisplayTimezone()
+        {
+            if (DisplayTimeZone == null)
+            {
+                lock (_syncRoot)
+                {
+                    var context = GetCallContext();
+
+                    if (context.TenantId.HasValue)
+                    {
+
+                        DisplayTimeZone =
+                            TimeZoneInfo.FindSystemTimeZoneById(SignupManager.GetTenant(context.TenantId.Value)
+                                .DisplayTimeZone);
+                    }
+                    else
+                    {
+                        TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+                    }
+                }
+            }
         }
 
         protected virtual MA.Core.CallContext GetCallContext()
