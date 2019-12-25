@@ -18,6 +18,7 @@ namespace ISCJ
 {
     public class BasePageModel:PageModel
     {
+        private static TimeZoneInfo EasternTimeZone =  TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
         private NavigationBar _leftNavBar = null;
 
         public NavigationBar LeftNavigationBar
@@ -189,6 +190,12 @@ namespace ISCJ
             if (c == null)
                 return "null";
             return c.FirstName + " " + c.LastName;
+        }
+
+        public string ShowDateTimeInEST(DateTime dt, string format="MM/dd/yyyy")
+        {
+            return TimeZoneInfo.ConvertTime(dt, EasternTimeZone).ToString(format);
+
         }
 
         protected virtual MA.Core.CallContext GetCallContext()

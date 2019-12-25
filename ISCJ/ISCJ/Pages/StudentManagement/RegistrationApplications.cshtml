@@ -16,36 +16,33 @@
                    Enrollments
                 </li>
                 <li class="active breadcrumb-item">
-                    <strong>Registraton Applications</strong>
+                    <strong>Registration Applications</strong>
                 </li>
             </ol>
         </div>
     </div>
-
-    <table class="table-bordered">
+    <div class="ibox-content">
+    <table class="table">
         <tr>
 
             <th>Application Date</th>
             <th>Father Name</th>
             <th>Mother Name</th>
             <th>Enrollments</th>
-            <th>Amount Due</th>
-            <th>Amount Remaining</th>
             <th>Invoice</th>
           
         </tr>
         <tbody>
-            @for (var i = 0; i < Model.Registrations.Count; i++)
+        @for (var i = 0; i < Model.Registrations.Count; i++)
         {
             <tr>
                 <input type="hidden" asp-for="@Model.Registrations[i].ApplicationId" value="@Model.Registrations[i].ApplicationId" />
-
-                <td>@Model.Registrations[i].ApplicationDate</td>
+                
+                <td>@Model.ShowDateTimeInEST(@Model.Registrations[i].ApplicationDate)</td>
                 <td><a href="#">@Model.Registrations[i].FatherContactInfo?.FirstName  @Model.Registrations[i].FatherContactInfo?.LastName</a></td>
                 <td><a href="#">@Model.Registrations[i].MotherContactInfo?.FirstName @Model.Registrations[i].MotherContactInfo?.LastName</a></td>
                 <td><a href="@Url.Page("Enrollments", new {regAppId=Model.Registrations[i].ApplicationId})">Enrollments</a></td>
-                <td>TODO</td>
-                <td>TODO </td>
+               
                 <td>
                     <a href="#">View Invoice - TODO</a>
                 </td>
@@ -54,6 +51,7 @@
         }
         </tbody>
     </table>
+    </div>
     <input type="button" id="btnAddNew" name="btnAction" class="btn-sm btn-success" value="Add New" onclick="window.location = 'RegisterStudent2'" />
 
 </form>

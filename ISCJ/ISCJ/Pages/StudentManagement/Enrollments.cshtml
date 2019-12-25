@@ -51,7 +51,7 @@ htmlAttributes: new { @class = "form-control m-b" })
                         <td> <Code code-type="publicschoolgradelist" code="@Model.Enrollments[i].PublicSchoolGradeId"></Code></td>
                         <td>@Model.GetContactName(@Model.Enrollments[i].FatherContactInfo)</td>
                         <td>@Model.GetContactName(@Model.Enrollments[i].MotherContactInfo)</td>
-                        <td>@Model.Enrollments[i].CreateDate.ToLocalTime().ToString("MM/dd/yyyy")</td>
+                        <td>@Model.ShowDateTimeInEST(@Model.Enrollments[i].CreateDate.ToLocalTime())</td>
                     </tr>
 
                 }
