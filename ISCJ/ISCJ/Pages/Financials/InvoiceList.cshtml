@@ -73,7 +73,7 @@
             <tr>
                 <input type="hidden" asp-for="@Model.Invoices[i].InvoiceId" value="@Model.PageData.RowData[i].Invoice.InvoiceId"/>
 
-                <td>@Model.PageData.RowData[i].Invoice.GenerationDate</td>
+                <td>@Model.ShowDateTimeInEST(@Model.PageData.RowData[i].Invoice.GenerationDate)</td>
                 <td>@Model.PageData.RowData[i].OrderType</td>
                 <td>@Model.PageData.RowData[i].Invoice.DueDate</td>
                 <td>$@Model.PageData.RowData[i].Invoice.InvoiceAmount</td>
