@@ -9,6 +9,7 @@
     [RowVersion]        ROWVERSION       NOT NULL,
     [IsVerified] TINYINT NULL, 
     [OwnerId] UNIQUEIDENTIFIER NOT NULL, 
+    [DisplayTimeZone] VARCHAR(50) NOT NULL DEFAULT 'Eastern Standard Time', 
     CONSTRAINT [PK_Tenants] PRIMARY KEY CLUSTERED ([TenantId] ASC)
 );
 

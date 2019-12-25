@@ -29,7 +29,6 @@ namespace ISCJ.Pages.Signup
         {
             if (ModelState.IsValid)
             {
-             
                var output = _signupManager.Signup(new OrganizationSignupInput()
                 {
                     SignupEmail = Email,
