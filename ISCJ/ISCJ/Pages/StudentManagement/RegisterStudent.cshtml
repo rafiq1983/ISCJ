@@ -1,32 +1,246 @@
 ﻿@page
-@model ISCJ.Pages.StudentManagement.RegisterStudentModel
+@model RegisterStudentModel
 @{
-  ViewData["Title"] = "RegisterStudent";
+    ViewData["Title"] = "RegisterStudent(s)";
+    Layout = "~/Pages/Shared/_LayoutModern.cshtml";
 }
 
-<h2>Register Student</h2>
+
 
 <form id="registrationForm" method="post">
-  <div class="form-group">
-    <label for="txtFirstName">First Name:</label>
-    <input type="text" name="txtFirstName" id="txtFirstName" class="form-control" />
-    <label for="txtMiddleName">Middle Name:</label>
-    <input type="text" name="txtMiddleName" id="txtMiddleName" class="form-control" />
-    <label for="txtLastName">Last Name:</label>
-    <input type="text" name="txtLastName" id="txtLastName" class="form-control" />
-    <label for="txtDob">Date of Birth:</label>
-    <input type="text" name="txtDob" id="txtDob" class="form-control" />
-    <label for="txtPSG">Public School Grade</label>
-    <input type="text" name="txtPSG" id="txtPSG" class="form-control" />
-    <label for="txtISG">Islamic School Grade:</label>
-    <input type="text" name="txtISG" id="txtISG" class="form-control" />
-    <label for="txtGender">Gender:</label>
-    <input type="text" name="txtGender" id="txtGender" class="form-control" />
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <h2>Islamic Center Membership & School Registration Form </h2>
+        <div class="panel-group">
+            <div class="panel panel-primary">
+                <div class="panel-heading"><h4>Program</h4></div>
+                <div class="panel-body">
 
-  </div>
-  <div>
-    <input type="submit" id="btnSubmit" name="btnSubmit" value="Save" class="btn-success" />
-  </div>
+                    <div class="row">
+                        <div class="form-group  col-xs-4">
+                            <label for="lstProgram">Program</label>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading"><h4>Application Data</h4></div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group  col-xs-4">
+                            <label for="txtDate">Date</label>
+                            <div class='input-group date' id='datetimepicker3'>
+                                <input type='text' class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                </span>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group col-xs-2">
+                            <label class="radio-inline"><input type="radio" name="optradio" checked>New</label>
+                        </div>
+
+                        <div class="form-group col-xs-2">
+                            <label class="radio-inline"><input type="radio" name="optradio">Renewal</label>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading"><h4>Guardian Information</h4></div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group  col-xs-4">
+                            <label for="txtFFirstName">Father First Name</label>
+                            <input id="txtFFirstName" asp-for="Registeration.FatherInfo.FirstName" placeholder="Father First Name" class="form-control" />
+                        </div>
+
+                        <div class="form-group  col-xs-4">
+                            <label for="txtFMName">Father Middle Name</label>
+                            <input id="txtFMName" asp-for="Registeration.FatherInfo.MiddleName" placeholder="Father Middle Name" class="form-control" />
+                        </div>
+
+                        <div class="form-group  col-xs-4">
+                            <label for="txtFLastName">Father Last Name</label>
+                            <input id="txtFLastName" asp-for="Registeration.FatherInfo.LastName" placeholder="Father Last Name" class="form-control" />
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group  col-xs-4">
+                            <label for="txtFFirstName">Mother First Name</label>
+                            <input id="txtFFirstName" asp-for="Registeration.MotherInfo.FirstName" class="form-control" />
+                        </div>
+
+                        <div class="form-group  col-xs-4">
+                            <label for="txtFMName">Mother Middle Name</label>
+                            <input id="txtFMName" asp-for="Registeration.MotherInfo.MiddleName" class="form-control" />
+                        </div>
+
+                        <div class="form-group  col-xs-4">
+                            <label for="txtFLastName">Mother Last Name</label>
+                            <input id="txtFLastName" asp-for="Registeration.MotherInfo.LastName" class="form-control" />
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+                        <div class="form-group  col-sm-8">
+                            <label for="txtStreet">Street</label>
+                            <input id="txtStreet" asp-for="Registeration.FatherInfo.StreetAddress" class="form-control" />
+                        </div>
+
+                        <div class="form-group  col-sm-4">
+                            <label for="txtApt">Apt</label>
+                            <input id="txtApt" asp-for="Registeration.FatherInfo.Apt" class="form-control" />
+                        </div>
+
+
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group  col-xs-4">
+                            <label for="txtCity">City</label>
+                            <input id="txtCity" asp-for="Registeration.FatherInfo.City" class="form-control" />
+                        </div>
+
+                        <div class="form-group  col-xs-4">
+                            <label for="txtState">State</label>
+                            <input id="txtState" asp-for="Registeration.FatherInfo.State" class="form-control" />
+                        </div>
+
+                        <div class="form-group  col-xs-4">
+                            <label for="txtZip">Zip</label>
+                            <input id="txtZip" asp-for="Registeration.FatherInfo.ZipCode" class="form-control" />
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group  col-xs-4">
+                            <label for="txtPhone">Phone (Home)</label>
+                            <input id="txtphone" asp-for="Registeration.FatherInfo.HomePhone" class="form-control" />
+                        </div>
+
+                        <div class="form-group  col-xs-4">
+                            <label for="txtFCell">Cell (Father)</label>
+                            <input id="txtFCell" asp-for="Registeration.FatherInfo.CellPhone" class="form-control" />
+                        </div>
+
+                        <div class="form-group  col-xs-4">
+                            <label for="txtMCell">Cell (Mother)</label>
+                            <input id="txtMCell" asp-for="Registeration.MotherInfo.CellPhone" class="form-control" />
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group  col-sm-6">
+                            <label for="txtPEmail">Primary Email Address</label>
+                            <input id="txtpEmail" asp-for="Registeration.FatherInfo.Email" class="form-control" />
+                        </div>
+
+                        <div class="form-group  col-sm-6">
+                            <label for="txtAEmail">Alternate Email Address</label>
+                            <input id="txtAEmail" asp-for="Registeration.MotherInfo.Email" class="form-control" />
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+
+            <div class="panel panel-primary">
+                <div class="panel-heading"><h4>Student(s) Information</h4></div>
+                <div class="panel-body" id="pnlDependents">
+                    <div id="pnlStudents">                       
+                    </div>
+                    <div class="form-group row" style="text-align:right">
+                        <div class="col-sm-12 col-sm-offset-2">
+                            <button class="btn btn-primary btn-sm" type="button" id="btnAddStudents">Add Student</button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div class="form-group row" style="text-align:right">
+            <div class="col-sm-12 col-sm-offset-2">
+                <button class="btn btn-white btn-sm" type="submit" name="btnCancel">Cancel</button>
+
+                <button class="btn btn-white btn-sm" type="submit" name="btnReset">Reset</button>
+
+                <button class="btn btn-primary btn-sm" type="submit" name="btnSave">Save changes</button>
+
+            </div>
+        </div>
+    </div>
 </form>
-<span class="text-info" name="Message">@Model.Message</span>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script type="text/javascript">
+        var rowsnumber = 0;      
+        $(function () {          
+            CreateStudentRows(rowsnumber);
+            $("#btnAddStudents").click(function () {    
+                rowsnumber++;
+                CreateStudentRows(rowsnumber);             
+            });         
+        });
+
+      
+        function CreateStudentRows(rownumber) {
+                var tblRow ="<div class='dvRow' id='dv" + rownumber + "'>";
+                tblRow += "<div class='row'>";
+                tblRow += " <div class='form-group  col-xs-4'>";
+                tblRow += "<label>First Name</label>";
+                tblRow += "<input name='Registeration.Dependents[" + rownumber + "].FirstName' data-val='FirstName' class='form-control' /> </div>";
+                tblRow += "<div class='form-group  col-xs-4'>";
+                tblRow += "<label>Middle Name</label>";
+                tblRow += "<input name='Registeration.Dependents[" + rownumber + "].MiddleName' data-val='MiddleName' class='form-control' /> </div>";
+                tblRow += " <div class='form-group  col-xs-4'><label>Last Name</label><input name='Registeration.Dependents[" + rownumber + "].LastName' data-val='LastName' class='form-control' /></div></div>";
+                tblRow += "<div class='row'><div class='form-group  col-xs-4'><label>Date of Birth</label><input name='Registeration.Dependents[" + rownumber + "].DOB' data-val='DOB' class='form-control' /></div>";
+                tblRow += " <div class='form-group  col-xs-4'><label>Public School Grade</label><input name='Registeration.Dependents[" + rownumber + "].HomePhone' data-val='HomePhone' class='form-control' /></div>";
+                tblRow += "<div class='form-group  col-xs-4'><label>Islamic School Grade</label><input name='Registeration.Dependents[" + rownumber + "].CellPhone' data-val='CellPhone' class='form-control' /></div></div>";
+                tblRow += "<div class='form-group col-xs-4'><a href='#' data-val='dv" + rownumber + "' class='delete-row'> Delete </a></div>";
+                tblRow += "</div>";
+
+            $("#pnlStudents").append(tblRow);
+
+            $(".delete-row").click(function(){
+                var id = $(this).attr('data-val');
+                DeleteStudentRow(id);
+            });
+
+
+        }
+
+
+        function DeleteStudentRow(id) {                  
+            $("#" + id + "").remove();
+            var id = 0
+            $(".dvRow :input").each(function () {                
+                var attrName = $(this).attr("data-val");
+                var newID = "Registeration.Dependents[" + id + "]." + attrName;
+                id++;
+                alert(newID);
+
+            });
+
+        }
+        
+    </script>
+}
+
+
 

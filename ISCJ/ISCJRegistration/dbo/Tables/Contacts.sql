@@ -1,0 +1,28 @@
+﻿CREATE TABLE [dbo].[Contacts] (
+    [Guid]          UNIQUEIDENTIFIER NOT NULL,
+    [FirstName]     VARCHAR (200)    NULL,
+    [LastName]      VARCHAR (200)    NULL,
+    [MiddleName]    VARCHAR (200)    NULL,
+    [Gender]        INT              NULL,
+    [CompanyName]   VARCHAR (200)    NULL,
+    [StreetAddress] VARCHAR (400)    NOT NULL,
+    [City]          VARCHAR (200)    NOT NULL,
+    [State]         VARCHAR (100)    NOT NULL,
+    [ZipCode]       VARCHAR (100)    NOT NULL,
+    [ContactType]   INT              NOT NULL,
+    [IsParent]      BIT              NULL,
+    [Organization]  VARCHAR (500)    NULL,
+    [CreatedDate]   DATETIME         NOT NULL,
+    [CreatedBy]     VARCHAR (200)    NOT NULL,
+    [ModifiedDate]  DATETIME         NULL,
+    [ModifiedBy]    VARCHAR (200)    NULL,
+    [Email]         VARCHAR (300)    NULL,
+    [DOB]           DATE             NULL,
+    [Apt]           VARCHAR (100)    NULL,
+    [CellPhone]     VARCHAR (100)    NULL,
+    [HomePhone]     VARCHAR (100)    NULL,
+    [Avatar]        VARBINARY (MAX)  NULL,
+    [TenantId] UNIQUEIDENTIFIER NULL, 
+    CONSTRAINT [PK_Contacts] PRIMARY KEY CLUSTERED ([Guid] ASC)
+);
+

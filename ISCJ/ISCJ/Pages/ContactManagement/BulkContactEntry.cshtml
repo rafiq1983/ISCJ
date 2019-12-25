@@ -1,0 +1,62 @@
+﻿@page
+@model ISCJ.Pages.ContactManagement.BulkContactEntryModel
+@{
+    ViewData["Title"] = "BulkContactEntry";
+}
+
+<h2>Bulk Contact Entry</h2>
+<form method="post" name="bulkSaveContact">
+  <table class="table-condensed">
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Gender</th>
+      <th>Type</th>
+      <th>Home Phone</th>
+      <th>Cell Phone</th>
+      <th>Street</th>
+      <th>City</th>
+      <th>State</th>
+      <th>Zip</th>
+    </tr>
+
+    @for (int i = 0; i < Model.BulkContacts.Count; i++)
+    {
+      <tr>
+
+        <td><input type="text" asp-for="@Model.BulkContacts[i].FirstName" class="form-control" placeholder="First Name"></td>
+        <td><input type="text" asp-for="@Model.BulkContacts[i].LastName" class="form-control" placeholder="Last"></td>
+        <td><input type="text" asp-for="@Model.BulkContacts[i].Email" class="form-control" placeholder="Email" /></td>
+        <td>
+          <select asp-for="@Model.BulkContacts[i].Gender" class="form-control"
+                  asp-items="@Model.GenderList">
+            <option>Please select one</option>
+          </select>
+        </td>
+
+        <td>
+          <select asp-for="@Model.BulkContacts[i].ContactType" class="form-control"
+                  asp-items="@(new SelectList(Model.ContactTypes,"ID","Description"))">
+            <option>Please select one</option>
+          </select>
+        </td>
+
+        <td><input type="text" asp-for="@Model.BulkContacts[i].HomePhone" class="form-control" placeholder="Home Phone" /></td>
+
+        <td><input type="text" asp-for="@Model.BulkContacts[i].CellPhone" class="form-control" placeholder="Cell Phone" /></td>
+
+        <td><input type="text" asp-for="@Model.BulkContacts[i].StreetAddress" class="form-control" placeholder="Street" /></td>
+        <td><input type="text" asp-for="@Model.BulkContacts[i].City" class="form-control" placeholder="City" /></td>
+        <td><input type="text" asp-for="@Model.BulkContacts[i].State" class="form-control" placeholder="State" /></td>
+        <td><input type="text" asp-for="@Model.BulkContacts[i].ZipCode" class="form-control" placeholder="Zip" /></td>
+
+      </tr>
+
+    }
+
+  </table>
+  <input type="submit" value="Save" class="btn-sm btn-success" />
+  <a href="ContactList" class="btn-sm btn-success">Contact List</a>
+</form>
+

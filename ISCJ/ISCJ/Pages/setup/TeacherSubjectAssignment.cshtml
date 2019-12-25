@@ -1,0 +1,122 @@
+﻿@page
+@model ISCJ.Pages.School.TeacherSubjectAssignment
+@{
+    ViewData["Title"] = "Contacts";
+    Layout = "~/Pages/Shared/_LayoutModern.cshtml";
+}
+
+<form method="POST">
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-9">
+            <h2>Teacher Subject Mapping</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    School
+                </li>
+                <li class="active breadcrumb-item">
+                    <strong>Teacher Subject Mapping</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+        
+        <div class="row">
+            <div asp-validation-summary="All"></div>
+        </div>
+        <div class="row">
+            
+            <div class="col-lg-12">
+                <div class="form-group  row">
+                    <label class="col-sm-2 col-form-label">Teacher</label>
+
+                    <div class="col-sm-10">
+                        <select asp-for="@Model.TeacherId" class="form-control"
+                                asp-items="@Model.Teachers">
+                            <option value="">Please select one</option>
+                        </select>
+                        <span asp-validation-for="@Model.TeacherId" class="text-danger"></span>
+
+                    </div>
+                </div>
+
+                <div class="form-group  row">
+                    <label class="col-sm-2 col-form-label">Program</label>
+
+                    <div class="col-sm-10">
+                        <select asp-for="@Model.ProgramId" class="form-control"
+                                asp-items="@Model.Programs">
+                            <option value="">Please select one</option>
+                        </select>
+                        <span asp-validation-for="@Model.ProgramId" class="text-danger"></span>
+
+                    </div>
+                </div>
+
+                <div class="form-group  row">
+                    <label class="col-sm-2 col-form-label">Subject</label>
+
+                    <div class="col-sm-10">
+                        <select asp-for="@Model.SubjectId" class="form-control"
+                                asp-items="@Model.Subjects">
+                            <option value="">Please select one</option>
+                        </select>
+                        <span asp-validation-for="@Model.SubjectId" class="text-danger"></span>
+
+                    </div>
+                </div>
+
+                <div class="form-group row" style="text-align: right">
+                    <div class="col-sm-12 col-sm-offset-2">
+                        <button class="btn btn-white btn-sm" type="submit" asp-page-handler="Cancel">Cancel</button>
+
+                        <button class="btn btn-white btn-sm" type="submit" asp-page-handler="Reset">Reset</button>
+
+                        <button class="btn btn-primary btn-sm" type="submit" asp-page-handler="Save">Save</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="wrapper border-bottom white-bg">
+        
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Teacher</th>
+                <th>Program</th>
+                <th>Subject</th>
+                
+            </tr>
+            </thead>
+            <tbody>
+            @for (var i = 0; i < Model.TeacherSubjectMappings.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <input type="hidden" asp-for="@Model.TeacherSubjectMappings[i].RecordId" />
+                        @Model.TeacherSubjectMappings[i].Teacher.Contact.FirstName  @Model.TeacherSubjectMappings[i].Teacher.Contact.LastName
+                    </td>
+                    <td>
+                        <input type="hidden" asp-for="@Model.TeacherSubjectMappings[i].ProgramId" />
+                        @Model.TeacherSubjectMappings[i].Program.ProgramName
+                    </td>
+                    <td>
+                        @Model.TeacherSubjectMappings[i].Subject.SubjectName
+                    </td>
+
+                </tr>
+            }
+            </tbody>
+
+        </table>
+    </div>
+</form>

@@ -1,0 +1,64 @@
+﻿@page
+@model ISCJ.Pages.School.SubjectsListModel
+@{
+    ViewData["Title"] = "Courses";
+}
+
+@{
+    ViewData["Title"] = "Contacts";
+    Layout = "~/Pages/Shared/_LayoutModern.cshtml";
+}
+
+<form method="POST">
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-9">
+            <h2>Student Registration</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    School
+                </li>
+                <li class="active breadcrumb-item">
+                    <strong>Subjects</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="wrapper wrapper-content animated fadeInRight">
+
+        <div class="ibox">
+            <div class="ibox-content">
+
+                <table class="table"><thead>
+                    <tr>
+                        <th>Subject Name</th>
+                        <th>Subject Description</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @for (var i = 0; i < Model.Subjects.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                <input type="hidden" asp-for="@Model.Subjects[i].SubjectId"/>
+                                @Model.Subjects[i].SubjectName
+                            </td>
+                            <td>
+                                @Model.Subjects[i].SubjectDescription
+                            </td>
+
+                        </tr>
+                    }
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</form>
+
+
+

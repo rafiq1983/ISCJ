@@ -1,0 +1,72 @@
+﻿@page
+@model ISCJ.Pages.Admin.LoginModel
+
+@{
+  Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>@ViewData["Title"] - ICSJ</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <environment names="Development">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="~/css/animate.css" />
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+  </environment>
+  <environment names="Staging,Production">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/css/animate.css" />
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+  </environment>
+
+
+</head>
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen  animated fadeInDown">
+      <div>
+        <div>
+          <h1 class="logo-name">ICSJ</h1>
+        </div>
+        <h3>Welcome to ICSJ</h3>
+        <p>
+          App Designed for ICSJ
+        </p>
+        <p>Login in. To see it in action.</p>
+
+        <form class="m-t" role="form" method="post">
+          <div class="form-group">
+              <input type="text" class="form-control" placeholder="Username" required="" asp-for="loginData.Username">
+              
+              <span asp-validation-for="@Model.loginData.Username" class="text-danger"></span>
+
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" placeholder="Password" required="" asp-for="loginData.Password">
+          </div>
+          <div class="form-group">
+            Remember me: <input  class="form-control" asp-for="loginData.RememberMe" type="checkbox" />
+          </div>
+            <button type="submit" id="btnLogin" class="btn btn-primary block full-width m-b">Login</button>
+           
+            <button type="submit" id="btnLoginWithGoogle" class="btn btn-primary block full-width m-b" formnovalidate="" onclick=" alert('not implemented'); return false;" >Login With Google</button>
+
+          <a href="#" onclick="alert('not implemented')"><small>Forgot password?</small></a>
+          <p class="text-muted text-center"><small>Do not have an account?</small></p>
+          <a class="btn btn-sm btn-white btn-block" href="@Url.Page("Signup/SignupUser")">Create an account</a>
+          @Html.AntiForgeryToken()
+        </form>
+
+        <p class="m-t"> <small>Apps</small> </p>
+      </div>
+    </div>
+   
+</body>
+</html>

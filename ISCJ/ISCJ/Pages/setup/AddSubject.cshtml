@@ -1,0 +1,137 @@
+﻿@page
+@model ISCJ.Pages.School.AddSubjectModel
+@{
+    ViewData["Title"] = "Add Subject";
+}
+
+@{
+    ViewData["Title"] = "Contacts";
+    Layout = "~/Pages/Shared/_LayoutModern.cshtml";
+}
+
+<form method="POST">
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-9">
+            <h2>Manage Subjects</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    School
+                </li>
+                <li class="active breadcrumb-item">
+                    <strong>Add/Edit Subject</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+
+        <div class="row">
+            <div class="col-lg-12">
+
+
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <h5>Add Subjects</h5>
+
+                    </div>
+
+
+                    <div class="ibox-content">
+
+                        <div class="form-group  row">
+                            <input type="hidden" asp-for="@Model.EditSubjectId"/>
+                            <label class="col-sm-2 col-form-label">Subject Name:</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" placeholder="Subject Name" class="form-control" asp-for="@Model.SubjectName" value="@Model.SubjectName"/>
+
+                                <span asp-validation-for="@Model.SubjectName" class="text-danger"></span>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group  row">
+                            <label class="col-sm-2 col-form-label">Description:</label>
+
+                            <div class="col-sm-10">
+                                <textarea rows="5" style="resize: none; width: 100%" asp-for="@Model.SubjectDescription">@Model.SubjectDescription</textarea>
+
+                                <span asp-validation-for="@Model.SubjectDescription" class="text-danger"></span>
+
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="hr-line-dashed"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group row" style="text-align:right">
+                    <div class="col-sm-12 col-sm-offset-2">
+                        <button class="btn btn-white btn-sm" type="submit" asp-page-handler="Cancel">Cancel</button>
+
+                        <button class="btn btn-white btn-sm" type="submit" asp-page-handler="Reset">Reset</button>
+
+                        <button class="btn btn-primary btn-sm" type="submit" asp-page-handler="Save">Save</button>
+
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+        
+      
+    </div>
+    
+    <div class="ibox">
+        <div class="ibox-content">
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Subject Name</th>
+                    <th>Subject Description</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                @for (var i = 0; i < Model.Subjects.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            @Model.Subjects[i].SubjectName
+                        </td>
+                        <td>
+                            @Model.Subjects[i].SubjectDescription
+                        </td>
+                        <td>
+                            <a href="@Url.Page("/setup/AssignMetric", new {entitytype = "subject", entityid= Model.Subjects[i].SubjectId})">Assign Metric</a>
+                        </td>
+                        <td>
+                          
+                            <button name="btnUpdateSubject" class="btn btn-white btn-sm" type="submit" asp-page-handler="Update" value="@Model.Subjects[i].SubjectId">Update</button>
+                        </td>
+
+                    </tr>
+                }
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+  
+</form>
+
+
+

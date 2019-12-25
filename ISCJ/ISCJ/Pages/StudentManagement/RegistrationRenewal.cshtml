@@ -1,0 +1,61 @@
+﻿@page
+@model RegistrationRenewalModel
+@{
+}
+<div class="panel panel-primary">
+  <div class="panel-heading"><h4>Select Students</h4></div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="form-group  col-xs-4">
+        <label for="txtFFirstName">Student 1</label>
+        <a href="#" class="form-control">Select Student 1</a>
+      </div>
+
+      <div class="form-group  col-xs-4">
+        <label for="txtFFirstName">Student 2</label>
+        <a href="#" class="form-control">Select Student 1</a>
+      </div>
+      <div class="form-group  col-xs-4">
+        <label for="txtFFirstName">Student 3</label>
+        <a href="#" class="form-control">Select Student 3</a>
+      </div>
+      <div class="form-group  col-xs-4">
+        <label for="txtFFirstName">Student 4</label>
+        <a href="#" class="form-control">Select Student 1</a>
+      </div>
+
+     
+    </div>
+  </div>
+  <div class="panel panel-primary">
+    <div class="panel-heading"><h4>Payment</h4></div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="form-group  col-xs-4">
+          <label for="txtPaymentAmount">Amount</label>
+          <input id="txtPaymentAmount" name="txtPaymentAmount" class="form-control" />
+        </div>
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="chkIsPartialPayment">
+          <label class="form-check-label" for="chkIsPartialPayment">Is Partial Payment</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <label for="lstGender">School Year:</label>
+          <select id="lstGender" class="form-control">
+            <option value="2018">2018</option>
+            <option value="2019">2019</option>
+            <option value="2020">2020</option>
+          </select>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <button type="submit" class="btn btn-primary" id="btnCancel">Cancel</button>
+  <button type="submit" class="btn btn-primary" id="btnReset">Reset</button>
+  <button type="submit" class="btn btn-primary" id="btnSubmit">Submit</button>
+

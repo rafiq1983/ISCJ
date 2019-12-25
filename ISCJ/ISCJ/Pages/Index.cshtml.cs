@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ISCJ.Pages
 {
-    public class IndexModel : PageModel
+    public class IndexModel : BasePageModel
     {
         public void OnGet()
         {

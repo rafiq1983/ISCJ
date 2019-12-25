@@ -1,0 +1,73 @@
+﻿@page
+@model ISCJ.Pages.UserMessagesModel
+@{
+    ViewData["Title"] = "UserMessages";
+}
+
+@{
+    ViewData["Title"] = "Contacts";
+    Layout = "~/Pages/Shared/_LayoutModern.cshtml";
+}
+
+<form method="POST">
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-9">
+            <h2>User</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="@Url.Action("Dashboard_1", "Dashboards")">App</a>
+                </li>
+                <li class="breadcrumb-item">
+                   User
+                </li>
+                <li class="active breadcrumb-item">
+                    <strong>Messages</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox-content">
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+
+                                <th>Type</th>
+                                
+                                <th>Message</th>
+                                <th>Received Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (var i = 0; i < Model.UserNotifications.Count; i++)
+                            {
+                                <tr>
+                                    <td>
+                                        <input type="hidden" asp-for="@Model.UserNotifications[i].NotificationId" />
+                                        @Model.UserNotifications[i].NotificationType
+                                    </td>
+                                    <td>
+                                        @Model.UserNotifications[i].NotificationData
+                                    </td>
+                                    <td>
+                                        @Model.UserNotifications[i].CreateDate.ToShortDateString()
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
