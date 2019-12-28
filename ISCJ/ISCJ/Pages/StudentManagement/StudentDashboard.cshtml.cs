@@ -19,13 +19,17 @@ namespace ISCJ.Pages.StudentManagement
         {
             LoadStudentSubjects();
             LoadStudents();
+
             LoadPrograms();
+            StudentMarks = StudentSubjects.Select(x=>new StudentMarks(){}).ToList();
         }
 
         public void OnPost()
         {
             LoadStudentSubjects();
             LoadStudents();
+            if(StudentMarks.Count ==0)//if data is posted by client, don't override it.
+            StudentMarks = StudentSubjects.Select(x => new StudentMarks() { }).ToList();
             LoadPrograms();
         }
 
@@ -52,6 +56,8 @@ namespace ISCJ.Pages.StudentManagement
         public List<SelectListItem> Programs { get; private set; }
         public List<StudentSubject> StudentSubjects { get; private set; }
 
+        [BindProperty] public List<StudentMarks> StudentMarks { get; set; } 
+
         public List<SelectListItem> Students { get; set; }
         [BindProperty]
         [Required]
@@ -62,5 +68,18 @@ namespace ISCJ.Pages.StudentManagement
         [Required]
         [BindProperty]
         public Guid SubjectId { get; set; }
+    }
+
+    public class StudentMarks
+
+    {
+        public Guid SubjectId { get; set; }
+        public int Term1Marks { get; set; }
+
+        public int Term2Marks { get; set; }
+
+        public int Term3Marks { get; set; }
+
+        public int Term4Marks { get; set; }
     }
 }
