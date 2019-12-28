@@ -121,6 +121,8 @@ namespace ISCJ
         {
             List<SectionItem> sectionItems = new List<SectionItem>();
             sectionItems.Add(GetSectionItem("Dashboard", "/StudentManagement/StudentDashboard"));
+
+            sectionItems.Add(GetSectionItem("Grade Entry", "/StudentManagement/GradeEntryBySubjects"));
             sectionItems.Add(GetSectionItem("Attendance", "/StudentManagement/Attendance"));
 
             Section section = new Section("Student", sectionItems);

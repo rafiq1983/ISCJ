@@ -1,0 +1,200 @@
+﻿@model ISCJ.Pages.GradeEntryBySubject
+
+
+@{
+    ViewData["Title"] = "Contacts";
+    Layout = "~/Pages/Shared/_LayoutModern.cshtml";
+
+}
+
+<style>
+
+    #olErrors li {
+        color: red;
+    }
+</style>
+<div asp-validation-summary="All"></div>
+<form method="post" name="frmRegister2">
+    <div class="wrapper wrapper-content">
+        <div class="row"><h1 style="color:red">UNDER CONSTRUCTION</h1></div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group  row">
+                    <label class="col-sm-2 col-form-label">Program</label>
+
+                    <div class="col-sm-10">
+                        <select asp-for="@Model.ProgramId" class="form-control"
+                                asp-items="@Model.Programs">
+                            <option value="">Please select one</option>
+                        </select>
+                        <span asp-validation-for="@Model.ProgramId" class="text-danger"></span>
+
+                    </div>
+
+                    <label class="col-sm-2 col-form-label">Student</label>
+
+                    <div class="col-sm-10">
+                        <select asp-for="@Model.StudentId" class="form-control"
+                                asp-items="@Model.Students">
+                            <option value="">Please select one</option>
+                        </select>
+                        <span asp-validation-for="@Model.StudentId" class="text-danger"></span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group row" style="text-align: right">
+                    <div class="col-sm-12 col-sm-offset-2">
+                        <button class="btn btn-primary btn-sm" type="submit" asp-page-handler="Load">Load</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-lg-10">
+
+
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <h5>Subjects</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content table-responsive">
+                        <table class="table table-hover no-margins">
+                            <thead>
+                                <tr>
+                                    <th>Subject Name</th>
+                                    <th>Term 1</th>
+                                    <th>Term 2</th>
+                                    <th>Term 3</th>
+                                    <th>Term 4</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                var i = 0;
+                                }
+                                @foreach (var studentSubject in Model.StudentSubjects)
+                            {
+
+                                <tr>
+                                    <td>
+                                        @studentSubject.Subject.SubjectName
+                                        <input type="hidden" asp-for="@Model.StudentMarks[i].SubjectId" value="@studentSubject.SubjectId" />
+
+                                    </td>
+                                    <td>
+                                        <input type="number" asp-for="@Model.StudentMarks[i].Term1Marks" />
+                                    </td>
+                                    <td>
+                                        <input type="number" asp-for="@Model.StudentMarks[i].Term2Marks" />
+                                    </td>
+                                    <td>
+                                        <input type="number" asp-for="@Model.StudentMarks[i].Term3Marks" />
+                                    </td>
+
+                                    <td>
+                                        <input type="number" asp-for="@Model.StudentMarks[i].Term4Marks" />
+                                    </td>
+                                </tr>
+                                i = i + 1;
+
+                            }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="col-lg-6">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <h5>Attendance</h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content d-none">
+                            <ul class="todo-list m-t small-list">
+                                <li>
+                                    <a href="#" class="check-link"><i class="fa fa-check-square"></i> </a>
+                                    <span class="m-l-xs todo-completed">Buy a milk</span>
+
+                                </li>
+                                <li>
+                                    <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
+                                    <span class="m-l-xs">Go to shop and find some products.</span>
+
+                                </li>
+                                <li>
+                                    <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
+                                    <span class="m-l-xs">Send documents to Mike</span>
+                                    <small class="label label-primary"><i class="fa fa-clock-o"></i> 1 mins</small>
+                                </li>
+                                <li>
+                                    <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
+                                    <span class="m-l-xs">Go to the doctor dr Smith</span>
+                                </li>
+                                <li>
+                                    <a href="#" class="check-link"><i class="fa fa-check-square"></i> </a>
+                                    <span class="m-l-xs todo-completed">Plan vacation</span>
+                                </li>
+                                <li>
+                                    <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
+                                    <span class="m-l-xs">Create new stuff</span>
+                                </li>
+                                <li>
+                                    <a href="#" class="check-link"><i class="fa fa-square-o"></i> </a>
+                                    <span class="m-l-xs">Call to Anna for dinner</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group row" style="text-align: right">
+                    <div class="col-sm-12 col-sm-offset-2">
+                        <button class="btn btn-white btn-sm" type="submit" asp-page-handler="AddSubject">Add Subject</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</form>
