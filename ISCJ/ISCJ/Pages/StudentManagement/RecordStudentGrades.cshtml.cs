@@ -14,12 +14,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ISCJ.Pages
 {
-    public class GradeEntryBySubject : BasePageModel
+    public class RecordStudentGrades : BasePageModel
     {
         public void OnGet()
         {
             LoadStudentSubjects();
-            LoadStudents();
+            LoadSubjects();
 
             LoadPrograms();
             StudentMarks = StudentSubjects.Select(x => new StudentManagement.StudentMarks() { }).ToList();
@@ -28,7 +28,7 @@ namespace ISCJ.Pages
         public void OnPost()
         {
             LoadStudentSubjects();
-            LoadStudents();
+            LoadSubjects();
             if (StudentMarks.Count == 0)//if data is posted by client, don't override it.
                 StudentMarks = StudentSubjects.Select(x => new StudentManagement.StudentMarks() { }).ToList();
             LoadPrograms();
@@ -40,11 +40,11 @@ namespace ISCJ.Pages
             StudentSubjects = mgr.GetStudentSubjects(GetCallContext(), StudentId, ProgramId);
         }
 
-        private void LoadStudents()
+        private void LoadSubjects()
         {
-            StudentManager mgr = new StudentManager();
-            Students = mgr.GetStudentList(GetCallContext(), ProgramId)
-                .Select(x => new SelectListItem(GetContactName(x.StudentContact), x.StudentId.ToString())).ToList();
+           CourseManager mgr = new CourseManager();
+            Subjects = mgr.GetSubjects(GetCallContext())
+                .Select(x => new SelectListItem(x.SubjectName, x.SubjectId.ToString())).ToList();
         }
 
         private void LoadPrograms()
@@ -59,7 +59,7 @@ namespace ISCJ.Pages
 
         [BindProperty] public List<StudentManagement.StudentMarks> StudentMarks { get; set; }
 
-        public List<SelectListItem> Students { get; set; }
+        public List<SelectListItem> Subjects { get; set; }
         [BindProperty]
         [Required]
         public Guid StudentId { get; set; }
