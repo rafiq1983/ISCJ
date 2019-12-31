@@ -94,7 +94,7 @@ namespace ISCJ.Pages.Admin
                         new AuthenticationProperties { IsPersistent = loginData.RememberMe });
 
 
-                    Response.Redirect("/selecttenant");
+                    Response.Redirect("/Me/selecttenant");
 
                     mgr.AddUserLoginAudit(new CallContext(user.UserId, user.UserName, "TBD", "", null));
                 }
