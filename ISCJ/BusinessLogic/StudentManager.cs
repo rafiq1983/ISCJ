@@ -24,7 +24,10 @@ namespace BusinessLogic
 
         using (Database db = new Database())
         {
-           var querable = db.Students.Include(x=>x.StudentContact).Where(x => x.TenantId == context.TenantId);
+            //TODO: Student records are created when subjects are assigned.  We should really load from enrollment table or
+            //always have a student record created?.
+
+                var querable = db.Students.Include(x=>x.StudentContact).Where(x => x.TenantId == context.TenantId);
 
            if (programId != null && programId.Value !=Guid.Empty)
            {
