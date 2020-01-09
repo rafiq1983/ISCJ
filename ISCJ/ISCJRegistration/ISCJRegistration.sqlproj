@@ -123,6 +123,7 @@
     <Build Include="dbo\Tables\CodeDecode.sql" />
     <Build Include="dbo\Tables\MetricAssociations.sql" />
     <Build Include="dbo\Tables\ContactTenants.sql" />
+    <Build Include="dbo\Tables\SequenceCounter.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />

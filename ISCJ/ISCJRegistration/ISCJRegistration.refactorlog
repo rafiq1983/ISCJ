@@ -238,4 +238,25 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="AssociationName" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="9069025f-fb9b-48ce-b1e4-eda8bc685abe" ChangeDateTime="01/09/2020 13:19:37">
+    <Property Name="ElementName" Value="[dbo].[Student].[IX_Student_Column]" />
+    <Property Name="ElementType" Value="SqlIndex" />
+    <Property Name="ParentElementName" Value="[dbo].[Student]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[IX_Student_Number_TenantId]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="563c9886-0426-4407-98e9-a467343ebc5d" ChangeDateTime="01/09/2020 13:32:48">
+    <Property Name="ElementName" Value="[dbo].[SequenceCounter].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SequenceCounter]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CounterName" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="da2e66b1-0f59-4a00-91e2-8b6b1e456fd3" ChangeDateTime="01/09/2020 13:32:55">
+    <Property Name="ElementName" Value="[dbo].[SequenceCounter].[CounterName]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SequenceCounter]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CounterId" />
+  </Operation>
 </Operations>
