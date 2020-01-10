@@ -80,6 +80,7 @@ namespace BusinessLogic
              contact.FirstName = input.FirstName;
              contact.LastName = input.LastName;
              contact.MiddleName = input.MiddleName;
+             contact.HomePhone = input.HomePhone;
 
              _ContextContact.SaveChanges();
          
@@ -131,6 +132,7 @@ context.SaveChanges();*/
             contact.CreatedDate = DateTime.UtcNow;
             contact.TenantId = callContext.TenantId.Value;
             contact.Gender = input.Contact.Gender;
+            contact.HomePhone = inputContact.HomePhone;
             using (var _ContextContact = new ContactContext())
             {
                 _ContextContact.Contacts.Add(contact);
