@@ -11,8 +11,12 @@ namespace MA.Common
   public class CreateRegistrationApplicationInput
   {
 
+      [Required(AllowEmptyStrings = false,
+          ErrorMessage = "Father must be selected when creating a registration application.")]
       public Guid? FatherId { get; set; } = null;
-      public Guid? MotherId { get; set; } = null;
+      [Required(AllowEmptyStrings = false,
+          ErrorMessage = "Mother must be selected when creating a registration application.")]
+        public Guid? MotherId { get; set; } = null;
 
         public string MotherName { get; set; }
         public string FatherName { get; set; }
