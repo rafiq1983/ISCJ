@@ -74,10 +74,8 @@ namespace BusinessLogic
                 PerformBilling(context, input.BillingInstructions, registrationApplication.ApplicationId,
                     ReferenceType.RegistrationApplication, invoiceTypeId, input.FatherId.Value);
 
-                if(input.AutoAssignSubjects)
-                    AddStudentSubjects(context, input, registrationApplication);
-
-               
+              AddStudents(context, input, registrationApplication, input.AutoAssignSubjects);
+                
                 scope.Complete();
                 return new CreateRegistrationApplicationOutput() { ApplicationId = registrationApplication.ApplicationId};
             }
@@ -112,7 +110,7 @@ namespace BusinessLogic
         }
     }
 
-    private void AddStudentSubjects(CallContext context, CreateRegistrationApplicationInput input, RegistrationApplication app)
+    private void AddStudents(CallContext context, CreateRegistrationApplicationInput input, RegistrationApplication app, bool assignSubjects)
     {
         StudentManager mgr = new StudentManager();
         ProgramManager programManager = new ProgramManager();
@@ -137,19 +135,27 @@ namespace BusinessLogic
                 });
             }
 
-            //Add subjects.
-            CourseManager courseManager = new CourseManager();
-
-            List<SubjectMapping> subjectMappings = 
-                courseManager.GetSubjectByProgramAndIslamicGradeId(context, input.ProgramId.Value, reg.IslamicSchoolGrade);
-
-            foreach (var subject in subjectMappings)
+            if (assignSubjects)
             {
-                var enrollmentId = app.Enrollments.SingleOrDefault(x => x.StudentContactId == reg.StudentId).EnrollmentId;
+                //Add subjects.
+                CourseManager courseManager = new CourseManager();
 
-               var studentSubjectId = mgr.AddStudentSubject(context, reg.StudentId.Value, enrollmentId, subject.SubjectId, input.ProgramId.Value);
+                List<SubjectMapping> subjectMappings =
+                    courseManager.GetSubjectByProgramAndIslamicGradeId(context, input.ProgramId.Value,
+                        reg.IslamicSchoolGrade);
 
-                mgr.AddMetricsToStudentSubject(context, studentSubjectId, programManager.GetAssociatedMetrics(context, subject.SubjectId).Select(x=>x.MetricId).ToList());
+                foreach (var subject in subjectMappings)
+                {
+                    var enrollmentId = app.Enrollments.SingleOrDefault(x => x.StudentContactId == reg.StudentId)
+                        .EnrollmentId;
+
+                    var studentSubjectId = mgr.AddStudentSubject(context, reg.StudentId.Value, enrollmentId,
+                        subject.SubjectId, input.ProgramId.Value);
+
+                    mgr.AddMetricsToStudentSubject(context, studentSubjectId,
+                        programManager.GetAssociatedMetrics(context, subject.SubjectId).Select(x => x.MetricId)
+                            .ToList());
+                }
             }
         }
 
