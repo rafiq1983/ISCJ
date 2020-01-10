@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Security.Policy;
 using System.Text;
 using MA.Common;
+using MA.Common.Entities;
 using MA.Common.Entities.Tenants;
 using MA.Common.Entities.User;
 using MA.Core;
@@ -150,6 +151,15 @@ namespace BusinessLogic
                             TenantId = tenant.TenantId,
                             RoleCd = "ADMIN",
                             Tenant = tenant
+
+                        });
+
+                        db.SequenceCounters.Add(new SequenceCounter()
+                        {
+                            CounterType = "Tenant",
+                            CounterValue = 0,
+                            TenantId = tenant.TenantId,
+                            CounterName = "StudentCounter"
 
                         });
 

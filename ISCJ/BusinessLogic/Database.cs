@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using MA.Common.Entities.Registration;
 using MA.Common;
+using MA.Common.Entities;
 using MA.Common.Entities.Contacts;
 using MA.Common.Entities.Product;
 using MA.Common.Entities.MasjidMembership;
@@ -58,6 +59,7 @@ namespace BusinessLogic
     public virtual DbSet<StudentSubject> StudentSubjects { get; set; }
     public virtual DbSet<Contact> Contacts { get; set; }
     public virtual DbSet<ContactTenant> ContactTenants { get; set; }
+    public virtual DbSet<SequenceCounter> SequenceCounters { get; set; }
 
 
         public DbSet<FinancialAccount> FinancialAccounts { get; set; }
@@ -252,7 +254,15 @@ namespace BusinessLogic
 
             modelBuilder.Entity<ContactTenant>(entity => { entity.HasKey(e => new { e.TenantId, e.ContactId }); });
 
-
+            modelBuilder.Entity<SequenceCounter>(entity =>
+            {
+                entity.ToTable("SequenceCounter");
+                entity.HasKey(e => e.CounterId);
+                entity.Property(x => x.CounterId).UseSqlServerIdentityColumn();
+                entity.HasAlternateKey(x => new {x.CounterName, x.TenantId}); //maps to unique index/constraint /or foreign key constraints.
+                //Don't really need to define alternate key, But I think EF will validate records in memory if they violate this rule. To be confirmed.
+            });
+            
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasKey(e => e.UserId);
