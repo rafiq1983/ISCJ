@@ -54,7 +54,7 @@ namespace MA.Common.Entities.Registration
         public Guid ApplicationId { get; set; }
         public DateTime ApplicationDate { get; set; }
         public Guid ProgramId { get; set; }
-
+        public int ApplicationNumber { get; set; }
         public Guid? MembershipId { get; set; }
         public Guid FatherContactId { get; set; } //isa:may not need these.
 

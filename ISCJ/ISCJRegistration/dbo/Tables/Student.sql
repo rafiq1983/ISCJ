@@ -10,9 +10,13 @@
     [ModifiedUser]       UNIQUEIDENTIFIER NULL,
     [RowVersion]         ROWVERSION       NOT NULL, 
     [TenantId] UNIQUEIDENTIFIER NOT NULL, 
-    [StudentNumber] INT NULL  
+    [StudentNumber] INT NOT NULL DEFAULT 0, 
+    CONSTRAINT [AK_Student_Column] UNIQUE ([TenantId], [StudentNumber])  
 );
 
 
 GO
 
+
+
+CREATE INDEX [IX_Student_StudentNumber] ON [dbo].[Student] ([StudentNumber])

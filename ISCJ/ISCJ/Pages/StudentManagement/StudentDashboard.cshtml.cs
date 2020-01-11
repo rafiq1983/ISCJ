@@ -37,6 +37,13 @@ namespace ISCJ.Pages.StudentManagement
         {
             StudentManager mgr = new StudentManager();
            StudentSubjects = mgr.GetStudentSubjects(GetCallContext(), StudentId, ProgramId);
+           SelectedStudent = mgr.GetStudent(GetCallContext(), StudentId);
+        }
+
+        public Student SelectedStudent
+        {
+            get;
+            private set;
         }
 
         private void LoadStudents()

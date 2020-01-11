@@ -259,4 +259,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="CounterId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="ee66cca7-5e0c-4d58-8cdd-bacc69a5ccfe" ChangeDateTime="01/11/2020 06:13:16">
+    <Property Name="ElementName" Value="[dbo].[Student].[IX_Student_Column]" />
+    <Property Name="ElementType" Value="SqlIndex" />
+    <Property Name="ParentElementName" Value="[dbo].[Student]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[IX_Student_StudentNumber]" />
+  </Operation>
 </Operations>

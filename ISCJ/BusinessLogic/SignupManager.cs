@@ -163,6 +163,15 @@ namespace BusinessLogic
 
                         });
 
+                        db.SequenceCounters.Add(new SequenceCounter()
+                        {
+                            CounterType = "Tenant",
+                            CounterValue = 0,
+                            TenantId = tenant.TenantId,
+                            CounterName = "RegistrationApplicationCounter"
+
+                        });
+
                         //TODO: Updating User's COntact id causes a dupicate key error in UserTenants for some reason.  Need to debug.
                         /*
                         user.Contact.TenantId = tenant.TenantId;
