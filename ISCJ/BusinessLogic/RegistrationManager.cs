@@ -25,9 +25,9 @@ namespace BusinessLogic
           MasjidMembershipManager mgr = new MasjidMembershipManager();
           MasjidMembership membership;
 
-          if (input.AddFatherMembership && input.FatherId.HasValue)
+          if (input.AddFatherMembership)
           {
-               membership = mgr.GetMembershipByContactId(input.FatherId.Value);
+               membership = mgr.GetMembershipByContactId(input.FatherId.GetValueOrDefault());
 
               if (membership == null)
               {
@@ -43,7 +43,7 @@ namespace BusinessLogic
               }
           }
 
-          if (input.AddMotherToMembership && input.MotherId.HasValue)
+          if (input.AddMotherToMembership)
           {
               membership = mgr.GetMembershipByContactId(input.MotherId.GetValueOrDefault());
 
@@ -64,20 +64,15 @@ namespace BusinessLogic
       }
     public CreateRegistrationApplicationOutput CreateRegistration(CallContext context, CreateRegistrationApplicationInput input)
     {
-        if (input.FatherId.HasValue == false && input.MotherId.HasValue == false)
-        {
-            throw new Exception("At least Father Id or Mother Id must be populated.");
-        }
             using (TransactionScope scope = new TransactionScope())
             {
-
                 var registrationApplication = SaveRegistrationApplication(context, input);
                 AddMembershipIfNeeded(context, input);
 
                 var invoiceTypeId = AddRegistrationApplicationInvoiceTypeId(context);
 
                 PerformBilling(context, input.BillingInstructions, registrationApplication.ApplicationId,
-                    ReferenceType.RegistrationApplication, invoiceTypeId, input.FatherId.HasValue?input.FatherId.Value:input.MotherId.Value);
+                    ReferenceType.RegistrationApplication, invoiceTypeId, input.FatherId.Value);
 
               AddStudents(context, input, registrationApplication, input.AutoAssignSubjects);
                 
@@ -131,8 +126,8 @@ namespace BusinessLogic
                 {
                     StudentId = reg.StudentId.Value,
                     ContactId = reg.StudentId.Value,
-                    FatherContactId = input.FatherId.GetValueOrDefault(Guid.Empty),
-                    MotherContactId = input.MotherId.GetValueOrDefault(Guid.Empty),
+                    FatherContactId = input.FatherId.Value,
+                    MotherContactId = input.MotherId.Value,
                     CreateDate = DateTime.UtcNow,
                     CreateUser = context.UserLoginName,
                     TenantId = context.TenantId.Value
@@ -236,7 +231,7 @@ namespace BusinessLogic
                 using (var db = new Database())
                 {
 
-                    var enrollment = GetStudentEnrollment(context, input.StudentId,input.ProgramId);
+                    var enrollment = GetStudentEnrollment(input.StudentId,input.ProgramId);
 
                     if (enrollment != null)
                         return new AddEnrollmentOutput()
@@ -294,10 +289,10 @@ namespace BusinessLogic
                     if (reg.StudentId.HasValue == false)
                         continue;
 
-                    var enrollment = new Enrollment()
+                    application.Enrollments.Add(new Enrollment()
                     {
-                        FatherId = input.FatherId.HasValue ?  input.FatherId.Value : Guid.Empty ,
-                        MotherId = input.MotherId.GetValueOrDefault(Guid.Empty), //another way.
+                        FatherId = input.FatherId.Value,
+                        MotherId = input.MotherId.Value,
                         ProgramId = input.ProgramId.Value,
                         IslamicSchoolGradeId = reg.IslamicSchoolGrade,
                         PublicSchoolGradeId = reg.PublicSchoolGrade,
@@ -306,10 +301,7 @@ namespace BusinessLogic
                         CreateDate = DateTime.UtcNow,
                         CreateUser = context.UserLoginName,
                         TenantId = context.TenantId.Value
-                    };
-
-
-                    application.Enrollments.Add(enrollment);
+                    });
                 }
                 
                 db.RegistrationApplications.Add(application);
@@ -390,11 +382,11 @@ namespace BusinessLogic
       }
     }
 
-    public Enrollment GetStudentEnrollment(CallContext context, Guid studentId, Guid programId)
+    public Enrollment GetStudentEnrollment(Guid studentId, Guid programId)
     {
         using (var db = new Database())
         {
-            return db.Enrollments.SingleOrDefault(x => x.StudentContactId == studentId && x.ProgramId == programId && x.TenantId == context.TenantId);
+            return db.Enrollments.SingleOrDefault(x => x.StudentContactId == studentId && x.ProgramId == programId);
         }
     }
 
@@ -417,7 +409,6 @@ namespace BusinessLogic
     {
       using (var db = new Database())
       {
-          //TODO: Modify Father/Mother relationship so that query is run as left join.
           var query = db.Enrollments
               .Include(Registration => Registration.FatherContactInfo)
               .Include(registration => registration.MotherContactInfo)

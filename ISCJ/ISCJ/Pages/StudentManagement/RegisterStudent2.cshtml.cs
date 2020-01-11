@@ -8,7 +8,6 @@ using BusinessLogic;
 using MA.Common;
 using MA.Common.Entities.Contacts;
 using MA.Common.Entities.Registration;
-using MA.Common.Entities.Student;
 using MA.Common.Models.api;
 using MA.Core;
 using Microsoft.AspNetCore.Mvc;
@@ -67,7 +66,7 @@ namespace ISCJ.Pages.StudentManagement
     {
         if (StudentRegistration.StudentRegistrations.Count == 0)
         {
-            ModelState.AddModelError<CreateRegistrationApplicationInput>((x)=>x.StudentRegistrations[0].StudentId, "At least one student registration must be selected.");
+            ModelState.AddModelError<CreateRegistrationApplicationInput>((x)=>x.StudentRegistrations[0].StudentId, "Atleast one student registration must be selected.");
         }
 
         for (int i = 0; i < StudentRegistration.StudentRegistrations.Count; i++)
@@ -127,24 +126,7 @@ namespace ISCJ.Pages.StudentManagement
         }
 
     }
-
-    private void EnsureAtleastOneGuardianSelected()
-        {
-
-        if (StudentRegistration.FatherId == null && StudentRegistration.MotherId == null)
-        {
-                //TODO: THIS doesn't work.  Why?
-                //ModelState.AddModelError<CreateRegistrationApplicationInput>(x => x.FatherId.Value, "At least one guardian must be selected.");
-                //ModelState.AddModelError<CreateRegistrationApplicationInput>(x => x.MotherId, "At least one guardian must be selected.");
-
-                //this works.
-                ModelState.AddModelError("StudentRegistration.FatherId", "At least one guardian must be selected.");
-                ModelState.AddModelError("StudentRegistration.MotherId", "At least one guardian must be selected.");
-
-            }
-
-        }
-        public void OnPostSave()
+    public void OnPostSave()
     {
         Products = productMgr.GetAllProducts(GetCallContext());
        // StudentRegistration = BuildForDisplay();
@@ -153,7 +135,6 @@ namespace ISCJ.Pages.StudentManagement
         {
             if (StudentRegistration.StudentRegistrations[i].StudentId.HasValue == false) //don't do validation on Student 2, 3, 4 if no student is selected.
             {
-                //TODO:  Determine if lambda expression can be used here.
                 //Clear model validation state only clears the state.  But Error stays.  So, clearing the errors.
                ModelState.ClearValidationState($"StudentRegistration.StudentRegistrations[{i}].StudentId");
                 ModelState.ClearValidationState($"StudentRegistration.StudentRegistrations[{i}].PublicSchoolGrade");
@@ -172,7 +153,6 @@ namespace ISCJ.Pages.StudentManagement
          }
 
             EnsureStudentDoesNotBelongToThisProgramAlready();
-            EnsureAtleastOneGuardianSelected();
 
             if (ModelState.IsValid)
             {
