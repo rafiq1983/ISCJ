@@ -78,7 +78,7 @@
                                 </label>
 
                                 <label class="col-sm-2 col-form-label">
-                                    @Model.SelectedStudent?.StudentNumber
+                                    @Model.SelectedStudent?.StudentNumber.ToString().PadLeft(4,'0')
                                 </label>
                             </div>
                             <div class="form-group row">
