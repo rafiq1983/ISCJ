@@ -124,6 +124,7 @@
     <Build Include="dbo\Tables\MetricAssociations.sql" />
     <Build Include="dbo\Tables\ContactTenants.sql" />
     <Build Include="dbo\Tables\SequenceCounter.sql" />
+    <Build Include="dbo\Tables\SystemSetttings.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />

@@ -266,4 +266,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="[IX_Student_StudentNumber]" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="2f5e94eb-4d53-4228-aff3-a413de0bec34" ChangeDateTime="01/14/2020 17:01:28">
+    <Property Name="ElementName" Value="[dbo].[SystemSetttings].[AllowedSimultaneousLogin]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SystemSetttings]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AllowedSimultaneousLoginToOrganization" />
+  </Operation>
 </Operations>
