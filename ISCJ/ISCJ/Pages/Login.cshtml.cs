@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -32,7 +33,9 @@ namespace ISCJ.Pages.Admin
         public LoginData loginData { get; set; }
         public void OnGet()
         {
-          
+           // System.Threading.Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("fr-FR");
+            //ICSJ.Resource.FieldLabels.Culture = CultureInfo.GetCultureInfo("fr-FR");
+            string s = ICSJ.Resource.FieldLabels.logoName;
         }
 
         public async Task OnPostAsync()
@@ -71,7 +74,7 @@ namespace ISCJ.Pages.Admin
                 identity.AddClaim(new Claim(AppClaimTypes.LoginName, loginData.Username));
                 identity.AddClaim(new Claim(ClaimTypes.Name, user.Contact.FirstName + " " + user.Contact.LastName));
 
-                if (user.UserTenants.Count == 1)
+                if (user.UserTenants.Count >= 1)
                 {
                     //TOOD: For Some reason I'm not able to get Tenant part of User.UserTenats.Tenanct call.  Check later.
                     var tenant = mgr.GetUserTenants(user.UserId).First();
