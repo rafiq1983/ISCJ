@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <UserSecretsId>409e7c10-0d5b-43b1-9cc5-6deeb1687619</UserSecretsId>
     <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
+    <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>
@@ -45,6 +46,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj" />
+    <ProjectReference Include="..\ISCJ.Resources\ICSJ.Resource.csproj" />
     <ProjectReference Include="..\MA.Core.Web\MA.Core.Web.csproj" />
   </ItemGroup>
 
