@@ -133,6 +133,7 @@
     <None Include="Scripts\SetStudentNumbersIfNecessary.sql" />
     <None Include="Scripts\DefineBuiltInCountersForExistingOrganizations.sql" />
     <None Include="Scripts\SetRegistrationNumberIfNecessary.sql" />
+    <None Include="Scripts\AddResourceDefinitions.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Script.PreDeployment.sql" />

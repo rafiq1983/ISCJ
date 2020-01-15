@@ -26,14 +26,14 @@ BEGIN TRANSACTION
 DECLARE @registrations TABLE (rowNumber INT IDENTITY, registrationId UniqueIdentifier, TenantId UniqueIdentifier, registrationNumber int)
 
 INSERT INTO @registrations(registrationId, TenantId, registrationNumber)
-SELECT registrationId, TenantId, ApplicationNumber from RegistrationApplication;
+SELECT ApplicationId, TenantId, ApplicationNumber from RegistrationApplication;
 
 DECLARE @count INT ; 
-SELECT @count = COUNT(*) FROM @students;
+SELECT @count = COUNT(*) FROM @registrations;
 DECLARE @index INT =0;
 DECLARE @tenantId UniqueIdentifier;
 DECLARE @registrationNumber INT;
-DECLARE @StudentId UniqueIdentifier;
+DECLARE @registrationId UniqueIdentifier;
 
 WHILE(@index < @count)
 BEGIN
@@ -48,9 +48,9 @@ if(@registrationNumber IS NULL or @registrationNumber = 0)
   
    DECLARE @registrationCounter INT
    SELECT @registrationCounter = CounterValue from SequenceCounter where TenantId=@TenantId and CounterName = 'RegistrationApplicationCounter';
-   SET @studentCounter = @studentCounter + 1;
+   SET @registrationCounter = @registrationCounter + 1;
    UPDATE SequenceCounter SET CounterValue = @registrationCounter where TenantId=@TenantId and CounterName = 'RegistrationApplicationCounter';
-   UPDATE RegistrationApplication SET ApplicationNumber = @registrationCounter Where registrationId = @registrationId;
+   UPDATE RegistrationApplication SET ApplicationNumber = @registrationCounter Where ApplicationId = @registrationId;
 
  END
 

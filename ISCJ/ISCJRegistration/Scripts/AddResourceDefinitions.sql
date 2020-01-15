@@ -9,13 +9,30 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
-
-
-Print ('Post Deployment Script')
-
-IF NOT EXISTS (SELECT * FROM ContactTypes)
+IF NOT EXISTS (SELECT * FROM ResourceDefinition)
 BEGIN
-INSERT INTO [dbo].[ContactTypes]
+Declare @tbl table(id int identity, sectionName varchar(50), keyName varchar(50), ValueType varchar(50))
+INSERT INTO @tbl values('FieldLabels', 'ApplicationNumber', 'String');
+
+Declare @count INT
+select @count = count(*) from @tbl;
+
+Declare @index_addresourcedefinitions INT = 1;
+Declare @sectionName varchar(50), @keyName varchar(50), @ValueType varchar(50);
+
+while(@index_addresourcedefinitions <= @count)
+BEGIN
+  IF NOT EXISTS(SELECT COUNT(*) FROM ResourceDefinition where SectionName = @sectionName and ResourceName = @keyName)
+   BEGIN
+      SELECT @sectionName = SectionName, @KeyName = keyName, @ValueType = valueType from @tbl where id=@index_addresourcedefinitions;
+
+      INSERT INTO ResourceDefinition(SectionName, ResourceName,ValueType)
+	  values(@sectionName, @keyName,@valueType);
+
+   END
+END
+
+INSERT INTO [dbo].[ResourceDefinition]
            ([Description]
         
            )
@@ -40,12 +57,3 @@ INSERT INTO [dbo].[ContactTypes]
            )
 		END
 GO
-
---Define Counters for organizations which are created previously but have no Counters.
-:r .\DefineBuiltInCountersForExistingOrganizations.sql
-
-
---Set Student Counter values.
-:r .\SetStudentNumbersIfNecessary.sql
-
-:r .\SetRegistrationNumberIfNecessary.sql
