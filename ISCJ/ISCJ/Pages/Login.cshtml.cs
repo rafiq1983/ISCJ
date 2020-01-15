@@ -5,9 +5,11 @@ using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Resources;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using BusinessLogic;
+using ICSJ.Resource;
 using MA.Common.Entities.User;
 using MA.Core;
 using MA.Core.Web;
@@ -29,11 +31,19 @@ namespace ISCJ.Pages.Admin
         {
             _signupManager = mgr;
         }
-    [BindProperty]
+
+        [BindProperty]
         public LoginData loginData { get; set; }
         public void OnGet()
         {
-           // System.Threading.Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("fr-FR");
+            
+            ResourceService svc = new ResourceService(new List<IResourceProvider>(){new FieldLabelResourceProvider("ICSJ.Resource", "ICSJ.Resource")});
+            string s1= svc.GetString("logoName");
+
+            ResourceService svc2 = new ResourceService(new List<IResourceProvider>() { new SmartAssemblyResourceProvider("ICSJ.Resource") });
+            s1=svc2.GetString("ICSJ.Resource.FieldLabels.logoName");
+
+            // System.Threading.Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("fr-FR");
             //ICSJ.Resource.FieldLabels.Culture = CultureInfo.GetCultureInfo("fr-FR");
             string s = ICSJ.Resource.FieldLabels.logoName;
         }

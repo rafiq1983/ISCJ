@@ -273,4 +273,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="AllowedSimultaneousLoginToOrganization" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="2c619c68-1b38-4758-97c9-b9b9d3f56a7f" ChangeDateTime="01/15/2020 09:08:58">
+    <Property Name="ElementName" Value="[dbo].[ResourceValues].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ResourceValues]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ValueID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="401f0a3f-cd07-43eb-a2b2-caad95a1f605" ChangeDateTime="01/15/2020 09:11:33">
+    <Property Name="ElementName" Value="[dbo].[ResourceValues].[ModifiedDate]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ResourceValues]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CreateUser" />
+  </Operation>
 </Operations>
