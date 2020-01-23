@@ -16,6 +16,10 @@ namespace MA.Common.Models.api
         public Guid ContactId { get; set; }
     }
 
+    public class CreateContactGroupInput
+    {
+        public string GroupName { get; set; }
+    }
     public class SaveContactInput
     {
         public Guid Guid { get; set; }
@@ -48,6 +52,7 @@ namespace MA.Common.Models.api
         public string CellPhone { get; set; }
         [Required]
         public string HomePhone { get; set; }
+        public Guid? GroupId { get; set; }
     }
     #region "Common"
         public class ContactApi //TODO: Iftikhar; Renaming it to ContactApi otherwise, swagger fails.  It gets confused between Contact class in Entities vs this.

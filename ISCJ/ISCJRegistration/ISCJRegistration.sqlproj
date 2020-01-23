@@ -120,13 +120,16 @@
     <Build Include="dbo\Tables\Unique_TeacherSubjectProgram.sql" />
     <Build Include="dbo\Tables\ForeignKey_TeacherSubjectAssignment_ValidTeacherId.sql" />
     <Build Include="dbo\Tables\UserNotification.sql" />
-    <Build Include="dbo\Tables\CodeDecode.sql" />
     <Build Include="dbo\Tables\MetricAssociations.sql" />
     <Build Include="dbo\Tables\ContactTenants.sql" />
     <Build Include="dbo\Tables\SequenceCounter.sql" />
     <Build Include="dbo\Tables\SystemSetttings.sql" />
     <Build Include="dbo\Tables\ResourceDefinition.sql" />
     <Build Include="dbo\Tables\ResourceValues.sql" />
+    <Build Include="dbo\Tables\CodeDecode.sql" />
+    <Build Include="dbo\Tables\CodeCategory.sql" />
+    <Build Include="dbo\Tables\CodeCategoryMapping.sql" />
+    <Build Include="dbo\Tables\ContactGroups.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />

@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using MA.Common;
 using MA.Common.Models.api;
+using MA.Core;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -69,7 +70,12 @@ namespace ISCJ
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<TypeToNameService>();
-            
+            services.AddSingleton<ResourceService>();
+            services.AddSingleton(typeof(List<IResourceProvider>), x =>
+                {
+                    return new List<IResourceProvider>() {new FieldLabelResourceProvider("ICSJ.Resource")};
+                });
+
             services.AddTransient<StudentManager>();
             services.AddTransient<ProductManager>();
             services.AddTransient<SignupManager>();

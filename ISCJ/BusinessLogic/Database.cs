@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using MA.Common.Entities.Registration;
 using MA.Common;
@@ -60,7 +61,7 @@ namespace BusinessLogic
     public virtual DbSet<Contact> Contacts { get; set; }
     public virtual DbSet<ContactTenant> ContactTenants { get; set; }
     public virtual DbSet<SequenceCounter> SequenceCounters { get; set; }
-
+    public virtual DbSet<ContactGroup> ContactGroups { get; set; }
 
         public DbSet<FinancialAccount> FinancialAccounts { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -133,6 +134,18 @@ namespace BusinessLogic
             modelBuilder.Entity<Teacher>(entity =>
             {
                 entity.HasKey(x => x.TeacherId);
+            });
+
+            modelBuilder.Entity<ContactGroup>(entity =>
+            {
+                entity.HasKey(x => x.GroupId);
+
+                entity.HasIndex(x =>
+                 new {
+                    x.TenantId, x.GroupName
+                });
+
+                entity.Ignore(x => x.ModifiedDate).Ignore(x => x.ModifiedUser);
             });
 
             modelBuilder.Entity<RegistrationApplication>(entity =>

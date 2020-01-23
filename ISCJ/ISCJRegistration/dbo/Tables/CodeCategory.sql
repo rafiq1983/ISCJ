@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[CodeCategory]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [CategoryName] NCHAR(10) NOT NULL, 
+    [TenantId] UNIQUEIDENTIFIER NULL
+)

@@ -20,16 +20,21 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.Extensions.Logging;
 
 namespace ISCJ.Pages.Admin
 {
     public class LoginModel : BasePageModel
     {
         private readonly SignupManager _signupManager;
+        private ILogger<LoginModel> _logger;
 
-        public LoginModel(SignupManager mgr)
+        public LoginModel(SignupManager mgr, ILogger<LoginModel> logger, ResourceService svc)
         {
             _signupManager = mgr;
+            svc.GetLabelName("logoName");
+            _logger = logger;
+            
         }
 
         [BindProperty]

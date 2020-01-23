@@ -5,6 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using MA.Common;
 using MA.Common.Entities.Contacts;
+using MA.Common.Entities.Registration;
 using MA.Common.Models.api;
 using MA.Core;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +30,24 @@ namespace BusinessLogic
 
       return Types;
     }
+
+    public Guid CreateContactGroup(CallContext context, CreateContactGroupInput input)
+    {
+        using (var db = new Database())
+        {
+            var contactGroup = new ContactGroup()
+            {
+                CreateDate = DateTime.UtcNow,
+                CreateUser = context.UserLoginName,
+                GroupId = Guid.NewGuid(),
+                GroupName = input.GroupName
+            };
+            db.ContactGroups.Add(contactGroup);
+            db.SaveChanges();
+            return contactGroup.GroupId;
+        }
+    }
+
         public Guid AddUpdateContact(CallContext callContext, SaveContactInput input)
         {
          using (var _ContextContact = new ContactContext())
@@ -41,6 +60,7 @@ namespace BusinessLogic
                  contact.CreatedDate = DateTime.UtcNow;
                  contact.CreatedBy = callContext.UserLoginName;
                  contact.TenantId = callContext.TenantId.Value;
+                 contact.GroupId = input.GroupId;
                  _ContextContact.Contacts.Add(contact);
                  _ContextContact.ContactTenants.Add(new ContactTenant()
                  {

@@ -48,6 +48,13 @@ namespace MA.Common.Entities.Registration
 
     }
 
+  public class ContactGroup: BaseEntity
+  {
+      public Guid GroupId { get; set; }
+      public Guid TenantId { get; set; }
+      public string GroupName { get; set; }
+  }
+
     public class RegistrationApplication:BaseEntity
     {
         public Guid TenantId { get; set; }
