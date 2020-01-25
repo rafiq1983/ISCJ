@@ -99,7 +99,7 @@ namespace BusinessLogic
              contact.City = input.City;
              contact.CompanyName = input.CompanyName;
              contact.ContactType = input.ContactType;
-
+             contact.GroupId = input.GroupId;
              contact.DOB = input.DOB;
              contact.Email = input.Email;
              contact.StreetAddress = input.StreetAddress;
@@ -224,6 +224,28 @@ context.SaveChanges();*/
 
       }
     }
+
+    public List<Contact> GetContactsByGroup(CallContext context, Guid groupId)
+    {
+
+        using (var _ContextContact = new ContactContext())
+        {
+            return _ContextContact.Contacts.Where(x => x.TenantId == context.TenantId && x.GroupId == groupId).ToList();
+
+        }
+    }
+
+    public ContactGroup GetContactGroup(CallContext context, Guid groupId)
+    {
+
+        using (var _ContextContact = new Database())
+        {
+            return _ContextContact.ContactGroups.SingleOrDefault(x =>
+                x.TenantId == context.TenantId && x.GroupId == groupId);
+
+        }
+    }
+
 
         public List<Contact> GetAllContacts(CallContext context)
         {

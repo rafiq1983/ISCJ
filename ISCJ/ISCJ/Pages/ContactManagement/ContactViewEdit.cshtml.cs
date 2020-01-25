@@ -7,6 +7,7 @@ using MA.Common.Entities.Contacts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using BusinessLogic;
+using MA.Common.Entities.Registration;
 using MA.Common.Models.api;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -44,7 +45,8 @@ namespace ISCJ.Pages.ContactManagement
                     Organization = contact.Organization,
                     State = contact.State,
                     StreetAddress = contact.StreetAddress,
-                    ZipCode = contact.ZipCode
+                    ZipCode = contact.ZipCode,
+                    GroupId = contact.GroupId
                 };
       }
     }
@@ -74,10 +76,22 @@ namespace ISCJ.Pages.ContactManagement
         
     [BindProperty]
     public SaveContactInput Contact { get; set; }
+
     public List<ContactType> ContactTypes { get { return ContactManager.GetContacTypes(); } }
 
+    public IEnumerable<ContactGroup> ContactGroups
+    {
+        get
+        {
+           ContactManager mgr = new ContactManager();
+           return mgr.GetContactGroups(GetCallContext());
+           
+        }
     }
-     
-  }
+
+
+    }
+
+}
 
  
