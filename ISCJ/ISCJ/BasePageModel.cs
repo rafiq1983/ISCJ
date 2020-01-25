@@ -109,6 +109,8 @@ namespace ISCJ
             List<SectionItem> sectionItems = new List<SectionItem>();
             sectionItems.Add(GetSectionItem("Contacts", "/ContactManagement/Contacts"));
             sectionItems.Add(GetSectionItem("Add Contacts", "/ContactManagement/ContactViewEdit"));
+            sectionItems.Add(GetSectionItem("Groups", "/ContactManagement/ContactGroups"));
+
             sectionItems.Add(GetSectionItem("Communication", "/ContactManagement/Communications"));
          
 

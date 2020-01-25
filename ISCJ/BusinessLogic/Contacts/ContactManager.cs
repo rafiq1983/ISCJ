@@ -31,7 +31,15 @@ namespace BusinessLogic
       return Types;
     }
 
-    public Guid CreateContactGroup(CallContext context, CreateContactGroupInput input)
+    public List<ContactGroup> GetContactGroups(CallContext callContext)
+    {
+        using (var db = new Database())
+        {
+            return db.ContactGroups.Where(x => x.TenantId == callContext.TenantId).ToList();
+        }
+    }
+
+    public Guid CreateContactGroup(CallContext context, CreateUpdateContactGroupInput input)
     {
         using (var db = new Database())
         {
@@ -40,7 +48,8 @@ namespace BusinessLogic
                 CreateDate = DateTime.UtcNow,
                 CreateUser = context.UserLoginName,
                 GroupId = Guid.NewGuid(),
-                GroupName = input.GroupName
+                GroupName = input.GroupName,
+                TenantId = context.TenantId.Value
             };
             db.ContactGroups.Add(contactGroup);
             db.SaveChanges();

@@ -16,9 +16,10 @@ namespace MA.Common.Models.api
         public Guid ContactId { get; set; }
     }
 
-    public class CreateContactGroupInput
+    public class CreateUpdateContactGroupInput
     {
         public string GroupName { get; set; }
+        public Guid? GroupId { get; set; }
     }
     public class SaveContactInput
     {

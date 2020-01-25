@@ -16,6 +16,11 @@ namespace ICSJ.IntegrationTests
     {
         Mock myInterfaceMock;
 
+        public TestContactManager()
+        {
+            
+        }
+
         [SetUp]
         public void Setup()
         {
