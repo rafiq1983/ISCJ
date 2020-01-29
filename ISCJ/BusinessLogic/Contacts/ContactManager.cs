@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Transactions;
 using MA.Common;
+using MA.Common.Entities;
 using MA.Common.Entities.Contacts;
 using MA.Common.Entities.Registration;
 using MA.Common.Models.api;
@@ -64,12 +66,32 @@ namespace BusinessLogic
              Contact contact = null;
              if (input.Guid == Guid.Empty) //new record.
              {
-                 contact = new Contact();
+                 SequenceCounter counter;
+                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))//creating in its own transaction as don't want to block that table for too long.
+                 {
+
+                     using (var db2 = new Database())
+                     {
+                         counter = db2.SequenceCounters.Single(x =>
+                             x.TenantId == callContext.TenantId && x.CounterName == "ContactCounter");
+
+                         db2.SequenceCounters.Add(counter);
+                         counter.CounterValue += 1;
+                         db2.Entry(counter).State = EntityState.Modified;
+                         db2.SaveChanges(); //update counter right away so we other transactions are not blocked from updating the value.
+
+
+                     }
+                     scope.Complete();
+                 }
+
+                    contact = new Contact();
                  contact.Guid = Guid.NewGuid();
                  contact.CreatedDate = DateTime.UtcNow;
                  contact.CreatedBy = callContext.UserLoginName;
                  contact.TenantId = callContext.TenantId.Value;
                  contact.GroupId = input.GroupId;
+                 contact.ContactNumber = counter.CounterValue;
                  _ContextContact.Contacts.Add(contact);
                  _ContextContact.ContactTenants.Add(new ContactTenant()
                  {
@@ -139,6 +161,25 @@ context.SaveChanges();*/
 
         public AddContactOutput AddNewContact(CallContext callContext,AddContactInput input)
         {
+            SequenceCounter counter;
+            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))//creating in its own transaction as don't want to block that table for too long.
+            {
+
+                using (var db2 = new Database())
+                {
+                    counter = db2.SequenceCounters.Single(x =>
+                        x.TenantId == callContext.TenantId && x.CounterName == "ContactCounter");
+
+                    db2.SequenceCounters.Add(counter);
+                    counter.CounterValue += 1;
+                    db2.Entry(counter).State = EntityState.Modified;
+                    db2.SaveChanges(); //update counter right away so we other transactions are not blocked from updating the value.
+
+
+                }
+                scope.Complete();
+            }
+
             var inputContact = input.Contact;
             Contact contact = new Contact();
             contact.FirstName = inputContact.FirstName;
@@ -162,6 +203,8 @@ context.SaveChanges();*/
             contact.TenantId = callContext.TenantId.Value;
             contact.Gender = input.Contact.Gender;
             contact.HomePhone = inputContact.HomePhone;
+            contact.ContactNumber = counter.CounterValue;
+
             using (var _ContextContact = new ContactContext())
             {
                 _ContextContact.Contacts.Add(contact);

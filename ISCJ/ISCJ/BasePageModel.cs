@@ -201,7 +201,7 @@ namespace ISCJ
         {
             if (c == null)
                 return "null";
-            return c.FirstName + " " + c.LastName;
+            return c.FirstName + " " + c.LastName + " (" + c.ContactNumber.ToString().PadLeft(4, '0') + ")";
         }
 
         public string ShowDateTimeInEST(DateTime dt, string format="MM/dd/yyyy")

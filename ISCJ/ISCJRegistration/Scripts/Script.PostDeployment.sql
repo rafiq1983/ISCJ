@@ -49,3 +49,5 @@ GO
 :r .\SetStudentNumbersIfNecessary.sql
 
 :r .\SetRegistrationNumberIfNecessary.sql
+
+:r .\SetContactNumberIfNecessary.sql

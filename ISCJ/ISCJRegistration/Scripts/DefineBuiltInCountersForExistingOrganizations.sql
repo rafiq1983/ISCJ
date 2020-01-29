@@ -39,4 +39,12 @@ BEGIN
   Values('Tenant', @TenantId, 0, 'RegistrationApplicationCounter')
 
 END
+
+IF ((SELECT COUNT(*) FROM SequenceCounter where CounterName='ContactCounter' and TenantId=@TenantId)=0)
+BEGIN
+  INSERT INTO SequenceCounter(CounterType, TenantId,CounterValue,CounterName)
+  Values('Tenant', @TenantId, 0, 'ContactCounter')
+
+END
+
 END

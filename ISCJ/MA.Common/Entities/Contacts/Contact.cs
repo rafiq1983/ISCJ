@@ -50,6 +50,7 @@ namespace MA.Common.Entities.Contacts
     public string CellPhone { get; set; }
         [Required]
     public string HomePhone { get; set; }
+    public int ContactNumber { get; set; }
 
   }
 
