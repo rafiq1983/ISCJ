@@ -49,9 +49,11 @@ namespace MA.Common.Models.api
         public string Email { get; set; }
         public DateTime? DOB { get; set; }
         public string Apt { get; set; }
-        [Required]
+        
+        [Phone(ErrorMessage = "Cell Phone must be in ###-###-#### format.")]
         public string CellPhone { get; set; }
-        [Required]
+
+        [Phone(ErrorMessage = "Home Phone must be in ###-###-#### format.")]
         public string HomePhone { get; set; }
         public Guid? GroupId { get; set; }
     }

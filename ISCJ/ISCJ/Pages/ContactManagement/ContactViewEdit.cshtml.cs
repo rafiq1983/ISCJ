@@ -65,7 +65,7 @@ namespace ISCJ.Pages.ContactManagement
 
                 mgr.AddUpdateContact(GetCallContext(), Contact);
              
-                Response.Redirect("Contacts");
+                Response.Redirect("ContactsList");
 
             }
 
