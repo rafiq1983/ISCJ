@@ -107,7 +107,7 @@ namespace ISCJ
         private Section GetContactSection()
         {
             List<SectionItem> sectionItems = new List<SectionItem>();
-            sectionItems.Add(GetSectionItem("Contacts", "/ContactManagement/Contacts"));
+            sectionItems.Add(GetSectionItem("Contacts", "/ContactManagement/ContactsList"));
             sectionItems.Add(GetSectionItem("Add Contacts", "/ContactManagement/ContactViewEdit"));
             sectionItems.Add(GetSectionItem("Groups", "/ContactManagement/ContactGroups"));
 
@@ -197,11 +197,17 @@ namespace ISCJ
 
        
 
-        public string GetContactName(Contact c)
+        public string GetContactName(Contact c, bool appendContactNumber=true)
         {
             if (c == null)
                 return "null";
-            return c.FirstName + " " + c.LastName + " (" + c.ContactNumber.ToString().PadLeft(4, '0') + ")";
+            string name= c.FirstName + " " + c.LastName;
+            if (appendContactNumber == true)
+            {
+                name += " (" + c.ContactNumber.ToString().PadLeft(4, '0') + ")";
+            }
+
+            return name;
         }
 
         public string ShowDateTimeInEST(DateTime dt, string format="MM/dd/yyyy")

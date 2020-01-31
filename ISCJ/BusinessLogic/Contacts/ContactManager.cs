@@ -278,7 +278,9 @@ context.SaveChanges();*/
         }
     }
 
-    public ContactGroup GetContactGroup(CallContext context, Guid groupId)
+    
+
+        public ContactGroup GetContactGroup(CallContext context, Guid groupId)
     {
 
         using (var _ContextContact = new Database())
