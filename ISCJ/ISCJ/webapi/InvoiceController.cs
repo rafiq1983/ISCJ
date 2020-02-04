@@ -59,6 +59,7 @@ namespace ISCJ.webapi
             return new JsonResult(output);
         }
 
+
         [HttpGet("responsibleparty/{contactId}")]
         public JsonResult GetInvoiceByContactId(Guid contactId)
         {

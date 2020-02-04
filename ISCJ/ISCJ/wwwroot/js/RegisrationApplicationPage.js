@@ -180,11 +180,11 @@ function SetupContactAutoComplete() {
                         _enrollments = d;
                         $(".FatherEnrollmentFound").show();
                         $(".MotherEnrollmentFound").show();
-                        $(".MotherEnrollmentFound,.FatherEnrollmentFound").on("click", function ()
-                        {
-                            DisplayEnrollmentsFound();
-                        })
-                         
+                        $(".MotherEnrollmentFound,.FatherEnrollmentFound").on("click",
+                            function() {
+                                DisplayEnrollmentsFound();
+                            });
+
                     }
                 },
                 error: function(response) {
@@ -200,9 +200,8 @@ function SetupContactAutoComplete() {
             evt.preventDefault();
             _enrollments = [];
             var i = 0;            
-            $(".enrollment:checkbox:checked").each(function ()
-            {                  
-                var enr = $(this).data("enrollment") 
+            $(".enrollment:checkbox:checked").each(function () {
+                var enr = $(this).data("enrollment");
                 var obj=JSON.parse(decodeURIComponent(enr));                
                 _enrollments[i] = obj;
                 i = i + 1;               
