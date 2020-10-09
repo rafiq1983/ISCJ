@@ -131,6 +131,8 @@
     <Build Include="dbo\Tables\CodeCategoryMapping.sql" />
     <Build Include="dbo\Tables\ContactGroups.sql" />
     <None Include="Scripts\SetContactNumberIfNecessary.sql" />
+    <Build Include="dbo\Tables\Questions.sql" />
+    <Build Include="dbo\Tables\UserSecurityQuestionAnswer.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />

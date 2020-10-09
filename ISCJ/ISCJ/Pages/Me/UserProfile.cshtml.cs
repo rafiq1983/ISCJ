@@ -15,13 +15,31 @@ namespace ISCJ.Pages
     {
         public void OnGet()
         {
-            UserManager mgr = new UserManager();
+           UserManager mgr = new UserManager();
            User u =  mgr.GetUsersByLoginName(HttpContext.User.FindFirstValue(AppClaimTypes.LoginName));
            Email = u.UserName;
 
         }
 
+        public void OnPostCancel()
+        {
+            string s = "";
+        }
+
+        public void OnPostReset()
+        {
+           
+        }
+
+        public void OnPostSave()
+        {
+            string s = "";
+        }
+
+
         public string Email { get; set; }
-        
+        public string PasswordResetQuestion { get; set; }
+        public string PasswordResetQuestionAnswer { get; set; }
+
     }
 }

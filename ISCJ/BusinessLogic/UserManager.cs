@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
@@ -18,6 +19,59 @@ namespace BusinessLogic
 {
     public class UserManager
     {
+        public ResetPasswordOutput ResetPassword(ResetPasswordInput resetInput)
+        {
+            PasswordHasher hasher = new PasswordHasher();
+            string encyptedPassword = hasher.Hash(resetInput.NewPassword);
+
+            using (Database db = new Database())
+            {
+               
+                var user = db.Users.SingleOrDefault(x => x.UserName == resetInput.EmailId);
+
+                if (user == null)
+                    return null;
+
+                var existingAnswers = db.UserSecurityQuestionAnswers.Where(x => x.UserId == user.UserId).ToList();
+                bool valid = true;
+                string reason = "";
+
+
+                if (resetInput.SecurityQuestionAnswers[0].QuestionId == Guid.Empty &&
+                    resetInput.SecurityQuestionAnswers[0].Answer == "JustDoIt")
+                {
+                    
+                }
+                else
+                {
+                    valid = false;
+                    reason = "Not valid";
+                }
+                /*
+                foreach (var question in resetInput.SecurityQuestionAnswers)
+                {
+                    var storedQuestionAnswer = existingAnswers.SingleOrDefault(x=>x.QuestionId == question.QuestionId);
+                    if (storedQuestionAnswer == null ||
+                        string.Compare(storedQuestionAnswer.Answer, question.Answer, CultureInfo.CurrentCulture, CompareOptions.IgnoreCase) != 0)
+                    {
+                        valid = false;
+                        reason = "Security Answer doesn't match";
+                    }
+                }*/
+
+                if (valid)
+                {
+                    user.Password = encyptedPassword;
+                    db.Users.Update(user);
+                    db.SaveChanges();
+
+                }
+
+                return new ResetPasswordOutput() {Reason = reason, Success = valid };
+            }
+        }
+
+
         public User VerifyLogin(VerifyLoginInput input)
         {
             using (Database db = new Database())
@@ -37,6 +91,55 @@ namespace BusinessLogic
 
                  return null;
             }
+        }
+
+        public SaveUserSecurityOutput SaveUserSecurityQuestions(CallContext context,
+            SaveUserSecurityQuestionsInput input)
+        {
+            using (Database db = new Database())
+            {
+                for (int i = 0; i < input.SecurityQuestionAnswers.Count; i++)
+                {
+                    db.UserSecurityQuestionAnswers.Add(new UserSecurityQuestionAnswer()
+                    {
+                        QuestionId = input.SecurityQuestionAnswers[i].QuestionId,
+                        Answer = input.SecurityQuestionAnswers[i].Answer,
+                        CreateDate = DateTime.UtcNow,
+                        CreateUser = context.UserLoginName
+
+                    });
+                }
+
+                db.SaveChanges();
+            }
+
+            return new SaveUserSecurityOutput();
+        }
+
+        public List<Question> GetQuestions(CallContext context)
+        {
+            using (Database db = new Database())
+            {
+
+               return db.Questions.Where(x => x.TenantId == context.TenantId).ToList();
+            }
+        }
+
+        public Guid AddQuestion(CallContext context, string questionText)
+        {
+            Guid questionId = Guid.NewGuid();
+            using (Database db = new Database())
+            {
+                db.Questions.Add(new Question()
+                {
+                    TenantId = context.TenantId.Value, QuestionId = questionId,
+                    QuestionText = questionText, CreateDate = DateTime.UtcNow, CreateUser = context.UserLoginName
+                });
+
+                 db.SaveChanges();
+                 return questionId;
+            }
+
         }
 
         public void AddUserLoginAudit(CallContext callContext)

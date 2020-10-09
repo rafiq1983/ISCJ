@@ -45,6 +45,8 @@ namespace BusinessLogic
     public virtual DbSet<CreditCardPayment> CreditCardPayments { get; set; }
     public virtual DbQuery<AllPayment> AllPaymentIds { get; set; }
     public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<Question> Questions { get; set; }
+      public virtual DbSet<UserSecurityQuestionAnswer> UserSecurityQuestionAnswers { get; set; }
     public virtual DbSet<UserTenant> UserTenants { get; set; }
     public virtual DbSet<Tenant> Tenants { get; set; }
     public virtual DbSet<MasjidMembership> MasjidMembers { get; set; }
@@ -135,6 +137,17 @@ namespace BusinessLogic
             {
                 entity.HasKey(x => x.TeacherId);
             });
+
+            modelBuilder.Entity<Question>(entity => {entity.HasKey(x => x.QuestionId);
+                entity.ToTable("Question");
+            });
+
+            modelBuilder.Entity<UserSecurityQuestionAnswer>(entity => 
+                entity.ToTable("UserSecurityQuestionAnswer")
+                    .HasKey(x =>
+            new {
+                x.QuestionId, x.UserId
+            }));
 
             modelBuilder.Entity<ContactGroup>(entity =>
             {

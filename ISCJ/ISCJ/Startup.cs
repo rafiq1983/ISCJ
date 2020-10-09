@@ -63,7 +63,7 @@ namespace ISCJ
                     options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 
                 }).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, "",
-                    options => { options.LoginPath = "/Login";  })
+                    options => { options.LoginPath = "/Login";})
                 .AddCaptcha(options => { options.ClaimsIssuer = "Iftikhar"; })
                 .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
                 {
@@ -89,6 +89,7 @@ namespace ISCJ
                 options.Conventions.AuthorizeFolder("/");
                 options.Conventions.AllowAnonymousToPage("/Login");
                 options.Conventions.AllowAnonymousToFolder("/signup");
+                options.Conventions.AllowAnonymousToPage("/ForgotPassword");
 
             });
             
