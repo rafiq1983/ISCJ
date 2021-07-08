@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Transactions;
 using MA.Common;
+using MA.Common.Entities;
 using MA.Common.Entities.Contacts;
+using MA.Common.Entities.Registration;
 using MA.Common.Models.api;
 using MA.Core;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +32,33 @@ namespace BusinessLogic
 
       return Types;
     }
+
+    public List<ContactGroup> GetContactGroups(CallContext callContext)
+    {
+        using (var db = new Database())
+        {
+            return db.ContactGroups.Where(x => x.TenantId == callContext.TenantId).ToList();
+        }
+    }
+
+    public Guid CreateContactGroup(CallContext context, CreateUpdateContactGroupInput input)
+    {
+        using (var db = new Database())
+        {
+            var contactGroup = new ContactGroup()
+            {
+                CreateDate = DateTime.UtcNow,
+                CreateUser = context.UserLoginName,
+                GroupId = Guid.NewGuid(),
+                GroupName = input.GroupName,
+                TenantId = context.TenantId.Value
+            };
+            db.ContactGroups.Add(contactGroup);
+            db.SaveChanges();
+            return contactGroup.GroupId;
+        }
+    }
+
         public Guid AddUpdateContact(CallContext callContext, SaveContactInput input)
         {
          using (var _ContextContact = new ContactContext())
@@ -36,11 +66,32 @@ namespace BusinessLogic
              Contact contact = null;
              if (input.Guid == Guid.Empty) //new record.
              {
-                 contact = new Contact();
+                 SequenceCounter counter;
+                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))//creating in its own transaction as don't want to block that table for too long.
+                 {
+
+                     using (var db2 = new Database())
+                     {
+                         counter = db2.SequenceCounters.Single(x =>
+                             x.TenantId == callContext.TenantId && x.CounterName == "ContactCounter");
+
+                         db2.SequenceCounters.Add(counter);
+                         counter.CounterValue += 1;
+                         db2.Entry(counter).State = EntityState.Modified;
+                         db2.SaveChanges(); //update counter right away so we other transactions are not blocked from updating the value.
+
+
+                     }
+                     scope.Complete();
+                 }
+
+                    contact = new Contact();
                  contact.Guid = Guid.NewGuid();
                  contact.CreatedDate = DateTime.UtcNow;
                  contact.CreatedBy = callContext.UserLoginName;
                  contact.TenantId = callContext.TenantId.Value;
+                 contact.GroupId = input.GroupId;
+                 contact.ContactNumber = counter.CounterValue;
                  _ContextContact.Contacts.Add(contact);
                  _ContextContact.ContactTenants.Add(new ContactTenant()
                  {
@@ -70,7 +121,7 @@ namespace BusinessLogic
              contact.City = input.City;
              contact.CompanyName = input.CompanyName;
              contact.ContactType = input.ContactType;
-
+             contact.GroupId = input.GroupId;
              contact.DOB = input.DOB;
              contact.Email = input.Email;
              contact.StreetAddress = input.StreetAddress;
@@ -80,6 +131,7 @@ namespace BusinessLogic
              contact.FirstName = input.FirstName;
              contact.LastName = input.LastName;
              contact.MiddleName = input.MiddleName;
+             contact.HomePhone = input.HomePhone;
 
              _ContextContact.SaveChanges();
          
@@ -109,6 +161,25 @@ context.SaveChanges();*/
 
         public AddContactOutput AddNewContact(CallContext callContext,AddContactInput input)
         {
+            SequenceCounter counter;
+            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))//creating in its own transaction as don't want to block that table for too long.
+            {
+
+                using (var db2 = new Database())
+                {
+                    counter = db2.SequenceCounters.Single(x =>
+                        x.TenantId == callContext.TenantId && x.CounterName == "ContactCounter");
+
+                    db2.SequenceCounters.Add(counter);
+                    counter.CounterValue += 1;
+                    db2.Entry(counter).State = EntityState.Modified;
+                    db2.SaveChanges(); //update counter right away so we other transactions are not blocked from updating the value.
+
+
+                }
+                scope.Complete();
+            }
+
             var inputContact = input.Contact;
             Contact contact = new Contact();
             contact.FirstName = inputContact.FirstName;
@@ -131,6 +202,9 @@ context.SaveChanges();*/
             contact.CreatedDate = DateTime.UtcNow;
             contact.TenantId = callContext.TenantId.Value;
             contact.Gender = input.Contact.Gender;
+            contact.HomePhone = inputContact.HomePhone;
+            contact.ContactNumber = counter.CounterValue;
+
             using (var _ContextContact = new ContactContext())
             {
                 _ContextContact.Contacts.Add(contact);
@@ -193,6 +267,30 @@ context.SaveChanges();*/
 
       }
     }
+
+    public List<Contact> GetContactsByGroup(CallContext context, Guid groupId)
+    {
+
+        using (var _ContextContact = new ContactContext())
+        {
+            return _ContextContact.Contacts.Where(x => x.TenantId == context.TenantId && x.GroupId == groupId).ToList();
+
+        }
+    }
+
+    
+
+        public ContactGroup GetContactGroup(CallContext context, Guid groupId)
+    {
+
+        using (var _ContextContact = new Database())
+        {
+            return _ContextContact.ContactGroups.SingleOrDefault(x =>
+                x.TenantId == context.TenantId && x.GroupId == groupId);
+
+        }
+    }
+
 
         public List<Contact> GetAllContacts(CallContext context)
         {

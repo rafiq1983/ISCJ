@@ -57,88 +57,54 @@
 
 
         <div class="row">
+            <div class="col-lg-8">
+                <div class="col-lg-6">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <h5>Summary</h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="form-group row">
+                                <label class="col-sm-6 col-form-label">
+                                    Student Number:
+                                </label>
 
-            <div class="col-lg-10">
+                                <label class="col-sm-2 col-form-label">
+                                    @Model.SelectedStudent?.StudentNumber.ToString().PadLeft(4,'0')
+                                </label>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-6 col-form-label">
+                                    Enrollment In Programs:
+                                </label>
 
+                                <label class="col-sm-2 col-form-label">
+                                    @Model.SelectedStudent?.Enrollments?.Count()
+                                </label>
+                            </div>
 
-                <div class="ibox ">
-                    <div class="ibox-title">
-                        <h5>Subjects</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
+                            <div class="form-group row">
+                                <label class="col-sm-6 col-form-label">
+                                    Attendance:
+                                </label>
+
+                                <label class="col-sm-2 col-form-label">
+                                    TBD
+                                </label>
+                            </div>
+
                         </div>
                     </div>
-                    <div class="ibox-content table-responsive">
-                        <table class="table table-hover no-margins">
-                            <thead>
-                            <tr>
-                                <th>Subject Name</th>
-                                <th>Semester 1 Grade</th>
-                                <th>Semester 2 Grade</th>
-                                <th>Semester 3 Grade</th>
-                                <th>Semester 4 Grade</th>
-
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach (var studnetSubject in Model.StudentSubjects)
-                            {
-                                <tr>
-                                    <td><input type="hidden" asp-for="@Model.SubjectId"/>@studnetSubject.Subject.SubjectName</td>
-                                    <td>
-                                        <select id="semester1Grade">
-                                            <option value="">--select--</option>
-                                            <option value="A">A</option>
-                                            <option value="B">B</option>
-                                            <option value="C">C</option>
-                                            <option value="D">D</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select id="semester1Grade">
-                                            <option value="">--select--</option>
-                                            <option value="A">A</option>
-                                            <option value="B">B</option>
-                                            <option value="C">C</option>
-                                            <option value="D">D</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select id="semester1Grade">
-                                            <option value="">--select--</option>
-                                            <option value="A">A</option>
-                                            <option value="B">B</option>
-                                            <option value="C">C</option>
-                                            <option value="D">D</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select id="semester1Grade">
-                                            <option value="">--select--</option>
-                                            <option value="A">A</option>
-                                            <option value="B">B</option>
-                                            <option value="C">C</option>
-                                            <option value="D">D</option>
-                                        </select>
-                                    </td>
-
-                                </tr>
-                            }
-
-
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
-
             </div>
-
-
         </div>
 
         <div class="row">
@@ -146,7 +112,88 @@
                 <div class="col-lg-6">
                     <div class="ibox ">
                         <div class="ibox-title">
-                            <h5>Attendance</h5>
+                            <h5>Parents</h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="form-group row">
+                                <label class="col-sm-6 col-form-label">
+                                    Father:
+                                </label>
+
+                                <label class="col-sm-2 col-form-label">
+                                    @Model.SelectedStudent?.FatherContactId
+                                </label>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-6 col-form-label">
+                                    Mother:
+                                </label>
+
+                                <label class="col-sm-2 col-form-label">
+                                    @Model.SelectedStudent?.MotherContactId
+                                </label>
+                            </div>
+
+                           
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="col-lg-6">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <h5>Enrollments</h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <ul class="todo-list m-t small-list">
+                                @if (@Model.SelectedStudent != null)
+                                {
+                                    <!--The foreach doesn't seem to honour null check. -->
+                                    @foreach (var enrollment in Model.SelectedStudent?.Enrollments)
+                                    {
+                                        <li>
+                                            <a href="#" class="check-link"><i class="fa fa-check-square"></i> </a>
+                                            <span class="m-l-xs todo">@enrollment?.ProgramId</span>
+
+                                        </li>
+                                    }
+                                }
+                            </ul>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="col-lg-6">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <h5>Notes</h5>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>
@@ -195,6 +242,80 @@
                 </div>
             </div>
         </div>
+
+        <div class="row">
+
+            <div class="col-lg-10">
+
+
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <h5>Subjects</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content table-responsive">
+                        <table class="table table-hover no-margins">
+                            <thead>
+                                <tr>
+                                    <th>Subject Name</th>
+                                    <th>Term 1</th>
+                                    <th>Term 2</th>
+                                    <th>Term 3</th>
+                                    <th>Term 4</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    var i = 0;
+                                }
+                                @foreach (var studentSubject in Model.StudentSubjects)
+                                {
+
+                                    <tr>
+                                        <td>
+                                            @studentSubject.Subject.SubjectName
+                                            <input type="hidden" asp-for="@Model.StudentMarks[i].SubjectId" value="@studentSubject.SubjectId" />
+
+                                        </td>
+                                        <td>
+                                            <input type="number" asp-for="@Model.StudentMarks[i].Term1Marks" />
+                                        </td>
+                                        <td>
+                                            <input type="number" asp-for="@Model.StudentMarks[i].Term2Marks" />
+                                        </td>
+                                        <td>
+                                            <input type="number" asp-for="@Model.StudentMarks[i].Term3Marks" />
+                                        </td>
+
+                                        <td>
+                                            <input type="number" asp-for="@Model.StudentMarks[i].Term4Marks" />
+                                        </td>
+                                    </tr>
+                                    i = i + 1;
+
+                                }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
 
 
         <div class="row">
@@ -272,109 +393,10 @@
                 lineWidth: 4,
                 size: 80
             });
-
-            var data2 = [
-                [gd(2012, 1, 1), 7], [gd(2012, 1, 2), 6], [gd(2012, 1, 3), 4], [gd(2012, 1, 4), 8],
-                [gd(2012, 1, 5), 9], [gd(2012, 1, 6), 7], [gd(2012, 1, 7), 5], [gd(2012, 1, 8), 4],
-                [gd(2012, 1, 9), 7], [gd(2012, 1, 10), 8], [gd(2012, 1, 11), 9], [gd(2012, 1, 12), 6],
-                [gd(2012, 1, 13), 4], [gd(2012, 1, 14), 5], [gd(2012, 1, 15), 11], [gd(2012, 1, 16), 8],
-                [gd(2012, 1, 17), 8], [gd(2012, 1, 18), 11], [gd(2012, 1, 19), 11], [gd(2012, 1, 20), 6],
-                [gd(2012, 1, 21), 6], [gd(2012, 1, 22), 8], [gd(2012, 1, 23), 11], [gd(2012, 1, 24), 13],
-                [gd(2012, 1, 25), 7], [gd(2012, 1, 26), 9], [gd(2012, 1, 27), 9], [gd(2012, 1, 28), 8],
-                [gd(2012, 1, 29), 5], [gd(2012, 1, 30), 8], [gd(2012, 1, 31), 25]
-            ];
-
-            var data3 = [
-                [gd(2012, 1, 1), 800], [gd(2012, 1, 2), 500], [gd(2012, 1, 3), 600], [gd(2012, 1, 4), 700],
-                [gd(2012, 1, 5), 500], [gd(2012, 1, 6), 456], [gd(2012, 1, 7), 800], [gd(2012, 1, 8), 589],
-                [gd(2012, 1, 9), 467], [gd(2012, 1, 10), 876], [gd(2012, 1, 11), 689], [gd(2012, 1, 12), 700],
-                [gd(2012, 1, 13), 500], [gd(2012, 1, 14), 600], [gd(2012, 1, 15), 700], [gd(2012, 1, 16), 786],
-                [gd(2012, 1, 17), 345], [gd(2012, 1, 18), 888], [gd(2012, 1, 19), 888], [gd(2012, 1, 20), 888],
-                [gd(2012, 1, 21), 987], [gd(2012, 1, 22), 444], [gd(2012, 1, 23), 999], [gd(2012, 1, 24), 567],
-                [gd(2012, 1, 25), 786], [gd(2012, 1, 26), 666], [gd(2012, 1, 27), 888], [gd(2012, 1, 28), 900],
-                [gd(2012, 1, 29), 178], [gd(2012, 1, 30), 555], [gd(2012, 1, 31), 993]
-            ];
+        
 
 
-            var dataset = [
-                {
-                    label: "Number of orders",
-                    data: data3,
-                    color: "#1ab394",
-                    bars: {
-                        show: true,
-                        align: "center",
-                        barWidth: 24 * 60 * 60 * 600,
-                        lineWidth: 0
-                    }
-
-                }, {
-                    label: "Payments",
-                    data: data2,
-                    yaxis: 2,
-                    color: "#1C84C6",
-                    lines: {
-                        lineWidth: 1,
-                        show: true,
-                        fill: true,
-                        fillColor: {
-                            colors: [{
-                                opacity: 0.2
-                            }, {
-                                opacity: 0.4
-                            }]
-                        }
-                    },
-                    splines: {
-                        show: false,
-                        tension: 0.6,
-                        lineWidth: 1,
-                        fill: 0.1
-                    },
-                }
-            ];
-
-
-            var options = {
-                xaxis: {
-                    mode: "time",
-                    tickSize: [3, "day"],
-                    tickLength: 0,
-                    axisLabel: "Date",
-                    axisLabelUseCanvas: true,
-                    axisLabelFontSizePixels: 12,
-                    axisLabelFontFamily: 'Arial',
-                    axisLabelPadding: 10,
-                    color: "#d5d5d5"
-                },
-                yaxes: [{
-                    position: "left",
-                    max: 1070,
-                    color: "#d5d5d5",
-                    axisLabelUseCanvas: true,
-                    axisLabelFontSizePixels: 12,
-                    axisLabelFontFamily: 'Arial',
-                    axisLabelPadding: 3
-                }, {
-                    position: "right",
-                    clolor: "#d5d5d5",
-                    axisLabelUseCanvas: true,
-                    axisLabelFontSizePixels: 12,
-                    axisLabelFontFamily: ' Arial',
-                    axisLabelPadding: 67
-                }
-                ],
-                legend: {
-                    noColumns: 1,
-                    labelBoxBorderColor: "#000000",
-                    position: "nw"
-                },
-                grid: {
-                    hoverable: false,
-                    borderWidth: 0
-                }
-            };
-
+         
             function gd(year, month, day) {
                 return new Date(year, month - 1, day).getTime();
             }

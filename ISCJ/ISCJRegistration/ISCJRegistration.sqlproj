@@ -120,12 +120,26 @@
     <Build Include="dbo\Tables\Unique_TeacherSubjectProgram.sql" />
     <Build Include="dbo\Tables\ForeignKey_TeacherSubjectAssignment_ValidTeacherId.sql" />
     <Build Include="dbo\Tables\UserNotification.sql" />
-    <Build Include="dbo\Tables\CodeDecode.sql" />
     <Build Include="dbo\Tables\MetricAssociations.sql" />
     <Build Include="dbo\Tables\ContactTenants.sql" />
+    <Build Include="dbo\Tables\SequenceCounter.sql" />
+    <Build Include="dbo\Tables\SystemSetttings.sql" />
+    <Build Include="dbo\Tables\ResourceDefinition.sql" />
+    <Build Include="dbo\Tables\ResourceValues.sql" />
+    <Build Include="dbo\Tables\CodeDecode.sql" />
+    <Build Include="dbo\Tables\CodeCategory.sql" />
+    <Build Include="dbo\Tables\CodeCategoryMapping.sql" />
+    <Build Include="dbo\Tables\ContactGroups.sql" />
+    <None Include="Scripts\SetContactNumberIfNecessary.sql" />
+    <Build Include="dbo\Tables\Questions.sql" />
+    <Build Include="dbo\Tables\UserSecurityQuestionAnswer.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
+    <None Include="Scripts\SetStudentNumbersIfNecessary.sql" />
+    <None Include="Scripts\DefineBuiltInCountersForExistingOrganizations.sql" />
+    <None Include="Scripts\SetRegistrationNumberIfNecessary.sql" />
+    <None Include="Scripts\AddResourceDefinitions.sql" />
   </ItemGroup>
   <ItemGroup>
     <PreDeploy Include="Scripts\Script.PreDeployment.sql" />

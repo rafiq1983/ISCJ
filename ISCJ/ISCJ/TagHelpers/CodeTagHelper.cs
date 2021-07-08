@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ISCJ.TagHelpers
 {
-  public class CodeTagHelper:TagHelper
+    [HtmlTargetElement("x:Code")]
+    public class CodeTagHelper:TagHelper
   {
     public CodeTagHelper(TypeToNameService typeToNameService)
     {

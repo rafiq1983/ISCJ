@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Resources;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using BusinessLogic;
+using ICSJ.Resource;
 using MA.Common.Entities.User;
 using MA.Core;
 using MA.Core.Web;
@@ -17,22 +20,41 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace ISCJ.Pages.Admin
 {
     public class LoginModel : BasePageModel
     {
         private readonly SignupManager _signupManager;
+        private ILogger<LoginModel> _logger;
 
-        public LoginModel(SignupManager mgr)
+        public LoginModel(SignupManager mgr, ILogger<LoginModel> logger, ResourceService svc, IOptions<ApplicationPreferences> prefs, IOptions<AuthenticationOptions> authOptions)
         {
             _signupManager = mgr;
+            svc.GetLabelName("logoName");
+            _logger = logger;
+            
+            IOptions<ApplicationPreferences> ioptions = prefs;
+            var _authOptions = authOptions;
+
         }
-    [BindProperty]
+
+        [BindProperty]
         public LoginData loginData { get; set; }
         public void OnGet()
         {
-          
+            
+            ResourceService svc = new ResourceService(new List<IResourceProvider>(){new FieldLabelResourceProvider("ICSJ.Resource", "ICSJ.Resource")});
+            string s1= svc.GetString("logoName");
+
+            ResourceService svc2 = new ResourceService(new List<IResourceProvider>() { new SmartAssemblyResourceProvider("ICSJ.Resource") });
+            s1=svc2.GetString("ICSJ.Resource.FieldLabels.logoName");
+
+            // System.Threading.Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("fr-FR");
+            //ICSJ.Resource.FieldLabels.Culture = CultureInfo.GetCultureInfo("fr-FR");
+            string s = ICSJ.Resource.FieldLabels.logoName;
         }
 
         public async Task OnPostAsync()
@@ -54,8 +76,6 @@ namespace ISCJ.Pages.Admin
                     isValid = true;
                 }
 
-
-
                 if (!isValid)
                 {
                     ModelState.AddModelError<LoginModel>((x) => x.loginData.Username,
@@ -63,7 +83,7 @@ namespace ISCJ.Pages.Admin
                     return;
 
                 }
-
+                
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name,
                     ClaimTypes.Role);
                 
@@ -71,7 +91,10 @@ namespace ISCJ.Pages.Admin
                 identity.AddClaim(new Claim(AppClaimTypes.LoginName, loginData.Username));
                 identity.AddClaim(new Claim(ClaimTypes.Name, user.Contact.FirstName + " " + user.Contact.LastName));
 
-                if (user.UserTenants.Count == 1)
+                //this is just for captch.  We want to store session id claim in session store.
+                identity.AddClaim(new Claim("SessionIdClaim", Guid.NewGuid().ToString()));
+
+                if (user.UserTenants.Count >= 1)
                 {
                     //TOOD: For Some reason I'm not able to get Tenant part of User.UserTenats.Tenanct call.  Check later.
                     var tenant = mgr.GetUserTenants(user.UserId).First();
@@ -84,7 +107,12 @@ namespace ISCJ.Pages.Admin
 
                     var principal = new ClaimsPrincipal(identity);
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal,
-                        new AuthenticationProperties { IsPersistent = loginData.RememberMe });
+                       new AuthenticationProperties { IsPersistent = loginData.RememberMe });
+
+                    //Can only call SignIn if CaptchaAuthenticationHandler inherits from SignInAuthenticationHandler.
+                    //await HttpContext.SignInAsync("Captcha", principal,
+                     //   new AuthenticationProperties { IsPersistent = loginData.RememberMe });
+
                     Response.Redirect("/main");
                 }
                 else if (user.UserTenants.Count == 0)
@@ -94,7 +122,7 @@ namespace ISCJ.Pages.Admin
                         new AuthenticationProperties { IsPersistent = loginData.RememberMe });
 
 
-                    Response.Redirect("/selecttenant");
+                    Response.Redirect("/Me/selecttenant");
 
                     mgr.AddUserLoginAudit(new CallContext(user.UserId, user.UserName, "TBD", "", null));
                 }

@@ -48,13 +48,20 @@ namespace MA.Common.Entities.Registration
 
     }
 
+  public class ContactGroup: BaseEntity
+  {
+      public Guid GroupId { get; set; }
+      public Guid TenantId { get; set; }
+      public string GroupName { get; set; }
+  }
+
     public class RegistrationApplication:BaseEntity
     {
         public Guid TenantId { get; set; }
         public Guid ApplicationId { get; set; }
         public DateTime ApplicationDate { get; set; }
         public Guid ProgramId { get; set; }
-
+        public int ApplicationNumber { get; set; }
         public Guid? MembershipId { get; set; }
         public Guid FatherContactId { get; set; } //isa:may not need these.
 

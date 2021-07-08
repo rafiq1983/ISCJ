@@ -29,49 +29,40 @@ htmlAttributes: new { @class = "form-control m-b" })
       </div>
     </div>
   </div>
+   
+        <div class="ibox-content">
 
-  <div class="wrapper wrapper-content animated fadeInRight">
-    <div class="row">
-      @for (var i = 0; i < Model.Enrollments.Count; i++)
-      {
-        <div class="col-lg-3">
-            <div class="contact-box center-version">
+            <table class="table">
+                <thead>
+                <th><x:FieldDisplayResourceKey resource-key="FieldLabels.RegistrationApplicationNumber"></x:FieldDisplayResourceKey></th>
+                <th>Student Name</th>
+                <th>Islamic School Grade</th>
+                <th>Public School Grade</th>
+                <th>Father Name</th>
+                <th>Mother Name</th>
+                <th>Enrollment Date</th>
 
-                <a href="@Url.Page("/StudentManagement/StudentDashboard", new {eid=Model.Enrollments[i].EnrollmentId, prgId=Model.ProgramId})">
-                    <img alt="image" class="rounded-circle" src="@(Model.Enrollments[i].StudentContactInfo.Gender == 1 ? "/images/male.png" : "/images/female.png")" />
+                </thead>
+                @for (var i = 0; i < Model.Enrollments.Count; i++)
+                {
+                    <tr>
+                        <td>@Model.Enrollments[i].RegistrationApplication.ApplicationNumber.ToString().PadLeft(4,'0')</td>
 
-                    <h3 class="m-b-xs">
-                        <strong>
-                            @(Model.Enrollments[i].StudentContactInfo.FirstName + " " + @Model.Enrollments[i].StudentContactInfo.LastName)
-                        </strong>
-                    </h3>
+                        <td>
+                            <a href="@Url.Page("/StudentManagement/StudentDashboard", new {eid = Model.Enrollments[i].EnrollmentId, prgId = Model.ProgramId})">
+                                @Model.GetContactName(@Model.Enrollments[i].StudentContactInfo)</a></td>
+                        <td> <x:Code code-type="islamicschoolgradelist" code="@Model.Enrollments[i].IslamicSchoolGradeId"></x:Code></td>
+                        <td> <x:Code code-type="publicschoolgradelist" code="@Model.Enrollments[i].PublicSchoolGradeId"></x:Code></td>
+                        <td>@Model.GetContactName(@Model.Enrollments[i].FatherContactInfo)</td>
+                        <td>@Model.GetContactName(@Model.Enrollments[i].MotherContactInfo)</td>
+                        <td>@Model.ShowDateTimeInEST(@Model.Enrollments[i].CreateDate.ToLocalTime())</td>
 
-                    <div class="font-bold">Student</div>
-                    <address class="m-t-md">
+                    </tr>
 
-                        @Model.Enrollments[i].StudentContactInfo.StreetAddress<br>
-                        @Model.Enrollments[i].StudentContactInfo.City, @Model.Enrollments[i].StudentContactInfo.State, @Model.Enrollments[i].StudentContactInfo.ZipCode<br>
-
-                        <abbr title="Islamic School Grade">Islamic School Grade:</abbr>
-                        <Code code-type="islamicschoolgradelist" code="@Model.Enrollments[i].IslamicSchoolGradeId"></Code>
-                        <br />
-                        <abbr title="Public School Grade">Public School Grade:</abbr>
-                        <Code code-type="publicschoolgradelist" code="@Model.Enrollments[i].PublicSchoolGradeId"></Code>
-                    </address>
-                </a>
-                <div class="contact-box-footer">
-                    <div class="m-t-xs btn-group">
-                        <a class="btn btn-xs btn-white"><i class="fa fa-phone"></i> Call Parent </a>
-                        <a class="btn btn-xs btn-white"><i class="fa fa-envelope"></i> Email</a>
-                    </div>
-                </div>
-
-            </div>
+                }
+            </table>
         </div>
-      }
-
-    </div>
-  </div>
+    
   <input type="button" id="btnAddNew" name="btnAction" class="btn-sm btn-success" value="Add New" onclick="window.location = 'RegisterStudent2'" />
   <input type="hidden" id="regId" name="regId" />
 </form>

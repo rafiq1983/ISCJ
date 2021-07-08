@@ -49,9 +49,9 @@ namespace ISCJ.webapi
         [Route("detail/{studentId}")]
         [HttpGet()]
         [ProducesResponseType(typeof(StudentDetail), 200)]
-        public ActionResult<StudentDetail> GetStudentDetail(Guid studentId)
+        public ActionResult<Student> GetStudentDetail(Guid studentId)
         {
-            var output = _studentManager.GetStudentDetail(studentId);
+            var output = _studentManager.GetStudent(GetCallContext(),studentId);
             return Ok(output);
         }
 

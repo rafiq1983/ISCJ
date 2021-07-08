@@ -238,4 +238,95 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="AssociationName" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="9069025f-fb9b-48ce-b1e4-eda8bc685abe" ChangeDateTime="01/09/2020 13:19:37">
+    <Property Name="ElementName" Value="[dbo].[Student].[IX_Student_Column]" />
+    <Property Name="ElementType" Value="SqlIndex" />
+    <Property Name="ParentElementName" Value="[dbo].[Student]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[IX_Student_Number_TenantId]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="563c9886-0426-4407-98e9-a467343ebc5d" ChangeDateTime="01/09/2020 13:32:48">
+    <Property Name="ElementName" Value="[dbo].[SequenceCounter].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SequenceCounter]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CounterName" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="da2e66b1-0f59-4a00-91e2-8b6b1e456fd3" ChangeDateTime="01/09/2020 13:32:55">
+    <Property Name="ElementName" Value="[dbo].[SequenceCounter].[CounterName]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SequenceCounter]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CounterId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="ee66cca7-5e0c-4d58-8cdd-bacc69a5ccfe" ChangeDateTime="01/11/2020 06:13:16">
+    <Property Name="ElementName" Value="[dbo].[Student].[IX_Student_Column]" />
+    <Property Name="ElementType" Value="SqlIndex" />
+    <Property Name="ParentElementName" Value="[dbo].[Student]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[IX_Student_StudentNumber]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="2f5e94eb-4d53-4228-aff3-a413de0bec34" ChangeDateTime="01/14/2020 17:01:28">
+    <Property Name="ElementName" Value="[dbo].[SystemSetttings].[AllowedSimultaneousLogin]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SystemSetttings]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AllowedSimultaneousLoginToOrganization" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="2c619c68-1b38-4758-97c9-b9b9d3f56a7f" ChangeDateTime="01/15/2020 09:08:58">
+    <Property Name="ElementName" Value="[dbo].[ResourceValues].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ResourceValues]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ValueID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="401f0a3f-cd07-43eb-a2b2-caad95a1f605" ChangeDateTime="01/15/2020 09:11:33">
+    <Property Name="ElementName" Value="[dbo].[ResourceValues].[ModifiedDate]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ResourceValues]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CreateUser" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="17d8e285-f15f-4ade-a351-c92677a863c7" ChangeDateTime="01/17/2020 10:47:06">
+    <Property Name="ElementName" Value="[dbo].[CodeDecode].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CodeDecode]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TenantID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="c1877f6a-31d9-48c3-97b6-9b5013577d17" ChangeDateTime="01/17/2020 10:47:10">
+    <Property Name="ElementName" Value="[dbo].[CodeDecode].[TenantID]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CodeDecode]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TenantId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="3f9c7af5-5a22-426f-b4d7-8f2e1f441718" ChangeDateTime="01/17/2020 10:53:58">
+    <Property Name="ElementName" Value="[dbo].[CodeCategoryMapping].[CodeCategory1]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CodeCategoryMapping]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ParentCategory" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="213c5ed6-d3c2-465f-91b3-62898b7a6dcd" ChangeDateTime="01/23/2020 22:34:39">
+    <Property Name="ElementName" Value="[dbo].[ContactGroups].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ContactGroups]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="GroupId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="37f62313-e63b-4483-ad48-cae6529f3429" ChangeDateTime="10/08/2020 19:01:00">
+    <Property Name="ElementName" Value="[dbo].[SecurityQuestions].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SecurityQuestions]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="QuestionId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="9c2fe0bb-b5d0-49f6-a6a3-74503df6184e" ChangeDateTime="10/08/2020 19:03:23">
+    <Property Name="ElementName" Value="[dbo].[UserSecurityQuestionAnswers].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[UserSecurityQuestionAnswers]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UserId" />
+  </Operation>
 </Operations>

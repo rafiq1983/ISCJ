@@ -23,6 +23,8 @@
     [HomePhone]     VARCHAR (100)    NULL,
     [Avatar]        VARBINARY (MAX)  NULL,
     [TenantId] UNIQUEIDENTIFIER NULL, 
+    [GroupId] UNIQUEIDENTIFIER NULL, 
+    [ContactNumber] INT NOT NULL DEFAULT 0, 
     CONSTRAINT [PK_Contacts] PRIMARY KEY CLUSTERED ([Guid] ASC)
 );
 

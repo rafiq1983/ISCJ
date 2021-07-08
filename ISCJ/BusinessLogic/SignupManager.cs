@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Security.Policy;
 using System.Text;
 using MA.Common;
+using MA.Common.Entities;
 using MA.Common.Entities.Tenants;
 using MA.Common.Entities.User;
 using MA.Core;
@@ -140,7 +141,8 @@ namespace BusinessLogic
                         tenant.CreateDate = DateTime.UtcNow;
                         tenant.CreateUser = user.UserName;
                         tenant.OwnerId = user.UserId;
-                        
+                        tenant.DisplayTimeZone = input.DisplayTimeZone;
+
                         db.UserTenants.Add(new UserTenant()
                         {
                             UserId = user.UserId,
@@ -149,6 +151,33 @@ namespace BusinessLogic
                             TenantId = tenant.TenantId,
                             RoleCd = "ADMIN",
                             Tenant = tenant
+
+                        });
+
+                        db.SequenceCounters.Add(new SequenceCounter()
+                        {
+                            CounterType = "Tenant",
+                            CounterValue = 0,
+                            TenantId = tenant.TenantId,
+                            CounterName = "StudentCounter"
+
+                        });
+
+                        db.SequenceCounters.Add(new SequenceCounter()
+                        {
+                            CounterType = "Tenant",
+                            CounterValue = 0,
+                            TenantId = tenant.TenantId,
+                            CounterName = "RegistrationApplicationCounter"
+
+                        });
+
+                        db.SequenceCounters.Add(new SequenceCounter()
+                        {
+                            CounterType = "Tenant",
+                            CounterValue = 0,
+                            TenantId = tenant.TenantId,
+                            CounterName = "ContactCounter"
 
                         });
 
@@ -185,6 +214,18 @@ namespace BusinessLogic
         }
 
 
+        public static Tenant GetTenant(Guid tenantId)
+        {
+            using (var db = new Database())
+            {
+               return
+                    db.Tenants.SingleOrDefault(x => x.TenantId == tenantId);
+            }
+
+          
+
+
+        }
         private void SendTenantRegistrationEmail(OrganizationSignupInput input)
         {
             string apiKey = _configuration["SendGridApiKey"];

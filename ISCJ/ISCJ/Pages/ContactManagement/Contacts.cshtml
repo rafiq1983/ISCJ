@@ -36,18 +36,19 @@
                         <img alt="image" class="rounded-circle" src="@(Model.Contacts[i].Gender == 1 ? "/images/male.png" : "/images/female.png")"/>
 
                         <div class="m-t-xs font-bold">
-                            <Code code-type="contacttype" code="@Model.Contacts[i].ContactType"></Code>
+                            <x:Code code-type="contacttype" code="@Model.Contacts[i].ContactType"></x:Code>
                         </div>
                     </div>
                 </div>
                 <div class="col-8">
-                    <h3><strong>@Model.Contacts[i].FirstName</strong></h3>
-                    <p><i class="fa fa-map-marker"></i> Riviera State 32/106</p>
+                    <h3><strong>@Model.Contacts[i].FirstName @Model.Contacts[i].LastName</strong></h3>
+                   <!-- <p><i class="fa fa-map-marker">Test</i></p>-->
                     <address>
-                        <strong>Twitter, Inc.</strong><br>
-                        795 Folsom Ave, Suite 600<br>
-                        San Francisco, CA 94107<br>
-                        <abbr title="Phone">P:</abbr> (123) 456-7890
+                        <!--<strong>a</strong><br>-->
+                        @Model.Contacts[i].StreetAddress<br>
+                        @Model.Contacts[i].City, @Model.Contacts[i].State @Model.Contacts[i].ZipCode<br>
+                        <abbr title="Phone">Cell Phone:</abbr> @Model.Contacts[i].CellPhone <br/>
+                        <abbr title="Phone">Home Phone:</abbr> @Model.Contacts[i].HomePhone
                     </address>
                 </div>
             </a>

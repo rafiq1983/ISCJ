@@ -1,0 +1,102 @@
+﻿@page
+@model ISCJ.Pages.ContactManagement.ContactsListModel
+
+@{
+    ViewData["Title"] = "Contacts";
+    Layout = "~/Pages/Shared/_LayoutModern.cshtml";
+}
+
+<form method="post">
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-9">
+            <h2>Contacts</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    Contact Management
+                </li>
+                <li class="active breadcrumb-item">
+                    <strong>Contacts</strong>
+                </li>
+            </ol>
+        </div>
+        <div class="col-lg-3">
+            <div class="title-action">
+                @Html.DropDownListFor(x => x.GroupId, new SelectList(Model.ContactGroups, "GroupId", "GroupName"), "--Select--",
+        htmlAttributes: new { @class = "form-control m-b" })
+
+            </div>
+        </div>
+    </div>
+
+    <div class="ibox-content">
+
+        <table class="table">
+            <thead>
+            <th>Number</th>
+            <th>Contact Name</th>
+            <th>Address</th>
+            <th>City/State</th>
+            <th>Zip</th>
+
+            <th>Home Phone</th>
+            <th>Cell Phone</th>
+
+            </thead>
+            @for (var i = 0; i < Model.Contacts.Count; i++)
+            {
+                <tr>
+                    <td>@Model.Contacts[i].ContactNumber.ToString().PadLeft(4, '0')</td>
+
+                    <td>
+                        <a href="@Url.Page("ContactViewEdit", new {contactId=Model.Contacts[i].Guid.ToString()})">
+                            @Model.GetContactName(@Model.Contacts[i], false)
+                        </a>
+                    </td>
+                    <td>
+
+                        @Model.Contacts[i].StreetAddress
+                    </td>
+                    <td>
+                        @Model.Contacts[i].City, @Model.Contacts[i].State
+                    </td>
+                    <td>
+                        @Model.Contacts[i].ZipCode
+                    </td>
+                    <td>@Model.Contacts[i].HomePhone
+                       </td>
+
+                    <td>
+                        @Model.Contacts[i].CellPhone
+                    </td>
+
+
+                </tr>
+
+            }
+        </table>
+    </div>
+
+    
+</form>
+
+@section scripts
+{
+    <script language="javascript">
+        $(document).ready(function () {
+            Startup();
+        });
+
+        function Startup() {
+            var ctlId = "#GroupId";//todo: isa: need to generate like we do in asp-for.
+            $(ctlId).change(function (x) {
+     
+                $("form").submit();
+            });
+        }
+  
+    </script>
+
+}

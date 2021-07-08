@@ -14,6 +14,7 @@
     [ModifiedUser]                 VARCHAR (50)     NULL,
     [RowVersion]                   ROWVERSION       NOT NULL,
     [AuthenticationSource] VARCHAR(20) NOT NULL,
+    [localCode] CHAR(5) NOT NULL DEFAULT 'en-Us', 
     CONSTRAINT [PK_Users] PRIMARY KEY ([UserId])
 );
 

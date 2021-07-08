@@ -20,7 +20,7 @@ using MA.Common.Validation;
 namespace ISCJ.webapi
 {
     [Route("api/[controller]")]
-    [Authorize]
+    [Authorize()]
     public class ContactController : MA.Core.Web.BaseController
     {
 

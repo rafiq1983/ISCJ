@@ -12,6 +12,7 @@ namespace MA.Common.Entities.Tenants
         public string RowVersion { get; set; }
         public bool IsVerified { get; set; }
         public Guid OwnerId { get; set; }
+        public string DisplayTimeZone { get; set; }
     }
 
    

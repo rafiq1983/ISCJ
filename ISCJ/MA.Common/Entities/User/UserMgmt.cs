@@ -6,6 +6,22 @@ using MA.Common.Entities.Tenants;
 
 namespace MA.Common.Entities.User
 {
+    public class Question : BaseEntity
+    {
+        public Guid QuestionId { get; set; }
+        public Guid TenantId { get; set; }
+        public string QuestionText { get; set; }
+    }
+
+    public class UserSecurityQuestionAnswer:BaseEntity
+    {
+        public Guid UserId { get; set; }
+        public string Answer { get; set; }
+        public Guid TenantId { get; set; }
+        public Guid QuestionId { get; set; }
+    }
+
+
     public class User:BaseEntity
     {
         public Guid UserId { get; set; }

@@ -1,0 +1,78 @@
+﻿@page  "{groupId:guid}"
+@model ISCJ.Pages.ContactManagement.ContactsByGroupModel
+
+
+@{
+    ViewData["Title"] = "Contacts";
+    Layout = "~/Pages/Shared/_LayoutModern.cshtml";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-9">
+        <h2>Contacts</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                Contact Management
+            </li>
+            <li class="active breadcrumb-item">
+                <strong>Contacts By Group</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="form-group  row">
+                <label class="col-sm-2 col-form-label">Group Name</label>
+
+                <div class="col-sm-10">
+                    @Model.GroupName
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        @for (var i = 0; i < Model.Contacts.Count; i++)
+        {
+            <div class="col-lg-4">
+                <div class="contact-box">
+                    <a class="row" href="@Url.Action("Profile", "AppViews")">
+                    <a href="@Url.Page("ContactViewEdit", new {contactId = Model.Contacts[i].Guid.ToString()})">
+                        <div class="col-4">
+                            <div class="text-center">
+                                <img alt="image" class="rounded-circle" src="@(Model.Contacts[i].Gender == 1 ? "/images/male.png" : "/images/female.png")"/>
+
+                                <div class="m-t-xs font-bold">
+                                    <x:Code code-type="contacttype" code="@Model.Contacts[i].ContactType"></x:Code>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <h3><strong>@Model.Contacts[i].FirstName @Model.Contacts[i].LastName</strong></h3>
+                            <!-- <p><i class="fa fa-map-marker">Test</i></p>-->
+                            <address>
+                                <!--<strong>a</strong><br>-->
+                                @Model.Contacts[i].StreetAddress<br>
+                                @Model.Contacts[i].City, @Model.Contacts[i].State @Model.Contacts[i].ZipCode<br>
+                                <abbr title="Phone">Cell Phone:</abbr> @Model.Contacts[i].CellPhone <br/>
+                                <abbr title="Phone">Home Phone:</abbr> @Model.Contacts[i].HomePhone
+                            </address>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+
+

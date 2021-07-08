@@ -16,6 +16,8 @@ namespace MA.Common.Entities.Student
         public Guid MotherContactId { get; set; }
         public Guid EmergencyContactId { get; set; }
         public Guid TenantId { get; set; }
+        public int StudentNumber { get; set; }
+
         [ForeignKey("StudentContactId")]
         public List<Enrollment> Enrollments { get; set; }
 

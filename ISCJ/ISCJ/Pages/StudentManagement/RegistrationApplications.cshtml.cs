@@ -6,22 +6,32 @@ using BusinessLogic;
 using MA.Common;
 using MA.Common.Entities.Registration;
 using MA.Core;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ISCJ.Pages.StudentManagement
 {
+
+    [Authorize(AuthenticationSchemes = "Cookies,Captcha")] //if captcha is present, it will captcha authentication enabled.
     public class RegistrationApplicationsModel : BasePageModel
     {
     ProgramManager programMgr;
-
     public RegistrationApplicationsModel()
     {
       programMgr = new ProgramManager();
 
      }
+        
         public void OnGet()
         {
+            var user = HttpContext.User;
+            var identities = user.Identities.ToList();
+            var claims = user.Claims.ToList();
+
+
             Programs = programMgr.GetAllPrograms(GetCallContext());
 
 

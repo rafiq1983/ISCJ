@@ -10,6 +10,7 @@
     [ModifiedDate]    DATETIME         NULL,
     [ModifiedUser]    VARCHAR (50)     NULL,
     [TenantId] UNIQUEIDENTIFIER NOT NULL, 
+    [ApplicationNumber] INT NOT NULL, 
     CONSTRAINT [PK_RegistrationApplication] PRIMARY KEY CLUSTERED ([ApplicationId] ASC)
 );
 

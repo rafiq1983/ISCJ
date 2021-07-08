@@ -43,6 +43,7 @@ namespace BusinessLogic
                         pmt.CreateDate = DateTime.UtcNow;
                         pmt.CreateUser = context.UserLoginName;
                         pmt.TenantId = context.TenantId.Value;
+                        pmt.InvoiceId = input.InvoiceId;
                         pmt.CheckCashableDate = input.CheckPaymentDetail.CheckCashDate;
                         db.CheckPayments.Add(pmt);
 
@@ -70,6 +71,7 @@ namespace BusinessLogic
                         pmt.CreateDate = DateTime.UtcNow;
                         pmt.CreateUser = context.UserLoginName;
                         pmt.TenantId = context.TenantId.Value;
+                        pmt.InvoiceId = input.InvoiceId;
                         db.CreditCardPayments.Add(pmt);
                         db.SaveChanges();
 
@@ -82,6 +84,7 @@ namespace BusinessLogic
                     else
                     {
                         var pmt = new CashPayment();
+                        pmt.InvoiceId = input.InvoiceId;
                         pmt.FinancialAccountId = input.FinancialAccountId;
                         pmt.PayorId = input.PaymentMadeByContactId;
                         pmt.PaymentAmount = input.PaymentAmount;

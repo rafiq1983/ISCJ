@@ -5,10 +5,55 @@ using System.Text;
 
 namespace MA.Common
 {
+    public class SaveUserSecurityQuestionsInput
+    {
+        public List<SecurityQuestionAnswer> SecurityQuestionAnswers { get; set; }
+    }
+
+    public class SecurityQuestionAnswer
+    {
+        public Guid QuestionId { get; set; }
+        public string Answer { get; set; }
+    }
+
+    public class GetSecurityQuestionsOutput
+    {
+        public List<SecurityQuestionAnswer> SecurityQuestions { get; set; }
+    }
+
+
+    public class SecurityQuestion
+    {
+        public Guid QuestionId
+        {
+            get; set;
+
+        }
+
+        public string QuestionText { get; set; }
+    }
+
+    public class SaveUserSecurityOutput
+    {
+
+    }
     public class VerifyLoginInput
     {
         public string UserName { get; set; }
         public string Password { get; set; }
+    }
+
+    public class ResetPasswordOutput
+    {
+        public bool Success { get; set; }
+        public string Reason { get; set; }
+    }
+
+    public class ResetPasswordInput
+    {
+        public string EmailId { get; set; }
+        public string NewPassword { get; set; }
+        public List<SecurityQuestionAnswer> SecurityQuestionAnswers { get; set; }
     }
 
     public class VerifyLoginOutput

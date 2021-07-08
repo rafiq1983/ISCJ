@@ -71,6 +71,19 @@
                         </div>
 
                         <div class="form-group  row">
+                            <label class="col-sm-2 col-form-label">Invoice</label>
+
+                            <div class="col-sm-10">
+                                <label id="lblSelectedInvoiceId" asp-for="InvoiceId">&nbsp;</label>
+                                <input type="hidden" asp-for="@Model.InvoiceId" />
+                                <input type="button" onclick="LoadInvoices()" value="Select Invoice" />
+                            </div>
+                              
+                        </div>
+
+
+
+                        <div class="form-group  row">
                             <label class="col-sm-2 col-form-label">Payment Note</label>
 
                             <div class="col-sm-10">
@@ -213,33 +226,67 @@
                             <div class="hr-line-dashed"></div>
                         </div>
                     </div>
+                </div>
             </div>
-        </div>
 
-        <div class="row">
+            <div class="row">
 
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="form-group row" style="text-align:right">
-                    <div class="col-sm-12 col-sm-offset-2">
-                        <button class="btn btn-white btn-sm" type="submit" asp-page-handler="Cancel">Cancel</button>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group row" style="text-align:right">
+                        <div class="col-sm-12 col-sm-offset-2">
+                            <button class="btn btn-white btn-sm" type="submit" asp-page-handler="Cancel">Cancel</button>
 
-                        <button class="btn btn-white btn-sm" type="submit" asp-page-handler="Reset">Reset</button>
+                            <button class="btn btn-white btn-sm" type="submit" asp-page-handler="Reset">Reset</button>
 
-                        <button class="btn btn-primary btn-sm" type="submit" asp-page-handler="Save">Save</button>
+                            <button class="btn btn-primary btn-sm" type="submit" asp-page-handler="Save">Save</button>
 
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <div class="modal inmodal fade" id="selectInvoiceModalWindow" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">Select Invoices</h4>
+                        <small class="font-bold">Invoices</small>
+                    </div>
+                    <div class="modal-body">
+                        <div id="dvEnrollments">
+
+                            <table id="tblEnrollments" class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Invoice Date</th>
+                                    <th scope="col">Invoice Amount</th>
+                                    <th scope="col">Total Paid</th>
+                                    <th scope="col">Responsible Party</th>
+                                </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="btnSelectInvoice">Select Invoice</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 </form>
 
 @section Scripts
 {
-    <script src="https://cdn.rawgit.com/xcash/bootstrap-autocomplete/v2.0.0/dist/latest/bootstrap-autocomplete.min.js"></script>
-
+    <script src="/js/bootstrap-autocomplete.js"></script>
+    <script src="/js/AddPayments.js"></script>
     <script language="javascript">
         function SetPaymentSectionVisibility() {
             var paymentMethodVal = $("#PaymentMethod").val();
@@ -365,28 +412,7 @@
             });
         }
 
-        $("#btnAddNewEnrollment").click(function(evt) {
-
-            evt.preventDefault();
-            _enrollments = [];
-            var i = 0;
-            $(".enrollment:checkbox:checked").each(function() {
-                var enr = $(this).data("enrollment")
-                var obj = JSON.parse(decodeURIComponent(enr));
-                _enrollments[i] = obj;
-                i = i + 1;
-            });
-
-            if (i > 0) {
-                $("#AutoEnrollmentJson").val(JSON.stringify(_enrollments));
-                $("#btnPostSelectedEnrollments").click();
-                $("#addInvoiceTypeModal").modal("hide");
-            } else {
-                $("#dvInvoiceTypeAddErrors").css("display", "block");
-
-            }
-        });
-
+        
 
     </script>
 }

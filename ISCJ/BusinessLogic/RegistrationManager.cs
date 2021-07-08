@@ -8,6 +8,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Transactions;
 using FluentValidation.Results;
+using MA.Common.Entities;
 using MA.Common.Entities.MasjidMembership;
 using MA.Common.Entities.Product;
 using MA.Common.Entities.School;
@@ -74,10 +75,8 @@ namespace BusinessLogic
                 PerformBilling(context, input.BillingInstructions, registrationApplication.ApplicationId,
                     ReferenceType.RegistrationApplication, invoiceTypeId, input.FatherId.Value);
 
-                if(input.AutoAssignSubjects)
-                    AddStudentSubjects(context, input, registrationApplication);
-
-               
+              AddStudents(context, input, registrationApplication, input.AutoAssignSubjects);
+                
                 scope.Complete();
                 return new CreateRegistrationApplicationOutput() { ApplicationId = registrationApplication.ApplicationId};
             }
@@ -112,7 +111,7 @@ namespace BusinessLogic
         }
     }
 
-    private void AddStudentSubjects(CallContext context, CreateRegistrationApplicationInput input, RegistrationApplication app)
+    private void AddStudents(CallContext context, CreateRegistrationApplicationInput input, RegistrationApplication app, bool assignSubjects)
     {
         StudentManager mgr = new StudentManager();
         ProgramManager programManager = new ProgramManager();
@@ -124,7 +123,26 @@ namespace BusinessLogic
 
             if (student == null)
             {
-                mgr.AddStudent(context, new Student()
+                SequenceCounter counter;
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))//creating in its own transaction as don't want to block that table for too long.
+                {
+
+                    using (var db2 = new Database())
+                    {
+                        counter = db2.SequenceCounters.Single(x =>
+                            x.TenantId == context.TenantId && x.CounterName == "StudentCounter");
+
+                        db2.SequenceCounters.Add(counter);
+                        counter.CounterValue += 1;
+                        db2.Entry(counter).State = EntityState.Modified;
+                        db2.SaveChanges(); //update counter right away so we other transactions are not blocked from updating the value.
+
+
+                    }
+                    scope.Complete();
+                }
+
+                    mgr.AddStudent(context, new Student()
                 {
                     StudentId = reg.StudentId.Value,
                     ContactId = reg.StudentId.Value,
@@ -132,24 +150,33 @@ namespace BusinessLogic
                     MotherContactId = input.MotherId.Value,
                     CreateDate = DateTime.UtcNow,
                     CreateUser = context.UserLoginName,
-                    TenantId = context.TenantId.Value
+                    TenantId = context.TenantId.Value,
+                    StudentNumber = counter.CounterValue
 
                 });
             }
 
-            //Add subjects.
-            CourseManager courseManager = new CourseManager();
-
-            List<SubjectMapping> subjectMappings = 
-                courseManager.GetSubjectByProgramAndIslamicGradeId(context, input.ProgramId.Value, reg.IslamicSchoolGrade);
-
-            foreach (var subject in subjectMappings)
+            if (assignSubjects)
             {
-                var enrollmentId = app.Enrollments.SingleOrDefault(x => x.StudentContactId == reg.StudentId).EnrollmentId;
+                //Add subjects.
+                CourseManager courseManager = new CourseManager();
 
-               var studentSubjectId = mgr.AddStudentSubject(context, reg.StudentId.Value, enrollmentId, subject.SubjectId, input.ProgramId.Value);
+                List<SubjectMapping> subjectMappings =
+                    courseManager.GetSubjectByProgramAndIslamicGradeId(context, input.ProgramId.Value,
+                        reg.IslamicSchoolGrade);
 
-                mgr.AddMetricsToStudentSubject(context, studentSubjectId, programManager.GetAssociatedMetrics(context, subject.SubjectId).Select(x=>x.MetricId).ToList());
+                foreach (var subject in subjectMappings)
+                {
+                    var enrollmentId = app.Enrollments.SingleOrDefault(x => x.StudentContactId == reg.StudentId)
+                        .EnrollmentId;
+
+                    var studentSubjectId = mgr.AddStudentSubject(context, reg.StudentId.Value, enrollmentId,
+                        subject.SubjectId, input.ProgramId.Value);
+
+                    mgr.AddMetricsToStudentSubject(context, studentSubjectId,
+                        programManager.GetAssociatedMetrics(context, subject.SubjectId).Select(x => x.MetricId)
+                            .ToList());
+                }
             }
         }
 
@@ -263,7 +290,26 @@ namespace BusinessLogic
         private RegistrationApplication SaveRegistrationApplication(CallContext context, CreateRegistrationApplicationInput input)
                 {
             using (var db = new Database())
-            {   
+            {
+                SequenceCounter counter;
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))//creating in its own transaction as don't want to block that table for too long.
+                {
+
+                    using (var db2 = new Database())
+                    {
+                        counter = db2.SequenceCounters.Single(x =>
+                            x.TenantId == context.TenantId && x.CounterName == "RegistrationApplicationCounter");
+
+                        db2.SequenceCounters.Add(counter);
+                        counter.CounterValue += 1;
+                        db2.Entry(counter).State = EntityState.Modified;
+                        db2.SaveChanges(); //update counter right away so we other transactions are not blocked from updating the value.
+
+
+                    }
+                    scope.Complete();
+                }
+
                 RegistrationApplication application = new RegistrationApplication()
                 {
                     ApplicationId = Guid.NewGuid(),
@@ -273,6 +319,7 @@ namespace BusinessLogic
                     ProgramId = input.ProgramId.GetValueOrDefault(Guid.Empty),
                     MembershipId = Guid.Empty,
                     TenantId = context.TenantId.Value,
+                    ApplicationNumber = counter.CounterValue,
                     CreateUser = context.UserLoginName
                 };
                

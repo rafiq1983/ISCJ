@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using MA.Common.Entities.Registration;
 using MA.Common;
+using MA.Common.Entities;
 using MA.Common.Entities.Contacts;
 using MA.Common.Entities.Product;
 using MA.Common.Entities.MasjidMembership;
@@ -43,6 +45,8 @@ namespace BusinessLogic
     public virtual DbSet<CreditCardPayment> CreditCardPayments { get; set; }
     public virtual DbQuery<AllPayment> AllPaymentIds { get; set; }
     public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<Question> Questions { get; set; }
+      public virtual DbSet<UserSecurityQuestionAnswer> UserSecurityQuestionAnswers { get; set; }
     public virtual DbSet<UserTenant> UserTenants { get; set; }
     public virtual DbSet<Tenant> Tenants { get; set; }
     public virtual DbSet<MasjidMembership> MasjidMembers { get; set; }
@@ -58,7 +62,8 @@ namespace BusinessLogic
     public virtual DbSet<StudentSubject> StudentSubjects { get; set; }
     public virtual DbSet<Contact> Contacts { get; set; }
     public virtual DbSet<ContactTenant> ContactTenants { get; set; }
-
+    public virtual DbSet<SequenceCounter> SequenceCounters { get; set; }
+    public virtual DbSet<ContactGroup> ContactGroups { get; set; }
 
         public DbSet<FinancialAccount> FinancialAccounts { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -131,6 +136,29 @@ namespace BusinessLogic
             modelBuilder.Entity<Teacher>(entity =>
             {
                 entity.HasKey(x => x.TeacherId);
+            });
+
+            modelBuilder.Entity<Question>(entity => {entity.HasKey(x => x.QuestionId);
+                entity.ToTable("Question");
+            });
+
+            modelBuilder.Entity<UserSecurityQuestionAnswer>(entity => 
+                entity.ToTable("UserSecurityQuestionAnswer")
+                    .HasKey(x =>
+            new {
+                x.QuestionId, x.UserId
+            }));
+
+            modelBuilder.Entity<ContactGroup>(entity =>
+            {
+                entity.HasKey(x => x.GroupId);
+
+                entity.HasIndex(x =>
+                 new {
+                    x.TenantId, x.GroupName
+                });
+
+                entity.Ignore(x => x.ModifiedDate).Ignore(x => x.ModifiedUser);
             });
 
             modelBuilder.Entity<RegistrationApplication>(entity =>
@@ -252,7 +280,15 @@ namespace BusinessLogic
 
             modelBuilder.Entity<ContactTenant>(entity => { entity.HasKey(e => new { e.TenantId, e.ContactId }); });
 
-
+            modelBuilder.Entity<SequenceCounter>(entity =>
+            {
+                entity.ToTable("SequenceCounter");
+                entity.HasKey(e => e.CounterId);
+                entity.Property(x => x.CounterId).UseSqlServerIdentityColumn();
+                entity.HasAlternateKey(x => new {x.CounterName, x.TenantId}); //maps to unique index/constraint /or foreign key constraints.
+                //Don't really need to define alternate key, But I think EF will validate records in memory if they violate this rule. To be confirmed.
+            });
+            
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasKey(e => e.UserId);

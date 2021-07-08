@@ -10,35 +10,51 @@
     Layout = "~/Pages/Shared/_LayoutModern.cshtml";
 }
 <form method="Post">
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-9">
+            <h2>Select Organization</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    User
+                </li>
+                <li class="active breadcrumb-item">
+                    <strong>Select Organization</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
     <div class="ibox-content">
 
 
         <table class="table">
             <thead>
-                <tr>
+            <tr>
 
-                    <th>Tenant Name</th>
+                <th>Tenant Name</th>
 
-                </tr>
+            </tr>
             </thead>
             <tbody>
-                @for (var i = 0; i < Model.Tenants.Count; i++)
-                {
-                    <tr>
-                        <input type="hidden" asp-for="@Model.Tenants[i].TenantId" />
-                        <input type="hidden" asp-for="@Model.Tenants[i].OrganizationName" />
+            @for (var i = 0; i < Model.Tenants.Count; i++)
+            {
+                <tr>
+                    <input type="hidden" asp-for="@Model.Tenants[i].TenantId"/>
+                    <input type="hidden" asp-for="@Model.Tenants[i].OrganizationName"/>
 
-                        <td>@Model.Tenants[i].OrganizationName</td>
+                    <td>@Model.Tenants[i].OrganizationName</td>
 
-                        <td>
-                            <button class="btn btn-white btn-sm" type="submit" name="btnLoginToTenant" value="@i"
-                                    asp-page-handler="SelectTenant">
-                                Select
-                            </button>
-                        </td>
+                    <td>
+                        <button class="btn btn-white btn-sm" type="submit" name="btnLoginToTenant" value="@i"
+                                asp-page-handler="SelectTenant">
+                            Select
+                        </button>
+                    </td>
 
-                    </tr>
-                }
+                </tr>
+            }
             </tbody>
         </table>
     </div>

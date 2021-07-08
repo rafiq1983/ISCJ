@@ -39,6 +39,7 @@ namespace MA.Common.Entities.Contacts
     public string CreatedBy { get; set; }
     public DateTime? ModifiedDate { get; set; }
     public string ModifiedBy { get; set; }
+    public Guid? GroupId { get; set; }
 
        
         [Required]
@@ -49,6 +50,7 @@ namespace MA.Common.Entities.Contacts
     public string CellPhone { get; set; }
         [Required]
     public string HomePhone { get; set; }
+    public int ContactNumber { get; set; }
 
   }
 

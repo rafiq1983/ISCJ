@@ -48,23 +48,24 @@ namespace BusinessLogic
         }
     }
 
-    public GetStudentDetail GetStudentDetail(Guid studentId)
-    {
-        var output = new GetStudentDetail();
-
-        output.StudentBasicInfo = new StudentDetail()
-        {
-             BasicInfo = new StudentBasicInfo()
-                 { ClassGrade = "1", DOB = DateTime.MaxValue, FirstName = "Test First", LastName = "Test Last" }
-        };
-
-        return output;
-    }
-
-    public void AddStudent(CallContext context, Student student)
+    public Student GetStudent(CallContext context, Guid studentId)
     {
         using (Database db = new Database())
         {
+
+            var output = db.Students.Where(x => x.StudentId == studentId && x.TenantId == context.TenantId).Include(x=>x.Enrollments)
+                .SingleOrDefault();
+            return output;
+
+        }
+    }
+
+
+        public void AddStudent(CallContext context, Student student)
+    {
+        using (Database db = new Database())
+        {
+
             db.Students.Add(student);
             db.SaveChanges();
         }

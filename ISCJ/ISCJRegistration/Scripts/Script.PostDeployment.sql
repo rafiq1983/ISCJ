@@ -40,3 +40,14 @@ INSERT INTO [dbo].[ContactTypes]
            )
 		END
 GO
+
+--Define Counters for organizations which are created previously but have no Counters.
+:r .\DefineBuiltInCountersForExistingOrganizations.sql
+
+
+--Set Student Counter values.
+:r .\SetStudentNumbersIfNecessary.sql
+
+:r .\SetRegistrationNumberIfNecessary.sql
+
+:r .\SetContactNumberIfNecessary.sql

@@ -121,7 +121,9 @@ namespace ISCJ.Pages.Financials
         [BindProperty]
         [Required(ErrorMessage = "Payment must be attached to an entity.")]
         public Guid? ContactId { get; set; }
-        
+
+     
+
         [Required(ErrorMessage = "Payment Amount is required.")]
         [BindProperty]
         public decimal PaymentAmount { get; set; }

@@ -79,7 +79,32 @@
 
         });
 
-        function SetupContactAutoComplete() {
+
+function ConfigureTypeAhead() {
+    var cars = ['Audi', 'BMW', 'Bugatti', 'Ferrari', 'Ford', 'Lamborghini', 'Mercedes Benz', 'Porsche', 'Rolls-Royce', 'Volkswagen'];
+
+    // Constructing the suggestion engine
+    var cars = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.whitespace,
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        local: cars
+    });
+
+    // Initializing the typeahead
+    $('.typeahead').typeahead({
+            hint: true,
+            highlight: true, /* Enable substring highlighting */
+            minLength: 1 /* Specify minimum characters required for showing suggestions */
+        },
+        {
+            name: 'cars',
+            source: cars
+        });
+}
+function SetupContactAutoComplete() {
+
+    ConfigureTypeAhead();
+
 
             $(".autocomplete").autoComplete({
                 minLength: 1,
@@ -155,11 +180,11 @@
                         _enrollments = d;
                         $(".FatherEnrollmentFound").show();
                         $(".MotherEnrollmentFound").show();
-                        $(".MotherEnrollmentFound,.FatherEnrollmentFound").on("click", function ()
-                        {
-                            DisplayEnrollmentsFound();
-                        })
-                         
+                        $(".MotherEnrollmentFound,.FatherEnrollmentFound").on("click",
+                            function() {
+                                DisplayEnrollmentsFound();
+                            });
+
                     }
                 },
                 error: function(response) {
@@ -175,9 +200,8 @@
             evt.preventDefault();
             _enrollments = [];
             var i = 0;            
-            $(".enrollment:checkbox:checked").each(function ()
-            {                  
-                var enr = $(this).data("enrollment") 
+            $(".enrollment:checkbox:checked").each(function () {
+                var enr = $(this).data("enrollment");
                 var obj=JSON.parse(decodeURIComponent(enr));                
                 _enrollments[i] = obj;
                 i = i + 1;               
