@@ -9,6 +9,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Filters\**" />
+    <Compile Remove="js\**" />
+    <Compile Remove="Pages\Admin\**" />
+    <Compile Remove="Pages\NewFolder\**" />
+    <Compile Remove="Pages\ProgramManagement\**" />
+    <Content Remove="Filters\**" />
+    <Content Remove="js\**" />
+    <Content Remove="Pages\Admin\**" />
+    <Content Remove="Pages\NewFolder\**" />
+    <Content Remove="Pages\ProgramManagement\**" />
+    <EmbeddedResource Remove="Filters\**" />
+    <EmbeddedResource Remove="js\**" />
+    <EmbeddedResource Remove="Pages\Admin\**" />
+    <EmbeddedResource Remove="Pages\NewFolder\**" />
+    <EmbeddedResource Remove="Pages\ProgramManagement\**" />
+    <None Remove="Filters\**" />
+    <None Remove="js\**" />
+    <None Remove="Pages\Admin\**" />
+    <None Remove="Pages\NewFolder\**" />
+    <None Remove="Pages\ProgramManagement\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Pages\StudentManagement\RegisterStudent.cshtml.cs" />
   </ItemGroup>
 
@@ -34,12 +57,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="js\" />
-    <Folder Include="Filters\" />
     <Folder Include="ParentPortal\" />
-    <Folder Include="Pages\Admin\" />
-    <Folder Include="Pages\NewFolder\" />
-    <Folder Include="Pages\ProgramManagement\" />
   </ItemGroup>
 
   <ItemGroup>
