@@ -5,9 +5,9 @@ const webpack = require('webpack');
 
 module.exports = {
     entry: {
-        pageOne: './src/main.js',
-        pageTwo: './src/main2.js',
-        pageThree: './src/main3.js'
+        pageOne: './vueapp/main.js',
+        pageTwo: './vueapp/main2.js',
+        pageThree: './vueapp/main3.js'
     },
   output: {
     path: path.resolve(__dirname, './dist'),
