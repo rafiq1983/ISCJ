@@ -1,0 +1,17 @@
+{
+  "name": "iscj",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "rimraf dist && cross-env NODE_ENV=production webpack --progress --hide-modules"
+  },
+  "dependencies": {
+    
+  },
+  "devDependencies": {
+    
+  },
+  "author": "Rafiq Ahmed",
+  "license": "ISC",
+  "description": ""
+}
