@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "es5",
+    "outDir": "wwwroot/compiledts",
+    "module": "es2020",
+    "skipLibCheck": true
+  },
+  "include": [
+    "typescript/*"
+  ],
+  "exclude": [
+    "node_modules\**",
+    "wwwroot\**",
+    "icsjangularapp\**",
+    "icsjvueapp\**",
+    "icsjreactjsapp\**",
+    "vueapp\**"
+  ]
+}
