@@ -16,6 +16,7 @@
     "wwwroot",
     "icsjangularapp",
     "icsjvueapp",
-    "icsjreactjsapp"
+    "icsjreactjsapp",
+    "vueapp"
   ]
 }
