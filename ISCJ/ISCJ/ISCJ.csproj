@@ -34,6 +34,9 @@
     <None Remove="Pages\NewFolder\**" />
     <None Remove="Pages\ProgramManagement\**" />
     <TypeScriptCompile Remove="angularapp\**" />
+	<TypeScriptCompile Remove="icsjangularapp\**" />
+	<TypeScriptCompile Remove="icsjvueapp\**" />
+	<TypeScriptCompile Remove="icsjreachjsapp\**" />
   </ItemGroup>
 
   <ItemGroup>
