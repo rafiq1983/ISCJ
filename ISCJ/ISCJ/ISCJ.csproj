@@ -49,6 +49,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="icsjangularapp\src\ListDetailsPoc\OrderList.component.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="icsjangularapp\src\ListDetailsPoc\OrderList.component.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentValidation" Version="8.4.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
@@ -86,6 +96,12 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="typescript\sampleFile.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="icsjangularapp\src\ListDetailsPoc\OrderList.component.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
 </Project>
